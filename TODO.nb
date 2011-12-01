@@ -1,0 +1,262 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[      6974,        253]
+NotebookOptionsPosition[      5582,        201]
+NotebookOutlinePosition[      6003,        218]
+CellTagsIndexPosition[      5960,        215]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["RHPackage", "Title",
+ CellChangeTimes->{{3.4976669113437243`*^9, 3.49766691325357*^9}, {
+  3.497666957979979*^9, 3.497666964592596*^9}, {3.497667011678321*^9, 
+  3.497667015964347*^9}, {3.503041684932157*^9, 3.5030416860285063`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ Cell[BoxData[
+  CheckboxBox[False]]],
+ " ",
+ "LFun RHSolve"
+}], "Outline1",
+ CellChangeTimes->{{3.49766707731851*^9, 3.497667080955963*^9}, {
+  3.503041697678492*^9, 3.50304171928797*^9}}],
+
+Cell[TextData[{
+ Cell[BoxData[
+  CheckboxBox[False]]],
+ " Toeplitz solver"
+}], "Outline2",
+ CellChangeTimes->{{3.497795921842202*^9, 3.497795923306574*^9}}],
+
+Cell[TextData[{
+ Cell[BoxData[
+  CheckboxBox[False]]],
+ " Block Toeplitz multiply"
+}], "Outline2",
+ CellChangeTimes->{{3.4976670882774897`*^9, 3.497667117205781*^9}, {
+  3.4977959101477747`*^9, 3.4977959310890512`*^9}}],
+
+Cell[TextData[{
+ Cell[BoxData[
+  CheckboxBox[False]]],
+ " Block Toeplitz solver"
+}], "Outline2",
+ CellChangeTimes->{{3.4976670882774897`*^9, 3.497667117205781*^9}, 
+   3.4977959101477747`*^9}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Bugs", "Outline1",
+ CellChangeTimes->{{3.498294146206596*^9, 3.498294152510981*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ Cell[BoxData[
+  CheckboxBox[True]]],
+ " IFuns with Curve domains only give correct result with one orientation"
+}], "Outline2",
+ CellChangeTimes->{{3.49829415443186*^9, 3.498294178072597*^9}, {
+   3.4999167877551517`*^9, 3.499916787897129*^9}, {3.503041729692999*^9, 
+   3.5030417467879133`*^9}, 3.5056606270472517`*^9}],
+
+Cell[TextData[{
+ Cell[BoxData[
+  CheckboxBox[True]]],
+ " Create unit test to demonstrate this"
+}], "Outline3",
+ CellChangeTimes->{{3.503041752717135*^9, 3.503041759137512*^9}, 
+   3.505660628298128*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[TextData[{
+ Cell[BoxData[
+  CheckboxBox[False]]],
+ " Create RHSolve which solves for one segment at a time, reducing \
+complexity"
+}], "Outline1",
+ CellChangeTimes->{{3.49766707731851*^9, 3.497667080955963*^9}, {
+  3.500013766563957*^9, 3.500013769030212*^9}, {3.503041766206905*^9, 
+  3.503041792199834*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Painleve", "Title",
+ CellChangeTimes->{{3.4976669113437243`*^9, 3.49766691325357*^9}, {
+  3.497666957979979*^9, 3.497666964592596*^9}, {3.4976670184608727`*^9, 
+  3.497667021507568*^9}, {3.497667359749016*^9, 3.4976673630039053`*^9}, {
+  3.497667420951729*^9, 3.497667425029471*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Painleve II", "Outline1",
+ CellChangeTimes->{{3.4976674337454576`*^9, 3.4976674370695972`*^9}, {
+  3.4976674835865173`*^9, 3.497667492725583*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ Cell[BoxData[
+  CheckboxBox[False]]],
+ " Negative x"
+}], "Outline2",
+ CellChangeTimes->{{3.497667517847496*^9, 3.497667519801787*^9}, {
+  3.500796223686447*^9, 3.500796225541841*^9}, {3.5030418718729343`*^9, 
+  3.503041888978006*^9}, {3.5056606349499207`*^9, 3.5056606395639963`*^9}}],
+
+Cell[TextData[{
+ Cell[BoxData[
+  CheckboxBox[True]]],
+ " Scaled Contour 2"
+}], "Outline3",
+ CellChangeTimes->{{3.503041892095677*^9, 3.503041906291136*^9}, {
+   3.503219085432069*^9, 3.503219087685924*^9}, 3.505660636783773*^9}],
+
+Cell[TextData[{
+ Cell[BoxData[
+  CheckboxBox[False]]],
+ " Choose contour"
+}], "Outline3",
+ CellChangeTimes->{{3.503041892095677*^9, 3.503041906291136*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ Cell[BoxData[
+  CheckboxBox[False]]],
+ " Positive x"
+}], "Outline2",
+ CellChangeTimes->{{3.497667520367834*^9, 3.497667527899171*^9}, {
+  3.5007962268379087`*^9, 3.5007962270657997`*^9}}],
+
+Cell[TextData[{
+ Cell[BoxData[
+  CheckboxBox[True]]],
+ " Implement in Painleve Routine"
+}], "Outline3",
+ CellChangeTimes->{{3.497667530006566*^9, 3.497667536902059*^9}, {
+   3.5007008416928453`*^9, 3.500700843745803*^9}, {3.5030418340647097`*^9, 
+   3.503041853087764*^9}, 3.505660641167416*^9}],
+
+Cell[TextData[{
+ Cell[BoxData[
+  CheckboxBox[False]]],
+ " Determine deformation for moderate x"
+}], "Outline3",
+ CellChangeTimes->{{3.503041853465939*^9, 3.503041867677046*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ Cell[BoxData[
+  CheckboxBox[True]]],
+ " Hastings McLeod"
+}], "Outline2",
+ CellChangeTimes->{{3.4976675219836206`*^9, 3.497667537897934*^9}, {
+   3.500796228635456*^9, 3.5007962288173733`*^9}, {3.500879816523053*^9, 
+   3.500879816530361*^9}, {3.503041879934436*^9, 3.503041883980221*^9}, 
+   3.5056606495630617`*^9}],
+
+Cell[TextData[{
+ Cell[BoxData[
+  CheckboxBox[True]]],
+ " Implement negative x in Painleve Routine"
+}], "Outline3",
+ CellChangeTimes->{{3.497667543214293*^9, 3.497667550604587*^9}, 
+   3.4977885577317257`*^9, {3.500796248447751*^9, 3.500796253990795*^9}, {
+   3.500879785710723*^9, 3.500879795836133*^9}, {3.503041815153741*^9, 
+   3.503041850757668*^9}, 3.505660648185334*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ Cell[BoxData[
+  CheckboxBox[False]]],
+ " ",
+ "Complex x"
+}], "Outline2",
+ CellChangeTimes->{{3.4976676148743057`*^9, 3.497667616312264*^9}, {
+  3.503041930133317*^9, 3.503041934367593*^9}}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{744, 747},
+WindowMargins->{{150, Automatic}, {Automatic, 0}},
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (November 6, \
+2010)",
+StyleDefinitions->FrontEnd`FileName[{"Utility"}, "Outline.nb", 
+  CharacterEncoding -> "UTF-8"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 239, 3, 76, "Title"],
+Cell[CellGroupData[{
+Cell[831, 29, 205, 7, 36, "Outline1"],
+Cell[1039, 38, 156, 5, 36, "Outline2"],
+Cell[1198, 45, 219, 6, 33, "Outline2"],
+Cell[1420, 53, 192, 6, 33, "Outline2"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[1649, 64, 90, 1, 33, "Outline1"],
+Cell[CellGroupData[{
+Cell[1764, 69, 337, 7, 55, "Outline2"],
+Cell[2104, 78, 202, 6, 35, "Outline3"]
+}, Open  ]]
+}, Open  ]],
+Cell[2333, 88, 314, 8, 59, "Outline1"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2684, 101, 289, 4, 76, "Title"],
+Cell[CellGroupData[{
+Cell[2998, 109, 152, 2, 36, "Outline1"],
+Cell[CellGroupData[{
+Cell[3175, 115, 301, 7, 36, "Outline2"],
+Cell[3479, 124, 228, 6, 35, "Outline3"],
+Cell[3710, 132, 155, 5, 32, "Outline3"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3902, 142, 204, 6, 36, "Outline2"],
+Cell[4109, 150, 295, 7, 35, "Outline3"],
+Cell[4407, 159, 177, 5, 32, "Outline3"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4621, 169, 333, 8, 36, "Outline2"],
+Cell[4957, 179, 376, 8, 35, "Outline3"]
+}, Open  ]],
+Cell[5348, 190, 206, 7, 36, "Outline2"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

@@ -1,0 +1,378 @@
+Notebook[{
+Cell["\<\
+\[Copyright] Sheehan Olver, 2010, subject to BSD license.
+
+Other contributors include Georg Wechslberger.
+
+FredholmDet is based on code by Folkmar Bornemann.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell["Setup", "Section"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"CauchyD", ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"BeginPackage", "[", 
+   RowBox[{"\"\<RiemannHilbert`\>\"", ",", 
+    RowBox[{"{", "\"\<RiemannHilbert`Common`\>\"", "}"}]}], "]"}], 
+  ";"}]}], "Input",
+ InitializationCell->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["PFun Cauchy", "Section"],
+
+Cell[CellGroupData[{
+
+Cell["At Value", "Subsection"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Begin", "[", "\"\<`Private`\>\"", "]"}], ";"}]], "Input",
+ InitializationCell->True],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"Cauchy", "[", 
+      RowBox[{"lf_PFun", ",", "z_List"}], "]"}], ":=", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Cauchy", "[", 
+        RowBox[{"lf", ",", "#"}], "]"}], "&"}], "/@", "z"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Cauchy", "[", 
+      RowBox[{
+       RowBox[{"s_", "?", "SignQ"}], ",", "lf_PFun", ",", "z_List"}], "]"}], ":=", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Cauchy", "[", 
+        RowBox[{"s", ",", "lf", ",", "#"}], "]"}], "&"}], "/@", "z"}]}], 
+    ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"CauchyS", "[", 
+      RowBox[{
+       RowBox[{"+", "1"}], ",", "lf_PFun", ",", 
+       RowBox[{"z_", "?", "ScalarQ"}]}], "]"}], ":=", 
+     RowBox[{
+      RowBox[{"1", "/", "2"}], " ", 
+      RowBox[{"First", "[", 
+       RowBox[{"lf", "//", "Values"}], "]"}]}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"CauchyS", "[", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "lf_PFun", ",", 
+       RowBox[{"z_", "?", "ScalarQ"}]}], "]"}], ":=", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"-", "1"}], "/", "2"}], " ", 
+      RowBox[{"First", "[", 
+       RowBox[{"lf", "//", "Values"}], "]"}]}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Cauchy", "[", 
+      RowBox[{
+       RowBox[{"pf_PFun", "?", "UnitPointFunQ"}], ",", "z_"}], "]"}], ":=", 
+     RowBox[{"-", 
+      FractionBox[
+       RowBox[{"First", "[", 
+        RowBox[{"pf", "//", "Values"}], "]"}], 
+       RowBox[{"2", " ", "\[Pi]", " ", "I", " ", "z", " "}]]}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Cauchy", "[", 
+      RowBox[{
+       RowBox[{"s_", "?", "SignQ"}], ",", 
+       RowBox[{"lf_PFun", "?", "UnitPointFunQ"}], ",", 
+       RowBox[{"z_", "?", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"DomainMemberQ", "[", 
+           RowBox[{"UnitPoint", ",", "#"}], "]"}], "&"}], ")"}]}]}], "]"}], ":=", 
+     RowBox[{"CauchyS", "[", 
+      RowBox[{"s", ",", "lf", ",", "z"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Cauchy", "[", 
+      RowBox[{
+       RowBox[{"s_", "?", "SignQ"}], ",", 
+       RowBox[{"lf_PFun", "?", "UnitPointFunQ"}], ",", 
+       RowBox[{"z_", "?", "ScalarQ"}]}], "]"}], ":=", 
+     RowBox[{"Cauchy", "[", 
+      RowBox[{"lf", ",", "z"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Cauchy", "[", 
+      RowBox[{"lf_PFun", ",", "z_"}], "]"}], ":=", 
+     RowBox[{"Cauchy", "[", 
+      RowBox[{
+       RowBox[{"lf", "//", "ToUnitPoint"}], ",", 
+       RowBox[{"MapToPoint", "[", 
+        RowBox[{"lf", ",", "z"}], "]"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Cauchy", "[", 
+      RowBox[{
+       RowBox[{"s_", "?", "SignQ"}], ",", "lf_PFun", ",", 
+       RowBox[{"z_", "?", "ScalarQ"}]}], "]"}], ":=", 
+     RowBox[{"Cauchy", "[", 
+      RowBox[{"s", ",", 
+       RowBox[{"lf", "//", "ToUnitPoint"}], ",", 
+       RowBox[{"MapToPoint", "[", 
+        RowBox[{"lf", ",", "z"}], "]"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"CauchyD", "[", 
+      RowBox[{
+       RowBox[{"pf_PFun", "?", "UnitPointFunQ"}], ",", "z_"}], "]"}], ":=", 
+     FractionBox[
+      RowBox[{"First", "[", 
+       RowBox[{"pf", "//", "Values"}], "]"}], 
+      RowBox[{"2", " ", "\[Pi]", " ", "I", " ", 
+       SuperscriptBox["z", "2"], " "}]]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"CauchyD", "[", 
+      RowBox[{"lf_PFun", ",", "z_"}], "]"}], ":=", 
+     RowBox[{
+      RowBox[{"CauchyD", "[", 
+       RowBox[{
+        RowBox[{"lf", "//", "ToUnitPoint"}], ",", 
+        RowBox[{"MapToPoint", "[", 
+         RowBox[{"lf", ",", "z"}], "]"}]}], "]"}], 
+      RowBox[{"MapToPointD", "[", 
+       RowBox[{"lf", ",", "z"}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"CauchyD", "[", "2", "]"}], "[", 
+      RowBox[{
+       RowBox[{"pf_PFun", "?", "UnitPointFunQ"}], ",", "z_"}], "]"}], ":=", 
+     RowBox[{"-", 
+      FractionBox[
+       RowBox[{"2", 
+        RowBox[{"First", "[", 
+         RowBox[{"pf", "//", "Values"}], "]"}]}], 
+       RowBox[{"2", " ", "\[Pi]", " ", "I", " ", 
+        SuperscriptBox["z", "3"], " "}]]}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"CauchyD", "[", "2", "]"}], "[", 
+      RowBox[{"lf_PFun", ",", "z_"}], "]"}], ":=", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"CauchyD", "[", "2", "]"}], "[", 
+       RowBox[{
+        RowBox[{"lf", "//", "ToUnitPoint"}], ",", 
+        RowBox[{"MapToPoint", "[", 
+         RowBox[{"lf", ",", "z"}], "]"}]}], "]"}], 
+      SuperscriptBox[
+       RowBox[{"MapToPointD", "[", 
+        RowBox[{"lf", ",", "z"}], "]"}], "2"]}]}], ";"}], 
+   "\[IndentingNewLine]"}]}]], "Input",
+ InitializationCell->True]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["PFun CauchyBasis and Cauchy Matrix", "Section"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"CauchyBasisS", "[", 
+    RowBox[{
+     RowBox[{"+", "1"}], ",", "UnitPoint", ",", "1", ",", "z_"}], "]"}], ":=", 
+   RowBox[{"1", "/", "2"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"CauchyBasisS", "[", 
+     RowBox[{
+      RowBox[{"-", "1"}], ",", "UnitPoint", ",", "1", ",", "z_"}], "]"}], ":=", 
+    RowBox[{
+     RowBox[{"-", "1"}], "/", "2"}]}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CauchyBasis", "[", 
+    RowBox[{
+     RowBox[{"d_", "?", "PointDomainQ"}], ",", "k_Integer", ",", "z_List"}], 
+    "]"}], ":=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"CauchyBasis", "[", 
+      RowBox[{"d", ",", "k", ",", "#"}], "]"}], "&"}], "/@", "z"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"CauchyBasis", "[", 
+     RowBox[{
+      RowBox[{"s_", "?", "SignQ"}], ",", 
+      RowBox[{"d_", "?", "PointDomainQ"}], ",", "k_Integer", ",", "z_List"}], 
+     "]"}], ":=", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"CauchyBasis", "[", 
+       RowBox[{"s", ",", "d", ",", "k", ",", "#"}], "]"}], "&"}], "/@", 
+     "z"}]}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"CauchyBasis", "[", 
+     RowBox[{"UnitPoint", ",", "k_Integer", ",", "z_"}], "]"}], ":=", 
+    RowBox[{"-", 
+     FractionBox["1", 
+      RowBox[{"2", " ", "\[Pi]", "\[NonBreakingSpace]", "I", " ", "z"}]]}]}], 
+   ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CauchyBasis", "[", 
+    RowBox[{
+     RowBox[{"s_", "?", "SignQ"}], ",", "UnitPoint", ",", "k_Integer", ",", 
+     RowBox[{"z_", "?", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"DomainMemberQ", "[", 
+         RowBox[{"UnitPoint", ",", "#"}], "]"}], "&"}], ")"}]}]}], "]"}], ":=", 
+   RowBox[{"CauchyBasisS", "[", 
+    RowBox[{"s", ",", "UnitPoint", ",", "k", ",", "z"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"CauchyBasis", "[", 
+     RowBox[{
+      RowBox[{"s_", "?", "SignQ"}], ",", "UnitPoint", ",", "k_Integer", ",", 
+      "z_"}], "]"}], ":=", 
+    RowBox[{"CauchyBasis", "[", 
+     RowBox[{"UnitPoint", ",", "k", ",", "z"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CauchyBasis", "[", 
+    RowBox[{
+     RowBox[{"f_", "?", "PointDomainQ"}], ",", "k_Integer", ",", "z_"}], 
+    "]"}], ":=", 
+   RowBox[{"CauchyBasis", "[", 
+    RowBox[{"UnitPoint", ",", "k", ",", 
+     RowBox[{"MapToPoint", "[", 
+      RowBox[{"f", ",", "z"}], "]"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CauchyBasis", "[", 
+    RowBox[{
+     RowBox[{"s_", "?", "SignQ"}], ",", 
+     RowBox[{"f_", "?", "PointDomainQ"}], ",", "k_Integer", ",", "z_"}], 
+    "]"}], ":=", 
+   RowBox[{"CauchyBasis", "[", 
+    RowBox[{"s", ",", "UnitPoint", ",", "k", ",", 
+     RowBox[{"MapToPoint", "[", 
+      RowBox[{"f", ",", "z"}], "]"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CauchyBasisS", "[", 
+    RowBox[{
+     RowBox[{"s_", "?", "SignQ"}], ",", 
+     RowBox[{"f_", "?", "PointDomainQ"}], ",", "k_Integer", ",", "z_"}], 
+    "]"}], ":=", 
+   RowBox[{"CauchyBasisS", "[", 
+    RowBox[{"s", ",", "UnitPoint", ",", "k", ",", 
+     RowBox[{"MapToPoint", "[", 
+      RowBox[{"f", ",", "z"}], "]"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]"}], "Input",
+ InitializationCell->True],
+
+Cell[CellGroupData[{
+
+Cell["FP and Cauchy Matrx", "Subsection"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FPCauchyBasis", "[", 
+     RowBox[{
+      RowBox[{"s_", "?", "SignQ"}], ",", 
+      RowBox[{"d_", "?", "PointDomainQ"}], ",", "1", ",", 
+      RowBox[{"lf_", "?", "FunQ"}]}], "]"}], ":=", 
+    RowBox[{"Fun", "[", 
+     RowBox[{
+      RowBox[{"CauchyBasis", "[", 
+       RowBox[{"s", ",", "d", ",", "1", ",", 
+        RowBox[{"lf", "//", "Points"}]}], "]"}], ",", 
+      RowBox[{"lf", "//", "Domain"}]}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"CauchyMatrix", "[", 
+     RowBox[{
+      RowBox[{"s_", "?", "SignQ"}], ",", 
+      RowBox[{"lf_PFun", "?", "ScalarFunQ"}], ",", 
+      RowBox[{"lf2_", "?", "FunQ"}]}], "]"}], ":=", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"FiniteValues", "[", 
+       RowBox[{"FPCauchyBasis", "[", 
+        RowBox[{"s", ",", "lf", ",", "1", ",", "lf2"}], "]"}], "]"}], "}"}], "//",
+      "Transpose"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CauchyMatrix", "[", 
+    RowBox[{
+     RowBox[{"s_", "?", "SignQ"}], ",", "f_PFun"}], "]"}], ":=", 
+   RowBox[{"CauchyMatrix", "[", 
+    RowBox[{"s", ",", "f", ",", "f"}], "]"}]}], ";"}]}], "Input",
+ InitializationCell->True]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Finish", "Section"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"EndPackage", "[", "]"}], ";"}]}], "Input",
+ InitializationCell->True]
+}, Open  ]]
+},
+AutoGeneratedPackage->Automatic,
+WindowSize->{839, 815},
+WindowMargins->{{94, Automatic}, {Automatic, 13}},
+PrivateNotebookOptions->{"FileOutlineCache"->False},
+ShowSelection->True,
+TrackCellChangeTimes->False,
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 23, \
+2011)",
+StyleDefinitions->"Default.nb"
+]
+

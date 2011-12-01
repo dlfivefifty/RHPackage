@@ -1,0 +1,1400 @@
+Notebook[{
+Cell["\<\
+\[Copyright] Sheehan Olver, 2010, subject to BSD license.
+  \
+\>", "Text"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"PainleveII", "::", "usage"}], "=", 
+   "\"\<PainleveII[{s1,s2,s3},x]  computes Painleve II (hopefully) reliably \
+for x in (-\[Infinity],5) to about 8 digits accuracy\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"PainleveIID", "::", "usage"}], "=", 
+   "\"\<PainleveIID[{s1,s2,s3},x] computes the derivative of Painleve II \
+(hopefully) reliably for x in (-5,5) to about 10 digits accuracy\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ClearPainleveDatabase", "::", "usage"}], "=", 
+  "\"\<ClearPainleveDatabase[] clears precomputed information.\>\""}], "\
+\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Begin", "[", "\"\<`Private`\>\"", "]"}], ";"}]}], "Input",
+ InitializationCell->True],
+
+Cell[CellGroupData[{
+
+Cell["Small x", "Section",
+ InitializationCell->True],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"ClearPainleveDatabase", "[", "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", "}"}], ",", 
+     RowBox[{"Clear", "[", "M", "]"}]}], "]"}]}], ";"}]], "Input",
+ InitializationCell->True],
+
+Cell[TextData[{
+ "We construct the ",
+ StyleBox["n \[Dash] ",
+  FontSlant->"Italic"],
+ "1 \[Times] ",
+ StyleBox["n \[Dash] ",
+  FontSlant->"Italic"],
+ "1 matrices ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["M", "k"], TraditionalForm]]],
+ " using the built-in routine CauchyMatrix.  This is the most time consuming \
+part, hence we save the evaluations for use with other choices of x and \
+Stokes multipliers"
+}], "Text",
+ InitializationCell->True],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"M", "[", 
+    RowBox[{"n_", ",", "k_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"M", "[", 
+     RowBox[{"n", ",", "k"}], "]"}], "=", 
+    RowBox[{"CauchyMatrix", "[", 
+     RowBox[{
+      RowBox[{"+", "1"}], ",", 
+      RowBox[{"ZeroAtInfinityFun", "[", 
+       RowBox[{
+        RowBox[{"0", "&"}], ",", 
+        RowBox[{"Line", "[", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"\[Infinity]", " ", 
+            RowBox[{"Exp", "[", 
+             RowBox[{"I", " ", 
+              RowBox[{"\[Pi]", "/", "6"}]}], "]"}]}]}], "}"}], "]"}], ",", 
+        "n"}], "]"}], ",", 
+      RowBox[{"ZeroAtInfinityFun", "[", 
+       RowBox[{
+        RowBox[{"0", "&"}], ",", 
+        RowBox[{"Line", "[", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"\[Infinity]", " ", 
+            RowBox[{"Exp", "[", 
+             RowBox[{"I", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"(", 
+                  RowBox[{"k", "-", "1"}], ")"}], " ", 
+                 RowBox[{"\[Pi]", "/", "3"}]}], "+", " ", 
+                RowBox[{"\[Pi]", "/", "6"}]}], ")"}]}], "]"}]}]}], "}"}], 
+         "]"}], ",", "n"}], "]"}]}], "]"}]}]}], ";"}]], "Input",
+ InitializationCell->True],
+
+Cell[TextData[{
+ "Mat is the 6 (",
+ StyleBox["n \[Dash] ",
+  FontSlant->"Italic"],
+ "1) \[Times] 6 (",
+ StyleBox["n \[Dash] ",
+  FontSlant->"Italic"],
+ "1) matrix for the linear system "
+}], "Text",
+ InitializationCell->True],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"Mat", "[", 
+    RowBox[{"n_", ",", 
+     RowBox[{"{", 
+      RowBox[{"s1_", ",", "s2_", ",", "s3_"}], "}"}], ",", "x_"}], "]"}], ":=", 
+   RowBox[{"Join", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"RightJoin", "[", 
+       RowBox[{
+        RowBox[{"IdentityMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}]}], "]"}], "-", 
+      RowBox[{"s1", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"ZeroAtInfinityFun", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"Exp", "[", 
+              RowBox[{
+               RowBox[{"8", " ", 
+                RowBox[{"I", " ", "/", "3"}], " ", 
+                RowBox[{"#", "^", "3"}]}], "+", 
+               RowBox[{"2", " ", "I", " ", "x", " ", "#"}]}], "]"}], "/.", 
+             RowBox[{
+              RowBox[{"Underflow", "[", "]"}], "\[Rule]", "0"}]}], "&"}], ",", 
+           RowBox[{"Line", "[", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", 
+              RowBox[{"\[Infinity]", " ", 
+               RowBox[{"Exp", "[", 
+                RowBox[{"I", " ", 
+                 RowBox[{"\[Pi]", "/", "6"}]}], "]"}]}]}], "}"}], "]"}], ",", 
+           "n"}], "]"}], "//", "FiniteValues"}], ")"}], 
+       RowBox[{"RightJoin", "[", 
+        RowBox[{
+         RowBox[{"ZeroMatrix", "[", 
+          RowBox[{"n", "-", "1"}], "]"}], ",", 
+         RowBox[{"ZeroMatrix", "[", 
+          RowBox[{"n", "-", "1"}], "]"}], ",", 
+         RowBox[{"ZeroMatrix", "[", 
+          RowBox[{"n", "-", "1"}], "]"}], ",", 
+         RowBox[{"M", "[", 
+          RowBox[{"n", ",", "6"}], "]"}], ",", 
+         RowBox[{"M", "[", 
+          RowBox[{"n", ",", "4"}], "]"}], ",", 
+         RowBox[{"M", "[", 
+          RowBox[{"n", ",", "2"}], "]"}]}], "]"}]}]}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"RightJoin", "[", 
+       RowBox[{
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"IdentityMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}]}], "]"}], "-", 
+      RowBox[{"s2", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"ZeroAtInfinityFun", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"Exp", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"-", "8"}], " ", 
+                RowBox[{"I", " ", "/", "3"}], " ", 
+                RowBox[{"#", "^", "3"}]}], "-", 
+               RowBox[{"2", " ", "I", " ", "x", " ", "#"}]}], "]"}], "/.", 
+             RowBox[{
+              RowBox[{"Underflow", "[", "]"}], "\[Rule]", "0"}]}], "&"}], ",", 
+           RowBox[{"Line", "[", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", 
+              RowBox[{"\[Infinity]", " ", 
+               RowBox[{"Exp", "[", 
+                RowBox[{"I", " ", 
+                 RowBox[{"\[Pi]", "/", "2"}]}], "]"}]}]}], "}"}], "]"}], ",", 
+           "n"}], "]"}], "//", "FiniteValues"}], ")"}], 
+       RowBox[{"RightJoin", "[", 
+        RowBox[{
+         RowBox[{"M", "[", 
+          RowBox[{"n", ",", "2"}], "]"}], ",", 
+         RowBox[{"M", "[", 
+          RowBox[{"n", ",", "6"}], "]"}], ",", 
+         RowBox[{"M", "[", 
+          RowBox[{"n", ",", "4"}], "]"}], ",", 
+         RowBox[{"ZeroMatrix", "[", 
+          RowBox[{"n", "-", "1"}], "]"}], ",", 
+         RowBox[{"ZeroMatrix", "[", 
+          RowBox[{"n", "-", "1"}], "]"}], ",", 
+         RowBox[{"ZeroMatrix", "[", 
+          RowBox[{"n", "-", "1"}], "]"}]}], "]"}]}]}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"RightJoin", "[", 
+       RowBox[{
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"IdentityMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}]}], "]"}], "-", 
+      RowBox[{"s3", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"ZeroAtInfinityFun", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"Exp", "[", 
+              RowBox[{
+               RowBox[{"8", " ", 
+                RowBox[{"I", " ", "/", "3"}], " ", 
+                RowBox[{"#", "^", "3"}]}], "+", 
+               RowBox[{"2", " ", "I", " ", "x", " ", "#"}]}], "]"}], "/.", 
+             RowBox[{
+              RowBox[{"Underflow", "[", "]"}], "\[Rule]", "0"}]}], "&"}], ",", 
+           RowBox[{"Line", "[", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", 
+              RowBox[{"\[Infinity]", " ", 
+               RowBox[{"Exp", "[", 
+                RowBox[{"5", " ", "I", " ", 
+                 RowBox[{"\[Pi]", "/", "6"}]}], "]"}]}]}], "}"}], "]"}], ",", 
+           "n"}], "]"}], "//", "FiniteValues"}], ")"}], 
+       RowBox[{"RightJoin", "[", 
+        RowBox[{
+         RowBox[{"ZeroMatrix", "[", 
+          RowBox[{"n", "-", "1"}], "]"}], ",", 
+         RowBox[{"ZeroMatrix", "[", 
+          RowBox[{"n", "-", "1"}], "]"}], ",", 
+         RowBox[{"ZeroMatrix", "[", 
+          RowBox[{"n", "-", "1"}], "]"}], ",", 
+         RowBox[{"M", "[", 
+          RowBox[{"n", ",", "2"}], "]"}], ",", 
+         RowBox[{"M", "[", 
+          RowBox[{"n", ",", "6"}], "]"}], ",", 
+         RowBox[{"M", "[", 
+          RowBox[{"n", ",", "4"}], "]"}]}], "]"}]}]}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"RightJoin", "[", 
+       RowBox[{
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"IdentityMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}]}], "]"}], "+", 
+      RowBox[{"s1", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"ZeroAtInfinityFun", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"Exp", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"-", "8"}], " ", 
+                RowBox[{"I", " ", "/", "3"}], " ", 
+                RowBox[{"#", "^", "3"}]}], "-", 
+               RowBox[{"2", " ", "I", " ", "x", " ", "#"}]}], "]"}], "/.", 
+             RowBox[{
+              RowBox[{"Underflow", "[", "]"}], "\[Rule]", "0"}]}], "&"}], ",", 
+           RowBox[{"Line", "[", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", 
+              RowBox[{"\[Infinity]", " ", 
+               RowBox[{"Exp", "[", 
+                RowBox[{
+                 RowBox[{"-", "5"}], "I", " ", 
+                 RowBox[{"\[Pi]", "/", "6"}]}], "]"}]}]}], "}"}], "]"}], ",", 
+           "n"}], "]"}], "//", "FiniteValues"}], ")"}], 
+       RowBox[{"RightJoin", "[", 
+        RowBox[{
+         RowBox[{"M", "[", 
+          RowBox[{"n", ",", "4"}], "]"}], ",", 
+         RowBox[{"M", "[", 
+          RowBox[{"n", ",", "2"}], "]"}], ",", 
+         RowBox[{"M", "[", 
+          RowBox[{"n", ",", "6"}], "]"}], ",", 
+         RowBox[{"ZeroMatrix", "[", 
+          RowBox[{"n", "-", "1"}], "]"}], ",", 
+         RowBox[{"ZeroMatrix", "[", 
+          RowBox[{"n", "-", "1"}], "]"}], ",", 
+         RowBox[{"ZeroMatrix", "[", 
+          RowBox[{"n", "-", "1"}], "]"}]}], "]"}]}]}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"RightJoin", "[", 
+       RowBox[{
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"IdentityMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}]}], "]"}], "+", 
+      RowBox[{"s2", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"ZeroAtInfinityFun", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"Exp", "[", 
+              RowBox[{
+               RowBox[{"8", " ", 
+                RowBox[{"I", " ", "/", "3"}], " ", 
+                RowBox[{"#", "^", "3"}]}], "+", 
+               RowBox[{"2", " ", "I", " ", "x", " ", "#"}]}], "]"}], "/.", 
+             RowBox[{
+              RowBox[{"Underflow", "[", "]"}], "\[Rule]", "0"}]}], "&"}], ",", 
+           RowBox[{"Line", "[", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", 
+              RowBox[{"\[Infinity]", " ", 
+               RowBox[{"Exp", "[", 
+                RowBox[{
+                 RowBox[{"-", " ", "I"}], " ", 
+                 RowBox[{"\[Pi]", "/", "2"}]}], "]"}]}]}], "}"}], "]"}], ",", 
+           "n"}], "]"}], "//", "FiniteValues"}], ")"}], 
+       RowBox[{"RightJoin", "[", 
+        RowBox[{
+         RowBox[{"ZeroMatrix", "[", 
+          RowBox[{"n", "-", "1"}], "]"}], ",", 
+         RowBox[{"ZeroMatrix", "[", 
+          RowBox[{"n", "-", "1"}], "]"}], ",", 
+         RowBox[{"ZeroMatrix", "[", 
+          RowBox[{"n", "-", "1"}], "]"}], ",", 
+         RowBox[{"M", "[", 
+          RowBox[{"n", ",", "4"}], "]"}], ",", 
+         RowBox[{"M", "[", 
+          RowBox[{"n", ",", "2"}], "]"}], ",", 
+         RowBox[{"M", "[", 
+          RowBox[{"n", ",", "6"}], "]"}]}], "]"}]}]}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"RightJoin", "[", 
+       RowBox[{
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"ZeroMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], ",", 
+        RowBox[{"IdentityMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}]}], "]"}], "+", 
+      RowBox[{"s3", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"ZeroAtInfinityFun", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"Exp", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"-", "8"}], " ", 
+                RowBox[{"I", " ", "/", "3"}], " ", 
+                RowBox[{"#", "^", "3"}]}], "-", 
+               RowBox[{"2", " ", "I", " ", "x", " ", "#"}]}], "]"}], "/.", 
+             RowBox[{
+              RowBox[{"Underflow", "[", "]"}], "\[Rule]", "0"}]}], "&"}], ",", 
+           RowBox[{"Line", "[", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", 
+              RowBox[{"\[Infinity]", " ", 
+               RowBox[{"Exp", "[", 
+                RowBox[{
+                 RowBox[{"-", "I"}], " ", 
+                 RowBox[{"\[Pi]", "/", "6"}]}], "]"}]}]}], "}"}], "]"}], ",", 
+           "n"}], "]"}], "//", "FiniteValues"}], ")"}], 
+       RowBox[{"RightJoin", "[", 
+        RowBox[{
+         RowBox[{"M", "[", 
+          RowBox[{"n", ",", "6"}], "]"}], ",", 
+         RowBox[{"M", "[", 
+          RowBox[{"n", ",", "4"}], "]"}], ",", 
+         RowBox[{"M", "[", 
+          RowBox[{"n", ",", "2"}], "]"}], ",", 
+         RowBox[{"ZeroMatrix", "[", 
+          RowBox[{"n", "-", "1"}], "]"}], ",", 
+         RowBox[{"ZeroMatrix", "[", 
+          RowBox[{"n", "-", "1"}], "]"}], ",", 
+         RowBox[{"ZeroMatrix", "[", 
+          RowBox[{"n", "-", "1"}], "]"}]}], "]"}]}]}]}], 
+    "\[IndentingNewLine]", "]"}]}], ";"}]], "Input",
+ InitializationCell->True],
+
+Cell["Vec is the right-hand side of the linear system", "Text",
+ InitializationCell->True],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"Vec", "[", 
+    RowBox[{"n_", ",", 
+     RowBox[{"{", 
+      RowBox[{"s1_", ",", "s2_", ",", "s3_"}], "}"}], ",", "x_"}], "]"}], ":=", 
+   RowBox[{"Join", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"ZeroVector", "[", 
+      RowBox[{"n", "-", "1"}], "]"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"s2", " ", 
+       RowBox[{"ZeroAtInfinityFun", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"Exp", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"-", "8"}], " ", 
+              RowBox[{"I", " ", "/", "3"}], " ", 
+              RowBox[{"#", "^", "3"}]}], "-", 
+             RowBox[{"2", " ", "I", " ", "x", " ", "#"}]}], "]"}], "/.", 
+           RowBox[{
+            RowBox[{"Underflow", "[", "]"}], "\[Rule]", "0"}]}], "&"}], ",", 
+         RowBox[{"Line", "[", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", 
+            RowBox[{"\[Infinity]", " ", 
+             RowBox[{"Exp", "[", 
+              RowBox[{"I", " ", 
+               RowBox[{"\[Pi]", "/", "2"}]}], "]"}]}]}], "}"}], "]"}], ",", 
+         "n"}], "]"}]}], "//", "FiniteValues"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"ZeroVector", "[", 
+      RowBox[{"n", "-", "1"}], "]"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"-", "s1"}], " ", 
+       RowBox[{"ZeroAtInfinityFun", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"Exp", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"-", "8"}], " ", 
+              RowBox[{"I", " ", "/", "3"}], " ", 
+              RowBox[{"#", "^", "3"}]}], "-", 
+             RowBox[{"2", " ", "I", " ", "x", " ", "#"}]}], "]"}], "/.", 
+           RowBox[{
+            RowBox[{"Underflow", "[", "]"}], "\[Rule]", "0"}]}], "&"}], ",", 
+         RowBox[{"Line", "[", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", 
+            RowBox[{"\[Infinity]", " ", 
+             RowBox[{"Exp", "[", 
+              RowBox[{
+               RowBox[{"-", "5"}], " ", "I", " ", 
+               RowBox[{"\[Pi]", "/", "6"}]}], "]"}]}]}], "}"}], "]"}], ",", 
+         "n"}], "]"}]}], "//", "FiniteValues"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"ZeroVector", "[", 
+      RowBox[{"n", "-", "1"}], "]"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"-", "s3"}], "  ", 
+       RowBox[{"ZeroAtInfinityFun", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"Exp", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"-", "8"}], " ", 
+              RowBox[{"I", " ", "/", "3"}], " ", 
+              RowBox[{"#", "^", "3"}]}], "-", 
+             RowBox[{"2", " ", "I", " ", "x", " ", "#"}]}], "]"}], "/.", 
+           RowBox[{
+            RowBox[{"Underflow", "[", "]"}], "\[Rule]", "0"}]}], "&"}], ",", 
+         RowBox[{"Line", "[", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", 
+            RowBox[{"\[Infinity]", " ", 
+             RowBox[{"Exp", "[", 
+              RowBox[{
+               RowBox[{"-", "I"}], " ", 
+               RowBox[{"\[Pi]", "/", "6"}]}], "]"}]}]}], "}"}], "]"}], ",", 
+         "n"}], "]"}]}], "//", "FiniteValues"}]}], "\[IndentingNewLine]", 
+    "]"}]}], ";"}]], "Input",
+ InitializationCell->True],
+
+Cell["\<\
+We solve the linear system, and then reform the solution as Fun's along each \
+of the constituent curves\
+\>", "Text",
+ InitializationCell->True],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"sol", "[", 
+    RowBox[{"n_", ",", "s_", ",", "x_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"FromValueList", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"ZeroAtInfinityFun", "[", 
+         RowBox[{
+          RowBox[{"0", "&"}], ",", 
+          RowBox[{"Line", "[", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", 
+             RowBox[{"\[Infinity]", " ", 
+              RowBox[{"Exp", "[", 
+               RowBox[{"I", " ", 
+                RowBox[{"\[Pi]", "/", "6"}]}], "]"}]}]}], "}"}], "]"}], ",", 
+          "n"}], "]"}], ",", 
+        RowBox[{"ZeroAtInfinityFun", "[", 
+         RowBox[{
+          RowBox[{"0", "&"}], ",", 
+          RowBox[{"Line", "[", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", 
+             RowBox[{"\[Infinity]", " ", 
+              RowBox[{"Exp", "[", 
+               RowBox[{"5", "I", " ", 
+                RowBox[{"\[Pi]", "/", "6"}]}], "]"}]}]}], "}"}], "]"}], ",", 
+          "n"}], "]"}], ",", 
+        RowBox[{"ZeroAtInfinityFun", "[", 
+         RowBox[{
+          RowBox[{"0", "&"}], ",", 
+          RowBox[{"Line", "[", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", 
+             RowBox[{"\[Infinity]", " ", 
+              RowBox[{"Exp", "[", 
+               RowBox[{
+                RowBox[{"-", "I"}], " ", 
+                RowBox[{"\[Pi]", "/", "2"}]}], "]"}]}]}], "}"}], "]"}], ",", 
+          "n"}], "]"}], ",", 
+        RowBox[{"ZeroAtInfinityFun", "[", 
+         RowBox[{
+          RowBox[{"0", "&"}], ",", 
+          RowBox[{"Line", "[", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", 
+             RowBox[{"\[Infinity]", " ", 
+              RowBox[{"Exp", "[", 
+               RowBox[{"I", " ", 
+                RowBox[{"\[Pi]", "/", "2"}]}], "]"}]}]}], "}"}], "]"}], ",", 
+          "n"}], "]"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"ZeroAtInfinityFun", "[", 
+         RowBox[{
+          RowBox[{"0", "&"}], ",", 
+          RowBox[{"Line", "[", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", 
+             RowBox[{"\[Infinity]", " ", 
+              RowBox[{"Exp", "[", 
+               RowBox[{
+                RowBox[{"-", "5"}], " ", "I", " ", 
+                RowBox[{"\[Pi]", "/", "6"}]}], "]"}]}]}], "}"}], "]"}], ",", 
+          "n"}], "]"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"ZeroAtInfinityFun", "[", 
+         RowBox[{
+          RowBox[{"0", "&"}], ",", 
+          RowBox[{"Line", "[", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", 
+             RowBox[{"\[Infinity]", " ", 
+              RowBox[{"Exp", "[", 
+               RowBox[{
+                RowBox[{"-", "I"}], " ", 
+                RowBox[{"\[Pi]", "/", "6"}]}], "]"}]}]}], "}"}], "]"}], ",", 
+          "n"}], "]"}]}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"LinearSolve", "[", 
+       RowBox[{
+        RowBox[{"Chop", "[", 
+         RowBox[{
+          RowBox[{"Mat", "[", 
+           RowBox[{"n", ",", "s", ",", "x"}], "]"}], ",", "$MachineEpsilon"}],
+          "]"}], ",", 
+        RowBox[{"Chop", "[", 
+         RowBox[{
+          RowBox[{"Vec", "[", 
+           RowBox[{"n", ",", "s", ",", "x"}], "]"}], ",", "$MachineEpsilon"}],
+          "]"}]}], "]"}]}], "\[IndentingNewLine]", "]"}], "//", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"#", "\[LeftDoubleBracket]", 
+        RowBox[{";;", "3"}], "\[RightDoubleBracket]"}], ",", 
+       RowBox[{"#", "\[LeftDoubleBracket]", 
+        RowBox[{"4", ";;"}], "\[RightDoubleBracket]"}]}], "}"}], "&"}]}]}], 
+  ";"}]], "Input",
+ InitializationCell->True],
+
+Cell["\<\
+To get the actual value of the solution to Painleve II, we need to integrate \
+over the domain.\
+\>", "Text",
+ InitializationCell->True],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PainleveIISmall", "[", 
+   RowBox[{"n_", ",", "s_", ",", "x_"}], "]"}], ":=", "\[IndentingNewLine]", 
+  RowBox[{"Quiet", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", 
+       RowBox[{
+        RowBox[{"sol", "[", 
+         RowBox[{"n", ",", "s", ",", "x"}], "]"}], "\[LeftDoubleBracket]", 
+        "2", "\[RightDoubleBracket]"}]}], "/", 
+      RowBox[{"(", " ", 
+       RowBox[{"\[Pi]", "\[NonBreakingSpace]", "I"}], ")"}]}], "//", 
+     "DomainIntegrate"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"General", "::", "\"\<unfl\>\""}]}], "]"}]}]], "Input",
+ InitializationCell->True],
+
+Cell["\<\
+The right-hand side changes if we want to compute the derivative.\
+\>", "Text",
+ InitializationCell->True],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"VecD", "[", 
+    RowBox[{"n_", ",", 
+     RowBox[{"{", 
+      RowBox[{"s1_", ",", "s2_", ",", "s3_"}], "}"}], ",", "x_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", "sl", "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"sl", "=", 
+       RowBox[{"MatrixMap", "[", 
+        RowBox[{"FiniteValues", ",", 
+         RowBox[{"sol", "[", 
+          RowBox[{"n", ",", 
+           RowBox[{"{", 
+            RowBox[{"s1", ",", "s2", ",", "s3"}], "}"}], ",", "x"}], "]"}]}], 
+        "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Join", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"2", " ", "I", " ", "s1", " ", 
+         RowBox[{"FiniteValues", "[", " ", 
+          RowBox[{"ZeroAtInfinityFun", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"#", " ", 
+               RowBox[{"Exp", "[", 
+                RowBox[{
+                 RowBox[{"8", " ", 
+                  RowBox[{"I", " ", "/", "3"}], " ", 
+                  RowBox[{"#", "^", "3"}]}], "+", 
+                 RowBox[{"2", " ", "I", " ", "x", " ", "#"}]}], "]"}]}], "/.", 
+              RowBox[{
+               RowBox[{"Underflow", "[", "]"}], "\[Rule]", "0"}]}], "&"}], 
+            ",", 
+            RowBox[{"Line", "[", 
+             RowBox[{"{", 
+              RowBox[{"0", ",", 
+               RowBox[{"\[Infinity]", " ", 
+                RowBox[{"Exp", "[", 
+                 RowBox[{"I", " ", 
+                  RowBox[{"\[Pi]", "/", "6"}]}], "]"}]}]}], "}"}], "]"}], ",",
+             "n"}], "]"}], "]"}], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"M", "[", 
+             RowBox[{"n", ",", "6"}], "]"}], ".", 
+            RowBox[{"sl", "\[LeftDoubleBracket]", 
+             RowBox[{"2", ",", "1"}], "\[RightDoubleBracket]"}]}], "+", 
+           RowBox[{
+            RowBox[{"M", "[", 
+             RowBox[{"n", ",", "4"}], "]"}], ".", 
+            RowBox[{"sl", "\[LeftDoubleBracket]", 
+             RowBox[{"2", ",", "2"}], "\[RightDoubleBracket]"}]}], "+", 
+           RowBox[{
+            RowBox[{"M", "[", 
+             RowBox[{"n", ",", "2"}], "]"}], ".", 
+            RowBox[{"sl", "\[LeftDoubleBracket]", 
+             RowBox[{"2", ",", "3"}], "\[RightDoubleBracket]"}]}]}], ")"}]}], 
+        ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"-", "2"}], " ", "I", " ", "s2", " ", 
+         RowBox[{"FiniteValues", "[", 
+          RowBox[{"ZeroAtInfinityFun", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"#", 
+               RowBox[{"Exp", "[", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"-", "8"}], " ", 
+                  RowBox[{"I", " ", "/", "3"}], " ", 
+                  RowBox[{"#", "^", "3"}]}], "-", 
+                 RowBox[{"2", " ", "I", " ", "x", " ", "#"}]}], "]"}]}], "/.", 
+              RowBox[{
+               RowBox[{"Underflow", "[", "]"}], "\[Rule]", "0"}]}], "&"}], 
+            ",", 
+            RowBox[{"Line", "[", 
+             RowBox[{"{", 
+              RowBox[{"0", ",", 
+               RowBox[{"\[Infinity]", " ", 
+                RowBox[{"Exp", "[", 
+                 RowBox[{"I", " ", 
+                  RowBox[{"\[Pi]", "/", "2"}]}], "]"}]}]}], "}"}], "]"}], ",",
+             "n"}], "]"}], "]"}], " ", 
+         RowBox[{"(", 
+          RowBox[{"1", "+", 
+           RowBox[{
+            RowBox[{"M", "[", 
+             RowBox[{"n", ",", "2"}], "]"}], ".", 
+            RowBox[{"sl", "\[LeftDoubleBracket]", 
+             RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}]}], "+", 
+           RowBox[{
+            RowBox[{"M", "[", 
+             RowBox[{"n", ",", "6"}], "]"}], ".", 
+            RowBox[{"sl", "\[LeftDoubleBracket]", 
+             RowBox[{"1", ",", "2"}], "\[RightDoubleBracket]"}]}], "+", 
+           RowBox[{
+            RowBox[{"M", "[", 
+             RowBox[{"n", ",", "4"}], "]"}], ".", 
+            RowBox[{"sl", "\[LeftDoubleBracket]", 
+             RowBox[{"1", ",", "3"}], "\[RightDoubleBracket]"}]}]}], ")"}]}], 
+        ",", "\[IndentingNewLine]", 
+        RowBox[{"2", " ", "I", " ", "s3", " ", 
+         RowBox[{"FiniteValues", "[", " ", 
+          RowBox[{"ZeroAtInfinityFun", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"#", " ", 
+               RowBox[{"Exp", "[", 
+                RowBox[{
+                 RowBox[{"8", " ", 
+                  RowBox[{"I", " ", "/", "3"}], " ", 
+                  RowBox[{"#", "^", "3"}]}], "+", 
+                 RowBox[{"2", " ", "I", " ", "x", " ", "#"}]}], "]"}]}], "/.", 
+              RowBox[{
+               RowBox[{"Underflow", "[", "]"}], "\[Rule]", "0"}]}], "&"}], 
+            ",", 
+            RowBox[{"Line", "[", 
+             RowBox[{"{", 
+              RowBox[{"0", ",", 
+               RowBox[{"\[Infinity]", " ", 
+                RowBox[{"Exp", "[", 
+                 RowBox[{"I", " ", "5", " ", 
+                  RowBox[{"\[Pi]", "/", "6"}]}], "]"}]}]}], "}"}], "]"}], ",",
+             "n"}], "]"}], "]"}], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"M", "[", 
+             RowBox[{"n", ",", "2"}], "]"}], ".", 
+            RowBox[{"sl", "\[LeftDoubleBracket]", 
+             RowBox[{"2", ",", "1"}], "\[RightDoubleBracket]"}]}], "+", 
+           RowBox[{
+            RowBox[{"M", "[", 
+             RowBox[{"n", ",", "6"}], "]"}], ".", 
+            RowBox[{"sl", "\[LeftDoubleBracket]", 
+             RowBox[{"2", ",", "2"}], "\[RightDoubleBracket]"}]}], "+", 
+           RowBox[{
+            RowBox[{"M", "[", 
+             RowBox[{"n", ",", "4"}], "]"}], ".", 
+            RowBox[{"sl", "\[LeftDoubleBracket]", 
+             RowBox[{"2", ",", "3"}], "\[RightDoubleBracket]"}]}]}], ")"}]}], 
+        ",", "\[IndentingNewLine]", 
+        RowBox[{"2", " ", "I", " ", "s1", " ", 
+         RowBox[{"FiniteValues", "[", 
+          RowBox[{"ZeroAtInfinityFun", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"#", 
+               RowBox[{"Exp", "[", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"-", "8"}], " ", 
+                  RowBox[{"I", " ", "/", "3"}], " ", 
+                  RowBox[{"#", "^", "3"}]}], "-", 
+                 RowBox[{"2", " ", "I", " ", "x", " ", "#"}]}], "]"}]}], "/.", 
+              RowBox[{
+               RowBox[{"Underflow", "[", "]"}], "\[Rule]", "0"}]}], "&"}], 
+            ",", 
+            RowBox[{"Line", "[", 
+             RowBox[{"{", 
+              RowBox[{"0", ",", 
+               RowBox[{"\[Infinity]", " ", 
+                RowBox[{"Exp", "[", 
+                 RowBox[{
+                  RowBox[{"-", "I"}], " ", "5", " ", 
+                  RowBox[{"\[Pi]", "/", "6"}]}], "]"}]}]}], "}"}], "]"}], ",",
+             "n"}], "]"}], "]"}], " ", 
+         RowBox[{"(", 
+          RowBox[{"1", "+", 
+           RowBox[{
+            RowBox[{"M", "[", 
+             RowBox[{"n", ",", "4"}], "]"}], ".", 
+            RowBox[{"sl", "\[LeftDoubleBracket]", 
+             RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}]}], "+", 
+           RowBox[{
+            RowBox[{"M", "[", 
+             RowBox[{"n", ",", "2"}], "]"}], ".", 
+            RowBox[{"sl", "\[LeftDoubleBracket]", 
+             RowBox[{"1", ",", "2"}], "\[RightDoubleBracket]"}]}], "+", 
+           RowBox[{
+            RowBox[{"M", "[", 
+             RowBox[{"n", ",", "6"}], "]"}], ".", 
+            RowBox[{"sl", "\[LeftDoubleBracket]", 
+             RowBox[{"1", ",", "3"}], "\[RightDoubleBracket]"}]}]}], ")"}]}], 
+        ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"-", "2"}], " ", "I", " ", "s2", " ", 
+         RowBox[{"FiniteValues", "[", " ", 
+          RowBox[{"ZeroAtInfinityFun", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"#", " ", 
+               RowBox[{"Exp", "[", 
+                RowBox[{
+                 RowBox[{"8", " ", 
+                  RowBox[{"I", " ", "/", "3"}], " ", 
+                  RowBox[{"#", "^", "3"}]}], "+", 
+                 RowBox[{"2", " ", "I", " ", "x", " ", "#"}]}], "]"}]}], "/.", 
+              RowBox[{
+               RowBox[{"Underflow", "[", "]"}], "\[Rule]", "0"}]}], "&"}], 
+            ",", 
+            RowBox[{"Line", "[", 
+             RowBox[{"{", 
+              RowBox[{"0", ",", 
+               RowBox[{"\[Infinity]", " ", 
+                RowBox[{"Exp", "[", 
+                 RowBox[{
+                  RowBox[{"-", "I"}], "  ", 
+                  RowBox[{"\[Pi]", "/", "2"}]}], "]"}]}]}], "}"}], "]"}], ",",
+             "n"}], "]"}], "]"}], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"M", "[", 
+             RowBox[{"n", ",", "4"}], "]"}], ".", 
+            RowBox[{"sl", "\[LeftDoubleBracket]", 
+             RowBox[{"2", ",", "1"}], "\[RightDoubleBracket]"}]}], "+", 
+           RowBox[{
+            RowBox[{"M", "[", 
+             RowBox[{"n", ",", "2"}], "]"}], ".", 
+            RowBox[{"sl", "\[LeftDoubleBracket]", 
+             RowBox[{"2", ",", "2"}], "\[RightDoubleBracket]"}]}], "+", 
+           RowBox[{
+            RowBox[{"M", "[", 
+             RowBox[{"n", ",", "6"}], "]"}], ".", 
+            RowBox[{"sl", "\[LeftDoubleBracket]", 
+             RowBox[{"2", ",", "3"}], "\[RightDoubleBracket]"}]}]}], ")"}]}], 
+        ",", "\[IndentingNewLine]", 
+        RowBox[{"2", " ", "I", " ", "s3", " ", 
+         RowBox[{"FiniteValues", "[", 
+          RowBox[{"ZeroAtInfinityFun", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"#", 
+               RowBox[{"Exp", "[", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"-", "8"}], " ", 
+                  RowBox[{"I", " ", "/", "3"}], " ", 
+                  RowBox[{"#", "^", "3"}]}], "-", 
+                 RowBox[{"2", " ", "I", " ", "x", " ", "#"}]}], "]"}]}], "/.", 
+              RowBox[{
+               RowBox[{"Underflow", "[", "]"}], "\[Rule]", "0"}]}], "&"}], 
+            ",", 
+            RowBox[{"Line", "[", 
+             RowBox[{"{", 
+              RowBox[{"0", ",", 
+               RowBox[{"\[Infinity]", " ", 
+                RowBox[{"Exp", "[", 
+                 RowBox[{
+                  RowBox[{"-", "I"}], " ", 
+                  RowBox[{"\[Pi]", "/", "6"}]}], "]"}]}]}], "}"}], "]"}], ",",
+             "n"}], "]"}], "]"}], " ", 
+         RowBox[{"(", 
+          RowBox[{"1", "+", 
+           RowBox[{
+            RowBox[{"M", "[", 
+             RowBox[{"n", ",", "6"}], "]"}], ".", 
+            RowBox[{"sl", "\[LeftDoubleBracket]", 
+             RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}]}], "+", 
+           RowBox[{
+            RowBox[{"M", "[", 
+             RowBox[{"n", ",", "4"}], "]"}], ".", 
+            RowBox[{"sl", "\[LeftDoubleBracket]", 
+             RowBox[{"1", ",", "2"}], "\[RightDoubleBracket]"}]}], "+", 
+           RowBox[{
+            RowBox[{"M", "[", 
+             RowBox[{"n", ",", "2"}], "]"}], ".", 
+            RowBox[{"sl", "\[LeftDoubleBracket]", 
+             RowBox[{"1", ",", "3"}], "\[RightDoubleBracket]"}]}]}], 
+          ")"}]}]}], "\[IndentingNewLine]", "]"}]}]}], "]"}]}], 
+  ";"}]], "Input",
+ InitializationCell->True],
+
+Cell["\<\
+This constructs the solution to the derivative RH problem as a list of Funs\
+\>", "Text",
+ InitializationCell->True],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"solD", "[", 
+    RowBox[{"n_", ",", "s_", ",", "x_"}], "]"}], ":=", "\[IndentingNewLine]", 
+   
+   RowBox[{
+    RowBox[{"FromValueList", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"ZeroAtInfinityFun", "[", 
+         RowBox[{
+          RowBox[{"0", "&"}], ",", 
+          RowBox[{"Line", "[", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", 
+             RowBox[{"\[Infinity]", " ", 
+              RowBox[{"Exp", "[", 
+               RowBox[{"I", " ", 
+                RowBox[{"\[Pi]", "/", "6"}]}], "]"}]}]}], "}"}], "]"}], ",", 
+          "n"}], "]"}], ",", 
+        RowBox[{"ZeroAtInfinityFun", "[", 
+         RowBox[{
+          RowBox[{"0", "&"}], ",", 
+          RowBox[{"Line", "[", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", 
+             RowBox[{"\[Infinity]", " ", 
+              RowBox[{"Exp", "[", 
+               RowBox[{"5", "I", " ", 
+                RowBox[{"\[Pi]", "/", "6"}]}], "]"}]}]}], "}"}], "]"}], ",", 
+          "n"}], "]"}], ",", 
+        RowBox[{"ZeroAtInfinityFun", "[", 
+         RowBox[{
+          RowBox[{"0", "&"}], ",", 
+          RowBox[{"Line", "[", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", 
+             RowBox[{"\[Infinity]", " ", 
+              RowBox[{"Exp", "[", 
+               RowBox[{
+                RowBox[{"-", "I"}], " ", 
+                RowBox[{"\[Pi]", "/", "2"}]}], "]"}]}]}], "}"}], "]"}], ",", 
+          "n"}], "]"}], ",", 
+        RowBox[{"ZeroAtInfinityFun", "[", 
+         RowBox[{
+          RowBox[{"0", "&"}], ",", 
+          RowBox[{"Line", "[", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", 
+             RowBox[{"\[Infinity]", " ", 
+              RowBox[{"Exp", "[", 
+               RowBox[{"I", " ", 
+                RowBox[{"\[Pi]", "/", "2"}]}], "]"}]}]}], "}"}], "]"}], ",", 
+          "n"}], "]"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"ZeroAtInfinityFun", "[", 
+         RowBox[{
+          RowBox[{"0", "&"}], ",", 
+          RowBox[{"Line", "[", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", 
+             RowBox[{"\[Infinity]", " ", 
+              RowBox[{"Exp", "[", 
+               RowBox[{
+                RowBox[{"-", "5"}], " ", "I", " ", 
+                RowBox[{"\[Pi]", "/", "6"}]}], "]"}]}]}], "}"}], "]"}], ",", 
+          "n"}], "]"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"ZeroAtInfinityFun", "[", 
+         RowBox[{
+          RowBox[{"0", "&"}], ",", 
+          RowBox[{"Line", "[", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", 
+             RowBox[{"\[Infinity]", " ", 
+              RowBox[{"Exp", "[", 
+               RowBox[{
+                RowBox[{"-", "I"}], " ", 
+                RowBox[{"\[Pi]", "/", "6"}]}], "]"}]}]}], "}"}], "]"}], ",", 
+          "n"}], "]"}]}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"LinearSolve", "[", 
+       RowBox[{
+        RowBox[{"Chop", "[", 
+         RowBox[{
+          RowBox[{"Mat", "[", 
+           RowBox[{"n", ",", "s", ",", "x"}], "]"}], ",", "$MachineEpsilon"}],
+          "]"}], ",", 
+        RowBox[{"Chop", "[", 
+         RowBox[{
+          RowBox[{"VecD", "[", 
+           RowBox[{"n", ",", "s", ",", "x"}], "]"}], ",", "$MachineEpsilon"}],
+          "]"}]}], "]"}]}], "\[IndentingNewLine]", "]"}], "//", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"#", "\[LeftDoubleBracket]", 
+        RowBox[{";;", "3"}], "\[RightDoubleBracket]"}], ",", 
+       RowBox[{"#", "\[LeftDoubleBracket]", 
+        RowBox[{"4", ";;"}], "\[RightDoubleBracket]"}]}], "}"}], "&"}]}]}], 
+  ";"}]], "Input",
+ InitializationCell->True],
+
+Cell["\<\
+This is the function that returns the derivative of Painleve II\
+\>", "Text",
+ InitializationCell->True],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"PainleveIIDSmall", "[", 
+    RowBox[{"n_", ",", "s_", ",", "x_"}], "]"}], ":=", 
+   RowBox[{"Quiet", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"-", 
+        RowBox[{
+         RowBox[{"solD", "[", 
+          RowBox[{"n", ",", "s", ",", "x"}], "]"}], "\[LeftDoubleBracket]", 
+         "2", "\[RightDoubleBracket]"}]}], "/", 
+       RowBox[{"(", " ", 
+        RowBox[{"\[Pi]", "\[NonBreakingSpace]", "I"}], ")"}]}], "//", 
+      "DomainIntegrate"}], ",", 
+     RowBox[{"General", "::", "\"\<unfl\>\""}]}], "]"}]}], ";"}]], "Input",
+ InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Choose routine", "Section",
+ InitializationCell->True],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"ClearPainleveDatabase", "[", "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", "}"}], ",", 
+     RowBox[{
+      RowBox[{"Clear", "[", "M", "]"}], ";", " ", 
+      RowBox[{
+       RowBox[{"M", "[", 
+        RowBox[{"n_", ",", "k_"}], "]"}], ":=", 
+       RowBox[{
+        RowBox[{"M", "[", 
+         RowBox[{"n", ",", "k"}], "]"}], "=", 
+        RowBox[{"CauchyMatrix", "[", 
+         RowBox[{
+          RowBox[{"+", "1"}], ",", 
+          RowBox[{"ZeroAtInfinityFun", "[", 
+           RowBox[{
+            RowBox[{"0", "&"}], ",", 
+            RowBox[{"Line", "[", 
+             RowBox[{"{", 
+              RowBox[{"0", ",", 
+               RowBox[{"\[Infinity]", " ", 
+                RowBox[{"Exp", "[", 
+                 RowBox[{"I", " ", 
+                  RowBox[{"\[Pi]", "/", "6"}]}], "]"}]}]}], "}"}], "]"}], ",",
+             "n"}], "]"}], ",", 
+          RowBox[{"ZeroAtInfinityFun", "[", 
+           RowBox[{
+            RowBox[{"0", "&"}], ",", 
+            RowBox[{"Line", "[", 
+             RowBox[{"{", 
+              RowBox[{"0", ",", 
+               RowBox[{"\[Infinity]", " ", 
+                RowBox[{"Exp", "[", 
+                 RowBox[{"I", 
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{"k", "-", "1"}], ")"}], " ", 
+                    RowBox[{"\[Pi]", "/", "3"}]}], "+", " ", 
+                    RowBox[{"\[Pi]", "/", "6"}]}], ")"}]}], "]"}]}]}], "}"}], 
+             "]"}], ",", "n"}], "]"}]}], "]"}]}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+       "apply", " ", "all", " ", "registered", " ", "clearing", " ", 
+        "functions"}], " ", "*)"}], "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"#", "[", "]"}], " ", "&"}], " ", "/@", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"DownValues", "[", "ClearDatabase", "]"}], "/.", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"t_", "\[RuleDelayed]", "_"}], ")"}], "\[RuleDelayed]", 
+           "t"}]}], "//", "ReleaseHold"}], ")"}]}], ";"}]}], 
+    "\[IndentingNewLine]", "]"}]}], ";"}]], "Input",
+ InitializationCell->True],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"PainleveII", "[", 
+    RowBox[{
+     RowBox[{"sin_", "?", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+           "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], " ", 
+           RowBox[{
+           "#", "\[LeftDoubleBracket]", "3", "\[RightDoubleBracket]"}]}], 
+          ")"}], "~", "NEqual", "~", "1"}], "&"}], ")"}]}], ",", 
+     RowBox[{"x_", "?", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"NZeroQ", "[", 
+          RowBox[{"Im", "[", "#", "]"}], "]"}], "&&", 
+         RowBox[{
+          RowBox[{"Re", "[", "#", "]"}], "<=", 
+          RowBox[{"-", "8.5"}]}]}], "&"}], ")"}]}]}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"PainleveIINegative", "[", "\"\<HMNeg\>\"", "]"}], "[", 
+    RowBox[{"sin", ",", "x"}], "]"}]}], " ", ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"PainleveII", "[", 
+     RowBox[{
+      RowBox[{"sin_", "?", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+            "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], " ", 
+            
+            RowBox[{
+            "#", "\[LeftDoubleBracket]", "3", "\[RightDoubleBracket]"}]}], 
+           ")"}], "~", "NEqual", "~", "1"}], "&"}], ")"}]}], ",", 
+      RowBox[{"x_", "?", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"NZeroQ", "[", 
+           RowBox[{"Im", "[", "#", "]"}], "]"}], "&&", 
+          RowBox[{
+           RowBox[{"Re", "[", "#", "]"}], "<=", 
+           RowBox[{"-", "2"}]}]}], "&"}], ")"}]}]}], "]"}], ":=", 
+    RowBox[{
+     RowBox[{"PainleveIINegative", "[", "\"\<HMMed\>\"", "]"}], "[", 
+     RowBox[{"sin", ",", "x"}], "]"}]}], " ", ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"PainleveII", "[", 
+     RowBox[{"s_", ",", 
+      RowBox[{"x_", "?", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"NZeroQ", "[", 
+           RowBox[{"Im", "[", "#", "]"}], "]"}], "&&", 
+          RowBox[{
+           RowBox[{"Re", "[", "#", "]"}], "<=", 
+           RowBox[{"-", "5"}]}]}], "&"}], ")"}]}], ",", 
+      RowBox[{"opts", ":", 
+       RowBox[{"OptionsPattern", "[", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"InterpolationPrecision", "\[Rule]", 
+           RowBox[{"10", "^", 
+            RowBox[{"-", "7"}]}]}], ",", 
+          RowBox[{"Contour", "\[Rule]", "3"}]}], "}"}], "]"}]}]}], "]"}], ":=", 
+    RowBox[{"With", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"c", "=", 
+        RowBox[{"OptionValue", "[", "Contour", "]"}]}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"With", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"fopts", " ", "=", 
+          RowBox[{"Sequence", "@@", " ", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"List", "[", "opts", "]"}], "\[NotEqual]", " ", 
+              RowBox[{"List", "[", "]"}]}], ",", 
+             RowBox[{"FilterRules", "[", 
+              RowBox[{
+               RowBox[{"opts", "//", "List"}], ",", 
+               RowBox[{
+                RowBox[{"PainleveIINegative", "[", "c", "]"}], "//", 
+                "Options"}]}], "]"}], ",", 
+             RowBox[{"{", "}"}]}], "]"}]}]}], "}"}], ",", 
+        RowBox[{
+         RowBox[{"PainleveIINegative", "[", "c", "]"}], "[", 
+         RowBox[{"s", ",", "x", ",", "fopts"}], "]"}]}], " ", "]"}]}], 
+     "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"PainleveII", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"s1_", ",", 
+        RowBox[{"_", "?", "NZeroQ"}], ",", "s3_"}], "}"}], ",", 
+      RowBox[{"x_", "?", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"NZeroQ", "[", 
+           RowBox[{"Im", "[", "#", "]"}], "]"}], "&&", 
+          RowBox[{
+           RowBox[{"Re", "[", "#", "]"}], "\[GreaterEqual]", "5"}]}], "&"}], 
+        ")"}]}]}], "]"}], ":=", 
+    RowBox[{
+     RowBox[{"PainleveIIPositive", "[", "\"\<AS\>\"", "]"}], "[", 
+     RowBox[{"s1", ",", "x"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"PainleveII", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"s1_", ",", "s2_", ",", "s3_"}], "}"}], ",", 
+      RowBox[{"x_", "?", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"NZeroQ", "[", 
+           RowBox[{"Im", "[", "#", "]"}], "]"}], "&&", 
+          RowBox[{
+           RowBox[{"Re", "[", "#", "]"}], "\[GreaterEqual]", "9"}]}], "&"}], 
+        ")"}]}]}], "]"}], ":=", 
+    RowBox[{
+     RowBox[{"PainleveIIPositive", "[", "\"\<Pos\>\"", "]"}], "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"s1", ",", "s2", ",", "s3"}], "}"}], ",", "x"}], "]"}]}], 
+   ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"PainleveII", "[", 
+    RowBox[{"s_", ",", "x_"}], "]"}], ":=", 
+   RowBox[{"PainleveIISmall", "[", 
+    RowBox[{"120", ",", "s", ",", "x"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"PainleveII", "[", 
+    RowBox[{"s_", ",", "x_", ",", 
+     RowBox[{"opts", ":", 
+      RowBox[{"OptionsPattern", "[", 
+       RowBox[{"{", 
+        RowBox[{"InterpolationPrecision", "\[Rule]", 
+         SuperscriptBox["10", 
+          RowBox[{"-", "7"}]]}], "}"}], "]"}]}]}], "]"}], ":=", 
+   RowBox[{"PainleveIISmall", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Quiet", "[", 
+       RowBox[{"ZeroAtInfinityFun", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"Exp", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"-", "8"}], " ", 
+              RowBox[{"I", " ", "/", "3"}], " ", 
+              RowBox[{"#", "^", "3"}]}], "-", 
+             RowBox[{"2", " ", "I", " ", "x", " ", "#"}]}], "]"}], "/.", 
+           RowBox[{
+            RowBox[{"Underflow", "[", "]"}], "\[Rule]", "0"}]}], "&"}], ",", 
+         RowBox[{"Line", "[", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", 
+            RowBox[{"\[Infinity]", " ", 
+             RowBox[{"Exp", "[", 
+              RowBox[{"I", " ", 
+               RowBox[{"\[Pi]", "/", "2"}]}], "]"}]}]}], "}"}], "]"}], ",", 
+         "opts"}], "]"}], "]"}], "//", "Length"}], ",", "s", ",", "x"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"PainleveIID", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"s1_", ",", 
+       RowBox[{"_", "?", "NZeroQ"}], ",", "s3_"}], "}"}], ",", 
+     RowBox[{"x_", "?", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"NZeroQ", "[", 
+          RowBox[{"Im", "[", "#", "]"}], "]"}], "&&", 
+         RowBox[{
+          RowBox[{"Re", "[", "#", "]"}], "\[GreaterEqual]", "5"}]}], "&"}], 
+       ")"}]}]}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"PainleveIIPositiveD", "[", "\"\<AS\>\"", "]"}], "[", 
+    RowBox[{"s1", ",", "x"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"PainleveIID", "[", 
+    RowBox[{"s_", ",", "x_"}], "]"}], ":=", 
+   RowBox[{"PainleveIIDSmall", "[", 
+    RowBox[{"120", ",", "s", ",", "x"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"End", "[", "]"}], ";"}]}], "Input",
+ InitializationCell->True]
+}, Open  ]]
+},
+AutoGeneratedPackage->Automatic,
+WindowSize->{719, 1109},
+WindowMargins->{{Automatic, 196}, {Automatic, 0}},
+PrivateNotebookOptions->{"FileOutlineCache"->False},
+ShowSelection->True,
+TrackCellChangeTimes->False,
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 23, \
+2011)",
+StyleDefinitions->"Default.nb"
+]
+

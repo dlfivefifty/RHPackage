@@ -1,0 +1,967 @@
+Notebook[{
+Cell["\<\
+\[Copyright] Sheehan Olver, 2010, subject to BSD license.
+
+Other contributors include Georg Wechslberger.
+
+FredholmDet is based on code by Folkmar Bornemann.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell["Setup", "Section"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"BeginPackage", "[", 
+   RowBox[{"\"\<RiemannHilbert`RandomMatrices`\>\"", ",", 
+    RowBox[{"{", 
+     RowBox[{
+     "\"\<RiemannHilbert`\>\"", ",", "\"\<RiemannHilbert`Common`\>\""}], 
+     "}"}]}], "]"}], ";"}]], "Input",
+ InitializationCell->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Documentation", "Section"],
+
+Cell[BoxData[{
+ RowBox[{"FreePlus", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"FreeTimes", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"FreeCompress", ";"}]}], "Input",
+ InitializationCell->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Inverse Stieljes", "Section"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Begin", "[", "\"\<Private`\>\"", "]"}], ";"}]], "Input",
+ InitializationCell->True],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"FreeInverseStieljes", "[", 
+      RowBox[{"GAB_", ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", "\[Infinity]"}], ",", "\[Infinity]"}], "}"}], ",", 
+       "rng_", ",", "sIpts_"}], "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"ret", ",", "sgpts", ",", "gpts", ",", "AB"}], "}"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"sgpts", ",", "gpts"}], "}"}], "=", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"ret", "=", 
+                  RowBox[{"GAB", "[", "#", "]"}]}], ";", 
+                 "\[IndentingNewLine]", 
+                 RowBox[{"If", "[", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"Sign", "[", 
+                    RowBox[{"Im", "[", "#", "]"}], "]"}], "\[Equal]", 
+                    RowBox[{"Sign", "[", 
+                    RowBox[{"Im", "[", "ret", "]"}], "]"}]}], "||", 
+                    RowBox[{"!", 
+                    RowBox[{"NumberQ", "[", "ret", "]"}]}]}], ",", "Null", 
+                   ",", 
+                   RowBox[{"{", 
+                    RowBox[{"#", ",", "ret"}], "}"}]}], "]"}]}], ")"}], "&"}],
+               "/@", "sIpts"}], ")"}], "/.", 
+            RowBox[{"Null", "\[Rule]", 
+             RowBox[{"Sequence", "[", "]"}]}]}], ")"}], "//", "Transpose"}]}],
+         ";", "\[IndentingNewLine]", 
+        RowBox[{"AB", "=", 
+         RowBox[{"LFun", "[", 
+          RowBox[{
+           RowBox[{"ShiftList", "[", " ", 
+            RowBox[{
+             RowBox[{"LeastSquares", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{
+                 RowBox[{"CauchyInverseBasis", "[", 
+                  RowBox[{"RealLine", ",", 
+                   RowBox[{"Span", "@@", "rng"}], ",", "#"}], "]"}], "&"}], "/@",
+                 "gpts"}], ",", "sgpts"}], "]"}], ",", 
+             RowBox[{
+              RowBox[{
+              "rng", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+              "+", "1"}]}], "]"}], ",", "RealLine"}], "]"}]}], ";", "\n", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"-", "1"}], "/", 
+           RowBox[{"(", 
+            RowBox[{"2", " ", "\[Pi]"}], ")"}]}], 
+          RowBox[{"HilbertInverse", "[", "AB", "]"}]}], "//", "Re"}]}]}], 
+      "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"FreeInverseStieljes", "[", 
+      RowBox[{"GAB_", ",", "GABD_", ",", "GABDD_", ",", "m_", ",", "sIpts_"}],
+       "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"xia", ",", "xib", ",", "a", ",", "b"}], "}"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"xia", ",", "xib"}], "}"}], "=", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"NewtonMethod", "[", 
+            RowBox[{"GABD", ",", "GABDD", ",", 
+             RowBox[{"-", ".1"}]}], "]"}], ",", 
+           RowBox[{"NewtonMethod", "[", 
+            RowBox[{"GABD", ",", "GABDD", ",", ".1"}], "]"}]}], "}"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"FreeInverseStieljes", "[", 
+         RowBox[{"GAB", ",", 
+          RowBox[{"{", 
+           RowBox[{"xia", ",", "xib"}], "}"}], ",", "m", ",", "sIpts"}], 
+         "]"}]}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"FreeInverseStieljes", "[", 
+     RowBox[{"GAB_", ",", 
+      RowBox[{"{", 
+       RowBox[{"xia_", ",", "xib_"}], "}"}], ",", "m_", ",", "sIpts_"}], 
+     "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "ret", ",", "sgpts", ",", "gpts", ",", "AB", ",", "a", ",", "b"}], 
+       "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"a", ",", "b"}], "}"}], "=", 
+        RowBox[{
+         RowBox[{"GAB", "/@", 
+          RowBox[{"{", 
+           RowBox[{"xia", ",", "xib"}], "}"}]}], "//", "Re"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"sgpts", ",", "gpts"}], "}"}], "=", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"ret", "=", 
+                 RowBox[{"GAB", "[", "#", "]"}]}], ";", "\[IndentingNewLine]", 
+                RowBox[{"If", "[", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"Sign", "[", 
+                    RowBox[{"Im", "[", "#", "]"}], "]"}], "\[Equal]", 
+                    RowBox[{"Sign", "[", 
+                    RowBox[{"Im", "[", "ret", "]"}], "]"}]}], "||", 
+                   RowBox[{"!", 
+                    RowBox[{"NumberQ", "[", "ret", "]"}]}], "||", 
+                   RowBox[{
+                    RowBox[{"NZeroQ", "[", 
+                    RowBox[{"Im", "[", "#", "]"}], "]"}], "&&", 
+                    RowBox[{
+                    RowBox[{"Re", "[", "#", "]"}], ">", "xib"}]}], "||", 
+                   RowBox[{
+                    RowBox[{"NZeroQ", "[", 
+                    RowBox[{"Im", "[", "#", "]"}], "]"}], "&&", 
+                    RowBox[{
+                    RowBox[{"Re", "[", "#", "]"}], "<", "xia"}]}]}], ",", 
+                  "Null", ",", 
+                  RowBox[{"{", 
+                   RowBox[{"#", ",", "ret"}], "}"}]}], "]"}]}], ")"}], "&"}], 
+             "/@", "sIpts"}], ")"}], "/.", 
+           RowBox[{"Null", "\[Rule]", 
+            RowBox[{"Sequence", "[", "]"}]}]}], ")"}], "//", "Transpose"}]}], 
+       ";", "\[IndentingNewLine]", 
+       RowBox[{"AB", "=", 
+        RowBox[{"SingFun", "[", 
+         RowBox[{
+          RowBox[{"IFun", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"LeastSquares", "[", 
+              RowBox[{
+               RowBox[{"BoundedCauchyInverseMatrix", "[", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{"a", ",", "b"}], "}"}], ",", "m", ",", "gpts"}], 
+                "]"}], ",", "sgpts"}], "]"}], "//", "InverseDCT"}], ",", 
+            RowBox[{"Line", "[", 
+             RowBox[{"{", 
+              RowBox[{"a", ",", "b"}], "}"}], "]"}]}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", "0"}], "}"}]}], "]"}]}], ";", "\n", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "1"}], "/", 
+          RowBox[{"(", 
+           RowBox[{"2", " ", "\[Pi]"}], ")"}]}], 
+         RowBox[{"HilbertInverse", "[", "AB", "]"}]}], "//", "Re"}]}]}], 
+     "\[IndentingNewLine]", "]"}]}], "\[IndentingNewLine]"}]}]], "Input",
+ InitializationCell->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["FreePlus", "Section"],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"DiskPoints", "[", "n_", "]"}], ":=", 
+     RowBox[{
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{"Points", "[", 
+         RowBox[{
+          RowBox[{"Circle", "[", 
+           RowBox[{"0", ",", "r"}], "]"}], ",", "n"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"r", ",", 
+          RowBox[{"1", "/", 
+           RowBox[{"(", 
+            RowBox[{"n", "-", "1"}], ")"}]}], ",", "1.", ",", 
+          RowBox[{"1", "/", 
+           RowBox[{"(", 
+            RowBox[{"n", "-", "1"}], ")"}]}]}], "}"}]}], "]"}], "//", 
+      "Flatten"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"SlitPlanePoints", "[", 
+      RowBox[{"pf_PFun", ",", "n_"}], "]"}], ":=", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Domain", "[", "pf", "]"}], "\[LeftDoubleBracket]", "1", 
+       "\[RightDoubleBracket]"}], "+", 
+      RowBox[{"Join", "[", 
+       RowBox[{
+        RowBox[{"DiskPoints", "[", "n", "]"}], ",", 
+        RowBox[{"1", "/", 
+         RowBox[{"DiskPoints", "[", "n", "]"}]}]}], "]"}]}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"SlitPlanePoints", "[", 
+      RowBox[{"lf_List", ",", "n_"}], "]"}], ":=", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"SlitPlanePoints", "[", 
+           RowBox[{"#", ",", 
+            RowBox[{
+             RowBox[{"n", "/", 
+              RowBox[{"Length", "[", "lf", "]"}]}], "//", "Ceiling"}]}], 
+           "]"}], "&"}], "/@", "lf"}], ")"}], "//", "Flatten"}], "//", 
+      "Union"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"SlitPlanePoints", "[", 
+      RowBox[{"lf_LFun", ",", "n_"}], "]"}], ":=", 
+     RowBox[{"Select", "[", 
+      RowBox[{
+       RowBox[{"MapFromCircle", "[", 
+        RowBox[{"lf", ",", 
+         RowBox[{"Join", "[", 
+          RowBox[{
+           RowBox[{"DiskPoints", "[", "n", "]"}], ",", 
+           RowBox[{"1", "/", 
+            RowBox[{"DiskPoints", "[", "n", "]"}]}]}], "]"}]}], "]"}], ",", 
+       "FiniteQ"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"SlitPlanePoints", "[", 
+      RowBox[{"if_IFun", ",", "n_"}], "]"}], ":=", 
+     RowBox[{"MapFromInterval", "[", 
+      RowBox[{"if", ",", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{"Points", "[", 
+            RowBox[{
+             RowBox[{"Circle", "[", 
+              RowBox[{"0", ",", "r"}], "]"}], ",", "n"}], "]"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"r", ",", 
+             RowBox[{"1", "/", 
+              RowBox[{"(", 
+               RowBox[{"n", "-", "1"}], ")"}]}], ",", "1.", ",", 
+             RowBox[{"1", "/", 
+              RowBox[{"(", 
+               RowBox[{"n", "-", "1"}], ")"}]}]}], "}"}]}], "]"}], "//", 
+         "Flatten"}], "//", "CircleToInterval"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"SlitPlanePoints", "[", 
+      RowBox[{"sf_SingFun", ",", "n_"}], "]"}], ":=", 
+     RowBox[{"SlitPlanePoints", "[", 
+      RowBox[{
+       RowBox[{"sf", "//", "First"}], ",", "n"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"BoundedCauchyInverseMatrix", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"a_", ",", "b_"}], "}"}], ",", "m_", ",", "gpts_"}], "]"}], ":=", 
+     RowBox[{
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{"BoundedCauchyInverseBasis", "[", 
+         RowBox[{
+          RowBox[{"Line", "[", 
+           RowBox[{"{", 
+            RowBox[{"a", ",", "b"}], "}"}], "]"}], ",", "k", ",", "gpts"}], 
+         "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"k", ",", "m"}], "}"}]}], "]"}], "//", "Transpose"}]}], 
+    ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"FreePlus", "[", 
+       RowBox[{"sfA_", ",", "sfB_", ",", 
+        RowBox[{"rng_:", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "80"}], ",", "80"}], "}"}]}], ",", 
+        RowBox[{"n_:", "10"}]}], "]"}], "/;", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Domain", "[", "sfA", "]"}], "\[Equal]", "RealLine"}], "||", 
+       RowBox[{
+        RowBox[{"Domain", "[", "sfB", "]"}], "\[Equal]", "RealLine"}]}]}], ":=", 
+     RowBox[{"Quiet", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"Module", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+          "GAB", ",", "GABD", ",", "GABDD", ",", "xia", ",", "xib", ",", 
+           "Apts", ",", "Bpts", ",", "sIptsA", ",", "sIptsB", ",", "sIpts", 
+           ",", "sgpts", ",", "gpts", ",", "ret", ",", "AB", ",", "a", ",", 
+           "b"}], "}"}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"GAB", "[", "y_", "]"}], ":=", 
+           RowBox[{
+            RowBox[{"StieljesInverseFunction", "[", 
+             RowBox[{"sfA", ",", "y"}], "]"}], "+", 
+            RowBox[{"StieljesInverseFunction", "[", 
+             RowBox[{"sfB", ",", "y"}], "]"}], "-", 
+            RowBox[{"1", "/", "y"}]}]}], ";", "\[IndentingNewLine]", 
+          "\[IndentingNewLine]", 
+          RowBox[{"Apts", "=", 
+           RowBox[{"SlitPlanePoints", "[", 
+            RowBox[{"sfA", ",", "n"}], "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"(", 
+           RowBox[{"sIpts", "=", 
+            RowBox[{"Stieljes", "[", 
+             RowBox[{"sfA", ",", "Apts"}], "]"}]}], ")"}], ";", 
+          "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          RowBox[{"FreeInverseStieljes", "[", 
+           RowBox[{"GAB", ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "\[Infinity]"}], ",", "\[Infinity]"}], "}"}], ",", 
+            "rng", ",", "sIpts"}], "]"}]}]}], "\[IndentingNewLine]", "]"}], 
+       ",", "\[IndentingNewLine]", 
+       RowBox[{"{", 
+        StyleBox[
+         RowBox[{
+          RowBox[{"First", "::", "first"}], ",", 
+          RowBox[{"Thread", "::", "tdlen"}]}], "MessageName"], "}"}]}], 
+      StyleBox["]", "MessageName"]}]}], 
+    StyleBox[";", "MessageName"]}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"FreePlus", "[", 
+      RowBox[{"sfA_", ",", "sfB_", ",", 
+       RowBox[{"m_:", "50"}], ",", 
+       RowBox[{"n_:", "30"}]}], "]"}], ":=", 
+     RowBox[{"Quiet", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"Module", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+          "GAB", ",", "GABD", ",", "GABDD", ",", "xia", ",", "xib", ",", 
+           "Apts", ",", "Bpts", ",", "sIptsA", ",", "sIptsB", ",", "sIpts", 
+           ",", "sgpts", ",", "gpts", ",", "ret", ",", "AB", ",", "a", ",", 
+           "b"}], "}"}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"GAB", "[", "y_", "]"}], ":=", 
+           RowBox[{
+            RowBox[{"StieljesInverseFunction", "[", 
+             RowBox[{"sfA", ",", "y"}], "]"}], "+", 
+            RowBox[{"StieljesInverseFunction", "[", 
+             RowBox[{"sfB", ",", "y"}], "]"}], "-", 
+            RowBox[{"1", "/", "y"}]}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"GABD", "[", "y_", "]"}], ":=", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"StieljesInverseFunctionD", "[", 
+              RowBox[{"sfA", ",", "y"}], "]"}], "+", 
+             RowBox[{"StieljesInverseFunctionD", "[", 
+              RowBox[{"sfB", ",", "y"}], "]"}], "+", 
+             RowBox[{"1", "/", 
+              RowBox[{"y", "^", "2"}]}]}], "//", "Re"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"GABDD", "[", "y_", "]"}], ":=", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"StieljesInverseFunctionD", "[", "2", "]"}], "[", 
+              RowBox[{"sfA", ",", "y"}], "]"}], "+", 
+             RowBox[{
+              RowBox[{"StieljesInverseFunctionD", "[", "2", "]"}], "[", 
+              RowBox[{"sfB", ",", "y"}], "]"}], "-", 
+             RowBox[{"2", "/", 
+              RowBox[{"y", "^", "3"}]}]}], "//", "Re"}]}], ";", 
+          "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          RowBox[{"Apts", "=", 
+           RowBox[{"SlitPlanePoints", "[", 
+            RowBox[{"sfA", ",", "n"}], "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"(", 
+           RowBox[{"sIpts", "=", 
+            RowBox[{"Stieljes", "[", 
+             RowBox[{"sfA", ",", "Apts"}], "]"}]}], ")"}], ";", 
+          "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          RowBox[{"FreeInverseStieljes", "[", 
+           RowBox[{"GAB", ",", "GABD", ",", "GABDD", ",", "m", ",", "sIpts"}],
+            "]"}]}]}], "\[IndentingNewLine]", "]"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"{", 
+        StyleBox[
+         RowBox[{
+          RowBox[{"First", "::", "first"}], ",", 
+          RowBox[{"Thread", "::", "tdlen"}]}], "MessageName"], "}"}]}], 
+      StyleBox["]", "MessageName"]}]}], 
+    StyleBox[";", "MessageName"]}]}]}]], "Input",
+ InitializationCell->True],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Apts", "=", 
+   RowBox[{"SlitPlanePoints", "[", 
+    RowBox[{"sfA", ",", 
+     RowBox[{
+      RowBox[{"n", "/", "2"}], "//", "Floor"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Bpts", "=", 
+   RowBox[{"SlitPlanePoints", "[", 
+    RowBox[{"sfB", ",", 
+     RowBox[{
+      RowBox[{"n", "/", "2"}], "//", "Floor"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"(", 
+   RowBox[{"sIpts", "=", 
+    RowBox[{
+     RowBox[{"Stieljes", "[", 
+      RowBox[{"sfA", ",", "Apts"}], "]"}], "~", "Union", "~", 
+     RowBox[{"Stieljes", "[", 
+      RowBox[{"sfB", ",", "Bpts"}], "]"}]}]}], ")"}], ";"}]}], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["FreeTimes", "Section"],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"TTransform", "[", 
+      RowBox[{
+       RowBox[{"SingFun", "[", 
+        RowBox[{"if_IFun", ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"1", "/", "2"}], ",", 
+           RowBox[{"1", "/", "2"}]}], "}"}]}], "]"}], ",", "z_"}], "]"}], ":=", 
+     RowBox[{"Stieljes", "[", 
+      RowBox[{
+       RowBox[{"SingFun", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"IncreaseDimension", "[", "if", "]"}], " ", 
+          RowBox[{"Fun", "[", 
+           RowBox[{
+            RowBox[{"#", "&"}], ",", 
+            RowBox[{"if", "//", "Domain"}], ",", 
+            RowBox[{
+             RowBox[{"Length", "[", "if", "]"}], "+", "1"}]}], "]"}]}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"1", "/", "2"}], ",", 
+           RowBox[{"1", "/", "2"}]}], "}"}]}], "]"}], ",", "z"}], "]"}]}], 
+    ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"TTransformInverseFunction", "[", 
+      RowBox[{
+       RowBox[{"SingFun", "[", 
+        RowBox[{"if_IFun", ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"1", "/", "2"}], ",", 
+           RowBox[{"1", "/", "2"}]}], "}"}]}], "]"}], ",", "z_"}], "]"}], ":=", 
+     RowBox[{"StieljesInverseFunction", "[", 
+      RowBox[{
+       RowBox[{"SingFun", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"IncreaseDimension", "[", "if", "]"}], " ", 
+          RowBox[{"Fun", "[", 
+           RowBox[{
+            RowBox[{"#", "&"}], ",", 
+            RowBox[{"if", "//", "Domain"}], ",", 
+            RowBox[{
+             RowBox[{"Length", "[", "if", "]"}], "+", "1"}]}], "]"}]}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"1", "/", "2"}], ",", 
+           RowBox[{"1", "/", "2"}]}], "}"}]}], "]"}], ",", "z"}], "]"}]}], 
+    ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"TTransformInverseFunctionD", "[", 
+      RowBox[{
+       RowBox[{"SingFun", "[", 
+        RowBox[{"if_IFun", ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"1", "/", "2"}], ",", 
+           RowBox[{"1", "/", "2"}]}], "}"}]}], "]"}], ",", "z_"}], "]"}], ":=", 
+     RowBox[{"StieljesInverseFunctionD", "[", 
+      RowBox[{
+       RowBox[{"SingFun", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"IncreaseDimension", "[", "if", "]"}], " ", 
+          RowBox[{"Fun", "[", 
+           RowBox[{
+            RowBox[{"#", "&"}], ",", 
+            RowBox[{"if", "//", "Domain"}], ",", 
+            RowBox[{
+             RowBox[{"Length", "[", "if", "]"}], "+", "1"}]}], "]"}]}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"1", "/", "2"}], ",", 
+           RowBox[{"1", "/", "2"}]}], "}"}]}], "]"}], ",", "z"}], "]"}]}], 
+    ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"TTransformInverseFunctionD", "[", "j_", "]"}], "[", 
+      RowBox[{
+       RowBox[{"SingFun", "[", 
+        RowBox[{"if_IFun", ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"1", "/", "2"}], ",", 
+           RowBox[{"1", "/", "2"}]}], "}"}]}], "]"}], ",", "z_"}], "]"}], ":=", 
+     RowBox[{
+      RowBox[{"StieljesInverseFunctionD", "[", "j", "]"}], "[", 
+      RowBox[{
+       RowBox[{"SingFun", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"IncreaseDimension", "[", "if", "]"}], " ", 
+          RowBox[{"Fun", "[", 
+           RowBox[{
+            RowBox[{"#", "&"}], ",", 
+            RowBox[{"if", "//", "Domain"}], ",", 
+            RowBox[{
+             RowBox[{"Length", "[", "if", "]"}], "+", "1"}]}], "]"}]}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"1", "/", "2"}], ",", 
+           RowBox[{"1", "/", "2"}]}], "}"}]}], "]"}], ",", "z"}], "]"}]}], 
+    ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"FreeTimes", "[", 
+      RowBox[{"sfA_", ",", "sfB_", ",", 
+       RowBox[{"m_:", "50"}], ",", 
+       RowBox[{"n_:", "30"}]}], "]"}], ":=", 
+     RowBox[{"Quiet", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"Module", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+          "GAB", ",", "GABD", ",", "GABDD", ",", "xia", ",", "xib", ",", 
+           "Apts", ",", "Bpts", ",", "sIptsA", ",", "sIptsB", ",", "sIpts", 
+           ",", "sgpts", ",", "gpts", ",", "ret", ",", "AB", ",", "a", ",", 
+           "b", ",", "Sf"}], "}"}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"GAB", "[", "y_", "]"}], ":=", 
+           RowBox[{
+            RowBox[{"TTransformInverseFunction", "[", 
+             RowBox[{"sfA", ",", "y"}], "]"}], 
+            RowBox[{"TTransformInverseFunction", "[", 
+             RowBox[{"sfB", ",", "y"}], "]"}], 
+            FractionBox["y", 
+             RowBox[{"1", "+", "y"}]]}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"GABD", "[", "y_", "]"}], ":=", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"TTransformInverseFunctionD", "[", 
+               RowBox[{"sfA", ",", "y"}], "]"}], 
+              RowBox[{"TTransformInverseFunction", "[", 
+               RowBox[{"sfB", ",", "y"}], "]"}], 
+              FractionBox["y", 
+               RowBox[{"1", "+", "y"}]]}], "+", 
+             RowBox[{
+              RowBox[{"TTransformInverseFunction", "[", 
+               RowBox[{"sfA", ",", "y"}], "]"}], 
+              RowBox[{"TTransformInverseFunctionD", "[", 
+               RowBox[{"sfB", ",", "y"}], "]"}], 
+              FractionBox["y", 
+               RowBox[{"1", "+", "y"}]]}], "+", 
+             RowBox[{
+              RowBox[{"TTransformInverseFunction", "[", 
+               RowBox[{"sfA", ",", "y"}], "]"}], 
+              RowBox[{"TTransformInverseFunction", "[", 
+               RowBox[{"sfB", ",", "y"}], "]"}], 
+              FractionBox["1", 
+               SuperscriptBox[
+                RowBox[{"(", 
+                 RowBox[{"1", "+", "y"}], ")"}], "2"]]}]}], "//", "Re"}]}], 
+          ";", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"GABDD", "[", "y_", "]"}], ":=", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"TTransformInverseFunctionD", "[", "2", "]"}], "[", 
+               RowBox[{"sfA", ",", "y"}], "]"}], 
+              RowBox[{"TTransformInverseFunction", "[", 
+               RowBox[{"sfB", ",", "y"}], "]"}], 
+              FractionBox["y", 
+               RowBox[{"1", "+", "y"}]]}], "+", 
+             RowBox[{"2", 
+              RowBox[{"TTransformInverseFunctionD", "[", 
+               RowBox[{"sfA", ",", "y"}], "]"}], 
+              RowBox[{"TTransformInverseFunctionD", "[", 
+               RowBox[{"sfB", ",", "y"}], "]"}], 
+              FractionBox["y", 
+               RowBox[{"1", "+", "y"}]]}], "+", 
+             RowBox[{
+              RowBox[{"TTransformInverseFunctionD", "[", 
+               RowBox[{"sfA", ",", "y"}], "]"}], 
+              RowBox[{"TTransformInverseFunction", "[", 
+               RowBox[{"sfB", ",", "y"}], "]"}], 
+              FractionBox["1", 
+               SuperscriptBox[
+                RowBox[{"(", 
+                 RowBox[{"1", "+", "y"}], ")"}], "2"]]}], "+", 
+             RowBox[{
+              RowBox[{"TTransformInverseFunction", "[", 
+               RowBox[{"sfA", ",", "y"}], "]"}], 
+              RowBox[{
+               RowBox[{"TTransformInverseFunctionD", "[", "2", "]"}], "[", 
+               RowBox[{"sfB", ",", "y"}], "]"}], 
+              FractionBox["y", 
+               RowBox[{"1", "+", "y"}]]}], "+", 
+             RowBox[{
+              RowBox[{"TTransformInverseFunction", "[", 
+               RowBox[{"sfA", ",", "y"}], "]"}], 
+              RowBox[{"TTransformInverseFunctionD", "[", 
+               RowBox[{"sfB", ",", "y"}], "]"}], 
+              FractionBox["1", 
+               SuperscriptBox[
+                RowBox[{"(", 
+                 RowBox[{"1", "+", "y"}], ")"}], "2"]]}], "+", 
+             RowBox[{
+              RowBox[{"TTransformInverseFunctionD", "[", 
+               RowBox[{"sfA", ",", "y"}], "]"}], 
+              RowBox[{"TTransformInverseFunction", "[", 
+               RowBox[{"sfB", ",", "y"}], "]"}], 
+              FractionBox["1", 
+               SuperscriptBox[
+                RowBox[{"(", 
+                 RowBox[{"1", "+", "y"}], ")"}], "2"]]}], "+", 
+             RowBox[{
+              RowBox[{"TTransformInverseFunction", "[", 
+               RowBox[{"sfA", ",", "y"}], "]"}], 
+              RowBox[{"TTransformInverseFunctionD", "[", 
+               RowBox[{"sfB", ",", "y"}], "]"}], 
+              FractionBox["1", 
+               SuperscriptBox[
+                RowBox[{"(", 
+                 RowBox[{"1", "+", "y"}], ")"}], "2"]]}], "+", 
+             "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{"TTransformInverseFunction", "[", 
+               RowBox[{"sfA", ",", "y"}], "]"}], 
+              RowBox[{"TTransformInverseFunction", "[", 
+               RowBox[{"sfB", ",", "y"}], "]"}], 
+              RowBox[{"(", 
+               RowBox[{"-", 
+                FractionBox["2", 
+                 SuperscriptBox[
+                  RowBox[{"(", 
+                   RowBox[{"1", "+", "y"}], ")"}], "3"]]}], ")"}]}]}], "//", 
+            "Re"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          RowBox[{"Apts", "=", 
+           RowBox[{"SlitPlanePoints", "[", 
+            RowBox[{"sfA", ",", "n"}], "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"(", 
+           RowBox[{"sIpts", "=", 
+            RowBox[{"TTransform", "[", 
+             RowBox[{"sfA", ",", "Apts"}], "]"}]}], ")"}], ";", 
+          "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          RowBox[{"Sf", "=", 
+           RowBox[{"FreeInverseStieljes", "[", 
+            RowBox[{
+            "GAB", ",", "GABD", ",", "GABDD", ",", "m", ",", "sIpts"}], 
+            "]"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          "\[IndentingNewLine]", 
+          RowBox[{"SingFun", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+             "Sf", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
+             " ", "//", 
+             RowBox[{
+              RowBox[{"#", " ", 
+               RowBox[{"Fun", "[", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"1", "/", "#"}], "&"}], ",", 
+                 RowBox[{"#", "//", "Domain"}], ",", 
+                 RowBox[{"#", "//", "Length"}]}], "]"}]}], "&"}]}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"1", "/", "2"}], ",", 
+              RowBox[{"1", "/", "2"}]}], "}"}]}], "]"}]}]}], 
+        "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
+       RowBox[{"{", 
+        StyleBox[
+         RowBox[{
+          RowBox[{"First", "::", "first"}], ",", 
+          RowBox[{"Thread", "::", "tdlen"}]}], "MessageName"], "}"}]}], 
+      StyleBox["]", "MessageName"]}]}], 
+    StyleBox[";", "MessageName"]}]}]}]], "Input",
+ InitializationCell->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["FreeCompress", "Section"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"FreeCompress", "[", 
+     RowBox[{"sfA_SingFun", ",", "\[Alpha]_", ",", 
+      RowBox[{"m_:", "31"}], ",", 
+      RowBox[{"n_:", "30"}]}], "]"}], ":=", 
+    RowBox[{"Quiet", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"Module", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+         "GAB", ",", "GABD", ",", "GABDD", ",", "xia", ",", "xib", ",", 
+          "Apts", ",", "Bpts", ",", "sIptsA", ",", "sIptsB", ",", "sIpts", 
+          ",", "sgpts", ",", "gpts", ",", "ret", ",", "AB", ",", "a", ",", 
+          "b"}], "}"}], ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"GAB", "[", "y_", "]"}], ":=", 
+          RowBox[{
+           RowBox[{"StieljesInverseFunction", "[", 
+            RowBox[{"sfA", ",", 
+             RowBox[{"\[Alpha]", " ", "y"}]}], "]"}], "+", 
+           FractionBox[
+            RowBox[{"(", 
+             RowBox[{"1", "-", 
+              FractionBox["1", 
+               RowBox[{"\[Alpha]", " "}]]}], ")"}], "y"]}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"GABD", "[", "y_", "]"}], ":=", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"\[Alpha]", " ", 
+             RowBox[{"StieljesInverseFunctionD", "[", 
+              RowBox[{"sfA", ",", 
+               RowBox[{"\[Alpha]", " ", "y"}]}], "]"}]}], "-", 
+            FractionBox[
+             RowBox[{"(", 
+              RowBox[{"1", "-", 
+               FractionBox["1", 
+                RowBox[{"\[Alpha]", " "}]]}], ")"}], 
+             SuperscriptBox["y", "2"]]}], "//", "Re"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"GABDD", "[", "y_", "]"}], ":=", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             SuperscriptBox["\[Alpha]", "2"], " ", 
+             RowBox[{
+              RowBox[{"StieljesInverseFunctionD", "[", "2", "]"}], "[", 
+              RowBox[{"sfA", ",", 
+               RowBox[{"\[Alpha]", " ", "y"}]}], "]"}]}], "+", 
+            RowBox[{"2", 
+             FractionBox[
+              RowBox[{"(", 
+               RowBox[{"1", "-", 
+                FractionBox["1", 
+                 RowBox[{"\[Alpha]", " "}]]}], ")"}], 
+              SuperscriptBox["y", "3"]]}]}], "//", "Re"}]}], ";", 
+         "\[IndentingNewLine]", "\[IndentingNewLine]", 
+         RowBox[{"Apts", "=", 
+          RowBox[{"SlitPlanePoints", "[", 
+           RowBox[{"sfA", ",", "n"}], "]"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"(", 
+          RowBox[{"sIpts", "=", 
+           RowBox[{"Stieljes", "[", 
+            RowBox[{"sfA", ",", "Apts"}], "]"}]}], ")"}], ";", 
+         "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+         
+         RowBox[{"FreeInverseStieljes", "[", 
+          RowBox[{"GAB", ",", "GABD", ",", "GABDD", ",", "m", ",", "sIpts"}], 
+          "]"}]}]}], "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       StyleBox[
+        RowBox[{
+         RowBox[{"First", "::", "first"}], ",", 
+         RowBox[{"Thread", "::", "tdlen"}]}], "MessageName"], "}"}]}], 
+     StyleBox["]", "MessageName"]}]}], 
+   StyleBox[";", "MessageName"]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"FreeCompress", "[", 
+    RowBox[{"sfA_LFun", ",", "\[Alpha]_", ",", 
+     RowBox[{"rng_:", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", "80"}], ",", "80"}], "}"}]}], ",", 
+     RowBox[{"n_:", "10"}]}], "]"}], ":=", 
+   RowBox[{"Quiet", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "GAB", ",", "GABD", ",", "GABDD", ",", "xia", ",", "xib", ",", "Apts",
+          ",", "Bpts", ",", "sIptsA", ",", "sIptsB", ",", "sIpts", ",", 
+         "sgpts", ",", "gpts", ",", "ret", ",", "AB", ",", "a", ",", "b"}], 
+        "}"}], ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"GAB", "[", "y_", "]"}], ":=", 
+         RowBox[{
+          RowBox[{"StieljesInverseFunction", "[", 
+           RowBox[{"sfA", ",", 
+            RowBox[{"\[Alpha]", " ", "y"}]}], "]"}], "+", 
+          FractionBox[
+           RowBox[{"(", 
+            RowBox[{"1", "-", 
+             FractionBox["1", 
+              RowBox[{"\[Alpha]", " "}]]}], ")"}], "y"]}]}], ";", 
+        "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"Apts", "=", 
+         RowBox[{"SlitPlanePoints", "[", 
+          RowBox[{"sfA", ",", "n"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"(", 
+         RowBox[{"sIpts", "=", 
+          RowBox[{"Stieljes", "[", 
+           RowBox[{"sfA", ",", "Apts"}], "]"}]}], ")"}], ";", 
+        "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"FreeInverseStieljes", "[", 
+         RowBox[{"GAB", ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "\[Infinity]"}], ",", "\[Infinity]"}], "}"}], ",", 
+          "rng", ",", "sIpts"}], "]"}]}]}], "\[IndentingNewLine]", "]"}], ",",
+      "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      StyleBox[
+       RowBox[{
+        RowBox[{"First", "::", "first"}], ",", 
+        RowBox[{"Thread", "::", "tdlen"}]}], "MessageName"], "}"}]}], 
+    StyleBox["]", "MessageName"]}]}], 
+  StyleBox[";", "MessageName"]}]}], "Input",
+ InitializationCell->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Finish", "Section"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"EndPackage", "[", "]"}], ";"}]}], "Input",
+ InitializationCell->True]
+}, Open  ]]
+},
+AutoGeneratedPackage->Automatic,
+WindowSize->{839, 815},
+WindowMargins->{{Automatic, -1529}, {Automatic, -42}},
+PrivateNotebookOptions->{"FileOutlineCache"->False},
+ShowSelection->True,
+TrackCellChangeTimes->False,
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 23, \
+2011)",
+StyleDefinitions->"Default.nb"
+]
+

@@ -1,0 +1,1967 @@
+Notebook[{
+Cell["\<\
+\[Copyright] Sheehan Olver, 2010, subject to BSD license.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell["Package setup", "Section"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"BeginPackage", "[", "$CommonPackage", "]"}], ";"}]], "Input",
+ InitializationCell->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Documentation", "Section"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"ComplexPlot", "::", "usage"}], "=", "\[IndentingNewLine]", 
+   "\"\<ComplexPlot[f[t],{t,a,b}] plots the trajectory in the complex plane \
+of f from a to b.\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ComplexArrowPlot", "::", "usage"}], "=", "\[IndentingNewLine]", 
+   "\"\<ComplexArrowPlot[f[t],{t,a,b}] plots the trajectory in the complex \
+plane of f from a to b with an arrow showing flow.\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ComplexPlot3D", "::", "usage"}], "=", "\[IndentingNewLine]", 
+   "\"\<ComplexPlot3D[f[z],{z,a,b}] plots absolute value, real and imaginary \
+parts in the complex plane in the rectangle defined by {{Re[a],Im[a]}, \
+{Re[b],Im[b]}}\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"TablePlot", "::", "usage"}], "=", "\[IndentingNewLine]", 
+   "\"\<TablePlot[h[k],{k,v}] plots the data points {k,h[k]} for k over range \
+v.\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"TableLogPlot", "::", "usage"}], "=", "\[IndentingNewLine]", 
+    "\"\<TableLogPlot[h[k],{k,v}] plots the data points {k,h[k]} for k over \
+range v with a logarithmic scale.\>\""}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ReImTablePlot", "::", "usage"}], "=", "\[IndentingNewLine]", 
+    "\"\<ReImTablePlot[h[k],{k,v}] plots the real and imaginary points of \
+h[k].\>\""}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ReImPlot", "::", "usage"}], "=", "\[IndentingNewLine]", 
+    "\"\<ReImPlot[h[x],{x,v}] plots the real and imaginary points of \
+h[x].\>\""}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"DotPlot", "::", "usage"}], "=", "\[IndentingNewLine]", 
+   "\"\<Plots a list of real points.\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ComplexDotPlot", "::", "usage"}], "=", "\[IndentingNewLine]", 
+   "\"\<Plots a list of complex points.\>\""}], ";"}], "\[IndentingNewLine]", 
+
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ComplexLinePlot", "::", "usage"}], "=", "\[IndentingNewLine]", 
+    "\"\<Plots a list of complex points, connected with lines.\>\""}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ListLineLogPlot", "::", "usage"}], "=", "\[IndentingNewLine]", 
+    "\"\<Like LineLogPlot, but with a logarithmic scale\>\""}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"TablePlot3D", "::", "usage"}], "=", "\[IndentingNewLine]", 
+   "\"\<TablePlot3D[h[i,k],{i,v1},{k,v2}] plots the data points {i,k,h[i,k]} \
+for i over range v1 and k over range v2.\>\""}], ";"}]}], "Input",
+ InitializationCell->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Colours", "Section"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"DarkYellow", "=", 
+   RowBox[{"RGBColor", "[", 
+    RowBox[{"0.6", ",", "0.6", ",", "0.1"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"DarkGreen", "=", 
+   RowBox[{"RGBColor", "[", 
+    RowBox[{"0.0", ",", "0.6", ",", "0.1"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"DarkRed", "=", 
+    RowBox[{"RGBColor", "[", 
+     RowBox[{"0.8", ",", "0.2", ",", "0.1"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"DefaultFontSize", ";", "RomanFont", ";", "ItalicFont", 
+  ";"}]}], "Input",
+ InitializationCell->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Complex Graphs", "Section"],
+
+Cell[BoxData[{
+ RowBox[{"ReImComplexContourPlot", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"CirclePlot", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"LogPlot3D", ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ComplexLogPlot3D", ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"PseudospectraPlot", ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SVDPlot", ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Begin", "[", "\"\<Private`\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Options", "[", "ComplexPlot", "]"}], "=", 
+   RowBox[{"Options", "[", "ParametricPlot", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ComplexPlot", "[", 
+    RowBox[{"hlis_", ",", "b_List", ",", 
+     RowBox[{"opts", ":", 
+      RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"h", ",", "hlist"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"hlist", "=", 
+       RowBox[{
+        RowBox[{"{", "hlis", "}"}], "//", "Flatten"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"Map", "[", 
+        RowBox[{
+         RowBox[{"Function", "[", 
+          RowBox[{"h", ",", "\[IndentingNewLine]", 
+           RowBox[{"ParametricPlot", "[", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"Re", "[", "h", "]"}], ",", 
+               RowBox[{"Im", "[", "h", "]"}]}], "}"}], ",", "b", ",", 
+             "opts"}], "]"}]}], "]"}], ",", "\[IndentingNewLine]", "hlist"}], 
+        "]"}], "//", "Show"}]}]}], "\[IndentingNewLine]", "]"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ComplexArrowPlot", "[", 
+    RowBox[{"hlis_", ",", "b_", ",", "opts___"}], "]"}], ":=", 
+   RowBox[{"Show", "[", 
+    RowBox[{
+     RowBox[{"ComplexPlot", "[", 
+      RowBox[{"hlis", ",", "b", ",", "opts"}], "]"}], ",", 
+     RowBox[{"Graphics", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Arrowheads", "[", "Large", "]"}], ",", 
+        RowBox[{"Hue", "[", 
+         RowBox[{"0.67`", ",", "0.6`", ",", "0.6`"}], "]"}], ",", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"hlis", "/.", 
+              RowBox[{
+               RowBox[{"First", "[", "b", "]"}], "\[Rule]", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"Last", "[", "b", "]"}], "+", 
+                 RowBox[{"0.000001", " ", 
+                  RowBox[{"Sign", "[", 
+                   RowBox[{
+                    RowBox[{"Second", "[", "b", "]"}], "-", 
+                    RowBox[{"Last", "[", "b", "]"}]}], "]"}]}]}], ")"}]}]}], "//", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"Re", "[", "#", "]"}], ",", 
+                RowBox[{"Im", "[", "#", "]"}]}], "}"}], "&"}]}], "//", "N"}], 
+           ",", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"hlis", "/.", 
+              RowBox[{
+               RowBox[{"First", "[", "b", "]"}], "\[Rule]", 
+               RowBox[{"(", 
+                RowBox[{"Last", "[", "b", "]"}], ")"}]}]}], "//", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"Re", "[", "#", "]"}], ",", 
+                RowBox[{"Im", "[", "#", "]"}]}], "}"}], "&"}]}], "//", 
+            "N"}]}], "}"}], "//", "Arrow"}]}], "}"}], "]"}]}], "]"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SetAttributes", "[", 
+    RowBox[{"ReImComplexContourPlot", ",", "HoldFirst"}], "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ReImComplexContourPlot", "[", 
+     RowBox[{"h_", ",", "yv_", ",", "tv_", ",", "opts___"}], "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", "hl", "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"hl", " ", "=", 
+        RowBox[{
+         RowBox[{"Hold", "[", " ", "h", "]"}], "/.", 
+         RowBox[{
+          RowBox[{"First", "[", "yv", "]"}], "\[Rule]", 
+          RowBox[{"Last", "[", "yv", "]"}]}]}]}], ";", "\[IndentingNewLine]", 
+       
+       RowBox[{"ReImPlot", "[", 
+        RowBox[{
+         RowBox[{"hl", "//", "ReleaseHold"}], ",", "tv", ",", "opts"}], 
+        "]"}]}]}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"CirclePlot", ",", "HoldFirst"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CirclePlot", "[", 
+    RowBox[{"h_", ",", 
+     RowBox[{"{", 
+      RowBox[{"z_", ",", "a_", ",", "r_"}], "}"}], ",", "opts___"}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"h2", ",", "t"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"h2", "=", 
+       RowBox[{
+        RowBox[{"Hold", "[", "h", "]"}], "/.", 
+        RowBox[{"z", "\[Rule]", 
+         RowBox[{"a", "+", 
+          RowBox[{"r", " ", 
+           RowBox[{"Exp", "[", 
+            RowBox[{"I", " ", "t"}], "]"}]}]}]}]}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"ReImPlot", "[", 
+       RowBox[{
+        RowBox[{"h2", "//", "ReleaseHold"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"t", ",", 
+          RowBox[{"-", "\[Pi]"}], ",", "\[Pi]"}], "}"}], ",", "opts"}], 
+       "]"}]}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CirclePlot", "[", 
+    RowBox[{"h_", ",", 
+     RowBox[{"{", 
+      RowBox[{"z_", ",", "r_"}], "}"}], ",", "opts___"}], "]"}], ":=", 
+   RowBox[{"CirclePlot", "[", 
+    RowBox[{"h", ",", 
+     RowBox[{"{", 
+      RowBox[{"z", ",", "0", ",", "r"}], "}"}], ",", "opts"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CirclePlot", "[", 
+    RowBox[{"h_", ",", "z_", ",", "opts___"}], "]"}], ":=", 
+   RowBox[{"CirclePlot", "[", 
+    RowBox[{"h", ",", 
+     RowBox[{"{", 
+      RowBox[{"z", ",", "1"}], "}"}], ",", "opts"}], "]"}]}], ";"}]}], "Input",
+ InitializationCell->True],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"Options", "[", "ComplexPlot3D", "]"}], "=", 
+   RowBox[{"Options", "[", "Plot3D", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ComplexPlot3D", "[", 
+    RowBox[{"h_", ",", "v_", ",", 
+     RowBox[{"opts", ":", 
+      RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"x", ",", "y", ",", "h2", ",", "xv", ",", "yv"}], "}"}], ",", 
+     "\[IndentingNewLine]", "\t", 
+     RowBox[{
+      RowBox[{"h2", "=", 
+       RowBox[{"h", "/.", 
+        RowBox[{
+         RowBox[{"First", "[", "v", "]"}], "\[Rule]", 
+         RowBox[{"x", "+", 
+          RowBox[{"I", " ", "y"}]}]}]}]}], ";", "\[IndentingNewLine]", "\t", 
+      RowBox[{"xv", "=", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", 
+         RowBox[{"Re", "[", 
+          RowBox[{"v", "[", 
+           RowBox[{"[", "2", "]"}], "]"}], "]"}], ",", 
+         RowBox[{"Re", "[", 
+          RowBox[{"Last", "[", "v", "]"}], "]"}]}], "}"}]}], ";", 
+      "\[IndentingNewLine]", "\t", 
+      RowBox[{"yv", "=", 
+       RowBox[{"{", 
+        RowBox[{"y", ",", 
+         RowBox[{"Im", "[", 
+          RowBox[{"v", "[", 
+           RowBox[{"[", "2", "]"}], "]"}], "]"}], ",", 
+         RowBox[{"Im", "[", 
+          RowBox[{"Last", "[", "v", "]"}], "]"}]}], "}"}]}], ";", 
+      "\[IndentingNewLine]", "\[IndentingNewLine]", "\t", 
+      RowBox[{
+       RowBox[{"Plot3D", "[", 
+        RowBox[{
+         RowBox[{"h2", "//", "Abs"}], ",", 
+         RowBox[{"Evaluate", "[", "xv", "]"}], ",", 
+         RowBox[{"Evaluate", "[", "yv", "]"}], ",", 
+         RowBox[{"PlotLabel", "\[Rule]", "Abs"}], ",", "opts"}], "]"}], "//", 
+       "Print"}], ";", "\[IndentingNewLine]", "\t", 
+      RowBox[{
+       RowBox[{"Plot3D", "[", 
+        RowBox[{
+         RowBox[{"h2", "//", "Re"}], ",", 
+         RowBox[{"Evaluate", "[", "xv", "]"}], ",", 
+         RowBox[{"Evaluate", "[", "yv", "]"}], ",", 
+         RowBox[{"PlotLabel", "\[Rule]", "Re"}], ",", "opts"}], "]"}], "//", 
+       "Print"}], ";", "\n", "\t", 
+      RowBox[{
+       RowBox[{"Plot3D", "[", 
+        RowBox[{
+         RowBox[{"h2", "//", "Im"}], ",", 
+         RowBox[{"Evaluate", "[", "xv", "]"}], ",", 
+         RowBox[{"Evaluate", "[", "yv", "]"}], ",", 
+         RowBox[{"PlotLabel", "\[Rule]", "Im"}], ",", "opts"}], "]"}], "//", 
+       "Print"}], ";"}]}], "\[IndentingNewLine]", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ReComplexPlot3D", "[", 
+   RowBox[{"h_", ",", "v_", ",", "opts___"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"x", ",", "y", ",", "h2", ",", "xv", ",", "yv"}], "}"}], ",", 
+    "\[IndentingNewLine]", "\t", 
+    RowBox[{
+     RowBox[{"h2", "=", 
+      RowBox[{"h", "/.", 
+       RowBox[{
+        RowBox[{"First", "[", "v", "]"}], "\[Rule]", 
+        RowBox[{"x", "+", 
+         RowBox[{"I", " ", "y"}]}]}]}]}], ";", "\[IndentingNewLine]", "\t", 
+     RowBox[{"xv", "=", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", 
+        RowBox[{"Re", "[", 
+         RowBox[{"v", "[", 
+          RowBox[{"[", "2", "]"}], "]"}], "]"}], ",", 
+        RowBox[{"Re", "[", 
+         RowBox[{"Last", "[", "v", "]"}], "]"}]}], "}"}]}], ";", 
+     "\[IndentingNewLine]", "\t", 
+     RowBox[{"yv", "=", 
+      RowBox[{"{", 
+       RowBox[{"y", ",", 
+        RowBox[{"Im", "[", 
+         RowBox[{"v", "[", 
+          RowBox[{"[", "2", "]"}], "]"}], "]"}], ",", 
+        RowBox[{"Im", "[", 
+         RowBox[{"Last", "[", "v", "]"}], "]"}]}], "}"}]}], ";", 
+     "\[IndentingNewLine]", "\[IndentingNewLine]", "\t", 
+     RowBox[{
+      RowBox[{"Plot3D", "[", 
+       RowBox[{
+        RowBox[{"h2", "//", "Re"}], ",", 
+        RowBox[{"Evaluate", "[", "xv", "]"}], ",", 
+        RowBox[{"Evaluate", "[", "yv", "]"}], ",", 
+        RowBox[{"PlotLabel", "\[Rule]", "Re"}], ",", "opts"}], "]"}], "//", 
+      "Print"}], ";"}]}], "\[IndentingNewLine]", "]"}]}]}], "Input",
+ InitializationCell->True],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"LogPlot3D", "[", 
+   RowBox[{"h_", ",", "opts___"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"x", ",", "y", ",", "h2", ",", "xv", ",", "yv"}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Plot3D", "[", 
+     RowBox[{
+      RowBox[{"h", "//", "Log10"}], ",", "opts"}], "]"}]}], 
+   "\[IndentingNewLine]", "]"}]}]], "Input",
+ InitializationCell->True],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ComplexLogPlot3D", "[", 
+   RowBox[{"h_", ",", "v_", ",", "opts___"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"x", ",", "y", ",", "h2", ",", "xv", ",", "yv"}], "}"}], ",", 
+    "\[IndentingNewLine]", "\t", 
+    RowBox[{
+     RowBox[{"h2", "=", 
+      RowBox[{"h", "/.", 
+       RowBox[{
+        RowBox[{"First", "[", "v", "]"}], "\[Rule]", 
+        RowBox[{"x", "+", 
+         RowBox[{"I", " ", "y"}]}]}]}]}], ";", "\[IndentingNewLine]", "\t", 
+     RowBox[{"xv", "=", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", 
+        RowBox[{"Re", "[", 
+         RowBox[{"v", "[", 
+          RowBox[{"[", "2", "]"}], "]"}], "]"}], ",", 
+        RowBox[{"Re", "[", 
+         RowBox[{"Last", "[", "v", "]"}], "]"}]}], "}"}]}], ";", 
+     "\[IndentingNewLine]", "\t", 
+     RowBox[{"yv", "=", 
+      RowBox[{"{", 
+       RowBox[{"y", ",", 
+        RowBox[{"Im", "[", 
+         RowBox[{"v", "[", 
+          RowBox[{"[", "2", "]"}], "]"}], "]"}], ",", 
+        RowBox[{"Im", "[", 
+         RowBox[{"Last", "[", "v", "]"}], "]"}]}], "}"}]}], ";", 
+     "\[IndentingNewLine]", "\[IndentingNewLine]", "\t", 
+     RowBox[{
+      RowBox[{"LogPlot3D", "[", 
+       RowBox[{
+        RowBox[{"h2", "//", "Abs"}], ",", 
+        RowBox[{"Evaluate", "[", "xv", "]"}], ",", 
+        RowBox[{"Evaluate", "[", "yv", "]"}], ",", 
+        RowBox[{"PlotLabel", "\[Rule]", "Abs"}], ",", "opts"}], "]"}], "//", 
+      "Print"}], ";", "\[IndentingNewLine]", "\t", 
+     RowBox[{
+      RowBox[{"LogPlot3D", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"h2", "//", "Re"}], "//", "Abs"}], ",", 
+        RowBox[{"Evaluate", "[", "xv", "]"}], ",", 
+        RowBox[{"Evaluate", "[", "yv", "]"}], ",", 
+        RowBox[{"PlotLabel", "\[Rule]", "Re"}], ",", "opts"}], "]"}], "//", 
+      "Print"}], ";", "\n", "\t", 
+     RowBox[{
+      RowBox[{"LogPlot3D", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"h2", "//", "Im"}], "//", "Abs"}], ",", 
+        RowBox[{"Evaluate", "[", "xv", "]"}], ",", 
+        RowBox[{"Evaluate", "[", "yv", "]"}], ",", 
+        RowBox[{"PlotLabel", "\[Rule]", "Im"}], ",", "opts"}], "]"}], "//", 
+      "Print"}], ";"}]}], "\[IndentingNewLine]", "]"}]}]], "Input",
+ InitializationCell->True],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"AnalyticityPlot", "[", 
+   RowBox[{"h_", ",", "v_", ",", "opts___"}], "]"}], ":=", 
+  "\[IndentingNewLine]", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "f", ",", "rf", ",", "if", ",", "x", ",", "y", ",", "z", ",", "anal1", 
+      ",", "anal2"}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"f", "[", 
+       RowBox[{"x_", ",", "y_"}], "]"}], ":=", 
+      RowBox[{"Assuming", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"x", "\[Element]", "Reals"}], "&&", 
+         RowBox[{"y", "\[Element]", "Reals"}]}], ",", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"h", "/.", 
+           RowBox[{
+            RowBox[{"First", "[", "v", "]"}], "\[Rule]", 
+            RowBox[{"x", "+", 
+             RowBox[{"I", " ", "y"}]}]}]}], "//", "ExpandAll"}], "//", 
+         "Simplify"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"anal1", "[", 
+       RowBox[{"x_", ",", "y_"}], "]"}], "=", 
+      RowBox[{
+       RowBox[{"Re", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Derivative", "[", 
+           RowBox[{"1", ",", "0"}], "]"}], "[", "f", "]"}], "[", 
+         RowBox[{"x", ",", "y"}], "]"}], "]"}], "-", 
+       RowBox[{"Im", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Derivative", "[", 
+           RowBox[{"0", ",", "1"}], "]"}], "[", "f", "]"}], "[", 
+         RowBox[{"x", ",", "y"}], "]"}], "]"}]}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"anal2", "[", 
+       RowBox[{"x_", ",", "y_"}], "]"}], "=", 
+      RowBox[{
+       RowBox[{"Im", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Derivative", "[", 
+           RowBox[{"1", ",", "0"}], "]"}], "[", "f", "]"}], "[", 
+         RowBox[{"x", ",", "y"}], "]"}], "]"}], "+", 
+       RowBox[{"Re", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Derivative", "[", 
+           RowBox[{"0", ",", "1"}], "]"}], "[", "f", "]"}], "[", 
+         RowBox[{"x", ",", "y"}], "]"}], "]"}]}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"Plot3D", "[", 
+       RowBox[{
+        RowBox[{"anal1", "[", 
+         RowBox[{"x", ",", "y"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"x", ",", 
+          RowBox[{"Re", "[", 
+           RowBox[{
+           "v", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], "]"}],
+           ",", 
+          RowBox[{"Re", "[", 
+           RowBox[{"Last", "[", "v", "]"}], "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"y", ",", 
+          RowBox[{"Im", "[", 
+           RowBox[{
+           "v", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], "]"}],
+           ",", 
+          RowBox[{"Im", "[", 
+           RowBox[{"Last", "[", "v", "]"}], "]"}]}], "}"}], ",", "opts"}], 
+       "]"}], "//", "Print"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"Plot3D", "[", 
+      RowBox[{
+       RowBox[{"anal2", "[", 
+        RowBox[{"x", ",", "y"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", 
+         RowBox[{"Re", "[", 
+          RowBox[{"v", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}],
+           "]"}], ",", 
+         RowBox[{"Re", "[", 
+          RowBox[{"Last", "[", "v", "]"}], "]"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"y", ",", 
+         RowBox[{"Im", "[", 
+          RowBox[{"v", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}],
+           "]"}], ",", 
+         RowBox[{"Im", "[", 
+          RowBox[{"Last", "[", "v", "]"}], "]"}]}], "}"}], ",", "opts"}], 
+      "]"}]}]}], "\[IndentingNewLine]", "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"End", "[", "]"}], ";"}]}], "Input",
+ InitializationCell->True],
+
+Cell[BoxData["\[IndentingNewLine]"], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Table Plots", "Section"],
+
+Cell[CellGroupData[{
+
+Cell["ListLog and ListLogLog", "Subsection"],
+
+Cell[BoxData[{
+ RowBox[{"ListLineLogLogPlot", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"TableLogLogPlot", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ReImLogPlot", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"AbsLogPlot", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ReImTableLogPlot", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ReImListLinePlot", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ReImListLinePlot", ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ReImListLineLogPlot", ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"ReImListPlot", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ReImListLogPlot", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ReImListLineLogLogPlot", ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ReImListLogLogPlot", ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Begin", "[", "\"\<Private`\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"JoinedPlot", "=", "ListLinePlot"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"ListLineLogPlot", ",", "HoldFirst"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ListLineLogPlot", "[", 
+    RowBox[{"h_", ",", "opts___"}], "]"}], ":=", 
+   RowBox[{"ListLogPlot", "[", 
+    RowBox[{"h", ",", 
+     RowBox[{"Joined", "\[Rule]", "True"}], ",", "opts"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"ListLineLogLogPlot", ",", "HoldFirst"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ListLineLogLogPlot", "[", 
+     RowBox[{"h_", ",", "opts___"}], "]"}], ":=", 
+    RowBox[{"ListLogLogPlot", "[", 
+     RowBox[{"h", ",", 
+      RowBox[{"Joined", "\[Rule]", "True"}], ",", "opts"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]"}], "Input",
+ InitializationCell->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Table,TableLog", "Subsection"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"ThreadIfList", "[", 
+    RowBox[{"l", ":", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"_", ",", 
+         RowBox[{"{", 
+          RowBox[{"_", ",", "_"}], "}"}]}], "}"}], ".."}], "}"}]}], "]"}], ":=", 
+   RowBox[{"Thread", "[", 
+    RowBox[{"Thread", "/@", "l"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ThreadIfList", "[", "l_", "]"}], ":=", "l"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"TablePlot", ",", "HoldFirst"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"TablePlot", "[", 
+    RowBox[{"h_", ",", "sp_", ",", "opts___"}], "]"}], ":=", 
+   RowBox[{"ListLinePlot", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"First", "[", "sp", "]"}], ",", "h"}], "}"}], ",", "sp"}], 
+       "]"}], "//", "ThreadIfList"}], ",", "opts"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"TablePlot", "[", 
+    RowBox[{"hl_List", ",", "sp_", ",", "opts___"}], "]"}], ":=", 
+   RowBox[{"ListLinePlot", "[", 
+    RowBox[{
+     RowBox[{"Map", "[", 
+      RowBox[{
+       RowBox[{"Function", "[", 
+        RowBox[{"h", ",", 
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"First", "[", "sp", "]"}], ",", 
+             RowBox[{"ReleaseHold", "[", "h", "]"}]}], "}"}], ",", "sp"}], 
+          "]"}]}], "]"}], ",", 
+       RowBox[{"Thread", "[", 
+        RowBox[{"Hold", "[", "hl", "]"}], "]"}]}], "]"}], ",", "opts"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"TablePlot3D", ",", "HoldFirst"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"TablePlot3D", "[", 
+     RowBox[{"h_", ",", "sp1_", ",", "sp2_", ",", "opts___"}], "]"}], ":=", 
+    RowBox[{"ListPlot3D", "[", 
+     RowBox[{
+      RowBox[{"Flatten", "[", 
+       RowBox[{
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"First", "[", "sp1", "]"}], ",", 
+            RowBox[{"First", "[", "sp2", "]"}], ",", "h"}], "}"}], ",", "sp1",
+           ",", "sp2"}], "]"}], ",", "1"}], "]"}], ",", "opts"}], "]"}]}], 
+   ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"CArrayPlot", ",", "HoldFirst"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CArrayPlot", "[", 
+    RowBox[{"h_", ",", "sp_", ",", "opts___"}], "]"}], ":=", 
+   RowBox[{"ListLinePlot", "[", 
+    RowBox[{
+     RowBox[{"Array", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"#", ",", 
+          RowBox[{"h", "[", "#", "]"}]}], "}"}], "&"}], ",", "sp"}], "]"}], 
+     ",", "opts"}], "]"}]}], ";"}]}], "Input",
+ InitializationCell->True],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"TableLogPlot", ",", "HoldFirst"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"TableLogPlot", "[", 
+    RowBox[{"h_", ",", "sp_", ",", "opts___"}], "]"}], ":=", 
+   "\[IndentingNewLine]", 
+   RowBox[{"ListLineLogPlot", "[", 
+    RowBox[{
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"First", "[", "sp", "]"}], ",", "h"}], "}"}], ",", "sp"}], 
+      "]"}], ",", "opts"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"TableLogPlot", "[", 
+     RowBox[{"hl_List", ",", "sp_", ",", "opts___"}], "]"}], ":=", 
+    RowBox[{"ListLineLogPlot", "[", 
+     RowBox[{
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{"Function", "[", 
+         RowBox[{"h", ",", 
+          RowBox[{"Table", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"First", "[", "sp", "]"}], ",", 
+              RowBox[{"ReleaseHold", "[", "h", "]"}]}], "}"}], ",", "sp"}], 
+           "]"}]}], "]"}], ",", 
+        RowBox[{"Thread", "[", 
+         RowBox[{"Hold", "[", "hl", "]"}], "]"}]}], "]"}], ",", "opts"}], 
+     "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"TableLogLogPlot", ",", "HoldFirst"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"TableLogLogPlot", "[", 
+    RowBox[{"h_", ",", "sp_", ",", "opts___"}], "]"}], ":=", 
+   "\[IndentingNewLine]", 
+   RowBox[{"ListLineLogLogPlot", "[", 
+    RowBox[{
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"First", "[", "sp", "]"}], ",", "h"}], "}"}], ",", "sp"}], 
+      "]"}], ",", "opts"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"TableLogLogPlot", "[", 
+     RowBox[{"hl_List", ",", "sp_", ",", "opts___"}], "]"}], ":=", 
+    RowBox[{"ListLineLogLogPlot", "[", 
+     RowBox[{
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{"Function", "[", 
+         RowBox[{"h", ",", 
+          RowBox[{"Table", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"First", "[", "sp", "]"}], ",", 
+              RowBox[{"ReleaseHold", "[", "h", "]"}]}], "}"}], ",", "sp"}], 
+           "]"}]}], "]"}], ",", 
+        RowBox[{"Thread", "[", 
+         RowBox[{"Hold", "[", "hl", "]"}], "]"}]}], "]"}], ",", "opts"}], 
+     "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"ArrayLogPlot", ",", "HoldFirst"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ArrayLogPlot", "[", 
+    RowBox[{"h_", ",", "sp_", ",", "opts___"}], "]"}], ":=", 
+   RowBox[{"ListLineLogPlot", "[", 
+    RowBox[{
+     RowBox[{"Array", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"#", ",", 
+          RowBox[{"h", "[", "#", "]"}]}], "}"}], "&"}], ",", "sp"}], "]"}], 
+     ",", "opts"}], "]"}]}], ";"}]}], "Input",
+ InitializationCell->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["MonitorTable", "Subsection"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"MonitorTable", ",", "HoldFirst"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"MonitorTable", "[", 
+    RowBox[{"h_", ",", 
+     RowBox[{"{", 
+      RowBox[{"k_", ",", "i_", ",", "n_", ",", "sp_"}], "}"}], ",", "cmd_", 
+     ",", "opts___"}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"p", ",", "foo"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"foo", "[", "p_", "]"}], ":=", 
+       RowBox[{
+        RowBox[{"foo", "[", "p", "]"}], "=", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Hold", "[", "h", "]"}], "/.", 
+          RowBox[{"k", "\[Rule]", "p"}]}], "//", "ReleaseHold"}]}]}], ";", 
+      RowBox[{"Monitor", "[", 
+       RowBox[{
+        RowBox[{"cmd", "[", 
+         RowBox[{
+          RowBox[{"foo", "[", "p", "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"p", ",", "i", ",", "n", ",", "sp"}], "}"}], ",", "opts"}],
+          "]"}], ",", 
+        RowBox[{"cmd", "[", 
+         RowBox[{
+          RowBox[{"foo", "[", "k", "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"k", ",", "i", ",", "p", ",", "sp"}], "}"}], ",", "opts"}],
+          "]"}]}], "]"}]}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"MonitorTable", "[", 
+    RowBox[{"h_", ",", 
+     RowBox[{"{", 
+      RowBox[{"k_", ",", "i_", ",", "n_"}], "}"}], ",", "cmd_", ",", 
+     "opts___"}], "]"}], ":=", 
+   RowBox[{"MonitorTable", "[", 
+    RowBox[{"h", ",", 
+     RowBox[{"{", 
+      RowBox[{"k", ",", "i", ",", "n", ",", "1"}], "}"}], ",", "cmd", ",", 
+     "opts"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"MonitorTable", "[", 
+     RowBox[{"h_", ",", 
+      RowBox[{"{", 
+       RowBox[{"k_", ",", "n_"}], "}"}], ",", "cmd_", ",", "opts___"}], "]"}],
+     ":=", 
+    RowBox[{"MonitorTable", "[", 
+     RowBox[{"h", ",", 
+      RowBox[{"{", 
+       RowBox[{"k", ",", "1", ",", "n"}], "}"}], ",", "cmd", ",", "opts"}], 
+     "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"MonitorTableLogPlot", ",", "HoldFirst"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"MonitorTableLogPlot", "[", 
+    RowBox[{"h_", ",", "sp_", ",", "opts___"}], "]"}], ":=", 
+   RowBox[{"MonitorTable", "[", 
+    RowBox[{"h", ",", "sp", ",", "TableLogPlot"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"MonitorTablePlot", ",", "HoldFirst"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"MonitorTablePlot", "[", 
+    RowBox[{"h_", ",", "sp_", ",", "opts___"}], "]"}], ":=", 
+   RowBox[{"MonitorTable", "[", 
+    RowBox[{"h", ",", "sp", ",", "TablePlot"}], "]"}]}], ";"}]}], "Input",
+ InitializationCell->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["ReIm Plots", "Subsection"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"AbsLogPlot", ",", "HoldFirst"}], "]"}], ";", 
+  RowBox[{
+   RowBox[{"AbsLogPlot", "[", 
+    RowBox[{"h_", ",", "sp_", ",", "opts___"}], "]"}], ":=", 
+   RowBox[{"LogPlot", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"h", ",", 
+       RowBox[{"-", "h"}]}], "}"}], ",", "sp", ",", "opts"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"ReImLogPlot", ",", "HoldFirst"}], "]"}], ";", 
+  RowBox[{
+   RowBox[{"ReImLogPlot", "[", 
+    RowBox[{"h_", ",", "sp_", ",", "opts___"}], "]"}], ":=", 
+   RowBox[{"LogPlot", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Re", "[", "h", "]"}], ",", 
+       RowBox[{"-", 
+        RowBox[{"Re", "[", "h", "]"}]}], ",", 
+       RowBox[{"Im", "[", "h", "]"}], ",", 
+       RowBox[{"-", 
+        RowBox[{"Im", "[", "h", "]"}]}]}], "}"}], ",", "sp", ",", "opts"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"ReImPlot", ",", "HoldFirst"}], "]"}], ";", 
+  RowBox[{
+   RowBox[{"ReImPlot", "[", 
+    RowBox[{"h_", ",", "sp_", ",", "opts___"}], "]"}], ":=", 
+   RowBox[{"Plot", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Re", "[", "h", "]"}], ",", 
+       RowBox[{"Im", "[", "h", "]"}]}], "}"}], ",", "sp", ",", "opts"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"ReImTablePlot", ",", "HoldFirst"}], "]"}], ";", 
+  RowBox[{
+   RowBox[{"ReImTablePlot", "[", 
+    RowBox[{"h_", ",", "sp_", ",", "opts___"}], "]"}], ":=", 
+   RowBox[{"TablePlot", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Re", "[", "h", "]"}], ",", 
+       RowBox[{"Im", "[", "h", "]"}]}], "}"}], ",", "sp", ",", "opts"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"ReImTableLogPlot", ",", "HoldFirst"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ReImTableLogPlot", "[", 
+    RowBox[{"h_", ",", "sp_", ",", "opts___"}], "]"}], ":=", 
+   RowBox[{"TablePlot", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Re", "[", "h", "]"}], ",", 
+       RowBox[{"-", 
+        RowBox[{"Re", "[", "h", "]"}]}], ",", 
+       RowBox[{"Im", "[", "h", "]"}], ",", 
+       RowBox[{"-", 
+        RowBox[{"Im", "[", "h", "]"}]}]}], "}"}], ",", "sp", ",", "opts"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ReImListLinePlot", "[", 
+     RowBox[{"h_List", ",", "opts___"}], "]"}], "/;", 
+    RowBox[{
+     RowBox[{"Depth", "[", "h", "]"}], ">", "2"}]}], ":=", 
+   RowBox[{"ListLinePlot", "[", 
+    RowBox[{
+     RowBox[{"Thread", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+            "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
+            
+            RowBox[{"Re", "[", 
+             RowBox[{
+             "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+             "]"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+            "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
+            
+            RowBox[{"Im", "[", 
+             RowBox[{
+             "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+             "]"}]}], "}"}]}], "}"}], "&"}], "/@", "h"}], "]"}], ",", 
+     "opts"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ReImListLinePlot", "[", 
+    RowBox[{"h_List", ",", "opts___"}], "]"}], ":=", 
+   RowBox[{"ListLinePlot", "[", 
+    RowBox[{
+     RowBox[{"Thread", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Re", "[", "#", "]"}], ",", 
+          RowBox[{"Im", "[", "#", "]"}]}], "}"}], "&"}], "/@", "h"}], "]"}], 
+     ",", "opts"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ReImListLineLogPlot", "[", 
+     RowBox[{"h_List", ",", "opts___"}], "]"}], "/;", 
+    RowBox[{
+     RowBox[{"Depth", "[", "h", "]"}], ">", "2"}]}], ":=", 
+   RowBox[{"ListLineLogPlot", "[", 
+    RowBox[{
+     RowBox[{"Thread", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+            "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
+            
+            RowBox[{"Max", "[", 
+             RowBox[{"0", ",", 
+              RowBox[{"Re", "[", 
+               RowBox[{
+               "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+               "]"}]}], "]"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+            "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
+            
+            RowBox[{"Max", "[", 
+             RowBox[{"0", ",", 
+              RowBox[{"-", 
+               RowBox[{"Re", "[", 
+                RowBox[{
+                "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+                "]"}]}]}], "]"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+            "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
+            
+            RowBox[{"Max", "[", 
+             RowBox[{"0", ",", 
+              RowBox[{"Im", "[", 
+               RowBox[{
+               "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+               "]"}]}], "]"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+            "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
+            
+            RowBox[{"Max", "[", 
+             RowBox[{"0", ",", 
+              RowBox[{"-", 
+               RowBox[{"Im", "[", 
+                RowBox[{
+                "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+                "]"}]}]}], "]"}]}], "}"}]}], "}"}], "&"}], "/@", "h"}], "]"}],
+      ",", "opts"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ReImListLineLogPlot", "[", 
+     RowBox[{"h_List", ",", "opts___"}], "]"}], ":=", 
+    RowBox[{"ListLineLogPlot", "[", 
+     RowBox[{
+      RowBox[{"Thread", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"Max", "[", 
+            RowBox[{"0", ",", 
+             RowBox[{"Re", "[", "#", "]"}]}], "]"}], ",", 
+           RowBox[{"Max", "[", 
+            RowBox[{"0", ",", 
+             RowBox[{"-", 
+              RowBox[{"Re", "[", "#", "]"}]}]}], "]"}], ",", 
+           RowBox[{"Max", "[", 
+            RowBox[{"0", ",", 
+             RowBox[{"Im", "[", "#", "]"}]}], "]"}], ",", 
+           RowBox[{"Max", "[", 
+            RowBox[{"0", ",", 
+             RowBox[{"-", 
+              RowBox[{"Im", "[", "#", "]"}]}]}], "]"}]}], "}"}], "&"}], "/@", 
+        "h"}], "]"}], ",", "opts"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ReImListPlot", "[", 
+     RowBox[{"h_List", ",", "opts___"}], "]"}], "/;", 
+    RowBox[{
+     RowBox[{"Depth", "[", "h", "]"}], ">", "2"}]}], ":=", 
+   RowBox[{"ListPlot", "[", 
+    RowBox[{
+     RowBox[{"Thread", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+            "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
+            
+            RowBox[{"Re", "[", 
+             RowBox[{
+             "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+             "]"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+            "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
+            
+            RowBox[{"Im", "[", 
+             RowBox[{
+             "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+             "]"}]}], "}"}]}], "}"}], "&"}], "/@", "h"}], "]"}], ",", 
+     "opts"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ReImListPlot", "[", 
+    RowBox[{"h_List", ",", "opts___"}], "]"}], ":=", 
+   RowBox[{"ListPlot", "[", 
+    RowBox[{
+     RowBox[{"Thread", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Re", "[", "#", "]"}], ",", 
+          RowBox[{"Im", "[", "#", "]"}]}], "}"}], "&"}], "/@", "h"}], "]"}], 
+     ",", "opts"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ReImListLogPlot", "[", 
+     RowBox[{"h_List", ",", "opts___"}], "]"}], "/;", 
+    RowBox[{
+     RowBox[{"Depth", "[", "h", "]"}], ">", "2"}]}], ":=", 
+   RowBox[{"ListLogPlot", "[", 
+    RowBox[{
+     RowBox[{"Thread", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+            "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
+            
+            RowBox[{"Max", "[", 
+             RowBox[{"0", ",", 
+              RowBox[{"Re", "[", 
+               RowBox[{
+               "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+               "]"}]}], "]"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+            "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
+            
+            RowBox[{"Max", "[", 
+             RowBox[{"0", ",", 
+              RowBox[{"-", 
+               RowBox[{"Re", "[", 
+                RowBox[{
+                "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+                "]"}]}]}], "]"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+            "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
+            
+            RowBox[{"Max", "[", 
+             RowBox[{"0", ",", 
+              RowBox[{"Im", "[", 
+               RowBox[{
+               "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+               "]"}]}], "]"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+            "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
+            
+            RowBox[{"Max", "[", 
+             RowBox[{"0", ",", 
+              RowBox[{"-", 
+               RowBox[{"Im", "[", 
+                RowBox[{
+                "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+                "]"}]}]}], "]"}]}], "}"}]}], "}"}], "&"}], "/@", "h"}], "]"}],
+      ",", "opts"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ReImListLogPlot", "[", 
+     RowBox[{"h_List", ",", "opts___"}], "]"}], ":=", 
+    RowBox[{"ListLogPlot", "[", 
+     RowBox[{
+      RowBox[{"Thread", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"Max", "[", 
+            RowBox[{"0", ",", 
+             RowBox[{"Re", "[", "#", "]"}]}], "]"}], ",", 
+           RowBox[{"Max", "[", 
+            RowBox[{"0", ",", 
+             RowBox[{"-", 
+              RowBox[{"Re", "[", "#", "]"}]}]}], "]"}], ",", 
+           RowBox[{"Max", "[", 
+            RowBox[{"0", ",", 
+             RowBox[{"Im", "[", "#", "]"}]}], "]"}], ",", 
+           RowBox[{"Max", "[", 
+            RowBox[{"0", ",", 
+             RowBox[{"-", 
+              RowBox[{"Im", "[", "#", "]"}]}]}], "]"}]}], "}"}], "&"}], "/@", 
+        "h"}], "]"}], ",", "opts"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ReImListLineLogLogPlot", "[", 
+     RowBox[{"h_List", ",", "opts___"}], "]"}], "/;", 
+    RowBox[{
+     RowBox[{"Depth", "[", "h", "]"}], ">", "2"}]}], ":=", 
+   RowBox[{"ListLineLogLogPlot", "[", 
+    RowBox[{
+     RowBox[{"Thread", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+            "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
+            
+            RowBox[{"Max", "[", 
+             RowBox[{"0", ",", 
+              RowBox[{"Re", "[", 
+               RowBox[{
+               "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+               "]"}]}], "]"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+            "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
+            
+            RowBox[{"Max", "[", 
+             RowBox[{"0", ",", 
+              RowBox[{"-", 
+               RowBox[{"Re", "[", 
+                RowBox[{
+                "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+                "]"}]}]}], "]"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+            "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
+            
+            RowBox[{"Max", "[", 
+             RowBox[{"0", ",", 
+              RowBox[{"Im", "[", 
+               RowBox[{
+               "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+               "]"}]}], "]"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+            "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
+            
+            RowBox[{"Max", "[", 
+             RowBox[{"0", ",", 
+              RowBox[{"-", 
+               RowBox[{"Im", "[", 
+                RowBox[{
+                "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+                "]"}]}]}], "]"}]}], "}"}]}], "}"}], "&"}], "/@", "h"}], "]"}],
+      ",", "opts"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ReImListLineLogLogPlot", "[", 
+     RowBox[{"h_List", ",", "opts___"}], "]"}], ":=", 
+    RowBox[{"ListLineLogLogPlot", "[", 
+     RowBox[{
+      RowBox[{"Thread", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"Max", "[", 
+            RowBox[{"0", ",", 
+             RowBox[{"Re", "[", "#", "]"}]}], "]"}], ",", 
+           RowBox[{"Max", "[", 
+            RowBox[{"0", ",", 
+             RowBox[{"-", 
+              RowBox[{"Re", "[", "#", "]"}]}]}], "]"}], ",", 
+           RowBox[{"Max", "[", 
+            RowBox[{"0", ",", 
+             RowBox[{"Im", "[", "#", "]"}]}], "]"}], ",", 
+           RowBox[{"Max", "[", 
+            RowBox[{"0", ",", 
+             RowBox[{"-", 
+              RowBox[{"Im", "[", "#", "]"}]}]}], "]"}]}], "}"}], "&"}], "/@", 
+        "h"}], "]"}], ",", "opts"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"ReImListLogLogPlot", "[", 
+     RowBox[{"h_List", ",", "opts___"}], "]"}], "/;", 
+    RowBox[{
+     RowBox[{"Depth", "[", "h", "]"}], ">", "2"}]}], ":=", 
+   RowBox[{"ListLogLogPlot", "[", 
+    RowBox[{
+     RowBox[{"Thread", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+            "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
+            
+            RowBox[{"Max", "[", 
+             RowBox[{"0", ",", 
+              RowBox[{"Re", "[", 
+               RowBox[{
+               "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+               "]"}]}], "]"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+            "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
+            
+            RowBox[{"Max", "[", 
+             RowBox[{"0", ",", 
+              RowBox[{"-", 
+               RowBox[{"Re", "[", 
+                RowBox[{
+                "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+                "]"}]}]}], "]"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+            "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
+            
+            RowBox[{"Max", "[", 
+             RowBox[{"0", ",", 
+              RowBox[{"Im", "[", 
+               RowBox[{
+               "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+               "]"}]}], "]"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+            "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
+            
+            RowBox[{"Max", "[", 
+             RowBox[{"0", ",", 
+              RowBox[{"-", 
+               RowBox[{"Im", "[", 
+                RowBox[{
+                "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+                "]"}]}]}], "]"}]}], "}"}]}], "}"}], "&"}], "/@", "h"}], "]"}],
+      ",", "opts"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ReImListLogLogPlot", "[", 
+    RowBox[{"h_List", ",", "opts___"}], "]"}], ":=", 
+   RowBox[{"ListLogLogPlot", "[", 
+    RowBox[{
+     RowBox[{"Thread", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Max", "[", 
+           RowBox[{"0", ",", 
+            RowBox[{"Re", "[", "#", "]"}]}], "]"}], ",", 
+          RowBox[{"Max", "[", 
+           RowBox[{"0", ",", 
+            RowBox[{"-", 
+             RowBox[{"Re", "[", "#", "]"}]}]}], "]"}], ",", 
+          RowBox[{"Max", "[", 
+           RowBox[{"0", ",", 
+            RowBox[{"Im", "[", "#", "]"}]}], "]"}], ",", 
+          RowBox[{"Max", "[", 
+           RowBox[{"0", ",", 
+            RowBox[{"-", 
+             RowBox[{"Im", "[", "#", "]"}]}]}], "]"}]}], "}"}], "&"}], "/@", 
+       "h"}], "]"}], ",", "opts"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]"}], "Input",
+ InitializationCell->True]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Eigenplots", "Section"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"EigenballPlot", "[", 
+   RowBox[{"A_", ",", "opts___"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"n", ",", "i", ",", "j"}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"n", "=", 
+      RowBox[{"Length", "[", "A", "]"}]}], ";", 
+     RowBox[{"Show", "[", 
+      RowBox[{
+       RowBox[{"Graphics", "[", 
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"Circle", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Re", "[", 
+               RowBox[{"A", "[", 
+                RowBox[{"[", 
+                 RowBox[{"i", ",", "i"}], "]"}], "]"}], "]"}], ",", 
+              RowBox[{"Im", "[", 
+               RowBox[{"A", "[", 
+                RowBox[{"[", 
+                 RowBox[{"i", ",", "i"}], "]"}], "]"}], "]"}]}], "}"}], ",", 
+            RowBox[{
+             RowBox[{
+              UnderoverscriptBox["\[Sum]", 
+               RowBox[{"j", "=", "1"}], 
+               RowBox[{"i", "-", "1"}]], 
+              RowBox[{"Abs", "[", 
+               RowBox[{"A", "[", 
+                RowBox[{"[", 
+                 RowBox[{"i", ",", "j"}], "]"}], "]"}], "]"}]}], "+", 
+             RowBox[{
+              UnderoverscriptBox["\[Sum]", 
+               RowBox[{"j", "=", 
+                RowBox[{"i", "+", "1"}]}], "n"], 
+              RowBox[{"Abs", "[", 
+               RowBox[{"A", "[", 
+                RowBox[{"[", 
+                 RowBox[{"i", ",", "j"}], "]"}], "]"}], "]"}]}]}]}], "]"}], 
+          ",", 
+          RowBox[{"{", 
+           RowBox[{"i", ",", "n"}], "}"}]}], "]"}], "]"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Graphics", "[", 
+        RowBox[{"Map", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Point", "[", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Re", "[", "#", "]"}], ",", 
+              RowBox[{"Im", "[", "#", "]"}]}], "}"}], "]"}], "&"}], ",", 
+          RowBox[{"Eigenvalues", "[", "A", "]"}]}], "]"}], 
+        "\[IndentingNewLine]", "]"}], ",", 
+       RowBox[{"Axes", "\[Rule]", "Automatic"}], ",", "opts"}], "]"}]}]}], 
+   "\[IndentingNewLine]", "]"}]}]], "Input",
+ InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Dot Plot", "Section"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"DotPlot", "[", 
+    RowBox[{"pts_", ",", 
+     RowBox[{"opts", ":", 
+      RowBox[{"OptionsPattern", "[", "ListPlot", "]"}]}]}], "]"}], ":=", 
+   RowBox[{"ListPlot", "[", 
+    RowBox[{
+     RowBox[{"Map", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"#", ",", "0"}], "}"}], "&"}], ",", "pts"}], "]"}], ",", 
+     RowBox[{"Axes", "\[Rule]", "False"}], ",", "opts"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ComplexDotPlot", "[", 
+    RowBox[{"pts_", ",", 
+     RowBox[{"opts", ":", 
+      RowBox[{"OptionsPattern", "[", "ListPlot", "]"}]}]}], "]"}], ":=", 
+   RowBox[{"ListPlot", "[", 
+    RowBox[{
+     RowBox[{"Map", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Re", "[", "#", "]"}], ",", 
+          RowBox[{"Im", "[", "#", "]"}]}], "}"}], "&"}], ",", "pts"}], "]"}], 
+     ",", 
+     RowBox[{"PlotStyle", "\[Rule]", 
+      RowBox[{"Join", "[", 
+       RowBox[{
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"OptionValue", "[", "PlotStyle", "]"}], "===", 
+           "Automatic"}], ",", 
+          RowBox[{"{", "}"}], ",", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"OptionValue", "[", "PlotStyle", "]"}], "}"}], "//", 
+           "Flatten"}]}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"PointSize", "[", "Large", "]"}], "}"}]}], "]"}]}], ",", 
+     "opts"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ComplexLinePlot", "[", 
+    RowBox[{"pts_", ",", 
+     RowBox[{"opts", ":", 
+      RowBox[{"OptionsPattern", "[", "ListLinePlot", "]"}]}]}], "]"}], ":=", 
+   RowBox[{"ListLinePlot", "[", 
+    RowBox[{
+     RowBox[{"Map", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Re", "[", "#", "]"}], ",", 
+          RowBox[{"Im", "[", "#", "]"}]}], "}"}], "&"}], ",", "pts"}], "]"}], 
+     ",", "opts"}], "]"}]}], ";"}]}], "Input",
+ InitializationCell->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Movies", "Section"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"Options", "[", "MoviePlot", "]"}], "=", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Plotter", "\[Rule]", "Plot"}], ",", 
+      RowBox[{"Frames", "\[Rule]", "15"}]}], "}"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"MoviePlot", "[", 
+   RowBox[{"f_", ",", "boundsAndOpts__"}], "]"}], ":=", "\[IndentingNewLine]",
+   "\t", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "bounds", ",", "opts", ",", "plotter", ",", "var", ",", "a", ",", "b", 
+      ",", "t", ",", "h", ",", "frames", ",", "plotrange"}], "}"}], ",", 
+    "\[IndentingNewLine]", "\t", 
+    RowBox[{
+     RowBox[{"bounds", "=", 
+      RowBox[{"Select", "[", 
+       RowBox[{
+        RowBox[{"{", "boundsAndOpts", "}"}], ",", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"Head", "[", "#", "]"}], "\[Equal]", "List"}], ")"}], 
+         "&"}]}], "]"}]}], ";", "\[IndentingNewLine]", "\t", 
+     RowBox[{"opts", "=", 
+      RowBox[{"Select", "[", 
+       RowBox[{
+        RowBox[{"{", "boundsAndOpts", "}"}], ",", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"Head", "[", "#", "]"}], "=!=", "List"}], ")"}], "&"}]}], 
+       "]"}]}], ";", "\[IndentingNewLine]", "\t", 
+     RowBox[{"plotter", "=", 
+      RowBox[{
+       RowBox[{"Plotter", "/.", "opts"}], "/.", 
+       RowBox[{"Options", "[", "MoviePlot", "]"}]}]}], ";", 
+     "\[IndentingNewLine]", "\t", 
+     RowBox[{"frames", "=", 
+      RowBox[{
+       RowBox[{"Frames", "/.", "opts"}], "/.", 
+       RowBox[{"Options", "[", "MoviePlot", "]"}]}]}], ";", 
+     "\[IndentingNewLine]", "\[IndentingNewLine]", "\t", 
+     RowBox[{"opts", "=", 
+      RowBox[{"Select", "[", 
+       RowBox[{"opts", ",", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"First", "[", "#", "]"}], "=!=", "Plotter"}], " ", "&&", 
+           RowBox[{
+            RowBox[{"First", "[", "#", "]"}], "=!=", "Frames"}]}], ")"}], 
+         "&"}]}], "]"}]}], ";", "\[IndentingNewLine]", "\t", 
+     "\[IndentingNewLine]", "\t", 
+     RowBox[{"var", "=", 
+      RowBox[{"First", "[", 
+       RowBox[{"First", "[", "bounds", "]"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", "\t", 
+     RowBox[{"a", "=", 
+      RowBox[{
+       RowBox[{"First", "[", "bounds", "]"}], "[", 
+       RowBox[{"[", "2", "]"}], "]"}]}], ";", "\[IndentingNewLine]", "\t", 
+     RowBox[{"b", "=", 
+      RowBox[{"Last", "[", 
+       RowBox[{"First", "[", "bounds", "]"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", "\t", 
+     RowBox[{"h", "=", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"b", "-", "a"}], ")"}], "/", "frames"}]}], ";", 
+     "\[IndentingNewLine]", "\[IndentingNewLine]", "\t", 
+     RowBox[{"plotrange", "=", 
+      RowBox[{"PlotRange", "/.", 
+       RowBox[{"AbsoluteOptions", "[", 
+        RowBox[{"plotter", "[", 
+         RowBox[{"f", ",", 
+          RowBox[{"Evaluate", "[", 
+           RowBox[{"First", "[", "bounds", "]"}], "]"}], ",", 
+          RowBox[{"Evaluate", "[", 
+           RowBox[{"Apply", "[", 
+            RowBox[{"Sequence", ",", "opts"}], "]"}], "]"}]}], "]"}], 
+        "]"}]}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", "\t", 
+     RowBox[{"opts", "=", 
+      RowBox[{"Select", "[", 
+       RowBox[{"opts", ",", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"First", "[", "#", "]"}], "=!=", "PlotRange"}], " ", ")"}],
+          "&"}]}], "]"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]",
+      "\[IndentingNewLine]", "\[IndentingNewLine]", "\t", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"plotter", "[", 
+        RowBox[{"f", ",", 
+         RowBox[{"Evaluate", "[", 
+          RowBox[{"{", 
+           RowBox[{"var", ",", "a", ",", "t"}], "}"}], "]"}], ",", 
+         RowBox[{"PlotRange", "\[Rule]", "plotrange"}], ",", 
+         RowBox[{"Evaluate", "[", 
+          RowBox[{"Apply", "[", 
+           RowBox[{"Sequence", ",", "opts"}], "]"}], "]"}]}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"t", ",", 
+         RowBox[{"a", "+", "h"}], ",", "b", ",", "h"}], "}"}]}], "]"}]}]}], 
+   "\[IndentingNewLine]", "]"}]}]}], "Input",
+ InitializationCell->True],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", "\[IndentingNewLine]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Simplex", "[", "2", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"x", ",", "y"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"x", "+", "y"}], "\[LessEqual]", "1"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", "0", ",", "1"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"y", ",", "0", ",", "1"}], "}"}]}], "}"}]}], "]"}]}]], "Input",
+ 
+ InitializationCell->True],
+
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"*", 
+     RowBox[{"Options", "[", "MapPlot", "]"}]}], "=", 
+    RowBox[{"Options", "[", "Show", "]"}]}], ";", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"MapPlot", "[", 
+     RowBox[{"T_", ",", "s_", ",", "opts___"}], "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", "\t", 
+      RowBox[{"Show", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"InequalityPlot", "[", 
+          RowBox[{
+           RowBox[{"Apply", "[", 
+            RowBox[{"Sequence", ",", "s"}], "]"}], ",", 
+           RowBox[{"DisplayFunction", "\[Rule]", "Identity"}]}], "]"}], "/.", 
+         
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Line", "[", "x_", "]"}], "\[RuleDelayed]", 
+            RowBox[{"Line", "[", 
+             RowBox[{"Map", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"Apply", "[", 
+                  RowBox[{"T", ",", "#"}], "]"}], ")"}], "&"}], ",", "x"}], 
+              "]"}], "]"}]}], ",", 
+           RowBox[{
+            RowBox[{"Polygon", "[", "x_", "]"}], "\[RuleDelayed]", 
+            RowBox[{"Polygon", "[", 
+             RowBox[{"Map", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"Apply", "[", 
+                  RowBox[{"T", ",", "#"}], "]"}], ")"}], "&"}], ",", "x"}], 
+              "]"}], "]"}]}]}], "}"}]}], "\[IndentingNewLine]", ",", 
+        RowBox[{"DisplayFunction", "\[Rule]", "$DisplayFunction"}], ",", 
+        "opts"}], "]"}]}], "\[IndentingNewLine]", "]"}]}]}], " ", 
+  "**)"}]], "Input"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"Options", "[", "MapPlot", "]"}], "=", 
+   RowBox[{"Options", "[", "Show", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"MapPlot", "[", 
+    RowBox[{"T_", ",", "_", ",", 
+     RowBox[{"n_:", "40"}], ",", "opts___"}], "]"}], ":=", 
+   RowBox[{"FilledListPlot", "[", 
+    RowBox[{
+     RowBox[{"Join", "[", 
+      RowBox[{
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"T", "[", 
+          RowBox[{
+           RowBox[{"1", "-", "x"}], ",", "x"}], "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", "0", ",", "1", ",", 
+           RowBox[{"1", "/", "n"}]}], "}"}]}], "]"}], ",", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"T", "[", 
+          RowBox[{"0", ",", 
+           RowBox[{"1", "-", "x"}]}], "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", "0", ",", "1", ",", 
+           RowBox[{"1", "/", "n"}]}], "}"}]}], "]"}], ",", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"T", "[", 
+          RowBox[{"x", ",", "0"}], "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", "0", ",", "1", ",", 
+           RowBox[{"1", "/", "n"}]}], "}"}]}], "]"}]}], "]"}], ",", "opts"}], 
+    "]"}]}], ";"}]}], "Input"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Fonts", "Section"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"DefaultFontSize", "=", "12"}], ";", 
+  RowBox[{"$TextStyle", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"FontFamily", "\[Rule]", "\"\<Cmr12\>\""}], ",", 
+     RowBox[{"FontSize", "\[Rule]", "DefaultFontSize"}]}], "}"}]}], ";", 
+  RowBox[{
+   RowBox[{"RomanFont", "[", 
+    RowBox[{"str_", ",", 
+     RowBox[{"size_", ":", "DefaultFontSize"}]}], "]"}], ":=", 
+   TagBox[
+    FormBox[
+     RowBox[{"Style", "[", 
+      RowBox[{"str", ",", 
+       RowBox[{"FontFamily", "\[Rule]", "\"\<Cmr12\>\""}], ",", 
+       RowBox[{"FontSize", "\[Rule]", "size"}]}], "]"}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ItalicFont", "[", 
+    RowBox[{"str_", ",", 
+     RowBox[{"size_", ":", "DefaultFontSize"}]}], "]"}], ":=", 
+   TagBox[
+    FormBox[
+     RowBox[{"Style", "[", 
+      RowBox[{"str", ",", 
+       RowBox[{"FontFamily", "\[Rule]", "\"\<Cmmi12\>\""}], ",", 
+       RowBox[{"FontSize", "\[Rule]", "size"}]}], "]"}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True]}], ";"}]}], "Input",
+ InitializationCell->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["PsuedoSpectra", "Section"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"PseudospectraPlot", "[", 
+    RowBox[{"M_", ",", 
+     RowBox[{"zmin_:", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "1."}], "-", 
+        RowBox[{"1.", "I"}]}], ")"}]}], ",", 
+     RowBox[{"zmax_:", 
+      RowBox[{"(", 
+       RowBox[{"1.", "+", 
+        RowBox[{"1.", " ", "I"}]}], ")"}]}], ",", 
+     RowBox[{"h_:", ".1"}]}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"Flatten", "[", 
+     RowBox[{
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"x", ",", "y", ",", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"M", "-", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"x", "+", 
+                  RowBox[{"I", " ", "y"}]}], ")"}], " ", 
+                RowBox[{"IdentityMatrix", "[", 
+                 RowBox[{"M", "//", "Length"}], "]"}]}]}], "//", 
+              "SingularValueDecomposition"}], "//", 
+             RowBox[{
+              RowBox[{
+              "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+              "&"}]}], "//", "Diagonal"}], "//", "Min"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"x", ",", 
+          RowBox[{"zmin", "//", "Re"}], ",", 
+          RowBox[{"zmax", "//", "Re"}], ",", "h"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"y", ",", 
+          RowBox[{"zmin", "//", "Im"}], ",", 
+          RowBox[{"zmax", "//", "Im"}], ",", "h"}], "}"}]}], "]"}], ",", 
+      "1"}], "]"}], "//", "ListContourPlot"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SVDPlot", "[", 
+    RowBox[{"m_", ",", "opts___"}], "]"}], ":=", 
+   RowBox[{"ComplexDotPlot", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"m", "//", "SVD"}], "//", "Second"}], "//", "Diagonal"}], ",", 
+     "opts"}], "]"}]}], ";"}]}], "Input",
+ InitializationCell->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Finish", "Section"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"EndPackage", "[", "]"}], ";"}]}], "Input",
+ InitializationCell->True]
+}, Open  ]]
+},
+AutoGeneratedPackage->Automatic,
+WindowSize->{520, 644},
+WindowMargins->{{Automatic, 347}, {Automatic, 32}},
+PrivateNotebookOptions->{"FileOutlineCache"->False},
+TrackCellChangeTimes->False,
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 23, \
+2011)",
+StyleDefinitions->"Default.nb"
+]
+

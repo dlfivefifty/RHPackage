@@ -1,0 +1,279 @@
+Notebook[{
+Cell["\<\
+\[Copyright] Sheehan Olver, 2010, subject to BSD license.
+
+Other contributors include Georg Wechslberger.
+
+FredholmDet is based on code by Folkmar Bornemann.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell["Setup", "Section"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"BeginPackage", "[", 
+   RowBox[{"\"\<RiemannHilbert`RandomMatrices`\>\"", ",", 
+    RowBox[{"{", 
+     RowBox[{
+     "\"\<RiemannHilbert`\>\"", ",", "\"\<RiemannHilbert`Common`\>\""}], 
+     "}"}]}], "]"}], ";"}]], "Input",
+ InitializationCell->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Documentation", "Section"],
+
+Cell[BoxData[{
+ RowBox[{"PlotEquilibriumMeasure", ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"EquilibriumMeasureSupport", "::", "usage"}], "=", 
+   "\"\<EquilibriumMeasureSupport[V] Computes the support of the equilibrium \
+measure (currently only for convex V\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"EquilibriumMeasure", "::", "usage"}], "=", 
+   "\"\<EquilibriumMeasure[V,x] Computes the equilibrium measure at a point x \
+inside the support\>\""}], ";"}]}], "Input",
+ InitializationCell->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Functions", "Section"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Begin", "[", "\"\<Private`\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"EquilibriumMeasureSupport", "[", 
+    RowBox[{"V_", ",", 
+     RowBox[{"retin_:", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", "1"}], ",", "1"}], "}"}]}]}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"ret", ",", "retold", ",", "F", ",", "J"}], "}"}], ",", "\n", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"F", "[", 
+        RowBox[{"{", 
+         RowBox[{"a_", ",", "b_"}], "}"}], "]"}], ":=", 
+       RowBox[{"Module", "[", 
+        RowBox[{
+         RowBox[{"{", "Vf", "}"}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"Vf", "=", 
+           RowBox[{"Fun", "[", 
+            RowBox[{"V", ",", 
+             RowBox[{"Line", "[", 
+              RowBox[{"{", 
+               RowBox[{"a", ",", "b"}], "}"}], "]"}]}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"DCT", "[", 
+              RowBox[{"Vf", "'"}], "]"}], "\[LeftDoubleBracket]", "1", 
+             "\[RightDoubleBracket]"}], ",", 
+            RowBox[{
+             RowBox[{
+              FractionBox[
+               RowBox[{"b", "-", "a"}], "8"], 
+              RowBox[{
+               RowBox[{"DCT", "[", 
+                RowBox[{"Vf", "'"}], "]"}], "\[LeftDoubleBracket]", "2", 
+               "\[RightDoubleBracket]"}]}], "-", "1"}]}], "}"}]}]}], "]"}]}], 
+      ";", "\n", 
+      RowBox[{
+       RowBox[{"J", "[", 
+        RowBox[{"{", 
+         RowBox[{"a_", ",", "b_"}], "}"}], "]"}], ":=", 
+       RowBox[{"Module", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"Vf", ",", "x"}], "}"}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"Vf", "=", 
+           RowBox[{"Fun", "[", 
+            RowBox[{"V", ",", 
+             RowBox[{"Line", "[", 
+              RowBox[{"{", 
+               RowBox[{"a", ",", "b"}], "}"}], "]"}]}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"x", "=", 
+           RowBox[{"IFun", "[", 
+            RowBox[{
+             RowBox[{"Points", "[", 
+              RowBox[{"UnitInterval", ",", 
+               RowBox[{"Length", "[", "Vf", "]"}]}], "]"}], ",", 
+             RowBox[{"Vf", "//", "Domain"}]}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"(", GridBox[{
+             {
+              RowBox[{
+               RowBox[{"DCT", "[", 
+                RowBox[{
+                 RowBox[{"(", 
+                  RowBox[{
+                   FractionBox["1", "2"], "-", 
+                   FractionBox["x", "2"]}], ")"}], 
+                 RowBox[{"Vf", "''"}]}], "]"}], "\[LeftDoubleBracket]", "1", 
+               "\[RightDoubleBracket]"}], 
+              RowBox[{
+               RowBox[{"DCT", "[", 
+                RowBox[{
+                 RowBox[{"(", 
+                  RowBox[{
+                   FractionBox["1", "2"], "+", 
+                   FractionBox["x", "2"]}], ")"}], 
+                 RowBox[{"Vf", "''"}]}], "]"}], "\[LeftDoubleBracket]", "1", 
+               "\[RightDoubleBracket]"}]},
+             {
+              RowBox[{
+               FractionBox["1", "8"], 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"(", 
+                   RowBox[{"b", "-", "a"}], ")"}], 
+                  RowBox[{
+                   RowBox[{"DCT", "[", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    FractionBox["1", "2"], "-", 
+                    FractionBox["x", "2"]}], ")"}], 
+                    RowBox[{"Vf", "''"}]}], "]"}], "\[LeftDoubleBracket]", 
+                   "2", "\[RightDoubleBracket]"}]}], "-", 
+                 RowBox[{
+                  RowBox[{"DCT", "[", 
+                   RowBox[{"Vf", "'"}], "]"}], "\[LeftDoubleBracket]", "2", 
+                  "\[RightDoubleBracket]"}]}], ")"}]}], 
+              RowBox[{
+               FractionBox["1", "8"], 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"(", 
+                   RowBox[{"b", "-", "a"}], ")"}], 
+                  RowBox[{
+                   RowBox[{"DCT", "[", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    FractionBox["1", "2"], "+", 
+                    FractionBox["x", "2"]}], ")"}], 
+                    RowBox[{"Vf", "''"}]}], "]"}], "\[LeftDoubleBracket]", 
+                   "2", "\[RightDoubleBracket]"}]}], "+", 
+                 RowBox[{
+                  RowBox[{"DCT", "[", 
+                   RowBox[{"Vf", "'"}], "]"}], "\[LeftDoubleBracket]", "2", 
+                  "\[RightDoubleBracket]"}]}], ")"}]}]}
+            }], ")"}]}]}], "\[IndentingNewLine]", "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"ret", "=", "retin"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"retold", "=", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"While", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Norm", "[", 
+          RowBox[{"ret", "-", "retold"}], "]"}], ">", "$MachineTolerance"}], 
+        ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"retold", "=", "ret"}], ";", "\[IndentingNewLine]", 
+         RowBox[{"ret", "=", 
+          RowBox[{"ret", "-", 
+           RowBox[{"LeastSquares", "[", 
+            RowBox[{
+             RowBox[{"J", "[", "ret", "]"}], ",", 
+             RowBox[{"F", "[", "ret", "]"}]}], "]"}]}]}], ";"}]}], 
+       "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"ret", "//", "Sort"}]}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"EquilibriumMeasure", "[", 
+    RowBox[{"V_", ",", 
+     RowBox[{"retin_:", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", "1"}], ",", "1"}], "}"}]}], ",", "x_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"-", 
+     FractionBox["1", 
+      RowBox[{"2", "\[Pi]"}]]}], 
+    RowBox[{"HilbertInverse", "[", 
+     RowBox[{
+      RowBox[{"IFun", "[", 
+       RowBox[{
+        RowBox[{"V", "'"}], ",", 
+        RowBox[{"Line", "[", 
+         RowBox[{"EquilibriumMeasureSupport", "[", 
+          RowBox[{"V", ",", "retin"}], "]"}], "]"}]}], "]"}], ",", "x"}], 
+     "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"PlotEquilibriumMeasure", "[", 
+    RowBox[{"V_", ",", 
+     RowBox[{"opts", ":", 
+      RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"supp", ",", "x", ",", "\[Psi]"}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"supp", "=", 
+       RowBox[{"EquilibriumMeasureSupport", "[", "V", "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"\[Psi]", "[", "x_", "]"}], "=", 
+       RowBox[{"EquilibriumMeasure", "[", 
+        RowBox[{"V", ",", "supp", ",", "x"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Plot", "[", 
+       RowBox[{
+        RowBox[{"\[Psi]", "[", "x", "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"x", ",", 
+          RowBox[{
+          "supp", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
+          RowBox[{
+          "supp", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}]}], 
+         "}"}], ",", "opts"}], "]"}]}]}], "]"}]}], ";"}]}], "Input",
+ InitializationCell->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Finish", "Section"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"EndPackage", "[", "]"}], ";"}]}], "Input",
+ InitializationCell->True]
+}, Open  ]]
+},
+AutoGeneratedPackage->Automatic,
+WindowSize->{839, 815},
+WindowMargins->{{12, Automatic}, {Automatic, 0}},
+PrivateNotebookOptions->{"FileOutlineCache"->False},
+ShowSelection->True,
+TrackCellChangeTimes->False,
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 23, \
+2011)",
+StyleDefinitions->"Default.nb"
+]
+

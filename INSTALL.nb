@@ -1,0 +1,177 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[      6562,        168]
+NotebookOptionsPosition[      5638,        138]
+NotebookOutlinePosition[      6359,        162]
+CellTagsIndexPosition[      6316,        159]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[TextData[{
+ "To install, add the folder RH to ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ "'s default path:"
+}], "Text",
+ CellChangeTimes->{{3.484026406919916*^9, 3.484026486555417*^9}, {
+  3.484026519923091*^9, 3.4840265371450987`*^9}, {3.484026582048707*^9, 
+  3.48402660140704*^9}, {3.484040588643384*^9, 3.484040668077141*^9}, {
+  3.484312978999209*^9, 3.484312979550518*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"AppendTo", "[", 
+   RowBox[{"$Path", ",", 
+    RowBox[{"NotebookDirectory", "[", "]"}]}], "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.4840264237036543`*^9, 3.484026433479053*^9}, {
+   3.484026542330701*^9, 3.484026546010311*^9}, 3.484040613210106*^9, 
+   3.484312975120537*^9}],
+
+Cell["Now load the package with the following command:", "Text",
+ CellChangeTimes->{{3.484026406919916*^9, 3.484026573599738*^9}}],
+
+Cell[BoxData[
+ RowBox[{"<<", "RiemannHilbert`"}]], "Input",
+ CellChangeTimes->{{3.484026574836755*^9, 3.484026577472653*^9}}],
+
+Cell["\<\
+To have the package available automatically, copy the RiemannHilbert folder to\
+\>", "Text",
+ CellChangeTimes->{{3.484026673979721*^9, 3.484026808381853*^9}, {
+  3.4840268842444468`*^9, 3.484026942832231*^9}, {3.4840269773846073`*^9, 
+  3.484026994710491*^9}, {3.4840270366729393`*^9, 3.484027065043089*^9}, {
+  3.484027132067938*^9, 3.484027186030307*^9}, {3.4840324265488253`*^9, 
+  3.48403243411388*^9}, {3.484040683430245*^9, 3.484040695894198*^9}, {
+  3.484223026879038*^9, 3.484223068937192*^9}}],
+
+Cell[BoxData[
+ RowBox[{"$UserBaseDirectory", "<>", "\"\</Applications/\>\""}]], "Input",
+ CellChangeTimes->{
+  3.484027045509845*^9, 3.48402746952704*^9, {3.484223043747429*^9, 
+   3.484223045211502*^9}}],
+
+Cell[TextData[{
+ "See ",
+ ButtonBox["Examples.nb",
+  BaseStyle->"Hyperlink",
+  ButtonData->{"Examples.nb", None}],
+ " for a tutorial and examples and Framework.pdf for a preprint describing \
+how the framework works.\n\nSee ",
+ ButtonBox["PainleveExamples.nb",
+  BaseStyle->"Hyperlink",
+  ButtonData->{"PainleveExamples.nb", None}],
+ " for examples of using the PainleveII routine."
+}], "Text",
+ CellChangeTimes->{{3.484026406919916*^9, 3.484026573599738*^9}, {
+  3.484026608294471*^9, 3.4840266344771147`*^9}, {3.484027445595642*^9, 
+  3.484027459962534*^9}, {3.484040877325564*^9, 3.48404089062999*^9}, {
+  3.48750263786552*^9, 3.487502683075746*^9}, {3.487502754026267*^9, 
+  3.487502754027186*^9}, {3.487502836600431*^9, 3.4875028472377357`*^9}, {
+  3.49422479652859*^9, 3.4942248307231007`*^9}, {3.494235455742846*^9, 
+  3.4942354564456367`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", "\[IndentingNewLine]"}]], "Input",
+ CellChangeTimes->{{3.484032064988543*^9, 3.4840320651240387`*^9}}],
+
+Cell[TextData[{
+ StyleBox["Acknowledgements",
+  FontSlant->"Italic"],
+ ":  The file \n\n\tRiemannHilbert/Data/McLeodSolution.txt \n\nis included \
+with permission from Michael Prahofer and Herbert Spohn, and is available \
+from \n\n\t",
+ ButtonBox["http://www-m5.ma.tum.de/KPZ/",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://www-m5.ma.tum.de/KPZ/"], None},
+  ButtonNote->"http://www-m5.ma.tum.de/KPZ/"],
+ "\n\t\nThe rest of the package was created by ",
+ ButtonBox["Sheehan Olver",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://www.comlab.ox.ac.uk/people/Sheehan.Olver/home.html"], None},
+  ButtonNote->"http://www.comlab.ox.ac.uk/people/Sheehan.Olver/home.html"],
+ ", and includes contributions from ",
+ ButtonBox["Georg Wechslberger",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://www-m4.ma.tum.de/pers/wechslberger/"], None},
+  ButtonNote->"http://www-m4.ma.tum.de/pers/wechslberger/"],
+ ". \n\nI thank:\n\n \[Bullet] Alex Barnett, with whom discussions helped \
+improve the speed of the package considerably\n \[Bullet] Folkmar Bornemann, \
+Andrew Dienstfrey, John Pearson, Tom Trogden & Georg Wechslberger, who either \
+tested the software or made helpful suggestions and comments and has made \
+many contributiions\n \[Bullet] The ",
+ StyleBox["chebfun",
+  FontSlant->"Italic"],
+ " team, as the design of this package is heavily influenced by the ",
+ StyleBox["chebfun",
+  FontSlant->"Italic"],
+ " project, which is available from\n \n \t",
+ ButtonBox["http://www.maths.ox.ac.uk/chebfun/",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://www.maths.ox.ac.uk/chebfun/"], None},
+  ButtonNote->"http://www.maths.ox.ac.uk/chebfun/"]
+}], "Text",
+ CellChangeTimes->{{3.484032017758155*^9, 3.4840323120483294`*^9}, {
+  3.484032349978703*^9, 3.484032377763812*^9}, {3.484032459147811*^9, 
+  3.48403248939153*^9}, {3.48403252309486*^9, 3.484032545833584*^9}, {
+  3.484040708733385*^9, 3.484040752321155*^9}, {3.484040808739687*^9, 
+  3.4840408124263353`*^9}, {3.484040849280189*^9, 3.484040851622963*^9}, {
+  3.484040911041193*^9, 3.484041011122643*^9}, {3.484222999701644*^9, 
+  3.48422301588398*^9}, {3.484312992040573*^9, 3.484313030244404*^9}, {
+  3.487502686766068*^9, 3.487502708804288*^9}, {3.4942424633316517`*^9, 
+  3.494242511877633*^9}, {3.50546627540753*^9, 3.505466278714447*^9}, {
+  3.5054663089438972`*^9, 3.505466339698214*^9}}]
+},
+AutoGeneratedPackage->Automatic,
+WindowSize->{640, 750},
+WindowMargins->{{Automatic, -1390}, {25, Automatic}},
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (November 6, \
+2010)",
+StyleDefinitions->Notebook[{
+   Cell[
+    StyleData[StyleDefinitions -> "Default.nb"]], 
+   Cell[
+    StyleData["Text"], CellDingbat -> None, FontSize -> 16, Background -> 
+    GrayLevel[0.85]]}, Visible -> False, FrontEndVersion -> 
+  "8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (November 6, 2010)", 
+  StyleDefinitions -> "PrivateStylesheetFormatting.nb"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[545, 20, 394, 9, 46, "Text"],
+Cell[942, 31, 314, 7, 27, "Input"],
+Cell[1259, 40, 130, 1, 46, "Text"],
+Cell[1392, 43, 125, 2, 27, "Input"],
+Cell[1520, 47, 512, 8, 46, "Text"],
+Cell[2035, 57, 204, 4, 27, "Input"],
+Cell[2242, 63, 851, 18, 103, "Text"],
+Cell[3096, 83, 148, 2, 58, "Input"],
+Cell[3247, 87, 2387, 49, 464, "Text"]
+}
+]
+*)
+
+(* End of internal cache information *)

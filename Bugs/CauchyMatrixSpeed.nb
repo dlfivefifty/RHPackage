@@ -1,0 +1,340 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 8.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[      9437,        331]
+NotebookOptionsPosition[      7760,        267]
+NotebookOutlinePosition[      8371,        292]
+CellTagsIndexPosition[      8287,        287]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"<<", "RiemannHilbert`"}]], "Input",
+ CellChangeTimes->{{3.5034041097423143`*^9, 3.503404111986279*^9}}],
+
+Cell["\<\
+Fixed: FiniteValues was using Select: this is slow!\
+\>", "Text",
+ CellChangeTimes->{{3.503404576838891*^9, 3.503404592917425*^9}}],
+
+Cell["\<\
+These should be roughly the same speed:
+\
+\>", "Text",
+ CellChangeTimes->{{3.503404139809627*^9, 3.50340415998347*^9}, {
+  3.503404572658681*^9, 3.503404573782848*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"if", "=", 
+   RowBox[{"Fun", "[", 
+    RowBox[{"Exp", ",", "UnitInterval", ",", "200"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"if2", "=", 
+   RowBox[{"Fun", "[", 
+    RowBox[{"Exp", ",", 
+     RowBox[{"Line", "[", 
+      RowBox[{"{", 
+       RowBox[{"2", ",", "3"}], "}"}], "]"}], ",", "200"}], "]"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.503404114058782*^9, 3.503404156070907*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Timing", "[", 
+  RowBox[{
+   RowBox[{"vals", "=", 
+    RowBox[{"Cauchy", "[", 
+     RowBox[{"if", ",", 
+      RowBox[{"if2", "//", "Points"}]}], "]"}]}], ";"}], "]"}]], "Input",
+ CellChangeTimes->{{3.503404156921475*^9, 3.503404177520701*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0.38094700000000015`", ",", "Null"}], "}"}]], "Output",
+ CellChangeTimes->{3.503404178263878*^9, 3.503404503033864*^9, 
+  3.50340456615578*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Timing", "[", 
+  RowBox[{
+   RowBox[{"mat", "=", 
+    RowBox[{"CauchyMatrix", "[", 
+     RowBox[{
+      RowBox[{"+", "1"}], ",", "if", ",", "if2"}], "]"}]}], ";"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.503404182155561*^9, 3.503404188008575*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0.35331699999999966`", ",", "Null"}], "}"}]], "Output",
+ CellChangeTimes->{3.503404189546821*^9, 3.50340450548952*^9, 
+  3.5034045666954393`*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"s", "=", 
+   RowBox[{"+", "1"}]}], ";", 
+  RowBox[{"f", "=", "if"}], ";", 
+  RowBox[{"g", "=", "if2"}], ";"}]], "Input",
+ CellChangeTimes->{{3.5034042556420517`*^9, 3.503404262133296*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Timing", "[", 
+  RowBox[{
+   RowBox[{"(", 
+    RowBox[{"FiniteValues", "/@", 
+     RowBox[{"FPCauchyBasis", "[", 
+      RowBox[{"s", ",", "f", ",", 
+       RowBox[{";;", 
+        RowBox[{"Length", "[", "f", "]"}]}], ",", "g"}], "]"}]}], ")"}], 
+   ";"}], "]"}]], "Input",
+ CellChangeTimes->{{3.503404313724329*^9, 3.5034043194365892`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1.154673999999999`", ",", "Null"}], "}"}]], "Output",
+ CellChangeTimes->{{3.503404314313333*^9, 3.503404320819695*^9}, 
+   3.503404509330886*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"??", "FiniteValues"}]], "Input",
+ CellChangeTimes->{{3.5034043215393476`*^9, 3.503404323890822*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["RiemannHilbert`Common`FiniteValues", "Print", "PrintUsage",
+ CellChangeTimes->{3.5034045131314287`*^9},
+ CellTags->"Info3503404513-8189211"],
+
+Cell[BoxData[
+ InterpretationBox[GridBox[{
+    {GridBox[{
+       {
+        RowBox[{
+         RowBox[{"FiniteValues", "[", "Private`if_IFun", "]"}], ":=", 
+         RowBox[{"Last", "/@", 
+          RowBox[{"Select", "[", 
+           RowBox[{
+            RowBox[{"Thread", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"Points", "[", "Private`if", "]"}], ",", 
+               RowBox[{"Values", "[", "Private`if", "]"}]}], "}"}], "]"}], 
+            ",", 
+            RowBox[{
+             RowBox[{"!", 
+              RowBox[{"InfinityQ", "[", 
+               RowBox[{"First", "[", "#1", "]"}], "]"}]}], "&"}]}], "]"}]}]}]},
+       {" "},
+       {
+        RowBox[{
+         RowBox[{"FiniteValues", "[", "Private`if_LFun", "]"}], ":=", 
+         RowBox[{"Last", "/@", 
+          RowBox[{"Select", "[", 
+           RowBox[{
+            RowBox[{"Thread", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"Points", "[", "Private`if", "]"}], ",", 
+               RowBox[{"Values", "[", "Private`if", "]"}]}], "}"}], "]"}], 
+            ",", 
+            RowBox[{
+             RowBox[{"!", 
+              RowBox[{"InfinityQ", "[", 
+               RowBox[{"First", "[", "#1", "]"}], "]"}]}], "&"}]}], 
+           "]"}]}]}]}
+      },
+      BaselinePosition->{Baseline, {1, 1}},
+      GridBoxAlignment->{
+       "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+        "RowsIndexed" -> {}},
+      GridBoxItemSize->{"Columns" -> {{
+           Scaled[0.999]}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, 
+        "RowsIndexed" -> {}}]}
+   },
+   BaselinePosition->{Baseline, {1, 1}},
+   GridBoxAlignment->{
+    "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+     "RowsIndexed" -> {}}],
+  Definition[RiemannHilbert`Common`FiniteValues],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.503404513188734*^9},
+ CellTags->"Info3503404513-8189211"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Timing", "[", 
+  RowBox[{
+   RowBox[{"(", 
+    RowBox[{"FiniteValues", "/@", 
+     RowBox[{"FPCauchyBasis", "[", 
+      RowBox[{"s", ",", "f", ",", 
+       RowBox[{";;", 
+        RowBox[{"Length", "[", "f", "]"}]}], ",", "g"}], "]"}]}], ")"}], 
+   ";"}], "]"}]], "Input",
+ CellChangeTimes->{{3.503404306500622*^9, 3.503404307900487*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1.1606920000000018`", ",", "Null"}], "}"}]], "Output",
+ CellChangeTimes->{3.503404309621379*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Timing", "[", 
+  RowBox[{
+   RowBox[{"Transpose", "[", 
+    RowBox[{"(", 
+     RowBox[{"FiniteValues", "/@", 
+      RowBox[{"FPCauchyBasis", "[", 
+       RowBox[{"s", ",", "f", ",", 
+        RowBox[{";;", 
+         RowBox[{"Length", "[", "f", "]"}]}], ",", "g"}], "]"}]}], ")"}], 
+    "]"}], ";"}], "]"}]], "Input",
+ CellChangeTimes->{{3.503404263133169*^9, 3.503404264428939*^9}, 
+   3.503404298216384*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1.1586169999999996`", ",", "Null"}], "}"}]], "Output",
+ CellChangeTimes->{3.503404265028841*^9, 3.5034043001784563`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Timing", "[", 
+  RowBox[{
+   RowBox[{"FiniteTransformMatrix", "[", "f", "]"}], ";"}], "]"}]], "Input",
+ CellChangeTimes->{3.5034042837127333`*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0.12047899999999956`", ",", "Null"}], "}"}]], "Output",
+ CellChangeTimes->{3.503404284237605*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Timing", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Transpose", "[", 
+     RowBox[{"(", 
+      RowBox[{"FiniteValues", "/@", 
+       RowBox[{"FPCauchyBasis", "[", 
+        RowBox[{"s", ",", "f", ",", 
+         RowBox[{";;", 
+          RowBox[{"Length", "[", "f", "]"}]}], ",", "g"}], "]"}]}], ")"}], 
+     "]"}], ".", 
+    RowBox[{"FiniteTransformMatrix", "[", "f", "]"}]}], ";"}], "]"}]], "Input",\
+
+ CellChangeTimes->{{3.503404274326955*^9, 3.503404276677857*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1.308300000000001`", ",", "Null"}], "}"}]], "Output",
+ CellChangeTimes->{{3.503404273773788*^9, 3.503404278127737*^9}}]
+}, Open  ]]
+},
+WindowSize->{740, 756},
+WindowMargins->{{Automatic, -832}, {35, Automatic}},
+ShowSelection->True,
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (November 6, \
+2010)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{
+ "Info3503404513-8189211"->{
+  Cell[3441, 126, 146, 2, 39, "Print",
+   CellTags->"Info3503404513-8189211"],
+  Cell[3590, 130, 1939, 53, 83, "Print",
+   CellTags->"Info3503404513-8189211"]}
+ }
+*)
+(*CellTagsIndex
+CellTagsIndex->{
+ {"Info3503404513-8189211", 8103, 279}
+ }
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[557, 20, 127, 2, 27, "Input"],
+Cell[687, 24, 141, 3, 26, "Text"],
+Cell[831, 29, 178, 5, 41, "Text"],
+Cell[1012, 36, 452, 14, 43, "Input"],
+Cell[CellGroupData[{
+Cell[1489, 54, 267, 7, 27, "Input"],
+Cell[1759, 63, 183, 4, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1979, 72, 274, 8, 27, "Input"],
+Cell[2256, 82, 185, 4, 27, "Output"]
+}, Open  ]],
+Cell[2456, 89, 223, 6, 27, "Input"],
+Cell[CellGroupData[{
+Cell[2704, 99, 363, 10, 27, "Input"],
+Cell[3070, 111, 185, 4, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3292, 120, 124, 2, 27, "Input"],
+Cell[CellGroupData[{
+Cell[3441, 126, 146, 2, 39, "Print",
+ CellTags->"Info3503404513-8189211"],
+Cell[3590, 130, 1939, 53, 83, "Print",
+ CellTags->"Info3503404513-8189211"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5578, 189, 361, 10, 27, "Input"],
+Cell[5942, 201, 136, 3, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6115, 209, 431, 12, 27, "Input"],
+Cell[6549, 223, 160, 3, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6746, 231, 170, 4, 27, "Input"],
+Cell[6919, 237, 137, 3, 27, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7093, 245, 489, 14, 43, "Input"],
+Cell[7585, 261, 159, 3, 27, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
