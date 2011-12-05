@@ -27,6 +27,8 @@ Second:=#[[2]]&;
 SparseZeroMatrix;
 SparseIdentityMatrix;
 DiagonalMatrixQ;
+
+RealLeastSquares;
 Begin["Private`"];
 ZeroMatrix[]=0;
 ZeroMatrix[n_]:=0 IdentityMatrix[n];
@@ -356,6 +358,9 @@ Map[Which[#===0||#===Null,
 BlockMatrix[A_]:=Flatten[(BlockRow/@A),1];
 SparseDiagonalMatrix[l_List]:=Module[{i},SparseArray[{i_,i_}:>l[[i]],Length[l]{1,1}]];
 End[];
+
+
+RealLeastSquares[A_,b_]:=LeastSquares[Join[Re[A],Im[A]],Join[Re[b],Im[b]]]
 
 
 

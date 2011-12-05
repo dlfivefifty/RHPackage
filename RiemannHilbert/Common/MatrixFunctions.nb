@@ -26,7 +26,10 @@ Cell[BoxData[{
     "&"}]}], ";"}], "\[IndentingNewLine]", 
  RowBox[{"SparseZeroMatrix", ";"}], "\[IndentingNewLine]", 
  RowBox[{"SparseIdentityMatrix", ";"}], "\[IndentingNewLine]", 
- RowBox[{"DiagonalMatrixQ", ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"DiagonalMatrixQ", ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"RealLeastSquares", ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"Begin", "[", "\"\<Private`\>\"", "]"}], 
   ";"}], "\[IndentingNewLine]", 
@@ -1904,6 +1907,29 @@ defined.\\\\\\\"\\\", \\\"MT\\\"]\\) \
 ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/End/noctx\\\", \
 ButtonNote -> \\\"End::noctx\\\"]\\)\"\>"}]], "Message", "MSG"]
 }, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Real LeastSquares", "Section"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"RealLeastSquares", "[", 
+   RowBox[{"A_", ",", "b_"}], "]"}], ":=", 
+  RowBox[{"LeastSquares", "[", 
+   RowBox[{
+    RowBox[{"Join", "[", 
+     RowBox[{
+      RowBox[{"Re", "[", "A", "]"}], ",", 
+      RowBox[{"Im", "[", "A", "]"}]}], "]"}], ",", 
+    RowBox[{"Join", "[", 
+     RowBox[{
+      RowBox[{"Re", "[", "b", "]"}], ",", 
+      RowBox[{"Im", "[", "b", "]"}]}], "]"}]}], "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.5320648023784027`*^9, 3.532064808505149*^9}, {
+  3.532064847862713*^9, 3.5320648643677073`*^9}}]
 }, Open  ]],
 
 Cell[CellGroupData[{

@@ -45,8 +45,8 @@ FreeInverseStieljes[GAB_,{xia_,xib_},m_,sIpts_]:=Module[{ret,sgpts,gpts,AB,a,b},
 {a,b}=GAB/@{xia,xib}//Re;
 {sgpts,gpts}=(((ret=GAB[#];
 If[Sign[Im[#]]==Sign[Im[ret]]||!NumberQ[ret]||NZeroQ[Im[#]]&&Re[#]>xib||NZeroQ[Im[#]]&&Re[#]<xia,Null,{#,ret}])&/@sIpts)/.Null->Sequence[])//Transpose;
-AB=SingFun[IFun[LeastSquares[BoundedCauchyInverseMatrix[{a,b},m,gpts],sgpts]//InverseDCT,Line[{a,b}]],{0,0}];
--1/(2 \[Pi])HilbertInverse[AB]//Re
+AB=SingFun[IFun[RealLeastSquares[BoundedCauchyInverseMatrix[{a,b},m,gpts],sgpts]//InverseDCT,Line[{a,b}]],{0,0}];
+-1/(2 \[Pi])HilbertInverse[AB]
 ]
 
 
@@ -78,7 +78,7 @@ GAB[y_]:=StieljesInverseFunction[sfA,y]+StieljesInverseFunction[sfB,y]-1/y;
 GABD[y_]:=StieljesInverseFunctionD[sfA,y]+StieljesInverseFunctionD[sfB,y]+1/y^2//Re;
 GABDD[y_]:=StieljesInverseFunctionD[2][sfA,y]+StieljesInverseFunctionD[2][sfB,y]-2/y^3//Re;
 
-Apts=SlitPlanePoints[sfA,n];
+Apts=Select[SlitPlanePoints[sfA,n],Im[#]>=0&];
 (sIpts=Stieljes[sfA,Apts]);
 
 FreeInverseStieljes[GAB,GABD,GABDD,m,sIpts]
