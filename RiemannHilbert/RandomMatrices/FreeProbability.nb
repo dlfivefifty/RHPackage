@@ -35,11 +35,206 @@ Cell[BoxData[{
 
 Cell[CellGroupData[{
 
-Cell["Inverse Stieljes", "Section"],
+Cell["Slit Plane Points", "Section"],
 
 Cell[BoxData[
  RowBox[{
   RowBox[{"Begin", "[", "\"\<Private`\>\"", "]"}], ";"}]], "Input",
+ InitializationCell->True],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"DiskPoints", "[", "n_", "]"}], ":=", 
+   RowBox[{
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"Points", "[", 
+       RowBox[{
+        RowBox[{"Circle", "[", 
+         RowBox[{"0", ",", "r"}], "]"}], ",", "n"}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"r", ",", 
+        RowBox[{"1", "/", 
+         RowBox[{"(", 
+          RowBox[{"n", "-", "1"}], ")"}]}], ",", "1.", ",", 
+        RowBox[{"1", "/", 
+         RowBox[{"(", 
+          RowBox[{"n", "-", "1"}], ")"}]}]}], "}"}]}], "]"}], "//", 
+    "Flatten"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SlitPlanePoints", "[", 
+    RowBox[{"pf_PFun", ",", "n_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Domain", "[", "pf", "]"}], "\[LeftDoubleBracket]", "1", 
+     "\[RightDoubleBracket]"}], "+", 
+    RowBox[{"Join", "[", 
+     RowBox[{
+      RowBox[{"DiskPoints", "[", "n", "]"}], ",", 
+      RowBox[{"1", "/", 
+       RowBox[{"DiskPoints", "[", "n", "]"}]}]}], "]"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SlitPlanePoints", "[", 
+    RowBox[{"lf_List", ",", "n_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"SlitPlanePoints", "[", 
+         RowBox[{"#", ",", 
+          RowBox[{
+           RowBox[{"n", "/", 
+            RowBox[{"Length", "[", "lf", "]"}]}], "//", "Ceiling"}]}], "]"}], 
+        "&"}], "/@", "lf"}], ")"}], "//", "Flatten"}], "//", "Union"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SlitPlanePoints", "[", 
+    RowBox[{"lf_LFun", ",", "n_"}], "]"}], ":=", 
+   RowBox[{"Select", "[", 
+    RowBox[{
+     RowBox[{"MapFromCircle", "[", 
+      RowBox[{"lf", ",", 
+       RowBox[{"Join", "[", 
+        RowBox[{
+         RowBox[{"DiskPoints", "[", "n", "]"}], ",", 
+         RowBox[{"1", "/", 
+          RowBox[{"DiskPoints", "[", "n", "]"}]}]}], "]"}]}], "]"}], ",", 
+     "FiniteQ"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SlitPlanePoints", "[", 
+    RowBox[{"if_IFun", ",", "n_"}], "]"}], ":=", 
+   RowBox[{"MapFromInterval", "[", 
+    RowBox[{"if", ",", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"Points", "[", 
+          RowBox[{
+           RowBox[{"Circle", "[", 
+            RowBox[{"0", ",", "r"}], "]"}], ",", "n"}], "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"r", ",", 
+           RowBox[{"1", "/", 
+            RowBox[{"(", 
+             RowBox[{"n", "-", "1"}], ")"}]}], ",", "1.", ",", 
+           RowBox[{"1", "/", 
+            RowBox[{"(", 
+             RowBox[{"n", "-", "1"}], ")"}]}]}], "}"}]}], "]"}], "//", 
+       "Flatten"}], "//", "CircleToInterval"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"SlitPlanePoints", "[", 
+     RowBox[{"sf_SingFun", ",", "n_"}], "]"}], ":=", 
+    RowBox[{"SlitPlanePoints", "[", 
+     RowBox[{
+      RowBox[{"sf", "//", "First"}], ",", "n"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SlitUpperPlanePoints", "[", 
+   RowBox[{"sf_", ",", "n_"}], "]"}], ":=", 
+  RowBox[{"Select", "[", 
+   RowBox[{
+    RowBox[{"SlitPlanePoints", "[", 
+     RowBox[{"sf", ",", "n"}], "]"}], ",", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Im", "[", "#", "]"}], "\[GreaterEqual]", "0"}], "&"}]}], 
+   "]"}]}]}], "Input",
+ InitializationCell->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Inverse Stieljes", "Section"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"CullPoints", "[", 
+    RowBox[{"sIpts_", ",", "GAB_", ",", "xia_", ",", "xib_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", "ret", "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"ret", "=", 
+              RowBox[{"GAB", "[", "#", "]"}]}], ";", "\[IndentingNewLine]", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{
+                 RowBox[{"Sign", "[", 
+                  RowBox[{"Im", "[", "#", "]"}], "]"}], "\[Equal]", 
+                 RowBox[{"Sign", "[", 
+                  RowBox[{"Im", "[", "ret", "]"}], "]"}]}], "||", 
+                RowBox[{"!", 
+                 RowBox[{"NumberQ", "[", "ret", "]"}]}], "||", 
+                RowBox[{
+                 RowBox[{"NZeroQ", "[", 
+                  RowBox[{"Im", "[", "#", "]"}], "]"}], "&&", 
+                 RowBox[{
+                  RowBox[{"Re", "[", "#", "]"}], ">", "xib"}]}], "||", 
+                RowBox[{
+                 RowBox[{"NZeroQ", "[", 
+                  RowBox[{"Im", "[", "#", "]"}], "]"}], "&&", 
+                 RowBox[{
+                  RowBox[{"Re", "[", "#", "]"}], "<", "xia"}]}]}], ",", 
+               "Null", ",", 
+               RowBox[{"{", 
+                RowBox[{"#", ",", "ret"}], "}"}]}], "]"}]}], ")"}], "&"}], "/@",
+           "sIpts"}], ")"}], "/.", 
+        RowBox[{"Null", "\[Rule]", 
+         RowBox[{"Sequence", "[", "]"}]}]}], ")"}], "//", "Transpose"}]}], 
+    "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CullPoints", "[", 
+    RowBox[{"sIpts_", ",", "GAB_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", "ret", "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"ret", "=", 
+              RowBox[{"GAB", "[", "#", "]"}]}], ";", "\[IndentingNewLine]", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{
+                 RowBox[{"Sign", "[", 
+                  RowBox[{"Im", "[", "#", "]"}], "]"}], "\[Equal]", 
+                 RowBox[{"Sign", "[", 
+                  RowBox[{"Im", "[", "ret", "]"}], "]"}]}], "||", 
+                RowBox[{"!", 
+                 RowBox[{"NumberQ", "[", "ret", "]"}]}]}], ",", "Null", ",", 
+               RowBox[{"{", 
+                RowBox[{"#", ",", "ret"}], "}"}]}], "]"}]}], ")"}], "&"}], "/@",
+           "sIpts"}], ")"}], "/.", 
+        RowBox[{"Null", "\[Rule]", 
+         RowBox[{"Sequence", "[", "]"}]}]}], ")"}], "//", "Transpose"}]}], 
+    "]"}]}], ";"}]}], "Input",
  InitializationCell->True],
 
 Cell[BoxData[
@@ -51,8 +246,8 @@ Cell[BoxData[
       RowBox[{"GAB_", ",", 
        RowBox[{"{", 
         RowBox[{
-         RowBox[{"-", "\[Infinity]"}], ",", "\[Infinity]"}], "}"}], ",", 
-       "rng_", ",", "sIpts_"}], "]"}], ":=", 
+         RowBox[{"-", "\[Infinity]"}], ",", "\[Infinity]"}], "}"}], ",", "m_",
+        ",", "sIpts_"}], "]"}], ":=", 
      RowBox[{"Module", "[", 
       RowBox[{
        RowBox[{"{", 
@@ -62,59 +257,41 @@ Cell[BoxData[
         RowBox[{
          RowBox[{"{", 
           RowBox[{"sgpts", ",", "gpts"}], "}"}], "=", 
+         RowBox[{"CullPoints", "[", 
+          RowBox[{"sIpts", ",", "GAB"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        
+        RowBox[{"LFun", "[", 
          RowBox[{
-          RowBox[{"(", 
-           RowBox[{
-            RowBox[{"(", 
-             RowBox[{
-              RowBox[{
-               RowBox[{"(", 
-                RowBox[{
-                 RowBox[{"ret", "=", 
-                  RowBox[{"GAB", "[", "#", "]"}]}], ";", 
-                 "\[IndentingNewLine]", 
-                 RowBox[{"If", "[", 
-                  RowBox[{
-                   RowBox[{
-                    RowBox[{
-                    RowBox[{"Sign", "[", 
-                    RowBox[{"Im", "[", "#", "]"}], "]"}], "\[Equal]", 
-                    RowBox[{"Sign", "[", 
-                    RowBox[{"Im", "[", "ret", "]"}], "]"}]}], "||", 
-                    RowBox[{"!", 
-                    RowBox[{"NumberQ", "[", "ret", "]"}]}]}], ",", "Null", 
-                   ",", 
-                   RowBox[{"{", 
-                    RowBox[{"#", ",", "ret"}], "}"}]}], "]"}]}], ")"}], "&"}],
-               "/@", "sIpts"}], ")"}], "/.", 
-            RowBox[{"Null", "\[Rule]", 
-             RowBox[{"Sequence", "[", "]"}]}]}], ")"}], "//", "Transpose"}]}],
-         ";", "\[IndentingNewLine]", 
-        RowBox[{"AB", "=", 
-         RowBox[{"LFun", "[", 
           RowBox[{
-           RowBox[{"ShiftList", "[", " ", 
+           RowBox[{"LeastSquares", "[", 
             RowBox[{
-             RowBox[{"LeastSquares", "[", 
+             RowBox[{
               RowBox[{
                RowBox[{
-                RowBox[{
-                 RowBox[{"CauchyInverseBasis", "[", 
-                  RowBox[{"RealLine", ",", 
-                   RowBox[{"Span", "@@", "rng"}], ",", "#"}], "]"}], "&"}], "/@",
-                 "gpts"}], ",", "sgpts"}], "]"}], ",", 
+                RowBox[{"-", "2"}], " ", "\[Pi]", "\[NonBreakingSpace]", "I", 
+                " ", 
+                RowBox[{"(", 
+                 RowBox[{"CauchyBasisS", "[", 
+                  RowBox[{
+                   RowBox[{"+", "1"}], ",", "RealLine", ",", 
+                   RowBox[{"1", ";;", "m"}], ",", "#"}], "]"}], ")"}]}], 
+               "&"}], "/@", "gpts"}], ",", "sgpts"}], "]"}], "//", 
+           RowBox[{
+            RowBox[{"ShiftList", "[", 
              RowBox[{
-              RowBox[{
-              "rng", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
-              "+", "1"}]}], "]"}], ",", "RealLine"}], "]"}]}], ";", "\n", 
-        RowBox[{
-         RowBox[{
-          RowBox[{
-           RowBox[{"-", "1"}], "/", 
-           RowBox[{"(", 
-            RowBox[{"2", " ", "\[Pi]"}], ")"}]}], 
-          RowBox[{"HilbertInverse", "[", "AB", "]"}]}], "//", "Re"}]}]}], 
-      "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
+              RowBox[{"Reverse", "[", 
+               RowBox[{"#", "//", "Conjugate"}], "]"}], ",", 
+              RowBox[{"Join", "[", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{"2", " ", 
+                  RowBox[{"Re", "[", 
+                   RowBox[{"#", ".", 
+                    RowBox[{"AlternatingVector", "[", 
+                    RowBox[{"Length", "[", "#", "]"}], "]"}]}], "]"}]}], 
+                 "}"}], ",", "#"}], "]"}]}], "]"}], "&"}]}], ",", 
+          "RealLine"}], "]"}]}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"FreeInverseStieljes", "[", 
@@ -167,43 +344,9 @@ Cell[BoxData[
        RowBox[{
         RowBox[{"{", 
          RowBox[{"sgpts", ",", "gpts"}], "}"}], "=", 
-        RowBox[{
-         RowBox[{"(", 
-          RowBox[{
-           RowBox[{"(", 
-            RowBox[{
-             RowBox[{
-              RowBox[{"(", 
-               RowBox[{
-                RowBox[{"ret", "=", 
-                 RowBox[{"GAB", "[", "#", "]"}]}], ";", "\[IndentingNewLine]", 
-                RowBox[{"If", "[", 
-                 RowBox[{
-                  RowBox[{
-                   RowBox[{
-                    RowBox[{"Sign", "[", 
-                    RowBox[{"Im", "[", "#", "]"}], "]"}], "\[Equal]", 
-                    RowBox[{"Sign", "[", 
-                    RowBox[{"Im", "[", "ret", "]"}], "]"}]}], "||", 
-                   RowBox[{"!", 
-                    RowBox[{"NumberQ", "[", "ret", "]"}]}], "||", 
-                   RowBox[{
-                    RowBox[{"NZeroQ", "[", 
-                    RowBox[{"Im", "[", "#", "]"}], "]"}], "&&", 
-                    RowBox[{
-                    RowBox[{"Re", "[", "#", "]"}], ">", "xib"}]}], "||", 
-                   RowBox[{
-                    RowBox[{"NZeroQ", "[", 
-                    RowBox[{"Im", "[", "#", "]"}], "]"}], "&&", 
-                    RowBox[{
-                    RowBox[{"Re", "[", "#", "]"}], "<", "xia"}]}]}], ",", 
-                  "Null", ",", 
-                  RowBox[{"{", 
-                   RowBox[{"#", ",", "ret"}], "}"}]}], "]"}]}], ")"}], "&"}], 
-             "/@", "sIpts"}], ")"}], "/.", 
-           RowBox[{"Null", "\[Rule]", 
-            RowBox[{"Sequence", "[", "]"}]}]}], ")"}], "//", "Transpose"}]}], 
-       ";", "\[IndentingNewLine]", 
+        RowBox[{"CullPoints", "[", 
+         RowBox[{"sIpts", ",", "GAB", ",", "xia", ",", "xib"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
        RowBox[{"AB", "=", 
         RowBox[{"SingFun", "[", 
          RowBox[{
@@ -237,103 +380,9 @@ Cell[CellGroupData[{
 Cell["FreePlus", "Section"],
 
 Cell[BoxData[
- RowBox[{"\[IndentingNewLine]", 
+ RowBox[{"\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  
   RowBox[{
-   RowBox[{
-    RowBox[{
-     RowBox[{"DiskPoints", "[", "n_", "]"}], ":=", 
-     RowBox[{
-      RowBox[{"Table", "[", 
-       RowBox[{
-        RowBox[{"Points", "[", 
-         RowBox[{
-          RowBox[{"Circle", "[", 
-           RowBox[{"0", ",", "r"}], "]"}], ",", "n"}], "]"}], ",", 
-        RowBox[{"{", 
-         RowBox[{"r", ",", 
-          RowBox[{"1", "/", 
-           RowBox[{"(", 
-            RowBox[{"n", "-", "1"}], ")"}]}], ",", "1.", ",", 
-          RowBox[{"1", "/", 
-           RowBox[{"(", 
-            RowBox[{"n", "-", "1"}], ")"}]}]}], "}"}]}], "]"}], "//", 
-      "Flatten"}]}], ";"}], "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{
-     RowBox[{"SlitPlanePoints", "[", 
-      RowBox[{"pf_PFun", ",", "n_"}], "]"}], ":=", 
-     RowBox[{
-      RowBox[{
-       RowBox[{"Domain", "[", "pf", "]"}], "\[LeftDoubleBracket]", "1", 
-       "\[RightDoubleBracket]"}], "+", 
-      RowBox[{"Join", "[", 
-       RowBox[{
-        RowBox[{"DiskPoints", "[", "n", "]"}], ",", 
-        RowBox[{"1", "/", 
-         RowBox[{"DiskPoints", "[", "n", "]"}]}]}], "]"}]}]}], ";"}], 
-   "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{
-     RowBox[{"SlitPlanePoints", "[", 
-      RowBox[{"lf_List", ",", "n_"}], "]"}], ":=", 
-     RowBox[{
-      RowBox[{
-       RowBox[{"(", 
-        RowBox[{
-         RowBox[{
-          RowBox[{"SlitPlanePoints", "[", 
-           RowBox[{"#", ",", 
-            RowBox[{
-             RowBox[{"n", "/", 
-              RowBox[{"Length", "[", "lf", "]"}]}], "//", "Ceiling"}]}], 
-           "]"}], "&"}], "/@", "lf"}], ")"}], "//", "Flatten"}], "//", 
-      "Union"}]}], ";"}], "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{
-     RowBox[{"SlitPlanePoints", "[", 
-      RowBox[{"lf_LFun", ",", "n_"}], "]"}], ":=", 
-     RowBox[{"Select", "[", 
-      RowBox[{
-       RowBox[{"MapFromCircle", "[", 
-        RowBox[{"lf", ",", 
-         RowBox[{"Join", "[", 
-          RowBox[{
-           RowBox[{"DiskPoints", "[", "n", "]"}], ",", 
-           RowBox[{"1", "/", 
-            RowBox[{"DiskPoints", "[", "n", "]"}]}]}], "]"}]}], "]"}], ",", 
-       "FiniteQ"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{
-     RowBox[{"SlitPlanePoints", "[", 
-      RowBox[{"if_IFun", ",", "n_"}], "]"}], ":=", 
-     RowBox[{"MapFromInterval", "[", 
-      RowBox[{"if", ",", 
-       RowBox[{
-        RowBox[{
-         RowBox[{"Table", "[", 
-          RowBox[{
-           RowBox[{"Points", "[", 
-            RowBox[{
-             RowBox[{"Circle", "[", 
-              RowBox[{"0", ",", "r"}], "]"}], ",", "n"}], "]"}], ",", 
-           RowBox[{"{", 
-            RowBox[{"r", ",", 
-             RowBox[{"1", "/", 
-              RowBox[{"(", 
-               RowBox[{"n", "-", "1"}], ")"}]}], ",", "1.", ",", 
-             RowBox[{"1", "/", 
-              RowBox[{"(", 
-               RowBox[{"n", "-", "1"}], ")"}]}]}], "}"}]}], "]"}], "//", 
-         "Flatten"}], "//", "CircleToInterval"}]}], "]"}]}], ";"}], 
-   "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{
-     RowBox[{"SlitPlanePoints", "[", 
-      RowBox[{"sf_SingFun", ",", "n_"}], "]"}], ":=", 
-     RowBox[{"SlitPlanePoints", "[", 
-      RowBox[{
-       RowBox[{"sf", "//", "First"}], ",", "n"}], "]"}]}], ";"}], 
-   "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"BoundedCauchyInverseMatrix", "[", 
@@ -357,11 +406,8 @@ Cell[BoxData[
      RowBox[{
       RowBox[{"FreePlus", "[", 
        RowBox[{"sfA_", ",", "sfB_", ",", 
-        RowBox[{"rng_:", 
-         RowBox[{"{", 
-          RowBox[{
-           RowBox[{"-", "80"}], ",", "80"}], "}"}]}], ",", 
-        RowBox[{"n_:", "10"}]}], "]"}], "/;", 
+        RowBox[{"m_:", "80"}], ",", 
+        RowBox[{"n_:", "20"}]}], "]"}], "/;", 
       RowBox[{
        RowBox[{
         RowBox[{"Domain", "[", "sfA", "]"}], "\[Equal]", "RealLine"}], "||", 
@@ -388,7 +434,7 @@ Cell[BoxData[
             RowBox[{"1", "/", "y"}]}]}], ";", "\[IndentingNewLine]", 
           "\[IndentingNewLine]", 
           RowBox[{"Apts", "=", 
-           RowBox[{"SlitPlanePoints", "[", 
+           RowBox[{"SlitUpperPlanePoints", "[", 
             RowBox[{"sfA", ",", "n"}], "]"}]}], ";", "\[IndentingNewLine]", 
           RowBox[{"(", 
            RowBox[{"sIpts", "=", 
@@ -400,8 +446,8 @@ Cell[BoxData[
             RowBox[{"{", 
              RowBox[{
               RowBox[{"-", "\[Infinity]"}], ",", "\[Infinity]"}], "}"}], ",", 
-            "rng", ",", "sIpts"}], "]"}]}]}], "\[IndentingNewLine]", "]"}], 
-       ",", "\[IndentingNewLine]", 
+            "m", ",", "sIpts"}], "]"}]}]}], "\[IndentingNewLine]", "]"}], ",",
+        "\[IndentingNewLine]", 
        RowBox[{"{", 
         StyleBox[
          RowBox[{
@@ -460,14 +506,8 @@ Cell[BoxData[
               RowBox[{"y", "^", "3"}]}]}], "//", "Re"}]}], ";", 
           "\[IndentingNewLine]", "\[IndentingNewLine]", 
           RowBox[{"Apts", "=", 
-           RowBox[{"Select", "[", 
-            RowBox[{
-             RowBox[{"SlitPlanePoints", "[", 
-              RowBox[{"sfA", ",", "n"}], "]"}], ",", 
-             RowBox[{
-              RowBox[{
-               RowBox[{"Im", "[", "#", "]"}], "\[GreaterEqual]", "0"}], 
-              "&"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+           RowBox[{"SlitUpperPlanePoints", "[", 
+            RowBox[{"sfA", ",", "n"}], "]"}]}], ";", "\[IndentingNewLine]", 
           RowBox[{"(", 
            RowBox[{"sIpts", "=", 
             RowBox[{"Stieljes", "[", 
@@ -759,7 +799,7 @@ Cell[BoxData[
                    RowBox[{"1", "+", "y"}], ")"}], "3"]]}], ")"}]}]}], "//", 
             "Re"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
           RowBox[{"Apts", "=", 
-           RowBox[{"SlitPlanePoints", "[", 
+           RowBox[{"SlitUpperPlanePoints", "[", 
             RowBox[{"sfA", ",", "n"}], "]"}]}], ";", "\[IndentingNewLine]", 
           RowBox[{"(", 
            RowBox[{"sIpts", "=", 
@@ -870,7 +910,7 @@ Cell[BoxData[{
               SuperscriptBox["y", "3"]]}]}], "//", "Re"}]}], ";", 
          "\[IndentingNewLine]", "\[IndentingNewLine]", 
          RowBox[{"Apts", "=", 
-          RowBox[{"SlitPlanePoints", "[", 
+          RowBox[{"SlitUpperPlanePoints", "[", 
            RowBox[{"sfA", ",", "n"}], "]"}]}], ";", "\[IndentingNewLine]", 
          RowBox[{"(", 
           RowBox[{"sIpts", "=", 
@@ -893,10 +933,7 @@ Cell[BoxData[{
   RowBox[{
    RowBox[{"FreeCompress", "[", 
     RowBox[{"sfA_LFun", ",", "\[Alpha]_", ",", 
-     RowBox[{"rng_:", 
-      RowBox[{"{", 
-       RowBox[{
-        RowBox[{"-", "80"}], ",", "80"}], "}"}]}], ",", 
+     RowBox[{"rng_:", "80"}], ",", 
      RowBox[{"n_:", "10"}]}], "]"}], ":=", 
    RowBox[{"Quiet", "[", "\[IndentingNewLine]", 
     RowBox[{
@@ -922,7 +959,7 @@ Cell[BoxData[{
               RowBox[{"\[Alpha]", " "}]]}], ")"}], "y"]}]}], ";", 
         "\[IndentingNewLine]", "\[IndentingNewLine]", 
         RowBox[{"Apts", "=", 
-         RowBox[{"SlitPlanePoints", "[", 
+         RowBox[{"SlitUpperPlanePoints", "[", 
           RowBox[{"sfA", ",", "n"}], "]"}]}], ";", "\[IndentingNewLine]", 
         "\[IndentingNewLine]", "\[IndentingNewLine]", 
         RowBox[{"(", 
@@ -965,7 +1002,7 @@ WindowMargins->{{29, Automatic}, {Automatic, 0}},
 PrivateNotebookOptions->{"FileOutlineCache"->False},
 ShowSelection->True,
 TrackCellChangeTimes->False,
-FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 23, \
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 5, \
 2011)",
 StyleDefinitions->"Default.nb"
 ]

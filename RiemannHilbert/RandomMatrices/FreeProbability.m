@@ -30,28 +30,6 @@ FreeCompress;
 Begin["Private`"];
 
 
-
-FreeInverseStieljes[GAB_,{-\[Infinity],\[Infinity]},rng_,sIpts_]:=Module[{ret,sgpts,gpts,AB},
-{sgpts,gpts}=(((ret=GAB[#];
-If[Sign[Im[#]]==Sign[Im[ret]]||!NumberQ[ret],Null,{#,ret}])&/@sIpts)/.Null->Sequence[])//Transpose;
-AB=LFun[ShiftList[ LeastSquares[CauchyInverseBasis[RealLine,Span@@rng,#]&/@gpts,sgpts],rng[[2]]+1],RealLine];
--1/(2 \[Pi])HilbertInverse[AB]//Re
-];
-FreeInverseStieljes[GAB_,GABD_,GABDD_,m_,sIpts_]:=Module[{xia,xib,a,b},
-{xia,xib}={NewtonMethod[GABD,GABDD,-.1],NewtonMethod[GABD,GABDD,.1]};
-FreeInverseStieljes[GAB,{xia,xib},m,sIpts]
-];
-FreeInverseStieljes[GAB_,{xia_,xib_},m_,sIpts_]:=Module[{ret,sgpts,gpts,AB,a,b},
-{a,b}=GAB/@{xia,xib}//Re;
-{sgpts,gpts}=(((ret=GAB[#];
-If[Sign[Im[#]]==Sign[Im[ret]]||!NumberQ[ret]||NZeroQ[Im[#]]&&Re[#]>xib||NZeroQ[Im[#]]&&Re[#]<xia,Null,{#,ret}])&/@sIpts)/.Null->Sequence[])//Transpose;
-AB=SingFun[IFun[RealLeastSquares[BoundedCauchyInverseMatrix[{a,b},m,gpts],sgpts]//InverseDCT,Line[{a,b}]],{0,0}];
--1/(2 \[Pi])HilbertInverse[AB]
-]
-
-
-
-
 DiskPoints[n_]:=Table[Points[Circle[0,r],n],{r,1/(n-1),1.,1/(n-1)}]//Flatten;
 SlitPlanePoints[pf_PFun,n_]:=Domain[pf][[1]]+Join[DiskPoints[n],1/DiskPoints[n]];
 SlitPlanePoints[lf_List,n_]:=(SlitPlanePoints[#,n/Length[lf]//Ceiling]&/@lf)//Flatten//Union;
@@ -59,16 +37,49 @@ SlitPlanePoints[lf_LFun,n_]:=Select[MapFromCircle[lf,Join[DiskPoints[n],1/DiskPo
 SlitPlanePoints[if_IFun,n_]:=MapFromInterval[if,Table[Points[Circle[0,r],n],{r,1/(n-1),1.,1/(n-1)}]//Flatten//CircleToInterval];
 SlitPlanePoints[sf_SingFun,n_]:=SlitPlanePoints[sf//First,n];
 
+SlitUpperPlanePoints[sf_,n_]:=Select[SlitPlanePoints[sf,n],Im[#]>=0&]
+
+
+CullPoints[sIpts_,GAB_,xia_,xib_]:=Module[{ret},
+(((ret=GAB[#];
+If[Sign[Im[#]]==Sign[Im[ret]]||!NumberQ[ret]||NZeroQ[Im[#]]&&Re[#]>xib||NZeroQ[Im[#]]&&Re[#]<xia,Null,{#,ret}])&/@sIpts)/.Null->Sequence[])//Transpose
+];
+CullPoints[sIpts_,GAB_]:=Module[{ret},
+(((ret=GAB[#];
+If[Sign[Im[#]]==Sign[Im[ret]]||!NumberQ[ret],Null,{#,ret}])&/@sIpts)/.Null->Sequence[])//Transpose];
+
+
+
+FreeInverseStieljes[GAB_,{-\[Infinity],\[Infinity]},m_,sIpts_]:=Module[{ret,sgpts,gpts,AB},
+{sgpts,gpts}=CullPoints[sIpts,GAB];
+LFun[LeastSquares[-2 \[Pi]\[NonBreakingSpace]I (CauchyBasisS[+1,RealLine,1;;m,#])&/@gpts,sgpts]//ShiftList[Reverse[#//Conjugate],Join[{2 Re[#.AlternatingVector[Length[#]]]},#]]&,RealLine]
+];
+FreeInverseStieljes[GAB_,GABD_,GABDD_,m_,sIpts_]:=Module[{xia,xib,a,b},
+{xia,xib}={NewtonMethod[GABD,GABDD,-.1],NewtonMethod[GABD,GABDD,.1]};
+FreeInverseStieljes[GAB,{xia,xib},m,sIpts]
+];
+FreeInverseStieljes[GAB_,{xia_,xib_},m_,sIpts_]:=Module[{ret,sgpts,gpts,AB,a,b},
+{a,b}=GAB/@{xia,xib}//Re;
+{sgpts,gpts}=CullPoints[sIpts,GAB,xia,xib];
+AB=SingFun[IFun[RealLeastSquares[BoundedCauchyInverseMatrix[{a,b},m,gpts],sgpts]//InverseDCT,Line[{a,b}]],{0,0}];
+-1/(2 \[Pi])HilbertInverse[AB]
+]
+
+
+
+
+
+
 BoundedCauchyInverseMatrix[{a_,b_},m_,gpts_]:=Table[BoundedCauchyInverseBasis[Line[{a,b}],k,gpts],{k,m}]//Transpose;
 
-FreePlus[sfA_,sfB_,rng_:{-80,80},n_:10]/;Domain[sfA]==RealLine||Domain[sfB]==RealLine:=Quiet[
+FreePlus[sfA_,sfB_,m_:80,n_:20]/;Domain[sfA]==RealLine||Domain[sfB]==RealLine:=Quiet[
 Module[{GAB,GABD,GABDD,xia,xib,Apts,Bpts,sIptsA,sIptsB,sIpts,sgpts,gpts,ret,AB,a,b},
 GAB[y_]:=StieljesInverseFunction[sfA,y]+StieljesInverseFunction[sfB,y]-1/y;
 
-Apts=SlitPlanePoints[sfA,n];
+Apts=SlitUpperPlanePoints[sfA,n];
 (sIpts=Stieljes[sfA,Apts]);
 
-FreeInverseStieljes[GAB,{-\[Infinity],\[Infinity]},rng,sIpts]
+FreeInverseStieljes[GAB,{-\[Infinity],\[Infinity]},m,sIpts]
 ],
 {First::first,Thread::tdlen}];
 
@@ -78,7 +89,7 @@ GAB[y_]:=StieljesInverseFunction[sfA,y]+StieljesInverseFunction[sfB,y]-1/y;
 GABD[y_]:=StieljesInverseFunctionD[sfA,y]+StieljesInverseFunctionD[sfB,y]+1/y^2//Re;
 GABDD[y_]:=StieljesInverseFunctionD[2][sfA,y]+StieljesInverseFunctionD[2][sfB,y]-2/y^3//Re;
 
-Apts=Select[SlitPlanePoints[sfA,n],Im[#]>=0&];
+Apts=SlitUpperPlanePoints[sfA,n];
 (sIpts=Stieljes[sfA,Apts]);
 
 FreeInverseStieljes[GAB,GABD,GABDD,m,sIpts]
@@ -100,7 +111,7 @@ GABD[y_]:=TTransformInverseFunctionD[sfA,y]TTransformInverseFunction[sfB,y] y/(1
 GABDD[y_]:=TTransformInverseFunctionD[2][sfA,y]TTransformInverseFunction[sfB,y] y/(1+y)+2TTransformInverseFunctionD[sfA,y]TTransformInverseFunctionD[sfB,y] y/(1+y)+TTransformInverseFunctionD[sfA,y]TTransformInverseFunction[sfB,y] 1/(1+y)^2+TTransformInverseFunction[sfA,y]TTransformInverseFunctionD[2][sfB,y] y/(1+y)+TTransformInverseFunction[sfA,y]TTransformInverseFunctionD[sfB,y] 1/(1+y)^2+TTransformInverseFunctionD[sfA,y]TTransformInverseFunction[sfB,y] 1/(1+y)^2+TTransformInverseFunction[sfA,y]TTransformInverseFunctionD[sfB,y] 1/(1+y)^2+
 TTransformInverseFunction[sfA,y]TTransformInverseFunction[sfB,y](-(2/(1+y)^3))//Re;
 
-Apts=SlitPlanePoints[sfA,n];
+Apts=SlitUpperPlanePoints[sfA,n];
 (sIpts=TTransform[sfA,Apts]);
 
 
@@ -118,7 +129,7 @@ GAB[y_]:=StieljesInverseFunction[sfA,\[Alpha] y]+(1-1/\[Alpha] )/y;
 GABD[y_]:=\[Alpha] StieljesInverseFunctionD[sfA,\[Alpha] y]-(1-1/\[Alpha] )/y^2//Re;
 GABDD[y_]:=\[Alpha]^2 StieljesInverseFunctionD[2][sfA,\[Alpha] y]+2 (1-1/\[Alpha] )/y^3//Re;
 
-Apts=SlitPlanePoints[sfA,n];
+Apts=SlitUpperPlanePoints[sfA,n];
 (sIpts=Stieljes[sfA,Apts]);
 
 
@@ -126,11 +137,11 @@ FreeInverseStieljes[GAB,GABD,GABDD,m,sIpts]
 ],
 {First::first,Thread::tdlen}];
 
-FreeCompress[sfA_LFun,\[Alpha]_,rng_:{-80,80},n_:10]:=Quiet[
+FreeCompress[sfA_LFun,\[Alpha]_,rng_:80,n_:10]:=Quiet[
 Module[{GAB,GABD,GABDD,xia,xib,Apts,Bpts,sIptsA,sIptsB,sIpts,sgpts,gpts,ret,AB,a,b},
 GAB[y_]:=StieljesInverseFunction[sfA,\[Alpha] y]+(1-1/\[Alpha] )/y;
 
-Apts=SlitPlanePoints[sfA,n];
+Apts=SlitUpperPlanePoints[sfA,n];
 
 
 (sIpts=Stieljes[sfA,Apts]);
