@@ -50,6 +50,9 @@ If[Sign[Im[#]]==Sign[Im[ret]]||!NumberQ[ret],Null,{#,ret}])&/@sIpts)/.Null->Sequ
 
 
 
+
+
+BoundedCauchyInverseMatrix[{a_,b_},m_,gpts_]:=Table[BoundedCauchyInverseBasis[Line[{a,b}],k,gpts],{k,m}]//Transpose;
 FreeInverseStieljes[GAB_,{-\[Infinity],\[Infinity]},m_,sIpts_]:=Module[{ret,sgpts,gpts,AB},
 {sgpts,gpts}=CullPoints[sIpts,GAB];
 LFun[LeastSquares[-2 \[Pi]\[NonBreakingSpace]I (CauchyBasisS[+1,RealLine,1;;m,#])&/@gpts,sgpts]//ShiftList[Reverse[#//Conjugate],Join[{2 Re[#.AlternatingVector[Length[#]]]},#]]&,RealLine]
@@ -68,9 +71,6 @@ AB=SingFun[IFun[RealLeastSquares[BoundedCauchyInverseMatrix[{a,b},m,gpts],sgpts]
 
 
 
-
-
-BoundedCauchyInverseMatrix[{a_,b_},m_,gpts_]:=Table[BoundedCauchyInverseBasis[Line[{a,b}],k,gpts],{k,m}]//Transpose;
 
 FreePlus[sfA_,sfB_,m_:80,n_:20]/;Domain[sfA]==RealLine||Domain[sfB]==RealLine:=Quiet[
 Module[{GAB,GABD,GABDD,xia,xib,Apts,Bpts,sIptsA,sIptsB,sIpts,sgpts,gpts,ret,AB,a,b},
