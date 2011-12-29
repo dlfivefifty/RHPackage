@@ -60,6 +60,7 @@ Dimensions[f_head]^:=f//First//Dimensions;
 SetupSingFun[SingFun];
 SingFun[if_IFun,{\[Alpha]_,\[Beta]_}][x_]:=if[x](MapToInterval[if,x]+1)^\[Alpha] (1-MapToInterval[if,x])^\[Beta];
 SingFun[f_,d_?DomainQ,{\[Alpha]_,\[Beta]_}]:=SingFun[(RightEndpoint[d]-LeftEndpoint[d])^(\[Beta]+\[Alpha])/2^(\[Alpha]+\[Beta]) IFun[f,d],{\[Alpha],\[Beta]}];
+SingFun[f_,d_?DomainQ,{\[Alpha]_,\[Beta]_},n_Integer]:=SingFun[(RightEndpoint[d]-LeftEndpoint[d])^(\[Beta]+\[Alpha])/2^(\[Alpha]+\[Beta]) IFun[f,d,n],{\[Alpha],\[Beta]}];
 DCT[sf_SingFun]:=DCT[First[sf]];
 
 DomainIntegrate[SingFun[if_IFun,{-1/2,-1/2}]]:=MapFromIntervalD[Domain[if],0] \[Pi] (if//Mean);
