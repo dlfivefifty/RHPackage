@@ -35,6 +35,7 @@ SlitPlanePoints[pf_PFun,n_]:=Domain[pf][[1]]+Join[DiskPoints[n],1/DiskPoints[n]]
 SlitPlanePoints[lf_List,n_]:=(SlitPlanePoints[#,n/Length[lf]//Ceiling]&/@lf)//Flatten//Union;
 SlitPlanePoints[lf_LFun,n_]:=Select[MapFromCircle[lf,Join[DiskPoints[n],1/DiskPoints[n]]],FiniteQ];
 SlitPlanePoints[if_IFun,n_]:=MapFromInterval[if,Table[Points[Circle[0,r],n],{r,1/(n-1),1.,1/(n-1)}]//Flatten//CircleToInterval];
+SlitPlanePoints[d_?IntervalDomainQ,n_]:=MapFromInterval[d,Table[Points[Circle[0,r],n],{r,1/(n-1),1.,1/(n-1)}]//Flatten//CircleToInterval];
 SlitPlanePoints[sf_SingFun,n_]:=SlitPlanePoints[sf//First,n];
 
 SlitUpperPlanePoints[sf_,n_]:=Select[SlitPlanePoints[sf,n],Im[#]>=0&]

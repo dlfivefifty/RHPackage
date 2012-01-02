@@ -132,6 +132,31 @@ Cell[BoxData[{
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
+   RowBox[{"SlitPlanePoints", "[", 
+    RowBox[{
+     RowBox[{"d_", "?", "IntervalDomainQ"}], ",", "n_"}], "]"}], ":=", 
+   RowBox[{"MapFromInterval", "[", 
+    RowBox[{"d", ",", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"Points", "[", 
+          RowBox[{
+           RowBox[{"Circle", "[", 
+            RowBox[{"0", ",", "r"}], "]"}], ",", "n"}], "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"r", ",", 
+           RowBox[{"1", "/", 
+            RowBox[{"(", 
+             RowBox[{"n", "-", "1"}], ")"}]}], ",", "1.", ",", 
+           RowBox[{"1", "/", 
+            RowBox[{"(", 
+             RowBox[{"n", "-", "1"}], ")"}]}]}], "}"}]}], "]"}], "//", 
+       "Flatten"}], "//", "CircleToInterval"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
    RowBox[{
     RowBox[{"SlitPlanePoints", "[", 
      RowBox[{"sf_SingFun", ",", "n_"}], "]"}], ":=", 
