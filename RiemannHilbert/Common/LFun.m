@@ -320,7 +320,44 @@ MakeFFTIndexRange[sl_ShiftList]:=SetIndexRange[sl,{-1,1}(IndexRange[sl]//Abs//Ma
 
 BoundedIntegrate[lf_LFun?UnitCircleFunQ]:=LFun[MapOuter[If[ZeroQ[#],0,1/#]&,lf//FFT//ShiftRight]//MakeFFTIndexRange//InverseFFT,lf//Domain];
 
-BoundedIntegrate[lf_LFun]:=SetDomain[BoundedIntegrate[ToUnitCircle[lf] LFun[MapFromCircleD[lf,#]&,UnitCircle,lf//Length]],lf//Domain];
+BoundedIntegrate[lf_LFun]:=SetDomain[BoundedIntegrate[ToUnitCircle[lf] LFun[\[Piecewise]{
+ {0, InfinityQ[MapFromCircle[lf,#]]},
+ {MapFromCircleD[lf,#], True}
+}&,UnitCircle,lf//Length]],lf//Domain];
+
+Integrate[lf_LFun,z_]^:=BoundedIntegrate[lf][z]+DomainIntegrate[lf](Log[MapToCircle[lf,z]]/(2 \[Pi]\[NonBreakingSpace]I) -\!\(\*
+TagBox[GridBox[{
+{"\[Piecewise]", GridBox[{
+{
+RowBox[{
+RowBox[{"-", "1"}], "/", "2"}], 
+RowBox[{
+RowBox[{"MapToCircle", "[", 
+RowBox[{"lf", ",", "\[Infinity]"}], "]"}], "~", "NEqual", "~", 
+RowBox[{"-", "1"}]}]},
+{
+RowBox[{
+RowBox[{"Log", "[", 
+RowBox[{"MapToCircle", "[", 
+RowBox[{"lf", ",", "\[Infinity]"}], "]"}], "]"}], "/", 
+RowBox[{"(", 
+RowBox[{"2", " ", "\[Pi]", "\[NonBreakingSpace]", "I"}], ")"}]}], "True"}
+},
+AllowedDimensions->{2, Automatic},
+Editable->True,
+GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}},
+GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.84]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}},
+Selectable->True]}
+},
+GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}},
+GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.35]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}}],
+"Piecewise",
+DeleteWithContents->True,
+Editable->False,
+SelectWithContents->True,
+Selectable->False]\));
 
 End[];
 
@@ -500,6 +537,12 @@ ComplexMapToCircle[Curve[cr_],z_]:=ComplexRoots[UnitCircle,IncreaseIndexRange[Re
 
 
 ComplexPlot[cf_LFun,opts:OptionsPattern[]]:=ListLinePlot[{Re[#],Im[#]}&/@cf//Values,opts];
+
+
+AdaptiveTimes[f_LFun,g_LFun]:=
+ChopDrop[LFun[IncreaseIndexRange[f//FFT,g//FFT//IndexRange],f//Domain] LFun[IncreaseIndexRange[g//FFT,f//FFT//IndexRange],g//Domain] ,$MachineTolerance];
+AdaptivePlus[f_LFun,g_LFun]:=
+ChopDrop[LFun[IncreaseIndexRange[f//FFT,g//FFT//IndexRange],f//Domain] +LFun[IncreaseIndexRange[g//FFT,f//FFT//IndexRange],g//Domain] ,$MachineTolerance];
 
 
 End[];

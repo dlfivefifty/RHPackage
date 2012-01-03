@@ -1259,9 +1259,8 @@ Cell[BoxData[{
 Cell[BoxData[
  RowBox[{
   StyleBox[
-   RowBox[{"End", "::", "noctx"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"No previous context defined. \\!\\(\\*ButtonBox[\\\"\
+   RowBox[{"End", "::", "noctx"}], "MessageName"], ":", 
+  " ", "\<\"No previous context defined. \\!\\(\\*ButtonBox[\\\"\
 \[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
 ButtonData:>\\\"paclet:ref/message/End/noctx\\\", ButtonNote -> \
 \\\"End::noctx\\\"]\\)\"\>"}]], "Message", "MSG"]
@@ -1859,11 +1858,96 @@ Cell[BoxData[
          RowBox[{"LFun", "[", 
           RowBox[{
            RowBox[{
-            RowBox[{"MapFromCircleD", "[", 
-             RowBox[{"lf", ",", "#"}], "]"}], "&"}], ",", "UnitCircle", ",", 
+            RowBox[{"\[Piecewise]", GridBox[{
+               {"0", 
+                RowBox[{"InfinityQ", "[", 
+                 RowBox[{"MapFromCircle", "[", 
+                  RowBox[{"lf", ",", "#"}], "]"}], "]"}]},
+               {
+                RowBox[{"MapFromCircleD", "[", 
+                 RowBox[{"lf", ",", "#"}], "]"}], "True"}
+              }]}], "&"}], ",", "UnitCircle", ",", 
            RowBox[{"lf", "//", "Length"}]}], "]"}]}], "]"}], ",", 
        RowBox[{"lf", "//", "Domain"}]}], "]"}]}], ";"}], 
    "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Integrate", "[", 
+      RowBox[{"lf_LFun", ",", "z_"}], "]"}], "^:=", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"BoundedIntegrate", "[", "lf", "]"}], "[", "z", "]"}], "+", 
+      RowBox[{
+       RowBox[{"DomainIntegrate", "[", "lf", "]"}], 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Log", "[", 
+           RowBox[{"MapToCircle", "[", 
+            RowBox[{"lf", ",", "z"}], "]"}], "]"}], "/", 
+          RowBox[{"(", 
+           RowBox[{"2", " ", "\[Pi]", "\[NonBreakingSpace]", "I"}], ")"}]}], 
+         " ", "-", 
+         TagBox[GridBox[{
+            {"\[Piecewise]", GridBox[{
+               {
+                RowBox[{
+                 RowBox[{"-", "1"}], "/", "2"}], 
+                RowBox[{
+                 RowBox[{"MapToCircle", "[", 
+                  RowBox[{"lf", ",", "\[Infinity]"}], "]"}], "~", "NEqual", 
+                 "~", 
+                 RowBox[{"-", "1"}]}]},
+               {
+                RowBox[{
+                 RowBox[{"Log", "[", 
+                  RowBox[{"MapToCircle", "[", 
+                   RowBox[{"lf", ",", "\[Infinity]"}], "]"}], "]"}], "/", 
+                 RowBox[{"(", 
+                  RowBox[{"2", " ", "\[Pi]", "\[NonBreakingSpace]", "I"}], 
+                  ")"}]}], "True"}
+              },
+              AllowedDimensions->{2, Automatic},
+              Editable->True,
+              
+              GridBoxAlignment->{
+               "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, 
+                "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+              
+              GridBoxItemSize->{
+               "Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, 
+                "Rows" -> {{1.}}, "RowsIndexed" -> {}},
+              GridBoxSpacings->{"Columns" -> {
+                  Offset[0.27999999999999997`], {
+                   Offset[0.84]}, 
+                  Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, 
+                "Rows" -> {
+                  Offset[0.2], {
+                   Offset[0.4]}, 
+                  Offset[0.2]}, "RowsIndexed" -> {}},
+              Selectable->True]}
+           },
+           
+           GridBoxAlignment->{
+            "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, 
+             "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+           
+           GridBoxItemSize->{
+            "Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, 
+             "Rows" -> {{1.}}, "RowsIndexed" -> {}},
+           GridBoxSpacings->{"Columns" -> {
+               Offset[0.27999999999999997`], {
+                Offset[0.35]}, 
+               Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+               Offset[0.2], {
+                Offset[0.4]}, 
+               Offset[0.2]}, "RowsIndexed" -> {}}],
+          "Piecewise",
+          DeleteWithContents->True,
+          Editable->False,
+          SelectWithContents->True,
+          Selectable->False]}], ")"}]}]}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"End", "[", "]"}], ";"}]}]}]], "Input",
  InitializationCell->True],
@@ -1871,8 +1955,9 @@ Cell[BoxData[
 Cell[BoxData[
  RowBox[{
   StyleBox[
-   RowBox[{"End", "::", "noctx"}], "MessageName"], ":", 
-  " ", "\<\"No previous context defined. \\!\\(\\*ButtonBox[\\\"\
+   RowBox[{"End", "::", "noctx"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"No previous context defined. \\!\\(\\*ButtonBox[\\\"\
 \[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
 ButtonData:>\\\"paclet:ref/message/End/noctx\\\", ButtonNote -> \
 \\\"End::noctx\\\"]\\)\"\>"}]], "Message", "MSG"]
@@ -2890,6 +2975,62 @@ Cell[BoxData[
 
 Cell[CellGroupData[{
 
+Cell["Adaptive Routines", "Section"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"AdaptiveTimes", "[", 
+    RowBox[{"f_LFun", ",", "g_LFun"}], "]"}], ":=", "\[IndentingNewLine]", 
+   RowBox[{"ChopDrop", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"LFun", "[", 
+       RowBox[{
+        RowBox[{"IncreaseIndexRange", "[", 
+         RowBox[{
+          RowBox[{"f", "//", "FFT"}], ",", 
+          RowBox[{
+           RowBox[{"g", "//", "FFT"}], "//", "IndexRange"}]}], "]"}], ",", 
+        RowBox[{"f", "//", "Domain"}]}], "]"}], " ", 
+      RowBox[{"LFun", "[", 
+       RowBox[{
+        RowBox[{"IncreaseIndexRange", "[", 
+         RowBox[{
+          RowBox[{"g", "//", "FFT"}], ",", 
+          RowBox[{
+           RowBox[{"f", "//", "FFT"}], "//", "IndexRange"}]}], "]"}], ",", 
+        RowBox[{"g", "//", "Domain"}]}], "]"}]}], " ", ",", 
+     "$MachineTolerance"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"AdaptivePlus", "[", 
+    RowBox[{"f_LFun", ",", "g_LFun"}], "]"}], ":=", "\[IndentingNewLine]", 
+   RowBox[{"ChopDrop", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"LFun", "[", 
+       RowBox[{
+        RowBox[{"IncreaseIndexRange", "[", 
+         RowBox[{
+          RowBox[{"f", "//", "FFT"}], ",", 
+          RowBox[{
+           RowBox[{"g", "//", "FFT"}], "//", "IndexRange"}]}], "]"}], ",", 
+        RowBox[{"f", "//", "Domain"}]}], "]"}], " ", "+", 
+      RowBox[{"LFun", "[", 
+       RowBox[{
+        RowBox[{"IncreaseIndexRange", "[", 
+         RowBox[{
+          RowBox[{"g", "//", "FFT"}], ",", 
+          RowBox[{
+           RowBox[{"f", "//", "FFT"}], "//", "IndexRange"}]}], "]"}], ",", 
+        RowBox[{"g", "//", "Domain"}]}], "]"}]}], " ", ",", 
+     "$MachineTolerance"}], "]"}]}], ";"}]}], "Input",
+ InitializationCell->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
 Cell["Finish", "Section"],
 
 Cell[BoxData[{
@@ -2902,11 +3043,11 @@ Cell[BoxData[{
 },
 AutoGeneratedPackage->Automatic,
 WindowSize->{814, 809},
-WindowMargins->{{Automatic, 240}, {Automatic, 0}},
+WindowMargins->{{Automatic, 824}, {Automatic, 131}},
 PrivateNotebookOptions->{"FileOutlineCache"->False},
 ShowSelection->True,
 TrackCellChangeTimes->False,
-FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 23, \
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 5, \
 2011)",
 StyleDefinitions->"Default.nb"
 ]

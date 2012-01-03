@@ -255,6 +255,8 @@ ToShiftListOfArrays;
 ToArrayOfShiftLists;
 
 Begin["Private`"];
+
+
 GaussianElimination[m_List?MatrixQ,v_List?VectorQ]:=Last/@RowReduce[Flatten/@Transpose[{m,v}]]
 
 MatrixMap[f_,m_]:=Map[f,m,{2}];
@@ -324,7 +326,10 @@ End[];
 
 
 BlockRow;BlockMatrix;SparseDiagonalMatrix;
+
 Begin["Private`"];
+
+
 CIdentityMatrix[n_,m_]:=IdentityMatrix[Max[n,m]][[1;;n,1;;m]];
 CIdentityMatrix[n_]:=IdentityMatrix[n];
 CIdentityMatrix[]=1;
@@ -357,11 +362,11 @@ Map[Which[#===0||#===Null,
 
 BlockMatrix[A_]:=Flatten[(BlockRow/@A),1];
 SparseDiagonalMatrix[l_List]:=Module[{i},SparseArray[{i_,i_}:>l[[i]],Length[l]{1,1}]];
-End[];
+
 
 
 RealLeastSquares[A_,b_]:=LeastSquares[Join[Re[A],Im[A]],Join[Re[b],Im[b]]]
 
 
-
+End[];
 EndPackage[];

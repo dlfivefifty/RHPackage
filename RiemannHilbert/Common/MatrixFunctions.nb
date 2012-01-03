@@ -1301,7 +1301,7 @@ Cell[BoxData[
    "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"Begin", "[", "\"\<Private`\>\"", "]"}], ";"}], 
-   "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"GaussianElimination", "[", 
      RowBox[{
@@ -1710,10 +1710,10 @@ Cell[BoxData[
  RowBox[{"\[IndentingNewLine]", 
   RowBox[{
    RowBox[{"BlockRow", ";", "BlockMatrix", ";", "SparseDiagonalMatrix", ";"}],
-    "\[IndentingNewLine]", 
+    "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"Begin", "[", "\"\<Private`\>\"", "]"}], ";"}], 
-   "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"CIdentityMatrix", "[", 
@@ -1893,9 +1893,7 @@ Cell[BoxData[{
         RowBox[{"Length", "[", "l", "]"}], 
         RowBox[{"{", 
          RowBox[{"1", ",", "1"}], "}"}]}]}], "]"}]}], "]"}]}], 
-  ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"End", "[", "]"}], ";"}]}], "Input",
+  ";"}], "\[IndentingNewLine]"}], "Input",
  InitializationCell->True],
 
 Cell[BoxData[
@@ -1936,10 +1934,11 @@ Cell[CellGroupData[{
 
 Cell["Finish", "Section"],
 
-Cell[BoxData[
- RowBox[{"\[IndentingNewLine]", 
-  RowBox[{
-   RowBox[{"EndPackage", "[", "]"}], ";"}]}]], "Input",
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"EndPackage", "[", "]"}], ";"}]}], "Input",
  InitializationCell->True]
 }, Open  ]]
 },
@@ -1949,7 +1948,7 @@ WindowMargins->{{51, Automatic}, {Automatic, 73}},
 PrivateNotebookOptions->{"FileOutlineCache"->False},
 ShowSelection->True,
 TrackCellChangeTimes->False,
-FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 23, \
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 5, \
 2011)",
 StyleDefinitions->"Default.nb"
 ]
