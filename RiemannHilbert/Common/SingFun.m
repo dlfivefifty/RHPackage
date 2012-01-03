@@ -69,15 +69,35 @@ DomainIntegrate[SingFun[if_IFun,{1/2,1/2}]]:=MapFromIntervalD[Domain[if],0]\[Pi]
 
 NIntegrate[sf_SingFun]^:=DomainIntegrate[sf];
 
+Integrate[SingFun[f_IFun,{0,0}]]^:=SingFun[Integrate[f],{0,0}];
+
 LinePlot[SingFun[f_IFun,{\[Alpha]_,\[Beta]_}],opts:OptionsPattern[]]:=LinePlot[Fun[\!\(\*
 TagBox[GridBox[{
 {"\[Piecewise]", GridBox[{
 {"0", 
 RowBox[{
+RowBox[{"(", 
+RowBox[{
 RowBox[{"#", "~", "NEqual", "~", 
-RowBox[{"RightEndpoint", "[", "f", "]"}]}], "||", 
+RowBox[{"RightEndpoint", "[", "f", "]"}]}], "&&", 
+RowBox[{"\[Beta]", "!=", "0"}]}], ")"}], "||", 
+RowBox[{"(", 
+RowBox[{
 RowBox[{"#", "~", "NEqual", "~", 
-RowBox[{"LeftEndpoint", "[", "f", "]"}]}]}]},
+RowBox[{"LeftEndpoint", "[", "f", "]"}]}], "&&", 
+RowBox[{"\[Alpha]", "!=", "0"}]}], ")"}]}]},
+{"1", 
+RowBox[{
+RowBox[{"(", 
+RowBox[{
+RowBox[{"#", "~", "NEqual", "~", 
+RowBox[{"RightEndpoint", "[", "f", "]"}]}], "&&", 
+RowBox[{"\[Beta]", "==", "0"}]}], ")"}], "||", 
+RowBox[{"(", 
+RowBox[{
+RowBox[{"#", "~", "NEqual", "~", 
+RowBox[{"LeftEndpoint", "[", "f", "]"}]}], "&&", 
+RowBox[{"\[Alpha]", "==", "0"}]}], ")"}]}]},
 {
 RowBox[{
 SuperscriptBox[
@@ -112,10 +132,28 @@ TagBox[GridBox[{
 {"\[Piecewise]", GridBox[{
 {"0", 
 RowBox[{
+RowBox[{"(", 
+RowBox[{
 RowBox[{"#", "~", "NEqual", "~", 
-RowBox[{"RightEndpoint", "[", "f", "]"}]}], "||", 
+RowBox[{"RightEndpoint", "[", "f", "]"}]}], "&&", 
+RowBox[{"\[Beta]", "!=", "0"}]}], ")"}], "||", 
+RowBox[{"(", 
+RowBox[{
 RowBox[{"#", "~", "NEqual", "~", 
-RowBox[{"LeftEndpoint", "[", "f", "]"}]}]}]},
+RowBox[{"LeftEndpoint", "[", "f", "]"}]}], "&&", 
+RowBox[{"\[Alpha]", "!=", "0"}]}], ")"}]}]},
+{"1", 
+RowBox[{
+RowBox[{"(", 
+RowBox[{
+RowBox[{"#", "~", "NEqual", "~", 
+RowBox[{"RightEndpoint", "[", "f", "]"}]}], "&&", 
+RowBox[{"\[Beta]", "==", "0"}]}], ")"}], "||", 
+RowBox[{"(", 
+RowBox[{
+RowBox[{"#", "~", "NEqual", "~", 
+RowBox[{"LeftEndpoint", "[", "f", "]"}]}], "&&", 
+RowBox[{"\[Alpha]", "==", "0"}]}], ")"}]}]},
 {
 RowBox[{
 SuperscriptBox[

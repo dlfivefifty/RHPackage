@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     21677,        613]
-NotebookOptionsPosition[     20910,        580]
-NotebookOutlinePosition[     21302,        597]
-CellTagsIndexPosition[     21259,        594]
+NotebookDataLength[     23963,        665]
+NotebookOptionsPosition[     23197,        632]
+NotebookOutlinePosition[     23587,        649]
+CellTagsIndexPosition[     23544,        646]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -363,6 +363,20 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{
    RowBox[{
+    RowBox[{"Integrate", "[", 
+     RowBox[{"SingFun", "[", 
+      RowBox[{"f_IFun", ",", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], "]"}], "]"}], "^:=", 
+    RowBox[{"SingFun", "[", 
+     RowBox[{
+      RowBox[{"Integrate", "[", "f", "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0"}], "}"}]}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
     RowBox[{"LinePlot", "[", 
      RowBox[{
       RowBox[{"SingFun", "[", 
@@ -381,10 +395,28 @@ Cell[BoxData[{
              {"\[Piecewise]", GridBox[{
                 {"0", 
                  RowBox[{
-                  RowBox[{"#", "~", "NEqual", "~", 
-                   RowBox[{"RightEndpoint", "[", "f", "]"}]}], "||", 
-                  RowBox[{"#", "~", "NEqual", "~", 
-                   RowBox[{"LeftEndpoint", "[", "f", "]"}]}]}]},
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"#", "~", "NEqual", "~", 
+                    RowBox[{"RightEndpoint", "[", "f", "]"}]}], "&&", 
+                    RowBox[{"\[Beta]", "\[NotEqual]", "0"}]}], ")"}], "||", 
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"#", "~", "NEqual", "~", 
+                    RowBox[{"LeftEndpoint", "[", "f", "]"}]}], "&&", 
+                    RowBox[{"\[Alpha]", "\[NotEqual]", "0"}]}], ")"}]}]},
+                {"1", 
+                 RowBox[{
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"#", "~", "NEqual", "~", 
+                    RowBox[{"RightEndpoint", "[", "f", "]"}]}], "&&", 
+                    RowBox[{"\[Beta]", "==", "0"}]}], ")"}], "||", 
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"#", "~", "NEqual", "~", 
+                    RowBox[{"LeftEndpoint", "[", "f", "]"}]}], "&&", 
+                    RowBox[{"\[Alpha]", "==", "0"}]}], ")"}]}]},
                 {
                  RowBox[{
                   SuperscriptBox[
@@ -465,10 +497,28 @@ Cell[BoxData[{
              {"\[Piecewise]", GridBox[{
                 {"0", 
                  RowBox[{
-                  RowBox[{"#", "~", "NEqual", "~", 
-                   RowBox[{"RightEndpoint", "[", "f", "]"}]}], "||", 
-                  RowBox[{"#", "~", "NEqual", "~", 
-                   RowBox[{"LeftEndpoint", "[", "f", "]"}]}]}]},
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"#", "~", "NEqual", "~", 
+                    RowBox[{"RightEndpoint", "[", "f", "]"}]}], "&&", 
+                    RowBox[{"\[Beta]", "\[NotEqual]", "0"}]}], ")"}], "||", 
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"#", "~", "NEqual", "~", 
+                    RowBox[{"LeftEndpoint", "[", "f", "]"}]}], "&&", 
+                    RowBox[{"\[Alpha]", "\[NotEqual]", "0"}]}], ")"}]}]},
+                {"1", 
+                 RowBox[{
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"#", "~", "NEqual", "~", 
+                    RowBox[{"RightEndpoint", "[", "f", "]"}]}], "&&", 
+                    RowBox[{"\[Beta]", "==", "0"}]}], ")"}], "||", 
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"#", "~", "NEqual", "~", 
+                    RowBox[{"LeftEndpoint", "[", "f", "]"}]}], "&&", 
+                    RowBox[{"\[Alpha]", "==", "0"}]}], ")"}]}]},
                 {
                  RowBox[{
                   SuperscriptBox[
@@ -561,7 +611,9 @@ Cell[BoxData[{
    3.529678162109123*^9, 3.529678162711341*^9}, {3.5296782355419807`*^9, 
    3.5296782737316236`*^9}, {3.5297373364945717`*^9, 
    3.5297373499211063`*^9}, {3.534116677729725*^9, 3.534116678104694*^9}, {
-   3.534116720834187*^9, 3.534116731600683*^9}}],
+   3.534116720834187*^9, 3.534116731600683*^9}, {3.534539612049424*^9, 
+   3.5345396968895397`*^9}, {3.534539731627552*^9, 3.534539768388444*^9}, {
+   3.534539924329961*^9, 3.534539949184235*^9}}],
 
 Cell[BoxData[
  RowBox[{
@@ -574,14 +626,14 @@ ButtonData:>\\\"paclet:ref/message/EndPackage/noctx\\\", ButtonNote -> \
 \\\"EndPackage::noctx\\\"]\\)\"\>"}]], "Message", "MSG",
  CellChangeTimes->{3.528189122299445*^9, 3.528189173357595*^9, 
   3.528189502997151*^9, 3.528189544241457*^9, 3.5281897842082367`*^9, 
-  3.528189820593134*^9}]
+  3.528189820593134*^9, 3.534539699705297*^9, 3.534539769213356*^9}]
 }, Open  ]]
 }, Open  ]]
 },
 AutoGeneratedPackage->Automatic,
 WindowSize->{1074, 749},
 WindowMargins->{{Automatic, 131}, {Automatic, 14}},
-FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 23, \
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 5, \
 2011)",
 StyleDefinitions->"Default.nb"
 ]
@@ -610,9 +662,9 @@ Cell[893, 38, 179, 4, 43, "Input",
 Cell[CellGroupData[{
 Cell[1109, 47, 93, 1, 67, "Section"],
 Cell[CellGroupData[{
-Cell[1227, 52, 19114, 511, 981, "Input",
+Cell[1227, 52, 21357, 563, 1155, "Input",
  InitializationCell->True],
-Cell[20344, 565, 538, 11, 23, "Message"]
+Cell[22587, 617, 582, 11, 23, "Message"]
 }, Open  ]]
 }, Open  ]]
 }
