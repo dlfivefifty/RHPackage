@@ -47,7 +47,8 @@ retold=ret;
 ret=ret-LeastSquares[J[ret],F[ret]];
 ];
 ret//Sort];
-EquilibriumMeasure[V_,retin_:{-1,1},x_]:=-(1/(2\[Pi]))HilbertInverse[IFun[V',Line[EquilibriumMeasureSupport[V,retin]]],x];
+EquilibriumMeasure[V_,retin_:{-1,1},x_]:=EquilibriumMeasure[V,retin][x];
+EquilibriumMeasure[V_,retin_:{-1,1}]:=-1/(2 \[Pi]) SingFun[Fun[V',V//EquilibriumMeasureSupport//Line],{0,0}]//HilbertInverse;
 PlotEquilibriumMeasure[V_,opts:OptionsPattern[]]:=Module[{supp,x,\[Psi]},
 supp=EquilibriumMeasureSupport[V];
 \[Psi][x_]=EquilibriumMeasure[V,supp,x];

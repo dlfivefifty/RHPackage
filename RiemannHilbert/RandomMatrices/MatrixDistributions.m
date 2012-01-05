@@ -26,6 +26,7 @@ RandomSymmetric;
 RandomOrthogonal;
 HistogramPlot;
 MarchenkoPastur;
+RandomDisk;
 
 Begin["Private`"];
 
@@ -52,6 +53,9 @@ MarchenkoPastur[Line[{a_,b_}]]:=Module[{\[Sigma],\[Lambda]},
 Select[(MarchenkoPastur@@#&/@Select[({\[Sigma],\[Lambda]}/.Solve[{b==\[Sigma]^2 (1 + Sqrt[\[Lambda]])^2,
 a==\[Sigma]^2 (1- Sqrt[\[Lambda]])^2},{\[Sigma],\[Lambda]}]),First[#]>0&&Last[#]>0&]),DomainIntegrate[#]~NEqual~1&]//First
 ]
+
+
+RandomDisk[n_,r_:1]:=Complex@@#&/@(r*Sqrt[RandomReal[1,n]]*Transpose[{Cos[#],Sin[#]}&[RandomReal[2 Pi,n]]])
 
 
 End[];

@@ -30,9 +30,9 @@ Cell[BoxData[{
  RowBox[{"RandomSymmetric", ";"}], "\[IndentingNewLine]", 
  RowBox[{"RandomOrthogonal", ";"}], "\[IndentingNewLine]", 
  RowBox[{"HistogramPlot", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"MarchenkoPastur", ";"}], "\[IndentingNewLine]", 
  RowBox[{
-  RowBox[{"MarchenkoPastur", ";"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+  RowBox[{"RandomDisk", ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"Begin", "[", "\"\<Private`\>\"", "]"}], ";"}]}], "Input",
  InitializationCell->True]
@@ -260,6 +260,38 @@ Cell[BoxData[{
 
 Cell[CellGroupData[{
 
+Cell["Random Points on a disk", "Section"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"RandomDisk", "[", 
+   RowBox[{"n_", ",", 
+    RowBox[{"r_:", "1"}]}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Complex", "@@", "#"}], "&"}], "/@", 
+   RowBox[{"(", 
+    RowBox[{"r", "*", 
+     RowBox[{"Sqrt", "[", 
+      RowBox[{"RandomReal", "[", 
+       RowBox[{"1", ",", "n"}], "]"}], "]"}], "*", 
+     RowBox[{"Transpose", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Cos", "[", "#", "]"}], ",", 
+          RowBox[{"Sin", "[", "#", "]"}]}], "}"}], "&"}], "[", 
+       RowBox[{"RandomReal", "[", 
+        RowBox[{
+         RowBox[{"2", " ", "Pi"}], ",", "n"}], "]"}], "]"}], "]"}]}], 
+    ")"}]}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.5347144487710123`*^9, 3.534714477388214*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
 Cell["Finish", "Section"],
 
 Cell[BoxData[{
@@ -276,7 +308,7 @@ WindowMargins->{{257, Automatic}, {Automatic, 0}},
 PrivateNotebookOptions->{"FileOutlineCache"->False},
 ShowSelection->True,
 TrackCellChangeTimes->False,
-FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 23, \
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 5, \
 2011)",
 StyleDefinitions->"Default.nb"
 ]

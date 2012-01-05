@@ -261,19 +261,21 @@ FiniteLength[f_]:=f//FinitePoints//Length;
 
 FiniteRealPoints[if_?FunQ]:=if//FinitePoints//Re;
 
+PlotPointValueList[f_?FunQ]:=Thread[{FiniteRealPoints[f],FiniteValues[f]}];
 
 
 
 
 
 
-LinePlot[f_,opts___]:=ListLinePlot[Thread[{FiniteRealPoints[f],FiniteValues[f]}],opts];
-ReImLinePlot[f_,opts___]:=ListLinePlot[{Thread[{FiniteRealPoints[f],FiniteValues[f]//Re}],Thread[{FiniteRealPoints[f],FiniteValues[f]//Im}]},opts];
-ReImLineLogPlot[f_,opts___]:=ListLineLogPlot[{Thread[{FiniteRealPoints[f],FiniteValues[f]//Re}],Thread[{FiniteRealPoints[f],FiniteValues[f]//Im}]},opts];
-ReImLineLogLogPlot[f_,opts___]:=ListLineLogLogPlot[{Thread[{FiniteRealPoints[f],FiniteValues[f]//Re}],Thread[{FiniteRealPoints[f],FiniteValues[f]//Im}]},opts];
-LinePlot[f_List,opts___]:=ListLinePlot[Map[Thread[{FiniteRealPoints[#],FiniteValues[#]}]&,f],opts];
 
-LineLogPlot[f_List,opts___]:=ListLineLogPlot[Map[Thread[{FiniteRealPoints[#],FiniteValues[#]}]&,f],opts];
+LinePlot[f_,opts___]:=ListLinePlot[PlotPointValueList[f],opts];
+ReImLinePlot[f_,opts___]:=ListLinePlot[{PlotPointValueList[f//Re],PlotPointValueList[f//Im]},opts];
+ReImLineLogPlot[f_,opts___]:=ListLineLogPlot[{PlotPointValueList[f//Re],PlotPointValueList[f//Im]},opts];
+ReImLineLogLogPlot[f_,opts___]:=ListLineLogLogPlot[{PlotPointValueList[f//Re],PlotPointValueList[f//Im]},opts];
+LinePlot[f_List,opts___]:=ListLinePlot[PlotPointValueList/@f,opts];
+
+LineLogPlot[f_List,opts___]:=ListLineLogPlot[PlotPointValueList/@f,opts];
 
 
 

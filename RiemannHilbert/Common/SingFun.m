@@ -71,7 +71,7 @@ NIntegrate[sf_SingFun]^:=DomainIntegrate[sf];
 
 Integrate[SingFun[f_IFun,{0,0}]]^:=SingFun[Integrate[f],{0,0}];
 
-LinePlot[SingFun[f_IFun,{\[Alpha]_,\[Beta]_}],opts:OptionsPattern[]]:=LinePlot[Fun[\!\(\*
+PlotPointValueList[SingFun[f_IFun,{\[Alpha]_,\[Beta]_}]]:=Fun[\!\(\*
 TagBox[GridBox[{
 {"\[Piecewise]", GridBox[{
 {"0", 
@@ -125,63 +125,7 @@ GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.35]}, Of
 DeleteWithContents->True,
 Editable->False,
 SelectWithContents->True,
-Selectable->False]\)&,f//Domain,100] SetLength[f,100],opts];
-
-ReImLinePlot[SingFun[f_IFun,{\[Alpha]_,\[Beta]_}],opts:OptionsPattern[]]:=ReImLinePlot[Fun[\!\(\*
-TagBox[GridBox[{
-{"\[Piecewise]", GridBox[{
-{"0", 
-RowBox[{
-RowBox[{"(", 
-RowBox[{
-RowBox[{"#", "~", "NEqual", "~", 
-RowBox[{"RightEndpoint", "[", "f", "]"}]}], "&&", 
-RowBox[{"\[Beta]", "!=", "0"}]}], ")"}], "||", 
-RowBox[{"(", 
-RowBox[{
-RowBox[{"#", "~", "NEqual", "~", 
-RowBox[{"LeftEndpoint", "[", "f", "]"}]}], "&&", 
-RowBox[{"\[Alpha]", "!=", "0"}]}], ")"}]}]},
-{"1", 
-RowBox[{
-RowBox[{"(", 
-RowBox[{
-RowBox[{"#", "~", "NEqual", "~", 
-RowBox[{"RightEndpoint", "[", "f", "]"}]}], "&&", 
-RowBox[{"\[Beta]", "==", "0"}]}], ")"}], "||", 
-RowBox[{"(", 
-RowBox[{
-RowBox[{"#", "~", "NEqual", "~", 
-RowBox[{"LeftEndpoint", "[", "f", "]"}]}], "&&", 
-RowBox[{"\[Alpha]", "==", "0"}]}], ")"}]}]},
-{
-RowBox[{
-SuperscriptBox[
-RowBox[{"(", 
-RowBox[{
-RowBox[{"MapToInterval", "[", 
-RowBox[{"f", ",", "#"}], "]"}], "+", "1"}], ")"}], "\[Alpha]"], " ", 
-SuperscriptBox[
-RowBox[{"(", 
-RowBox[{"1", "-", 
-RowBox[{"MapToInterval", "[", 
-RowBox[{"f", ",", "#"}], "]"}]}], ")"}], "\[Beta]"]}], "True"}
-},
-AllowedDimensions->{2, Automatic},
-Editable->True,
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.84]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}},
-Selectable->True]}
-},
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.35]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}}],
-"Piecewise",
-DeleteWithContents->True,
-Editable->False,
-SelectWithContents->True,
-Selectable->False]\)&,f//Domain,100] SetLength[f,100],opts];
+Selectable->False]\)&,f//Domain,100] SetLength[f,100]//PlotPointValueList;
 
 Format[sf:SingFun[_IFun,{_,_}]]:=ReImLinePlot[sf,Sequence@@$FunFormat];
 

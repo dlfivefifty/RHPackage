@@ -209,18 +209,34 @@ Cell[BoxData[{
        RowBox[{
         RowBox[{"-", "1"}], ",", "1"}], "}"}]}], ",", "x_"}], "]"}], ":=", 
    RowBox[{
-    RowBox[{"-", 
-     FractionBox["1", 
-      RowBox[{"2", "\[Pi]"}]]}], 
-    RowBox[{"HilbertInverse", "[", 
-     RowBox[{
-      RowBox[{"IFun", "[", 
+    RowBox[{"EquilibriumMeasure", "[", 
+     RowBox[{"V", ",", "retin"}], "]"}], "[", "x", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"EquilibriumMeasure", "[", 
+    RowBox[{"V_", ",", 
+     RowBox[{"retin_:", 
+      RowBox[{"{", 
        RowBox[{
-        RowBox[{"V", "'"}], ",", 
-        RowBox[{"Line", "[", 
-         RowBox[{"EquilibriumMeasureSupport", "[", 
-          RowBox[{"V", ",", "retin"}], "]"}], "]"}]}], "]"}], ",", "x"}], 
-     "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+        RowBox[{"-", "1"}], ",", "1"}], "}"}]}]}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", "1"}], "/", 
+      RowBox[{"(", 
+       RowBox[{"2", " ", "\[Pi]"}], ")"}]}], " ", 
+     RowBox[{"SingFun", "[", 
+      RowBox[{
+       RowBox[{"Fun", "[", 
+        RowBox[{
+         RowBox[{"V", "'"}], ",", 
+         RowBox[{
+          RowBox[{"V", "//", "EquilibriumMeasureSupport"}], "//", "Line"}]}], 
+        "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], "]"}]}], "//", "HilbertInverse"}]}],
+   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"PlotEquilibriumMeasure", "[", 
@@ -272,7 +288,7 @@ WindowMargins->{{12, Automatic}, {Automatic, 0}},
 PrivateNotebookOptions->{"FileOutlineCache"->False},
 ShowSelection->True,
 TrackCellChangeTimes->False,
-FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 23, \
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 5, \
 2011)",
 StyleDefinitions->"Default.nb"
 ]

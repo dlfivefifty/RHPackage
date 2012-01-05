@@ -39,13 +39,20 @@ Cell["Slit Plane Points", "Section"],
 
 Cell[BoxData[
  RowBox[{
+  RowBox[{
+   RowBox[{"DiskPoints", "[", "n_", "]"}], ":=", 
+   RowBox[{"RandomDisk", "[", 
+    SuperscriptBox["n", "2"], "]"}]}], ";"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{
   RowBox[{"Begin", "[", "\"\<Private`\>\"", "]"}], ";"}]], "Input",
  InitializationCell->True],
 
 Cell[BoxData[{
  RowBox[{
   RowBox[{
-   RowBox[{"DiskPoints", "[", "n_", "]"}], ":=", 
+   RowBox[{"EvenEvenDiskPoints", "[", "n_", "]"}], ":=", 
    RowBox[{
     RowBox[{"Table", "[", 
      RowBox[{
@@ -62,6 +69,59 @@ Cell[BoxData[{
          RowBox[{"(", 
           RowBox[{"n", "-", "1"}], ")"}]}]}], "}"}]}], "]"}], "//", 
     "Flatten"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"EvenHalfChebDiskPoints", "[", "n_", "]"}], ":=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"Points", "[", 
+        RowBox[{
+         RowBox[{"Circle", "[", 
+          RowBox[{"0", ",", "#"}], "]"}], ",", "n"}], "]"}], "&"}], "/@", 
+      RowBox[{"Rest", "[", 
+       RowBox[{"Points", "[", 
+        RowBox[{
+         RowBox[{"Line", "[", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", "1"}], "}"}], "]"}], ",", "n"}], "]"}], "]"}]}], 
+     "//", "Flatten"}], "//", "Union"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"EvenChebDiskPoints", "[", "n_", "]"}], ":=", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"#", 
+        RowBox[{"Exp", "[", 
+         RowBox[{"I", " ", "\[Pi]", " ", 
+          RowBox[{"Range", "[", 
+           RowBox[{
+            RowBox[{"-", "1."}], ",", 
+            RowBox[{
+             RowBox[{"-", "1"}], "/", "n"}], ",", 
+            RowBox[{"1", "/", "n"}]}], "]"}]}], "]"}]}], "&"}], "/@", 
+      RowBox[{"Select", "[", 
+       RowBox[{
+        RowBox[{"Points", "[", 
+         RowBox[{
+          RowBox[{"Line", "[", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "1"}], ",", "1"}], "}"}], "]"}], ",", "n"}], "]"}], 
+        ",", 
+        RowBox[{
+         RowBox[{"!", 
+          RowBox[{"NZeroQ", "[", "#", "]"}]}], "&"}]}], "]"}]}], "//", 
+     "Flatten"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"DiskPoints", "[", "n_", "]"}], ":=", 
+    RowBox[{"EvenChebDiskPoints", "[", "n", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"SlitPlanePoints", "[", 
@@ -102,34 +162,21 @@ Cell[BoxData[{
       RowBox[{"lf", ",", 
        RowBox[{"Join", "[", 
         RowBox[{
-         RowBox[{"DiskPoints", "[", "n", "]"}], ",", 
+         RowBox[{"EvenEvenDiskPoints", "[", 
+          RowBox[{"n", "+", "1"}], "]"}], ",", 
          RowBox[{"1", "/", 
-          RowBox[{"DiskPoints", "[", "n", "]"}]}]}], "]"}]}], "]"}], ",", 
+          RowBox[{"EvenEvenDiskPoints", "[", 
+           RowBox[{"n", "+", "1"}], "]"}]}]}], "]"}]}], "]"}], ",", 
      "FiniteQ"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"SlitPlanePoints", "[", 
     RowBox[{"if_IFun", ",", "n_"}], "]"}], ":=", 
    RowBox[{"MapFromInterval", "[", 
-    RowBox[{"if", ",", 
+    RowBox[{"if", ",", " ", 
      RowBox[{
-      RowBox[{
-       RowBox[{"Table", "[", 
-        RowBox[{
-         RowBox[{"Points", "[", 
-          RowBox[{
-           RowBox[{"Circle", "[", 
-            RowBox[{"0", ",", "r"}], "]"}], ",", "n"}], "]"}], ",", 
-         RowBox[{"{", 
-          RowBox[{"r", ",", 
-           RowBox[{"1", "/", 
-            RowBox[{"(", 
-             RowBox[{"n", "-", "1"}], ")"}]}], ",", "1.", ",", 
-           RowBox[{"1", "/", 
-            RowBox[{"(", 
-             RowBox[{"n", "-", "1"}], ")"}]}]}], "}"}]}], "]"}], "//", 
-       "Flatten"}], "//", "CircleToInterval"}]}], "]"}]}], 
-  ";"}], "\[IndentingNewLine]", 
+      RowBox[{"DiskPoints", "[", "n", "]"}], "//", "CircleToInterval"}]}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"SlitPlanePoints", "[", 
@@ -138,23 +185,8 @@ Cell[BoxData[{
    RowBox[{"MapFromInterval", "[", 
     RowBox[{"d", ",", 
      RowBox[{
-      RowBox[{
-       RowBox[{"Table", "[", 
-        RowBox[{
-         RowBox[{"Points", "[", 
-          RowBox[{
-           RowBox[{"Circle", "[", 
-            RowBox[{"0", ",", "r"}], "]"}], ",", "n"}], "]"}], ",", 
-         RowBox[{"{", 
-          RowBox[{"r", ",", 
-           RowBox[{"1", "/", 
-            RowBox[{"(", 
-             RowBox[{"n", "-", "1"}], ")"}]}], ",", "1.", ",", 
-           RowBox[{"1", "/", 
-            RowBox[{"(", 
-             RowBox[{"n", "-", "1"}], ")"}]}]}], "}"}]}], "]"}], "//", 
-       "Flatten"}], "//", "CircleToInterval"}]}], "]"}]}], 
-  ";"}], "\[IndentingNewLine]", 
+      RowBox[{"DiskPoints", "[", "n", "]"}], "//", "CircleToInterval"}]}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -432,7 +464,7 @@ Cell[BoxData[
       RowBox[{"FreePlus", "[", 
        RowBox[{"sfA_", ",", "sfB_", ",", 
         RowBox[{"m_:", "80"}], ",", 
-        RowBox[{"n_:", "20"}]}], "]"}], "/;", 
+        RowBox[{"n_:", "19"}]}], "]"}], "/;", 
       RowBox[{
        RowBox[{
         RowBox[{"Domain", "[", "sfA", "]"}], "\[Equal]", "RealLine"}], "||", 
@@ -1027,7 +1059,7 @@ WindowMargins->{{Automatic, 151}, {Automatic, 0}},
 PrivateNotebookOptions->{"FileOutlineCache"->False},
 ShowSelection->True,
 TrackCellChangeTimes->False,
-FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 23, \
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 5, \
 2011)",
 StyleDefinitions->"Default.nb"
 ]

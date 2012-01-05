@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     23987,        666]
-NotebookOptionsPosition[     23221,        633]
-NotebookOutlinePosition[     23611,        650]
-CellTagsIndexPosition[     23568,        647]
+NotebookDataLength[     19757,        560]
+NotebookOptionsPosition[     18991,        527]
+NotebookOutlinePosition[     19382,        544]
+CellTagsIndexPosition[     19339,        541]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -377,207 +377,100 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{
    RowBox[{
-    RowBox[{"LinePlot", "[", 
+    RowBox[{"PlotPointValueList", "[", 
+     RowBox[{"SingFun", "[", 
+      RowBox[{"f_IFun", ",", 
+       RowBox[{"{", 
+        RowBox[{"\[Alpha]_", ",", "\[Beta]_"}], "}"}]}], "]"}], "]"}], ":=", 
+    RowBox[{
      RowBox[{
-      RowBox[{"SingFun", "[", 
-       RowBox[{"f_IFun", ",", 
-        RowBox[{"{", 
-         RowBox[{"\[Alpha]_", ",", "\[Beta]_"}], "}"}]}], "]"}], ",", 
-      RowBox[{"opts", ":", 
-       RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", 
-    RowBox[{"LinePlot", "[", 
-     RowBox[{
-      RowBox[{
-       RowBox[{"Fun", "[", 
+      RowBox[{"Fun", "[", 
+       RowBox[{
         RowBox[{
-         RowBox[{
-          TagBox[GridBox[{
-             {"\[Piecewise]", GridBox[{
-                {"0", 
-                 RowBox[{
-                  RowBox[{"(", 
-                   RowBox[{
-                    RowBox[{"#", "~", "NEqual", "~", 
+         TagBox[GridBox[{
+            {"\[Piecewise]", GridBox[{
+               {"0", 
+                RowBox[{
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"#", "~", "NEqual", "~", 
                     RowBox[{"RightEndpoint", "[", "f", "]"}]}], "&&", 
-                    RowBox[{"\[Beta]", "\[NotEqual]", "0"}]}], ")"}], "||", 
-                  RowBox[{"(", 
-                   RowBox[{
-                    RowBox[{"#", "~", "NEqual", "~", 
+                   RowBox[{"\[Beta]", "\[NotEqual]", "0"}]}], ")"}], "||", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"#", "~", "NEqual", "~", 
                     RowBox[{"LeftEndpoint", "[", "f", "]"}]}], "&&", 
-                    RowBox[{"\[Alpha]", "\[NotEqual]", "0"}]}], ")"}]}]},
-                {"1", 
-                 RowBox[{
-                  RowBox[{"(", 
-                   RowBox[{
-                    RowBox[{"#", "~", "NEqual", "~", 
+                   RowBox[{"\[Alpha]", "\[NotEqual]", "0"}]}], ")"}]}]},
+               {"1", 
+                RowBox[{
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"#", "~", "NEqual", "~", 
                     RowBox[{"RightEndpoint", "[", "f", "]"}]}], "&&", 
-                    RowBox[{"\[Beta]", "==", "0"}]}], ")"}], "||", 
+                   RowBox[{"\[Beta]", "==", "0"}]}], ")"}], "||", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"#", "~", "NEqual", "~", 
+                    RowBox[{"LeftEndpoint", "[", "f", "]"}]}], "&&", 
+                   RowBox[{"\[Alpha]", "==", "0"}]}], ")"}]}]},
+               {
+                RowBox[{
+                 SuperscriptBox[
                   RowBox[{"(", 
                    RowBox[{
-                    RowBox[{"#", "~", "NEqual", "~", 
-                    RowBox[{"LeftEndpoint", "[", "f", "]"}]}], "&&", 
-                    RowBox[{"\[Alpha]", "==", "0"}]}], ")"}]}]},
-                {
-                 RowBox[{
-                  SuperscriptBox[
-                   RowBox[{"(", 
-                    RowBox[{
                     RowBox[{"MapToInterval", "[", 
                     RowBox[{"f", ",", "#"}], "]"}], "+", "1"}], ")"}], 
-                   "\[Alpha]"], " ", 
-                  SuperscriptBox[
-                   RowBox[{"(", 
-                    RowBox[{"1", "-", 
+                  "\[Alpha]"], " ", 
+                 SuperscriptBox[
+                  RowBox[{"(", 
+                   RowBox[{"1", "-", 
                     RowBox[{"MapToInterval", "[", 
                     RowBox[{"f", ",", "#"}], "]"}]}], ")"}], "\[Beta]"]}], 
-                 "True"}
-               },
-               AllowedDimensions->{2, Automatic},
-               Editable->True,
-               
-               GridBoxAlignment->{
-                "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, 
-                 "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
-               
-               GridBoxItemSize->{
-                "Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, 
-                 "Rows" -> {{1.}}, "RowsIndexed" -> {}},
-               GridBoxSpacings->{"Columns" -> {
-                   Offset[0.27999999999999997`], {
-                    Offset[0.84]}, 
-                   Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, 
-                 "Rows" -> {
-                   Offset[0.2], {
-                    Offset[0.4]}, 
-                   Offset[0.2]}, "RowsIndexed" -> {}},
-               Selectable->True]}
-            },
-            
-            GridBoxAlignment->{
-             "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, 
-              "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
-            
-            GridBoxItemSize->{
-             "Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, 
-              "Rows" -> {{1.}}, "RowsIndexed" -> {}},
-            GridBoxSpacings->{"Columns" -> {
-                Offset[0.27999999999999997`], {
-                 Offset[0.35]}, 
-                Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
-                Offset[0.2], {
-                 Offset[0.4]}, 
-                Offset[0.2]}, "RowsIndexed" -> {}}],
-           "Piecewise",
-           DeleteWithContents->True,
-           Editable->False,
-           SelectWithContents->True,
-           Selectable->False], "&"}], ",", 
-         RowBox[{"f", "//", "Domain"}], ",", "100"}], "]"}], " ", 
-       RowBox[{"SetLength", "[", 
-        RowBox[{"f", ",", "100"}], "]"}]}], ",", "opts"}], "]"}]}], ";"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{
-    RowBox[{"ReImLinePlot", "[", 
-     RowBox[{
-      RowBox[{"SingFun", "[", 
-       RowBox[{"f_IFun", ",", 
-        RowBox[{"{", 
-         RowBox[{"\[Alpha]_", ",", "\[Beta]_"}], "}"}]}], "]"}], ",", 
-      RowBox[{"opts", ":", 
-       RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", 
-    RowBox[{"ReImLinePlot", "[", 
-     RowBox[{
-      RowBox[{
-       RowBox[{"Fun", "[", 
-        RowBox[{
-         RowBox[{
-          TagBox[GridBox[{
-             {"\[Piecewise]", GridBox[{
-                {"0", 
-                 RowBox[{
-                  RowBox[{"(", 
-                   RowBox[{
-                    RowBox[{"#", "~", "NEqual", "~", 
-                    RowBox[{"RightEndpoint", "[", "f", "]"}]}], "&&", 
-                    RowBox[{"\[Beta]", "\[NotEqual]", "0"}]}], ")"}], "||", 
-                  RowBox[{"(", 
-                   RowBox[{
-                    RowBox[{"#", "~", "NEqual", "~", 
-                    RowBox[{"LeftEndpoint", "[", "f", "]"}]}], "&&", 
-                    RowBox[{"\[Alpha]", "\[NotEqual]", "0"}]}], ")"}]}]},
-                {"1", 
-                 RowBox[{
-                  RowBox[{"(", 
-                   RowBox[{
-                    RowBox[{"#", "~", "NEqual", "~", 
-                    RowBox[{"RightEndpoint", "[", "f", "]"}]}], "&&", 
-                    RowBox[{"\[Beta]", "==", "0"}]}], ")"}], "||", 
-                  RowBox[{"(", 
-                   RowBox[{
-                    RowBox[{"#", "~", "NEqual", "~", 
-                    RowBox[{"LeftEndpoint", "[", "f", "]"}]}], "&&", 
-                    RowBox[{"\[Alpha]", "==", "0"}]}], ")"}]}]},
-                {
-                 RowBox[{
-                  SuperscriptBox[
-                   RowBox[{"(", 
-                    RowBox[{
-                    RowBox[{"MapToInterval", "[", 
-                    RowBox[{"f", ",", "#"}], "]"}], "+", "1"}], ")"}], 
-                   "\[Alpha]"], " ", 
-                  SuperscriptBox[
-                   RowBox[{"(", 
-                    RowBox[{"1", "-", 
-                    RowBox[{"MapToInterval", "[", 
-                    RowBox[{"f", ",", "#"}], "]"}]}], ")"}], "\[Beta]"]}], 
-                 "True"}
-               },
-               AllowedDimensions->{2, Automatic},
-               Editable->True,
-               
-               GridBoxAlignment->{
-                "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, 
-                 "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
-               
-               GridBoxItemSize->{
-                "Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, 
-                 "Rows" -> {{1.}}, "RowsIndexed" -> {}},
-               GridBoxSpacings->{"Columns" -> {
-                   Offset[0.27999999999999997`], {
-                    Offset[0.84]}, 
-                   Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, 
-                 "Rows" -> {
-                   Offset[0.2], {
-                    Offset[0.4]}, 
-                   Offset[0.2]}, "RowsIndexed" -> {}},
-               Selectable->True]}
-            },
-            
-            GridBoxAlignment->{
-             "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, 
-              "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
-            
-            GridBoxItemSize->{
-             "Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, 
-              "Rows" -> {{1.}}, "RowsIndexed" -> {}},
-            GridBoxSpacings->{"Columns" -> {
-                Offset[0.27999999999999997`], {
-                 Offset[0.35]}, 
-                Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
-                Offset[0.2], {
-                 Offset[0.4]}, 
-                Offset[0.2]}, "RowsIndexed" -> {}}],
-           "Piecewise",
-           DeleteWithContents->True,
-           Editable->False,
-           SelectWithContents->True,
-           Selectable->False], "&"}], ",", 
-         RowBox[{"f", "//", "Domain"}], ",", "100"}], "]"}], " ", 
-       RowBox[{"SetLength", "[", 
-        RowBox[{"f", ",", "100"}], "]"}]}], ",", "opts"}], "]"}]}], ";"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+                "True"}
+              },
+              AllowedDimensions->{2, Automatic},
+              Editable->True,
+              GridBoxAlignment->{
+               "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, 
+                "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+              
+              GridBoxItemSize->{
+               "Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, 
+                "Rows" -> {{1.}}, "RowsIndexed" -> {}},
+              GridBoxSpacings->{"Columns" -> {
+                  Offset[0.27999999999999997`], {
+                   Offset[0.84]}, 
+                  Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, 
+                "Rows" -> {
+                  Offset[0.2], {
+                   Offset[0.4]}, 
+                  Offset[0.2]}, "RowsIndexed" -> {}},
+              Selectable->True]}
+           },
+           
+           GridBoxAlignment->{
+            "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, 
+             "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+           
+           GridBoxItemSize->{
+            "Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, 
+             "Rows" -> {{1.}}, "RowsIndexed" -> {}},
+           GridBoxSpacings->{"Columns" -> {
+               Offset[0.27999999999999997`], {
+                Offset[0.35]}, 
+               Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+               Offset[0.2], {
+                Offset[0.4]}, 
+               Offset[0.2]}, "RowsIndexed" -> {}}],
+          "Piecewise",
+          DeleteWithContents->True,
+          Editable->False,
+          SelectWithContents->True,
+          Selectable->False], "&"}], ",", 
+        RowBox[{"f", "//", "Domain"}], ",", "100"}], "]"}], " ", 
+      RowBox[{"SetLength", "[", 
+       RowBox[{"f", ",", "100"}], "]"}]}], "//", "PlotPointValueList"}]}], 
+   ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -613,7 +506,8 @@ Cell[BoxData[{
    3.5297373499211063`*^9}, {3.534116677729725*^9, 3.534116678104694*^9}, {
    3.534116720834187*^9, 3.534116731600683*^9}, {3.534539612049424*^9, 
    3.5345396968895397`*^9}, {3.534539731627552*^9, 3.534539768388444*^9}, {
-   3.534539924329961*^9, 3.534539949184235*^9}}],
+   3.534539924329961*^9, 3.534539949184235*^9}, {3.53471011038231*^9, 
+   3.534710150294664*^9}, {3.534710195582801*^9, 3.534710199958474*^9}}],
 
 Cell[BoxData[
  RowBox[{
@@ -633,7 +527,7 @@ ButtonData:>\\\"paclet:ref/message/EndPackage/noctx\\\", ButtonNote -> \
 },
 AutoGeneratedPackage->Automatic,
 WindowSize->{1074, 749},
-WindowMargins->{{Automatic, 131}, {Automatic, 14}},
+WindowMargins->{{365, Automatic}, {303, Automatic}},
 FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 5, \
 2011)",
 StyleDefinitions->"Default.nb"
@@ -663,9 +557,9 @@ Cell[893, 38, 179, 4, 43, "Input",
 Cell[CellGroupData[{
 Cell[1109, 47, 93, 1, 67, "Section"],
 Cell[CellGroupData[{
-Cell[1227, 52, 21357, 563, 1155, "Input",
+Cell[1227, 52, 17127, 457, 961, "Input",
  InitializationCell->True],
-Cell[22587, 617, 606, 12, 23, "Message"]
+Cell[18357, 511, 606, 12, 23, "Message"]
 }, Open  ]]
 }, Open  ]]
 }
