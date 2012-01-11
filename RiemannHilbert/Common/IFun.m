@@ -537,7 +537,7 @@ Begin["Private`"];
 
 IFun[l_List,d_][z_]:=ChebyshevLobattoBarycentricInterpolation[l,MapToInterval[d,z]];
 IFun[f_?NotListOrPatternQ,d_,n_Integer]:=IFun[f/@Points[d,n],d];
-
+IFun[a_]:=IFun[a,UnitInterval];
 
 Values[IFun[l_List,_]]:=l;
 Domain[IFun[_List,d_]]:=d;
@@ -783,7 +783,7 @@ Fun[f_?NotListOrPatternQ,Line[l:{_,_,___},Lopts___],n_List]:=IFun[f,Line[#[[1]],
 Fun[f_?NotListOrPatternQ,Line[l:{_,_,___},Lopts___],n_Integer]:=Fun[f,Line[l,Lopts],n OneVector[Length[l]-1]];
 Fun[f_?NotListOrPatternQ,Line[l:{_,_,___},Lopts___],opts:OptionsPattern[]]:=IFun[f,Line[#,Sequence@@If[Or@@(InfinityQ/@#),{Lopts},{}]],opts]&/@Partition[l,2,1]//If[Length[#]==1,#[[1]],#]&;
 Fun[f_,d_?IntervalDomainQ,opts___]:=IFun[f,d,opts];
-
+Fun[a_]:=Fun[a,UnitInterval];
 
 ZeroAtInfinityFun[f_List,d_?IntervalDomainQ]:=ZeroAtInfinityIFun[f,d];
 
