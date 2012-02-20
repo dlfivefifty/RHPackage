@@ -110,6 +110,8 @@ Fun;
 ZeroAtInfinityFun;
 MeanZero;
 
+FastPlus;
+
 
 
 

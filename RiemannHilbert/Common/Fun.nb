@@ -193,7 +193,8 @@ d\>\""}], ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]",
    RowBox[{"VectorFunQ", ";"}], "\[IndentingNewLine]", 
    RowBox[{"Fun", ";"}], "\[IndentingNewLine]", 
    RowBox[{"ZeroAtInfinityFun", ";"}], "\[IndentingNewLine]", 
-   RowBox[{"MeanZero", ";"}], "\[IndentingNewLine]", 
+   RowBox[{"MeanZero", ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"FastPlus", ";"}], "\[IndentingNewLine]", 
    "\[IndentingNewLine]"}]}]], "Input",
  InitializationCell->True]
 }, Open  ]],
@@ -980,7 +981,7 @@ Cell[BoxData[{
        RowBox[{
         RowBox[{"JumpScaleDomainPlot", "[", 
          RowBox[{"#", ",", "opts"}], "]"}], "&"}], "/@", "l"}], ",", "opts"}],
-      "]"}]}], ";"}], "\[IndentingNewLine]"}], "\n", 
+      "]"}]}], ";"}], "\n"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"JumpScale", "[", 

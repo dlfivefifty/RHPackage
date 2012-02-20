@@ -611,8 +611,8 @@ Hilbert[lf_,z_]:=I (Cauchy[+1,lf,z]+Cauchy[-1,lf,z]);
 Hilbert[lf_]:=I (Cauchy[+1,lf]+Cauchy[-1,lf]);
 
 FPCauchy[s_?SignQ,f_IFun,g_IFun]:=IFun[Transpose[(Values/@FPCauchyBasis[s,f,;;Length[f],g])].DCT[f],g//Domain];
-FPCauchy[s_?SignQ,f_List,g_IFun]:=FastPlus@@(FPCauchy[s,#,g]&/@f);
-FPCauchy[s_?SignQ,f_List,g:{__IFun}]:=FPCauchy[s,f,#]&/@g;
+FPCauchy[s_?SignQ,f_List,g_?FunQ]:=FastPlus@@(FPCauchy[s,#,g]&/@f);
+FPCauchy[s_?SignQ,f_List,g:{__?FunQ}]:=FPCauchy[s,f,#]&/@g;
 FPCauchy[s_?SignQ,f_]:=FPCauchy[s,f,f];
 
 
