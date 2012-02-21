@@ -247,17 +247,47 @@ Cell[BoxData[{
        RowBox[{"{", 
         RowBox[{"__", "?", "FunQ"}], "}"}]}]}], "]"}], ":=", 
     RowBox[{"CauchyMatrix", "[", 
-     RowBox[{"s", ",", "f", ",", "f"}], "]"}]}], ";"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+     RowBox[{"s", ",", "f", ",", "f"}], "]"}]}], ";"}], "\[IndentingNewLine]",
+   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
-   RowBox[{"CauchySeriesAtInfinity", "[", "U_", "]"}], ":=", 
+   RowBox[{"CauchySeriesAtInfinity", "[", "U_PFun", "]"}], ":=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Values", "[", "U", "]"}], "\[LeftDoubleBracket]", "1", 
+     "\[RightDoubleBracket]"}], "/", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"-", "2"}], " ", "\[Pi]", "\[NonBreakingSpace]", "I"}], 
+     ")"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CauchySeriesAtInfinity", "[", "U_IFun", "]"}], ":=", 
    RowBox[{
     RowBox[{"-", 
      RowBox[{"(", 
       RowBox[{"U", "//", "DomainIntegrate"}], ")"}]}], "/", 
     RowBox[{"(", 
      RowBox[{"2", " ", "\[Pi]", "\[NonBreakingSpace]", "I"}], ")"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CauchySeriesAtInfinity", "[", "U_LFun", "]"}], ":=", 
+   RowBox[{
+    RowBox[{"-", 
+     RowBox[{"(", 
+      RowBox[{"U", "//", "DomainIntegrate"}], ")"}]}], "/", 
+    RowBox[{"(", 
+     RowBox[{"2", " ", "\[Pi]", "\[NonBreakingSpace]", "I"}], ")"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CauchySeriesAtInfinity", "[", 
+    RowBox[{"U", ":", 
+     RowBox[{"{", 
+      RowBox[{"__", "?", "FunQ"}], "}"}]}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"CauchySeriesAtInfinity", "/@", "U"}], "//", "Total"}]}], 
   ";"}]}], "Input",
  InitializationCell->True]
 }, Open  ]],
@@ -2427,7 +2457,7 @@ WindowMargins->{{20, Automatic}, {Automatic, 0}},
 PrivateNotebookOptions->{"FileOutlineCache"->False},
 ShowSelection->True,
 TrackCellChangeTimes->False,
-FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 23, \
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 5, \
 2011)",
 StyleDefinitions->"Default.nb"
 ]

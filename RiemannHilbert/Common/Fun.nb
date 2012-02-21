@@ -494,6 +494,16 @@ Cell[BoxData[
      RowBox[{"DomainQ", "[", "_", "]"}], ":=", "False"}], ";"}], 
    "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
+    RowBox[{
+     RowBox[{"DomainIntegrate", "[", 
+      RowBox[{"{", 
+       RowBox[{"if__", "?", "FunQ"}], "}"}], "]"}], ":=", 
+     RowBox[{"Plus", "@@", 
+      RowBox[{"(", 
+       RowBox[{"DomainIntegrate", "/@", 
+        RowBox[{"{", "if", "}"}]}], ")"}]}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{
     RowBox[{"End", "[", "]"}], ";"}]}]}]], "Input",
  InitializationCell->True]
 }, Open  ]]
@@ -981,7 +991,7 @@ Cell[BoxData[{
        RowBox[{
         RowBox[{"JumpScaleDomainPlot", "[", 
          RowBox[{"#", ",", "opts"}], "]"}], "&"}], "/@", "l"}], ",", "opts"}],
-      "]"}]}], ";"}], "\n"}], "\[IndentingNewLine]", 
+      "]"}]}], ";"}], "\[IndentingNewLine]"}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{"JumpScale", "[", 

@@ -2907,7 +2907,7 @@ Cell[BoxData[
            RowBox[{"l", "[", 
             RowBox[{"[", 
              RowBox[{"-", "1"}], "]"}], "]"}]}], "}"}], ",", "d"}], "]"}], 
-       ",", "opts"}], "]"}]}], ";"}], "\n", "\[IndentingNewLine]", 
+       ",", "opts"}], "]"}]}], ";"}], "\[IndentingNewLine]", "\n", 
    RowBox[{
     RowBox[{
      RowBox[{"JumpScaleDomainPlot", "[", 
@@ -3387,7 +3387,7 @@ indefinite integral.\>\""}], ";"}], "\[IndentingNewLine]",
              RowBox[{"d", "[", 
               RowBox[{"#", "-", "1"}], "]"}], "&"}], ",", 
             RowBox[{"{", "n", "}"}]}], "]"}]}]}], "]"}]}]}], "]"}]}], ";"}], 
-  "\n"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -3644,19 +3644,10 @@ Cell[BoxData[{
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
-   RowBox[{"DomainIntegrate", "[", "if_IFun", "]"}], ":=", 
    RowBox[{
-    RowBox[{"if", "//", "Integrate"}], "//", "Last"}]}], 
-  ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{
-    RowBox[{"DomainIntegrate", "[", 
-     RowBox[{"{", "if__IFun", "}"}], "]"}], ":=", 
-    RowBox[{"Plus", "@@", 
-     RowBox[{"(", 
-      RowBox[{"DomainIntegrate", "/@", 
-       RowBox[{"{", "if", "}"}]}], ")"}]}]}], ";"}], 
+    RowBox[{"DomainIntegrate", "[", "if_IFun", "]"}], ":=", 
+    RowBox[{
+     RowBox[{"if", "//", "Integrate"}], "//", "Last"}]}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"End", "[", "]"}], ";"}]}], "Input",
@@ -4042,8 +4033,8 @@ Cell[BoxData[
      RowBox[{"ReduceDimensionMatrix", "[", 
       RowBox[{
        RowBox[{"f", "//", "Domain"}], ",", 
-       RowBox[{"f", "//", "Length"}]}], "]"}]}], ";"}], "\n", 
-   "\[IndentingNewLine]", 
+       RowBox[{"f", "//", "Length"}]}], "]"}]}], ";"}], "\[IndentingNewLine]",
+    "\n", 
    RowBox[{
     RowBox[{
      RowBox[{"ReduceDimensionIntegrateMatrix", "[", 
@@ -5512,7 +5503,7 @@ WindowMargins->{{241, Automatic}, {Automatic, 0}},
 PrivateNotebookOptions->{"FileOutlineCache"->False},
 ShowSelection->True,
 TrackCellChangeTimes->False,
-FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 23, \
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 5, \
 2011)",
 StyleDefinitions->"Default.nb"
 ]

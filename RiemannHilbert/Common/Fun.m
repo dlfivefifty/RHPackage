@@ -181,6 +181,8 @@ Begin["Private`"];
 DomainMemberQ[f_?FunQ,x_]:=DomainMemberQ[f//Domain,x];
 DomainQ[_]:=False;
 
+DomainIntegrate[{if__?FunQ}]:=Plus@@(DomainIntegrate/@{if});
+
 End[];
 
 
