@@ -25,6 +25,8 @@ BeginPackage["RiemannHilbert`RandomMatrices`",{"RiemannHilbert`","RiemannHilbert
 FreePlus;
 FreeTimes;
 FreeCompress;
+TTransform;
+TTransformInverseFunction;
 
 
 Begin["Private`"];
@@ -102,6 +104,10 @@ FreeInverseStieljes[GAB,GABD,GABDD,m,sIpts]
 ],
 {First::first,Thread::tdlen}];
 
+
+
+TTransform[if_LFun,z_]:=Stieljes[if ZeroAtInfinityLFun[#&,if//Domain,Length[if]],z];
+TTransformInverseFunction[if_LFun,z_]:=StieljesInverseFunction[if ZeroAtInfinityLFun[#&,if//Domain,Length[if]],z];
 
 
 TTransform[SingFun[if_IFun,{1/2,1/2}],z_]:=Stieljes[SingFun[IncreaseDimension[if] Fun[#&,if//Domain,Length[if]+1],{1/2,1/2}],z];

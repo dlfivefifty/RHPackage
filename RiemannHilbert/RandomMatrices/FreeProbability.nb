@@ -29,7 +29,9 @@ Cell["Documentation", "Section"],
 Cell[BoxData[{
  RowBox[{"FreePlus", ";"}], "\[IndentingNewLine]", 
  RowBox[{"FreeTimes", ";"}], "\[IndentingNewLine]", 
- RowBox[{"FreeCompress", ";"}]}], "Input",
+ RowBox[{"FreeCompress", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"TTransform", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"TTransformInverseFunction", ";"}]}], "Input",
  InitializationCell->True]
 }, Open  ]],
 
@@ -615,6 +617,33 @@ Cell["FreeTimes", "Section"],
 Cell[BoxData[
  RowBox[{"\[IndentingNewLine]", 
   RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"TTransform", "[", 
+      RowBox[{"if_LFun", ",", "z_"}], "]"}], ":=", 
+     RowBox[{"Stieljes", "[", 
+      RowBox[{
+       RowBox[{"if", " ", 
+        RowBox[{"ZeroAtInfinityLFun", "[", 
+         RowBox[{
+          RowBox[{"#", "&"}], ",", 
+          RowBox[{"if", "//", "Domain"}], ",", 
+          RowBox[{"Length", "[", "if", "]"}]}], "]"}]}], ",", "z"}], "]"}]}], 
+    ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"TTransformInverseFunction", "[", 
+      RowBox[{"if_LFun", ",", "z_"}], "]"}], ":=", 
+     RowBox[{"StieljesInverseFunction", "[", 
+      RowBox[{
+       RowBox[{"if", " ", 
+        RowBox[{"ZeroAtInfinityLFun", "[", 
+         RowBox[{
+          RowBox[{"#", "&"}], ",", 
+          RowBox[{"if", "//", "Domain"}], ",", 
+          RowBox[{"Length", "[", "if", "]"}]}], "]"}]}], ",", "z"}], "]"}]}], 
+    ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"TTransform", "[", 
