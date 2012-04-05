@@ -44,6 +44,9 @@ CauchyOperator::usage=
 
 
 Begin["`Private`"];
+
+
+
 Clear[\[Psi]p,\[Psi]m,\[Phi]];
 \[Phi][n_,z_]:=(1/2) z^(2 Floor[(n+1)/2] + 1) LerchPhi[z^2,1,1/2+ Floor[(n+1)/2] ];
 \[Mu][n_,z_]:=ArcTanh[z]-\[Phi][n,z];
