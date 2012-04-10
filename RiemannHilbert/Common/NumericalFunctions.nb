@@ -1140,7 +1140,7 @@ Cell[BoxData[{
        RowBox[{
         RowBox[{
          RowBox[{"Norm", "[", 
-          RowBox[{"ret", "-", "retold"}], "]"}], ">", 
+          RowBox[{"f", "[", "ret", "]"}], "]"}], ">", 
          RowBox[{"OptionValue", "[", "InterpolationPrecision", "]"}]}], ",", 
         "\[IndentingNewLine]", "\t", 
         RowBox[{
@@ -1608,7 +1608,7 @@ WindowMargins->{{158, Automatic}, {Automatic, 0}},
 PrivateNotebookOptions->{"FileOutlineCache"->False},
 ShowSelection->True,
 TrackCellChangeTimes->False,
-FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 23, \
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 5, \
 2011)",
 StyleDefinitions->"Default.nb"
 ]

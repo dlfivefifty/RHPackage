@@ -161,7 +161,7 @@ CircleNIntegrate[h_,z_,opts___]:=CircleNIntegrate[h,{z,0,1},opts];
 NewtonMethod[f_,fp_,x0_,OptionsPattern[InterpolationPrecision->10^-12.5]]:=Module[{ret,retold},
 	retold=x0+10;
 	ret=x0;
-While[Norm[ret-retold]>OptionValue[InterpolationPrecision],
+While[Norm[f[ret]]>OptionValue[InterpolationPrecision],
 	retold=ret;
 	ret=ret-f[ret]/fp[ret];
 ];
