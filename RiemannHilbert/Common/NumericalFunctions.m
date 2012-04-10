@@ -158,23 +158,28 @@ CircleNIntegrate[h_,{z_,r_},opts___]:=CircleNIntegrate[h,{z,0,r},opts];
 CircleNIntegrate[h_,z_,opts___]:=CircleNIntegrate[h,{z,0,1},opts];
 
 
-NewtonMethod[f_,fp_,x0_,OptionsPattern[InterpolationPrecision->10^-12.5]]:=Module[{ret,retold},
+NewtonMethod[f_,fp_,x0_,OptionsPattern[{InterpolationPrecision->100 $MachineTolerance,MaxIterations->25}]]:=Module[{ret,retold,maxiter},
 	retold=x0+10;
 	ret=x0;
+	maxiter=0;
 While[Norm[f[ret]]>OptionValue[InterpolationPrecision],
+	If[maxiter>OptionValue[MaxIterations],
+		Throw[$IterationLimit::itlim]];
+
 	retold=ret;
 	ret=ret-f[ret]/fp[ret];
+	maxiter++;
 ];
 Table[
 	retold=ret;
 	ret=ret-f[ret]/fp[ret];
 ,{3}];
 ret];
-NewtonMethod[f_,x0_,opts:OptionsPattern[InterpolationPrecision->100 $MachineTolerance]]:=NewtonMethod[f,f',x0,opts];
-NewtonInverse[f_,pt_,opts:OptionsPattern[InterpolationPrecision->100 $MachineTolerance]]:=NewtonMethod[f[#]-pt&,pt,opts];
-NewtonInverse[f_,pt_,x0_,opts:OptionsPattern[InterpolationPrecision->100 $MachineTolerance]]:=
+NewtonMethod[f_,x0_,opts:OptionsPattern[{InterpolationPrecision->100 $MachineTolerance,MaxIterations->25}]]:=NewtonMethod[f,f',x0,opts];
+NewtonInverse[f_,pt_,opts:OptionsPattern[{InterpolationPrecision->100 $MachineTolerance,MaxIterations->25}]]:=NewtonMethod[f[#]-pt&,pt,opts];
+NewtonInverse[f_,pt_,x0_,opts:OptionsPattern[{InterpolationPrecision->100 $MachineTolerance,MaxIterations->25}]]:=
 NewtonMethod[f[#]-pt&,f',x0,opts];
-NewtonInverse[f_,fp_,pt_,x0_,opts:OptionsPattern[InterpolationPrecision->100 $MachineTolerance]]:=
+NewtonInverse[f_,fp_,pt_,x0_,opts:OptionsPattern[{InterpolationPrecision->100 $MachineTolerance,MaxIterations->25}]]:=
 NewtonMethod[f[#]-pt&,fp,x0,opts];
 
 
