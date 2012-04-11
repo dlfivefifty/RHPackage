@@ -1,0 +1,298 @@
+Notebook[{
+Cell["\<\
+\[Copyright] Sheehan Olver, 2010, subject to BSD license.
+
+Other contributors include Georg Wechslberger.
+
+FredholmDet is based on code by Folkmar Bornemann.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell["Setup", "Section"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"BeginPackage", "[", 
+   RowBox[{"\"\<RiemannHilbert`\>\"", ",", 
+    RowBox[{"{", "\"\<RiemannHilbert`Common`\>\"", "}"}]}], "]"}], 
+  ";"}]], "Input",
+ InitializationCell->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Documentation", "Section"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"CauchyInverseFunction", ";"}], "\[IndentingNewLine]"}]], "Input",
+ InitializationCell->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Routine", "Section"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Begin", "[", "\"\<Private`\>\"", "]"}], ";"}]], "Input",
+ InitializationCell->True],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"P", "[", "n_", "]"}], ":=", " ", 
+   RowBox[{"ToeplitzMatrix", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", " ", "0"}], " ", 
+      RowBox[{
+       RowBox[{"Join", "[", 
+        RowBox[{
+         RowBox[{"{", "0", "}"}], ",", 
+         RowBox[{"Riffle", "[", 
+          RowBox[{
+           RowBox[{"Table", "[", 
+            RowBox[{
+             FractionBox["1.", "i"], ",", 
+             RowBox[{"{", 
+              RowBox[{"i", ",", "1", ",", 
+               RowBox[{
+                RowBox[{"2", " ", "n"}], "+", "1"}], ",", "2"}], "}"}]}], 
+            "]"}], ",", "0"}], "]"}]}], "]"}], "\[LeftDoubleBracket]", 
+       RowBox[{";;", "n"}], "\[RightDoubleBracket]"}]}], ",", 
+     RowBox[{
+      RowBox[{"Join", "[", 
+       RowBox[{
+        RowBox[{"{", "0", "}"}], ",", 
+        RowBox[{"Riffle", "[", 
+         RowBox[{
+          RowBox[{"Table", "[", 
+           RowBox[{
+            FractionBox["1.", "i"], ",", 
+            RowBox[{"{", 
+             RowBox[{"i", ",", "1", ",", 
+              RowBox[{
+               RowBox[{"2", " ", "n"}], "+", "1"}], ",", "2"}], "}"}]}], 
+           "]"}], ",", "0"}], "]"}]}], "]"}], "\[LeftDoubleBracket]", 
+      RowBox[{";;", "n"}], "\[RightDoubleBracket]"}]}], "]"}]}], 
+  ";"}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.543050717592698*^9, 3.543050720476606*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"CpT", "[", "fft_", "]"}], ":=", 
+    RowBox[{"ShiftMatrix", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"ZeroMatrix", "[", 
+        RowBox[{
+         RowBox[{"fft", "//", "NegativeList"}], "//", "Length"}], "]"}], "~", 
+       "RightJoin", "~", 
+       RowBox[{"IdentityMatrix", "[", 
+        RowBox[{
+         RowBox[{"fft", "//", "NonNegativeList"}], "//", "Length"}], "]"}]}], 
+      ",", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", 
+        RowBox[{"fft", "//", "Index"}]}], "}"}]}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SgnArgCauchy", "[", 
+    RowBox[{"fft_ShiftList", ",", "z_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"-", "1"}], "/", 
+     RowBox[{"(", 
+      RowBox[{"I", " ", "\[Pi]"}], ")"}]}], " ", 
+    RowBox[{"MapDot", "[", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox["z", "#"], "&"}], ",", 
+      RowBox[{
+       RowBox[{"CpT", "[", "fft", "]"}], ".", 
+       RowBox[{"ShiftMatrix", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Transpose", "[", 
+           RowBox[{"P", "[", 
+            RowBox[{"Length", "[", "fft", "]"}], "]"}], "]"}], "-", 
+          RowBox[{"P", "[", 
+           RowBox[{"Length", "[", "fft", "]"}], "]"}]}], ",", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"1", ",", "1"}], "}"}], " ", 
+          RowBox[{"Index", "[", "fft", "]"}]}]}], "]"}], ".", 
+       RowBox[{"(", "fft", ")"}]}]}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"SgnArgCauchy", "[", 
+     RowBox[{"lf_LFun", ",", "z_"}], "]"}], ":=", 
+    RowBox[{"SgnArgCauchy", "[", 
+     RowBox[{
+      RowBox[{"lf", "//", "FFT"}], ",", "z"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SgnArgCauchyInverseFunction", "[", 
+    RowBox[{"fft_ShiftList", ",", "y_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"Select", "[", 
+     RowBox[{
+      RowBox[{"ComplexRoots", "[", 
+       RowBox[{"UnitCircle", ",", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"-", "1"}], "/", 
+           RowBox[{"(", 
+            RowBox[{"I", " ", "\[Pi]"}], ")"}]}], 
+          RowBox[{
+           RowBox[{"CpT", "[", "fft", "]"}], ".", 
+           RowBox[{"ShiftMatrix", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"Transpose", "[", 
+               RowBox[{"P", "[", 
+                RowBox[{"Length", "[", "fft", "]"}], "]"}], "]"}], "-", 
+              RowBox[{"P", "[", 
+               RowBox[{"Length", "[", "fft", "]"}], "]"}]}], ",", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"1", ",", "1"}], "}"}], " ", 
+              RowBox[{"Index", "[", "fft", "]"}]}]}], "]"}], ".", 
+           RowBox[{"(", "fft", ")"}]}]}], "//", 
+         RowBox[{
+          RowBox[{"#", "-", 
+           RowBox[{
+            RowBox[{"BasisShiftList", "[", 
+             RowBox[{"#", ",", "0"}], "]"}], " ", "y"}]}], "&"}]}]}], "]"}], 
+      ",", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Abs", "[", "#", "]"}], "\[LessEqual]", "1."}], "&"}]}], 
+     "]"}], "//", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Length", "[", "#", "]"}], "\[GreaterEqual]", "1"}], ",", 
+       RowBox[{"#", "\[LeftDoubleBracket]", 
+        RowBox[{"-", "1"}], "\[RightDoubleBracket]"}], ",", "#"}], "]"}], 
+     "&"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SgnArgCauchyInverseFunction", "[", 
+    RowBox[{"lf_LFun", ",", "y_"}], "]"}], ":=", 
+   RowBox[{"SgnArgCauchyInverseFunction", "[", 
+    RowBox[{
+     RowBox[{"lf", "//", "FFT"}], ",", "y"}], "]"}]}], ";"}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.543048481491703*^9, 3.543048490640698*^9}, {
+  3.5430487084750137`*^9, 3.543048769922028*^9}, {3.5430489593440123`*^9, 
+  3.543048991684095*^9}, {3.5430491077382812`*^9, 3.543049118301353*^9}, {
+  3.54304935438161*^9, 3.543049406777347*^9}, {3.543049555366085*^9, 
+  3.543049594396171*^9}, {3.543050510062257*^9, 3.543050510740837*^9}, {
+  3.543050655920289*^9, 3.5430506561582737`*^9}, {3.543050759934259*^9, 
+  3.54305076121038*^9}, {3.5430511737808933`*^9, 3.543051177243309*^9}, {
+  3.5430934295668*^9, 3.54309343139713*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"CompanionCauchyInverseFunction", "[", 
+    RowBox[{
+     RowBox[{"if_IFun", "?", "UnitIntervalFunQ"}], ",", "y_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"SgnArgCauchyInverseFunction", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"2", " ", 
+        RowBox[{"SetLength", "[", 
+         RowBox[{"if", ",", "200"}], " ", "]"}]}], "//", "LFun"}], ",", "y"}],
+      "]"}], "//", "CircleToInterval"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CauchyInverseFunction", "[", 
+    RowBox[{
+     RowBox[{"if_IFun", "?", "UnitIntervalFunQ"}], ",", "y_"}], "]"}], ":=", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"CompanionCauchyInverseFunction", "[", 
+     RowBox[{"if", ",", "y"}], "]"}], "//", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"#", "===", 
+        RowBox[{"{", "}"}]}], ",", 
+       RowBox[{"{", "}"}], ",", 
+       RowBox[{"NewtonInverse", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Cauchy", "[", 
+           RowBox[{"if", ",", "#"}], "]"}], "&"}], ",", 
+         RowBox[{
+          RowBox[{"CauchyD", "[", 
+           RowBox[{"if", ",", "#"}], "]"}], "&"}], ",", "y", ",", "#"}], 
+        "]"}]}], "]"}], "&"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"CauchyInverseFunction", "[", 
+     RowBox[{
+      RowBox[{"if_IFun", "?", "RightEndpointInfinityQ"}], ",", "w_"}], "]"}], 
+    ":=", 
+    RowBox[{"MapFromInterval", "[", 
+     RowBox[{"if", ",", 
+      RowBox[{"CauchyInverseFunction", "[", 
+       RowBox[{
+        RowBox[{"if", "//", "ToUnitInterval"}], ",", 
+        RowBox[{"w", "+", 
+         RowBox[{"Cauchy", "[", 
+          RowBox[{
+           RowBox[{"if", "//", "ToUnitInterval"}], ",", "1"}], "]"}]}]}], 
+       "]"}]}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"StieljesInverseFunction", "[", 
+    RowBox[{"if_IFun", ",", "z_"}], "]"}], ":=", 
+   RowBox[{"CauchyInverseFunction", "[", 
+    RowBox[{"if", ",", 
+     RowBox[{"z", "/", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "2"}], " ", "\[Pi]", "\[NonBreakingSpace]", "I"}], 
+       ")"}]}]}], "]"}]}], ";"}]}], "Input",
+ InitializationCell->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Finish", "Section"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"EndPackage", "[", "]"}], ";"}]}], "Input",
+ InitializationCell->True]
+}, Open  ]]
+},
+AutoGeneratedPackage->Automatic,
+WindowSize->{839, 815},
+WindowMargins->{{Automatic, 584}, {Automatic, 208}},
+PrivateNotebookOptions->{"FileOutlineCache"->False},
+ShowSelection->True,
+TrackCellChangeTimes->False,
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 5, \
+2011)",
+StyleDefinitions->"Default.nb"
+]
+

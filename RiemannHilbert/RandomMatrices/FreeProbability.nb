@@ -697,7 +697,34 @@ Cell[BoxData[
           RowBox[{
            RowBox[{"1", "/", "2"}], ",", 
            RowBox[{"1", "/", "2"}]}], "}"}]}], "]"}], ",", "z"}], "]"}]}], 
-    ";"}], "\[IndentingNewLine]", 
+    ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"TTransform", "[", 
+      RowBox[{"if_IFun", ",", "z_"}], "]"}], ":=", 
+     RowBox[{"Stieljes", "[", 
+      RowBox[{
+       RowBox[{"if", " ", 
+        RowBox[{"ZeroAtInfinityIFun", "[", 
+         RowBox[{
+          RowBox[{"#", "&"}], ",", 
+          RowBox[{"if", "//", "Domain"}], ",", 
+          RowBox[{"Length", "[", "if", "]"}]}], "]"}]}], ",", "z"}], "]"}]}], 
+    ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"TTransformInverseFunction", "[", 
+      RowBox[{"if_IFun", ",", "z_"}], "]"}], ":=", 
+     RowBox[{"StieljesInverseFunction", "[", 
+      RowBox[{
+       RowBox[{"if", " ", 
+        RowBox[{"ZeroAtInfinityIFun", "[", 
+         RowBox[{
+          RowBox[{"#", "&"}], ",", 
+          RowBox[{"if", "//", "Domain"}], ",", 
+          RowBox[{"Length", "[", "if", "]"}]}], "]"}]}], ",", "z"}], "]"}]}], 
+    ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"TTransformInverseFunctionD", "[", 

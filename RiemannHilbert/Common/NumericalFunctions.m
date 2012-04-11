@@ -164,7 +164,9 @@ NewtonMethod[f_,fp_,x0_,OptionsPattern[{InterpolationPrecision->100 $MachineTole
 	maxiter=0;
 While[Norm[f[ret]]>OptionValue[InterpolationPrecision],
 	If[maxiter>OptionValue[MaxIterations],
-		Throw[$IterationLimit::itlim]];
+		Message[$IterationLimit::itlim,OptionValue[MaxIterations]];
+		Return[Null];
+];
 
 	retold=ret;
 	ret=ret-f[ret]/fp[ret];

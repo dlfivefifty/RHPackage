@@ -113,6 +113,12 @@ TTransformInverseFunction[if_LFun,z_]:=StieljesInverseFunction[if ZeroAtInfinity
 TTransform[SingFun[if_IFun,{1/2,1/2}],z_]:=Stieljes[SingFun[IncreaseDimension[if] Fun[#&,if//Domain,Length[if]+1],{1/2,1/2}],z];
 
 TTransformInverseFunction[SingFun[if_IFun,{1/2,1/2}],z_]:=StieljesInverseFunction[SingFun[IncreaseDimension[if] Fun[#&,if//Domain,Length[if]+1],{1/2,1/2}],z];
+
+TTransform[if_IFun,z_]:=Stieljes[if ZeroAtInfinityIFun[#&,if//Domain,Length[if]],z];
+
+TTransformInverseFunction[if_IFun,z_]:=StieljesInverseFunction[if ZeroAtInfinityIFun[#&,if//Domain,Length[if]],z];
+
+
 TTransformInverseFunctionD[SingFun[if_IFun,{1/2,1/2}],z_]:=StieljesInverseFunctionD[SingFun[IncreaseDimension[if] Fun[#&,if//Domain,Length[if]+1],{1/2,1/2}],z];
 TTransformInverseFunctionD[j_][SingFun[if_IFun,{1/2,1/2}],z_]:=StieljesInverseFunctionD[j][SingFun[IncreaseDimension[if] Fun[#&,if//Domain,Length[if]+1],{1/2,1/2}],z];
 
