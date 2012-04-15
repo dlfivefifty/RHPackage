@@ -109,7 +109,14 @@ lnn=IncreaseIndexRange[ln,IndexRange[ln2]];
 lnn2=IncreaseIndexRange[ln2,IndexRange[ln]];
 ShiftList[ToList[lnn]+ToList[lnn2],Index[lnn]]];
 ShiftList/:Plus[c_,ShiftList[ln_,ind_]]:=ShiftList[ln+c,ind];
-ShiftList/:Dot[ShiftList[ln_,_],ShiftList[ln2_,_]]:=ln.ln2;
+ShiftList/:Dot[sl1_ShiftList,sl2_ShiftList]:=Module[{indm,indM},
+indm=Max[FirstIndex[sl1],FirstIndex[sl2]];
+indM=Min[LastIndex[sl1],LastIndex[sl2]];
+If[indM<indm,
+0,
+sl1[[indm;;indM]].sl2[[indm;;indM]]
+]
+];
 ShiftList/:Times[ShiftList[ln_,ind_],ShiftList[ln2_,ind_]]:=ShiftList[ ln ln2, ind];
 ShiftList/:Times[c_,ShiftList[ln_,ind_]]:=ShiftList[c ln,ind];
 ShiftList/:ListConvolve[a_ShiftList,b_ShiftList,opts___]:=ShiftList[ListConvolve[ToList[a],ToList[b],opts],Index[a]];
