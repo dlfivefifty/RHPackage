@@ -40,6 +40,7 @@ Ellipse::usage=
 
 
 LaurentCoefficients::usage="Gives the Laurent coefficients of an LFun over a circle.";
+TaylorCoefficients;
 
 Centre::usage=
 "Centre is a possible parameter for Line used in determining the conformal map.";
@@ -279,6 +280,8 @@ SetupFun[LFun];
 FFT[if_LFun]:=if//Values//FFT;
 
 LaurentCoefficients[lf:LFun[_,_Circle]]:=MapOuter[MapToCircleD[lf,0]^#&,FFT[lf]];
+TaylorCoefficients[lf_?UnitCircleFunQ]:=lf//FFT//NonNegativeList[#]~Join~((-1)^Length[lf] NegativeList[#])&;
+
 
 Mean[f_LFun]^:=FFT[f][[0]];
 

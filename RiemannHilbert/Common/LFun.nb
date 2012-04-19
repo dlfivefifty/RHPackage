@@ -58,10 +58,12 @@ interval (a,b).\>\""}], ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]",
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
-   RowBox[{
-    RowBox[{"LaurentCoefficients", "::", "usage"}], "=", 
-    "\"\<Gives the Laurent coefficients of an LFun over a circle.\>\""}], 
-   ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+   RowBox[{"LaurentCoefficients", "::", "usage"}], "=", 
+   "\"\<Gives the Laurent coefficients of an LFun over a circle.\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"TaylorCoefficients", ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -376,7 +378,7 @@ on the unit circle.\>\""}], ";"}],
    RowBox[{"End", "[", "]"}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]"}], "Input",
  InitializationCell->True]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -1554,19 +1556,35 @@ Cell[BoxData[{
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
-   RowBox[{
-    RowBox[{"LaurentCoefficients", "[", 
-     RowBox[{"lf", ":", 
-      RowBox[{"LFun", "[", 
-       RowBox[{"_", ",", "_Circle"}], "]"}]}], "]"}], ":=", 
-    RowBox[{"MapOuter", "[", 
+   RowBox[{"LaurentCoefficients", "[", 
+    RowBox[{"lf", ":", 
+     RowBox[{"LFun", "[", 
+      RowBox[{"_", ",", "_Circle"}], "]"}]}], "]"}], ":=", 
+   RowBox[{"MapOuter", "[", 
+    RowBox[{
      RowBox[{
       RowBox[{
-       RowBox[{
-        RowBox[{"MapToCircleD", "[", 
-         RowBox[{"lf", ",", "0"}], "]"}], "^", "#"}], "&"}], ",", 
-      RowBox[{"FFT", "[", "lf", "]"}]}], "]"}]}], ";"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+       RowBox[{"MapToCircleD", "[", 
+        RowBox[{"lf", ",", "0"}], "]"}], "^", "#"}], "&"}], ",", 
+     RowBox[{"FFT", "[", "lf", "]"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"TaylorCoefficients", "[", 
+     RowBox[{"lf_", "?", "UnitCircleFunQ"}], "]"}], ":=", 
+    RowBox[{
+     RowBox[{"lf", "//", "FFT"}], "//", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"NonNegativeList", "[", "#", "]"}], "~", "Join", "~", 
+       RowBox[{"(", 
+        RowBox[{
+         SuperscriptBox[
+          RowBox[{"(", 
+           RowBox[{"-", "1"}], ")"}], 
+          RowBox[{"Length", "[", "lf", "]"}]], 
+         RowBox[{"NegativeList", "[", "#", "]"}]}], ")"}]}], "&"}]}]}], ";"}],
+   "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -1955,9 +1973,8 @@ Cell[BoxData[
 Cell[BoxData[
  RowBox[{
   StyleBox[
-   RowBox[{"End", "::", "noctx"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"No previous context defined. \\!\\(\\*ButtonBox[\\\"\
+   RowBox[{"End", "::", "noctx"}], "MessageName"], ":", 
+  " ", "\<\"No previous context defined. \\!\\(\\*ButtonBox[\\\"\
 \[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
 ButtonData:>\\\"paclet:ref/message/End/noctx\\\", ButtonNote -> \
 \\\"End::noctx\\\"]\\)\"\>"}]], "Message", "MSG"]
