@@ -204,7 +204,7 @@ ColumnIndexRange[l_ShiftMatrix]:={1-ColumnIndex[l],Dimensions[l][[2]]-ColumnInde
 
 
 
-Format[sm_ShiftMatrix]:=Module[{i,j},
+Format[sm:ShiftMatrix[_?MatrixQ,{_Integer,_Integer}]]:=Module[{i,j},
 Table[If[i==0||j==0,Style[sm[[i,j]],Bold],sm[[i,j]]],{i,RowIndexRange[sm][[1]],RowIndexRange[sm][[2]]},{j,ColumnIndexRange[sm][[1]],ColumnIndexRange[sm][[2]]}]]//MatrixForm
 
 
