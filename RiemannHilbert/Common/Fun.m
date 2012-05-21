@@ -252,7 +252,9 @@ SubtractIdentityMatrix[l_?FunQ]:=(#-IdentityMatrix[2])&/@l;
 SubtractIdentityMatrix[l_List]:=SubtractIdentityMatrix/@l;
 
 
+ReImLinePlot[f_?VectorFunQ,opts___]:={ArrayMap[ReImLinePlot[#,opts]&,f//ToArrayOfFuns]}//MatrixForm;
 ReImLinePlot[f_?ArrayFunQ,opts___]:=ArrayMap[ReImLinePlot[#,opts]&,f//ToArrayOfFuns]//MatrixForm;
+
 
 
 MatrixMap[f_,g_?FunQ]:=MatrixMap[f,g//ToMatrixOfFuns];
