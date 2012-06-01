@@ -271,6 +271,8 @@ LFun[f_,d_,n_]:=LFun[f/@MapFromCircle[d,Points[UnitCircle,n]],d];
 LFun[l_ShiftList,d_]:=LFun[l//MakeFFTIndexRange//InverseFFT,d];
 
 
+LFun[a_]:=LFun[a,UnitCircle];
+
 Values[LFun[l_List,_]]:=l;
 Domain[LFun[_,d_]]:=d;
 
