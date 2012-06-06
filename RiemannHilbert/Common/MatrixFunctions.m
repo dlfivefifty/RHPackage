@@ -211,7 +211,7 @@ Table[If[i==0||j==0,Style[sm[[i,j]],Bold],sm[[i,j]]],{i,RowIndexRange[sm][[1]],R
 ShiftMatrix/:sm_ShiftMatrix.sl_ShiftList:=ShiftList[ToArray[sm].ToList[sl],RangeIndex[sm]];
 ShiftMatrix/:sm_ShiftMatrix.sm2_ShiftMatrix:=ShiftMatrix[ToArray[sm].ToArray[sm2],{RangeIndex[sm],DomainIndex[sm2]}];
 ShiftMatrix/:sm_ShiftMatrix+sm2_ShiftMatrix:=ShiftMatrix[ToArray[sm]+ToArray[sm2],{RangeIndex[sm],DomainIndex[sm2]}];
--sm_ShiftMatrix^:=ShiftMatrix[-ToArray[sm],{RangeIndex[sm],DomainIndex[sm]}];
+ShiftMatrix/:c_?NumberQ sm_ShiftMatrix:=ShiftMatrix[c ToArray[sm],{RangeIndex[sm],DomainIndex[sm]}];
 
 
 ShiftDiagonalMatrix[A_,B_]:=ShiftMatrix[BlockDiagonalMatrix[{A,B}],Dimensions[A]+1];

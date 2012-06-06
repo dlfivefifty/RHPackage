@@ -1265,11 +1265,12 @@ Cell[BoxData[{
        RowBox[{"DomainIndex", "[", "sm2", "]"}]}], "}"}]}], "]"}]}], 
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
-  RowBox[{
-   RowBox[{"-", "sm_ShiftMatrix"}], "^:=", 
+  RowBox[{"ShiftMatrix", "/:", 
+   RowBox[{
+    RowBox[{"c_", "?", "NumberQ"}], " ", "sm_ShiftMatrix"}], ":=", 
    RowBox[{"ShiftMatrix", "[", 
     RowBox[{
-     RowBox[{"-", 
+     RowBox[{"c", " ", 
       RowBox[{"ToArray", "[", "sm", "]"}]}], ",", 
      RowBox[{"{", 
       RowBox[{
@@ -2259,7 +2260,7 @@ WindowMargins->{{Automatic, 188}, {Automatic, 0}},
 PrivateNotebookOptions->{"FileOutlineCache"->False},
 ShowSelection->True,
 TrackCellChangeTimes->False,
-FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 23, \
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 5, \
 2011)",
 StyleDefinitions->"Default.nb"
 ]
