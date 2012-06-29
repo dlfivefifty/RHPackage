@@ -61,7 +61,9 @@ GrowShiftLeft;
 ShiftTable;
 RiffleList;
 Indices;
+ShiftMatrix;
 LastIndex;
+LaurentMatrix;
 BasisShiftList;
 Begin["Private`"];
 ShiftList/:ShiftList[ln_List,ind_Integer][[j_Span]]:=ln[[j[[1]]+ind;;j[[2]]+ind]];
@@ -168,7 +170,11 @@ ReImLinePlot[sl_ShiftList,opts___]:=ReImListLinePlot[Thread[List[Indices[sl],ToL
 ReImLineLogPlot[sl_ShiftList,opts___]:=ReImListLineLogPlot[Thread[List[Indices[sl],ToList[sl]]],opts];
 ReImLogPlot[sl_ShiftList,opts___]:=ReImListLogPlot[Thread[List[Indices[sl],ToList[sl]]],opts];
 
-ToeplitzMatrix[sl_ShiftList]^:=ToeplitzMatrix[sl//NonPositiveList//Reverse,sl//NonNegativeList];
+
+ShiftList/:ToeplitzMatrix[sl_ShiftList,n_Integer]:=ToeplitzMatrix[PadRight[NonPositiveList[sl]//Reverse,n],PadRight[NonNegativeList[sl],n]]//Transpose;
+ToeplitzMatrix[sl_ShiftList]^:=ToeplitzMatrix[sl,Length[sl]];
+LaurentMatrix[lg_,{im_,iM_}]:=ShiftMatrix[ToeplitzMatrix[lg,iM-im+1],{1-im,1-im}];
+LaurentMatrix[lg_ShiftList]:=ShiftMatrix[ToeplitzMatrix[lg,Length[lg]],lg//IndexRange];
 End[];
 
 
@@ -217,6 +223,8 @@ ShiftMatrix/:c_?NumberQ sm_ShiftMatrix:=ShiftMatrix[c ToArray[sm],{RangeIndex[sm
 ShiftDiagonalMatrix[A_,B_]:=ShiftMatrix[BlockDiagonalMatrix[{A,B}],Dimensions[A]+1];
 
 ShiftMatrix[{A_?MatrixQ,B_?MatrixQ}]:=ShiftMatrix[A~RightJoin~B,{1,Dimensions[A][[2]]+1}];
+
+ShiftMatrix/:LinearSolve[sm_ShiftMatrix,sl_ShiftList]:=ShiftList[LinearSolve[sm//ToArray,sl//ToList],sm//DomainIndex];
 
 End[];
 

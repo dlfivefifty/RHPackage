@@ -41,6 +41,9 @@ Stieljes;
 CauchyInverseInverseFunction;
 CauchyInverseFunction;
 StieljesInverseFunction;
+CauchyInverseIntegral;
+CauchyIntegral;
+CauchyIntegralS;
 CauchyD;
 CauchyInverseD;
 StieljesD;
@@ -227,6 +230,22 @@ CauchyInverseD[lf_LFun,z_]:=CauchyInverse[lf',z];
 CauchyInverseD[2][lf_LFun,z_]:=CauchyInverse[lf'',z];
 BoundedCauchyInverseD[lf_LFun,z_]:=CauchyInverseD[lf,z];
 BoundedCauchyInverseD[k_][lf_LFun,z_]:=CauchyInverseD[k][lf,z];
+
+
+DomainIntegrate2[lfm0:LFun[_,RealLine]]:=4 \[Pi] LinearSolve[LaurentMatrix[Fun[(1+#)^2&,UnitCircle],lfm0//FFT//IndexRange],lfm0//FFT][[-1]];
+
+CauchyIntegralS[+1,lfm0:LFun[_,RealLine],z_]:=-2 I MapDot[(MapToCircle[RealLine,z]^#-(-1)^#)/#&,LinearSolve[LaurentMatrix[Fun[(1+#)^2&,UnitCircle],lfm0//FFT//IndexRange],lfm0//FFT]//NonNegativeList]+DomainIntegrate2[lfm0] 1/(2 \[Pi] I) (-Log[I+z]);
+CauchyIntegralS[-1,lfm0:LFun[_,RealLine],z_]:=2 I MapDot[(MapToCircle[RealLine,z]^-#-(-1)^#)/-#&,LinearSolve[LaurentMatrix[Fun[(1+#)^2&,UnitCircle],lfm0//FFT//IndexRange],lfm0//FFT]//NegativeList//Reverse//Rest]+DomainIntegrate2[lfm0] 1/(2 \[Pi] I) (\[Pi] I -Log[I-z]);
+CauchyInverseIntegralS[s_?SignQ,lfm0:LFun[_,RealLine],z_]:=s CauchyIntegralS[s,lfm0,z];
+
+
+CauchyIntegral[lfm0:LFun[_,RealLine],z_?(Im[#]>0&)]:=CauchyIntegralS[+1,lfm0,z];
+CauchyIntegral[lfm0:LFun[_,RealLine],z_?(Im[#]<0&)]:=CauchyIntegralS[-1,lfm0,z];
+CauchyIntegral[s_?SignQ,lfm0:LFun[_,RealLine],z_]:=CauchyIntegralS[s,lfm0,z];
+
+CauchyInverseIntegral[lfm0:LFun[_,RealLine],z_?(Im[#]>0&)]:=CauchyInverseIntegralS[+1,lfm0,z];
+CauchyInverseIntegral[lfm0:LFun[_,RealLine],z_?(Im[#]<0&)]:=CauchyInverseIntegralS[-1,lfm0,z];
+CauchyInverseIntegral[s_?SignQ,lfm0:LFun[_,RealLine],z_]:=CauchyInverseIntegralS[s,lfm0,z];
 
 
 End[];

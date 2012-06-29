@@ -550,5 +550,10 @@ AdaptivePlus[f_LFun,g_LFun]:=
 ChopDrop[LFun[IncreaseIndexRange[f//FFT,g//FFT//IndexRange],f//Domain] +LFun[IncreaseIndexRange[g//FFT,f//FFT//IndexRange],g//Domain] ,$MachineTolerance];
 
 
+LFun/:ToeplitzMatrix[lf_LFun,n_Integer]:=ToeplitzMatrix[lf//FFT,n];
+ShiftList/:HankelMatrix[sl_ShiftList,n_Integer]:=HankelMatrix[PadRight[PositiveList[sl],n]]//Transpose;
+LFun/:HankelMatrix[lf_LFun,n_Integer]:=HankelMatrix[lf//FFT,n];
+
+
 End[];
 EndPackage[];

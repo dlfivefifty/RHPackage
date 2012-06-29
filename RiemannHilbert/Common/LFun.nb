@@ -2214,7 +2214,7 @@ Cell[BoxData[{
      RowBox[{"if", "//", "Domain"}]}], "]"}]}], ";"}]}], "Input",
  InitializationCell->True]
 }, Open  ]]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -2245,7 +2245,7 @@ Cell[BoxData[
       RowBox[{"lf", ",", "UnitCircle"}], "]"}]}], ";"}], 
    "\[IndentingNewLine]"}]}]], "Input",
  InitializationCell->True]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -2507,7 +2507,7 @@ Cell[BoxData[
     RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]", 
    "\[IndentingNewLine]", "\[IndentingNewLine]"}]}]], "Input",
  InitializationCell->True]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -2789,7 +2789,7 @@ Cell[BoxData[{
      "]"}]}], ";"}], "\[IndentingNewLine]", 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]"}], "Input",
  InitializationCell->True]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -2853,7 +2853,7 @@ Cell[BoxData[{
     RowBox[{"f", ",", "d"}], "]"}]}], ";"}], "\[IndentingNewLine]"}], "Input",
  
  InitializationCell->True]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -2873,7 +2873,7 @@ Cell[BoxData[
        RowBox[{"f", "//", "FFT"}], ")"}]}], ",", "opts"}], "]"}]}], 
   ";"}]], "Input",
  InitializationCell->True]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -2995,7 +2995,7 @@ Cell[BoxData[
          "Values"}], ",", "opts"}], "]"}]}], ";"}]}]}]], "Input",
  InitializationCell->True]
 }, Open  ]]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -3050,6 +3050,39 @@ Cell[BoxData[{
            RowBox[{"f", "//", "FFT"}], "//", "IndexRange"}]}], "]"}], ",", 
         RowBox[{"g", "//", "Domain"}]}], "]"}]}], " ", ",", 
      "$MachineTolerance"}], "]"}]}], ";"}]}], "Input",
+ InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Toeplitz and Laurent", "Section"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"LFun", "/:", 
+   RowBox[{"ToeplitzMatrix", "[", 
+    RowBox[{"lf_LFun", ",", "n_Integer"}], "]"}], ":=", 
+   RowBox[{"ToeplitzMatrix", "[", 
+    RowBox[{
+     RowBox[{"lf", "//", "FFT"}], ",", "n"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ShiftList", "/:", 
+   RowBox[{"HankelMatrix", "[", 
+    RowBox[{"sl_ShiftList", ",", "n_Integer"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"HankelMatrix", "[", 
+     RowBox[{"PadRight", "[", 
+      RowBox[{
+       RowBox[{"PositiveList", "[", "sl", "]"}], ",", "n"}], "]"}], "]"}], "//",
+     "Transpose"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"LFun", "/:", 
+   RowBox[{"HankelMatrix", "[", 
+    RowBox[{"lf_LFun", ",", "n_Integer"}], "]"}], ":=", 
+   RowBox[{"HankelMatrix", "[", 
+    RowBox[{
+     RowBox[{"lf", "//", "FFT"}], ",", "n"}], "]"}]}], ";"}]}], "Input",
  InitializationCell->True]
 }, Open  ]],
 
