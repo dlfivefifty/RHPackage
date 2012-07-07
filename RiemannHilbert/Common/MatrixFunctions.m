@@ -134,6 +134,8 @@ ShiftRight[f_ShiftList,d_]:=ShiftList[ToList[f],Index[f]-d];
 GrowShiftRight[f_ShiftList]:=ShiftRight[PadLeft[f,Length[f]+1]];
 GrowShiftLeft[f_ShiftList]:=ShiftLeft[PadRight[f,Length[f]+1]];
 
+Append[f_ShiftList,el_]^:=ShiftList[Append[f//ToList,el],f//Index];
+
 
 
 RiffleList[l_List,l2_List]:=Module[{Foo},Riffle[l,Foo@@l2]/.Foo->Sequence];
