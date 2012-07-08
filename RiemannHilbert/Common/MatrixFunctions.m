@@ -97,6 +97,8 @@ ReverseKeepIndexRange[sl_ShiftList]:=SetIndexRange[Reverse[sl],IndexRange[sl]];
 
 DropNegative[l_ShiftList]:=ShiftList[l[[0;;Length[l]-Index[l]]],1];
 
+Drop[l_ShiftList,n_]^:=ShiftList[Drop[l//ToList,n],Index[l]-n];
+
 NegativeList[ShiftList[ln_,ind_]]:=ln[[1;;ind-1]];
 NonPositiveList[ShiftList[ln_,ind_]]:=ln[[1;;ind]];
 NonNegativeList[ShiftList[ln_,ind_]]:=ln[[ind;;-1]];
