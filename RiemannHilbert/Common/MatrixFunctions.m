@@ -65,6 +65,8 @@ ShiftMatrix;
 LastIndex;
 LaurentMatrix;
 BasisShiftList;
+ReplaceEntry;
+IncreaseSize;
 Begin["Private`"];
 ShiftList/:ShiftList[ln_List,ind_Integer][[j_Span]]:=ln[[j[[1]]+ind;;j[[2]]+ind]];
 ShiftList/:ShiftList[ln_List,ind_Integer][[j_]]:=ln[[Mod[j+ind-1,Length[ln]]+1]];
@@ -160,6 +162,16 @@ BasisShiftList[i_;;j_,k_]:=ShiftList[BasisVector[j-i+1][k-i+1],1-i];
 
 
 ReplacePart[sl_ShiftList,pat_]^:=ShiftList[MapIndexed[If[Apply[Or,Map[Function[pm,MatchQ[First[#2]-Index[sl],pm]],Map[First,pat]]],First[#2]-Index[sl]/.pat,#1]&,ToList[sl]],Index[sl]];
+
+ReplaceEntry[sl_ShiftList,i_,p_,OptionsPattern[IncreaseSize->False]]:=Module[{sl2,sll},
+If[!OptionValue[IncreaseSize]&&(i>LastIndex[sl]||i<FirstIndex[sl]),
+Throw["ReplaceEntry: Increase Size is false"];];
+sl2=IncreaseIndexRange[sl,{i,i}];
+
+
+sll=sl2//ToList;
+sll[[i+Index[sl2]]]=p;
+ShiftList[sll,sl2//Index]];
 Abs[f_ShiftList]^:=Map[Abs,f];
 
 

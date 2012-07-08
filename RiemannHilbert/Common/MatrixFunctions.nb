@@ -141,6 +141,8 @@ Cell[BoxData[{
  RowBox[{"LastIndex", ";"}], "\[IndentingNewLine]", 
  RowBox[{"LaurentMatrix", ";"}], "\[IndentingNewLine]", 
  RowBox[{"BasisShiftList", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ReplaceEntry", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"IncreaseSize", ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"Begin", "[", "\"\<Private`\>\"", "]"}], 
   ";"}], "\[IndentingNewLine]", 
@@ -904,36 +906,81 @@ Cell[BoxData[{
 Cell[BoxData[{
  RowBox[{
   RowBox[{
-   RowBox[{"ReplacePart", "[", 
-    RowBox[{"sl_ShiftList", ",", "pat_"}], "]"}], "^:=", 
-   RowBox[{"ShiftList", "[", 
-    RowBox[{
-     RowBox[{"MapIndexed", "[", 
-      RowBox[{
+   RowBox[{
+    RowBox[{"ReplacePart", "[", 
+     RowBox[{"sl_ShiftList", ",", "pat_"}], "]"}], "^:=", 
+    RowBox[{"ShiftList", "[", 
+     RowBox[{
+      RowBox[{"MapIndexed", "[", 
        RowBox[{
-        RowBox[{"If", "[", 
-         RowBox[{
-          RowBox[{"Apply", "[", 
-           RowBox[{"Or", ",", 
-            RowBox[{"Map", "[", 
-             RowBox[{
-              RowBox[{"Function", "[", 
-               RowBox[{"pm", ",", 
-                RowBox[{"MatchQ", "[", 
-                 RowBox[{
-                  RowBox[{
-                   RowBox[{"First", "[", "#2", "]"}], "-", 
-                   RowBox[{"Index", "[", "sl", "]"}]}], ",", "pm"}], "]"}]}], 
-               "]"}], ",", 
-              RowBox[{"Map", "[", 
-               RowBox[{"First", ",", "pat"}], "]"}]}], "]"}]}], "]"}], ",", 
+        RowBox[{
+         RowBox[{"If", "[", 
           RowBox[{
+           RowBox[{"Apply", "[", 
+            RowBox[{"Or", ",", 
+             RowBox[{"Map", "[", 
+              RowBox[{
+               RowBox[{"Function", "[", 
+                RowBox[{"pm", ",", 
+                 RowBox[{"MatchQ", "[", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"First", "[", "#2", "]"}], "-", 
+                    RowBox[{"Index", "[", "sl", "]"}]}], ",", "pm"}], "]"}]}],
+                 "]"}], ",", 
+               RowBox[{"Map", "[", 
+                RowBox[{"First", ",", "pat"}], "]"}]}], "]"}]}], "]"}], ",", 
            RowBox[{
-            RowBox[{"First", "[", "#2", "]"}], "-", 
-            RowBox[{"Index", "[", "sl", "]"}]}], "/.", "pat"}], ",", "#1"}], 
-         "]"}], "&"}], ",", 
-       RowBox[{"ToList", "[", "sl", "]"}]}], "]"}], ",", 
-     RowBox[{"Index", "[", "sl", "]"}]}], "]"}]}], 
+            RowBox[{
+             RowBox[{"First", "[", "#2", "]"}], "-", 
+             RowBox[{"Index", "[", "sl", "]"}]}], "/.", "pat"}], ",", "#1"}], 
+          "]"}], "&"}], ",", 
+        RowBox[{"ToList", "[", "sl", "]"}]}], "]"}], ",", 
+      RowBox[{"Index", "[", "sl", "]"}]}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ReplaceEntry", "[", 
+    RowBox[{"sl_ShiftList", ",", "i_", ",", "p_", ",", 
+     RowBox[{"OptionsPattern", "[", 
+      RowBox[{"IncreaseSize", "\[Rule]", "False"}], "]"}]}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"sl2", ",", "sll"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"!", 
+          RowBox[{"OptionValue", "[", "IncreaseSize", "]"}]}], "&&", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"i", ">", 
+            RowBox[{"LastIndex", "[", "sl", "]"}]}], "||", 
+           RowBox[{"i", "<", 
+            RowBox[{"FirstIndex", "[", "sl", "]"}]}]}], ")"}]}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{
+         "Throw", "[", "\"\<ReplaceEntry: Increase Size is false\>\"", "]"}], 
+         ";"}]}], "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"sl2", "=", 
+       RowBox[{"IncreaseIndexRange", "[", 
+        RowBox[{"sl", ",", 
+         RowBox[{"{", 
+          RowBox[{"i", ",", "i"}], "}"}]}], "]"}]}], ";", 
+      "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"sll", "=", 
+       RowBox[{"sl2", "//", "ToList"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"sll", "\[LeftDoubleBracket]", 
+        RowBox[{"i", "+", 
+         RowBox[{"Index", "[", "sl2", "]"}]}], "\[RightDoubleBracket]"}], "=",
+        "p"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"ShiftList", "[", 
+       RowBox[{"sll", ",", 
+        RowBox[{"sl2", "//", "Index"}]}], "]"}]}]}], "]"}]}], 
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
