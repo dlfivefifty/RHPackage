@@ -1753,7 +1753,9 @@ Cell[BoxData[
     RowBox[{"SVD", ":=", "SingularValueDecomposition"}], ";"}], 
    "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{"ConditionNumber", ";"}], "\[IndentingNewLine]", 
-   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"AlternatingTotal", ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
    RowBox[{"PartitionList", ";"}], "\[IndentingNewLine]", 
    "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{"RightJoin", ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
@@ -1764,6 +1766,17 @@ Cell[BoxData[
    "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"Begin", "[", "\"\<Private`\>\"", "]"}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"AlternatingTotal", "[", "lst_", "]"}], ":=", 
+     RowBox[{"MapDot", "[", 
+      RowBox[{
+       RowBox[{
+        SuperscriptBox[
+         RowBox[{"(", 
+          RowBox[{"-", "1"}], ")"}], 
+         RowBox[{"#", "-", "1"}]], "&"}], ",", "lst"}], "]"}]}], ";"}], 
    "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"GaussianElimination", "[", 

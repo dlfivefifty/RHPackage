@@ -322,7 +322,7 @@ SVD:=SingularValueDecomposition;
 
 ConditionNumber;
 
-
+AlternatingTotal;
 
 PartitionList;
 
@@ -335,6 +335,8 @@ ToShiftListOfArrays;
 ToArrayOfShiftLists;
 
 Begin["Private`"];
+
+AlternatingTotal[lst_]:=MapDot[(-1)^(#-1)&,lst];
 
 
 GaussianElimination[m_List?MatrixQ,v_List?VectorQ]:=Last/@RowReduce[Flatten/@Transpose[{m,v}]]
