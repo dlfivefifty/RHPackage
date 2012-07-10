@@ -191,6 +191,11 @@ ShiftList/:ToeplitzMatrix[sl_ShiftList,n_Integer]:=ToeplitzMatrix[PadRight[NonPo
 ToeplitzMatrix[sl_ShiftList]^:=ToeplitzMatrix[sl,Length[sl]];
 LaurentMatrix[lg_,{im_,iM_}]:=ShiftMatrix[ToeplitzMatrix[lg,iM-im+1],{1-im,1-im}];
 LaurentMatrix[lg_ShiftList]:=ShiftMatrix[ToeplitzMatrix[lg,Length[lg]],lg//IndexRange];
+
+
+NZeroQ[sl_List]:=sl//Abs//Max//NZeroQ;
+NZeroQ[sl_ShiftList]:=sl//ToList//NZeroQ;
+
 End[];
 
 
