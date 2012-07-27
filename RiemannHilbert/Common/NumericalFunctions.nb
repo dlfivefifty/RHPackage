@@ -1113,7 +1113,7 @@ Cell[BoxData[{
   ";"}]}], "Input",
  InitializationCell->True]
 }, Open  ]]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -1622,7 +1622,7 @@ Cell[BoxData[
       "ret"}]}], "\[IndentingNewLine]", "]"}]}], 
   "\[IndentingNewLine]"}]], "Input",
  InitializationCell->True]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 

@@ -339,6 +339,8 @@ BlockDiagonalMatrix;
 ToShiftListOfArrays;
 ToArrayOfShiftLists;
 
+PLUDecomposition;
+
 Begin["Private`"];
 
 AlternatingTotal[lst_]:=MapDot[(-1)^(#-1)&,lst];
@@ -407,6 +409,13 @@ ShiftLeft[l_List,k_]:=l[[k+1;;]];
 GrowShiftLeft[l_List]:=PadRight[ShiftLeft[l],Length[l]];
 GrowShiftLeft[l_List,k_]:=PadRight[ShiftLeft[l,k],Length[l]];
 GrowShiftRight[l_List]:=Join[{0},l];
+
+PLUDecomposition[M_]:=Module[{lu,p,c,n},
+n=M//Length;
+{lu,p,c}=M//LUDecomposition;
+{IdentityMatrix[n][[p]]\[Transpose],
+lu SparseArray[{i_,j_}/;j<i->1,{n,n}]+IdentityMatrix[n],
+lu SparseArray[{i_,j_}/;j>=i->1,{n,n}]}];
 
 End[];
 
