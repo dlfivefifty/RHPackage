@@ -24,6 +24,7 @@ BeginPackage["RiemannHilbert`RandomMatrices`",{"RiemannHilbert`","RiemannHilbert
 
 RandomSymmetric;
 RandomOrthogonal;
+RandomHermitian;
 HistogramPlot;
 MarchenkoPastur;
 RandomDisk;
@@ -34,14 +35,18 @@ Begin["Private`"];
 
 RandomSymmetric[n_,dist_:NormalDistribution[0,1/Sqrt[2]]]:=RandomVariate[dist,{n,n}]//(#+Transpose[#])/Sqrt[2 n]&;
 RandomOrthogonal[n_,dist_:NormalDistribution[0,1/Sqrt[2]]]:=RandomVariate[dist,{n,n}]//QRDecomposition//First;
+RandomHermitian[n_,dist_:NormalDistribution[0,1/Sqrt[2]]]:=Module[{GG},
+(GG=(RandomVariate[dist,{n,n}]+I RandomVariate[dist,{n,n}]);
+(GG+ConjugateTranspose[GG])/Sqrt[4 n] )
+];
 SetAttributes[HistogramPlot,HoldFirst];
+HistogramPlot[M_,opts:OptionsPattern[SampleRate->100]]:=Module[{Evs},
+Evs=Table[M//Eigenvalues,{k,OptionValue[SampleRate]}];
+Show[Histogram[Evs//Flatten,60,"PDF"]]
+];
 HistogramPlot[M_,dst_,opts:OptionsPattern[]]:=Module[{Evs},
 Evs=Table[M//Eigenvalues,{k,100}];
 Show[Histogram[Evs//Flatten,60,"PDF"],LinePlot[dst//Re,PlotStyle->{DarkRed,Thick}],opts]
-];
-HistogramPlot[M_,opts:OptionsPattern[]]:=Module[{Evs},
-Evs=Table[M//Eigenvalues,{k,100}];
-Show[Histogram[Evs//Flatten,60,"PDF"],opts]
 ];
 
 
