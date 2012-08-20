@@ -27,6 +27,8 @@ OrthogonalPolynomialMatrixGeneratorConnected;
 OrthogonalPolynomialMatrixGenerator;
 InvariantEnsembleKernel;
 GFunction;
+LeftOfLine;
+RightOfLine;
 Begin["Private`"];
 
 

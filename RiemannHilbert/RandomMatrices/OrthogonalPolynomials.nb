@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[    129667,       3715]
-NotebookOptionsPosition[    128533,       3670]
-NotebookOutlinePosition[    128890,       3686]
-CellTagsIndexPosition[    128847,       3683]
+NotebookDataLength[    129823,       3717]
+NotebookOptionsPosition[    128688,       3672]
+NotebookOutlinePosition[    129046,       3688]
+CellTagsIndexPosition[    129003,       3685]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -45,6 +45,8 @@ Cell[BoxData[{
   ";"}], "\[IndentingNewLine]", 
  RowBox[{"InvariantEnsembleKernel", ";"}], "\[IndentingNewLine]", 
  RowBox[{"GFunction", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"LeftOfLine", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"RightOfLine", ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"Begin", "[", "\"\<Private`\>\"", "]"}], ";"}]}], "Input",
  InitializationCell->True,
@@ -52,7 +54,7 @@ Cell[BoxData[{
   3.554073055007407*^9, 3.55407305602337*^9}, {3.5540733327182913`*^9, 
   3.554073333328246*^9}, {3.5540785789114113`*^9, 3.5540785812944193`*^9}, {
   3.5540799801425543`*^9, 3.55407998038303*^9}, {3.5540804857607822`*^9, 
-  3.55408048681546*^9}}]
+  3.55408048681546*^9}, {3.554488010952302*^9, 3.554488015045302*^9}}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -1842,7 +1844,7 @@ RD/Z5ysCoo+pp8uB6CqdQjUQfSBc2whEr9mrbAqil53XsQbR35/32IBoi06f
 IhCtkdJQBqJdZhe+nhn6ytGyu/ALiDZa8PMniE6x0vwFosPknzbcq3rlOGmR
 eDOI1jllOwFEL/j9ZRKItnJcegREazWqHQPRAF7wsNo=
   "]]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -3528,7 +3530,7 @@ Cell[BoxData[
    3.554078604495112*^9, 3.5540786050620413`*^9}, 3.554079969825622*^9, {
    3.554081608784966*^9, 3.55408161211854*^9}, {3.554081650065937*^9, 
    3.5540816507992067`*^9}, {3.554081770758059*^9, 3.5540817710766*^9}}]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -3668,9 +3670,9 @@ Cell[BoxData[{
  InitializationCell->True]
 }, Open  ]]
 },
-WindowSize->{1200, 1152},
-WindowMargins->{{Automatic, 171}, {Automatic, 0}},
-FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 5, \
+WindowSize->{1200, 1122},
+WindowMargins->{{28, Automatic}, {Automatic, 0}},
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 23, \
 2011)",
 StyleDefinitions->"Default.nb"
 ]
@@ -3692,29 +3694,29 @@ Cell[606, 24, 285, 8, 27, "Input",
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[928, 37, 32, 0, 67, "Section"],
-Cell[963, 39, 802, 15, 103, "Input",
+Cell[963, 39, 957, 17, 133, "Input",
  InitializationCell->True]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1802, 59, 94, 1, 67, "Section"],
-Cell[1899, 62, 3759, 106, 238, "Input",
+Cell[1957, 61, 94, 1, 67, "Section"],
+Cell[2054, 64, 3759, 106, 238, "Input",
  InitializationCell->True],
-Cell[5661, 170, 59217, 1673, 2242, "Input",
+Cell[5816, 172, 59217, 1673, 2242, "Input",
+ InitializationCell->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[65070, 1850, 95, 1, 37, "Section"],
+Cell[65168, 1853, 58502, 1678, 2197, "Input",
+ InitializationCell->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[123707, 3536, 92, 1, 37, "Section"],
+Cell[123802, 3539, 4630, 118, 268, "Input",
  InitializationCell->True]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[64915, 1848, 95, 1, 67, "Section"],
-Cell[65013, 1851, 58502, 1678, 2197, "Input",
- InitializationCell->True]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[123552, 3534, 92, 1, 67, "Section"],
-Cell[123647, 3537, 4630, 118, 268, "Input",
- InitializationCell->True]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[128314, 3660, 25, 0, 67, "Section"],
-Cell[128342, 3662, 175, 5, 43, "Input",
+Cell[128469, 3662, 25, 0, 67, "Section"],
+Cell[128497, 3664, 175, 5, 43, "Input",
  InitializationCell->True]
 }, Open  ]]
 }
