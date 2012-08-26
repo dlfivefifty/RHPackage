@@ -378,7 +378,7 @@ on the unit circle.\>\""}], ";"}],
    RowBox[{"End", "[", "]"}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]"}], "Input",
  InitializationCell->True]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -518,8 +518,6 @@ Cell[BoxData[{
 Cell[CellGroupData[{
 
 Cell["Circle", "Subsection"],
-
-Cell[CellGroupData[{
 
 Cell[BoxData[{
  RowBox[{
@@ -757,23 +755,25 @@ Cell[BoxData[{
    "\[Infinity]"}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
-   RowBox[{"MapFromCircle", "[", 
-    RowBox[{
-     RowBox[{"Line", "[", 
-      RowBox[{
-       RowBox[{"{", 
-        RowBox[{
-         RowBox[{"-", "\[Infinity]"}], ",", "\[Infinity]"}], "}"}], ",", 
-       RowBox[{"Stretch", "\[Rule]", "L_"}]}], "]"}], ",", "z_"}], "]"}], ":=", 
-   RowBox[{"-", 
-    FractionBox[
-     RowBox[{"\[ImaginaryI]", " ", 
-      RowBox[{"(", 
+   RowBox[{
+    RowBox[{"MapFromCircle", "[", 
+     RowBox[{
+      RowBox[{"Line", "[", 
        RowBox[{
-        RowBox[{"-", "1"}], "+", "z"}], ")"}]}], 
-     RowBox[{"L", " ", 
-      RowBox[{"(", 
-       RowBox[{"1", "+", "z"}], ")"}]}]]}]}], ";"}], "\[IndentingNewLine]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "\[Infinity]"}], ",", "\[Infinity]"}], "}"}], ",", 
+        RowBox[{"Stretch", "\[Rule]", "L_"}]}], "]"}], ",", "z_"}], "]"}], ":=", 
+    RowBox[{"-", 
+     FractionBox[
+      RowBox[{"\[ImaginaryI]", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "1"}], "+", "z"}], ")"}]}], 
+      RowBox[{"L", " ", 
+       RowBox[{"(", 
+        RowBox[{"1", "+", "z"}], ")"}]}]]}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"MapToCircle", "[", 
@@ -803,8 +803,45 @@ Cell[BoxData[{
        RowBox[{"L", " ", "t"}]}]}], 
      RowBox[{" ", 
       RowBox[{"\[ImaginaryI]", "+", 
-       RowBox[{"L", " ", "t"}]}]}]]}], ";"}], "\[IndentingNewLine]", 
+       RowBox[{"L", " ", "t"}]}]}]]}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"MapFromCircleD", "[", 
+    RowBox[{
+     RowBox[{"Line", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", "\[Infinity]"}], ",", "\[Infinity]"}], "}"}], ",", 
+       RowBox[{"Stretch", "\[Rule]", "L_"}]}], "]"}], ",", "z_"}], "]"}], ":=", 
+   RowBox[{"-", 
+    FractionBox[
+     RowBox[{"2", " ", "\[ImaginaryI]"}], 
+     RowBox[{"L", " ", 
+      SuperscriptBox[
+       RowBox[{"(", 
+        RowBox[{"1", "+", "z"}], ")"}], "2"]}]]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"MapToCircleD", "[", 
+     RowBox[{
+      RowBox[{"Line", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "\[Infinity]"}], ",", "\[Infinity]"}], "}"}], ",", 
+        RowBox[{"Stretch", "\[Rule]", "L_"}]}], "]"}], ",", "t_"}], "]"}], ":=", 
+    RowBox[{"-", 
+     FractionBox[
+      RowBox[{"2", " ", "\[ImaginaryI]", " ", "L"}], 
+      SuperscriptBox[
+       RowBox[{"(", 
+        RowBox[{"\[ImaginaryI]", "+", 
+         RowBox[{"L", " ", "t"}]}], ")"}], "2"]]}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"MapFromCircle", "[", 
@@ -1256,19 +1293,9 @@ Cell[BoxData[{
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"End", "[", "]"}], ";"}]}], "Input",
- InitializationCell->True],
-
-Cell[BoxData[
- RowBox[{
-  StyleBox[
-   RowBox[{"End", "::", "noctx"}], "MessageName"], ":", 
-  " ", "\<\"No previous context defined. \\!\\(\\*ButtonBox[\\\"\
-\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
-ButtonData:>\\\"paclet:ref/message/End/noctx\\\", ButtonNote -> \
-\\\"End::noctx\\\"]\\)\"\>"}]], "Message", "MSG"]
+ InitializationCell->True]
 }, Open  ]]
-}, Open  ]]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -1306,7 +1333,7 @@ Cell[BoxData[
    RowBox[{
     RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]"}]}]], "Input",
  InitializationCell->True]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -1676,7 +1703,13 @@ Cell[BoxData[{
    RowBox[{"FinitePoints", "[", 
     RowBox[{"if", ":", 
      RowBox[{"LFun", "[", 
-      RowBox[{"_", ",", "RealLine"}], "]"}]}], "]"}], ":=", 
+      RowBox[{"_", ",", 
+       RowBox[{"Line", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "\[Infinity]"}], ",", "\[Infinity]"}], "}"}], ",", 
+         "___"}], "]"}]}], "]"}]}], "]"}], ":=", 
    RowBox[{
     RowBox[{"if", "//", "Points"}], "//", "Rest"}]}], 
   ";"}], "\[IndentingNewLine]", 
@@ -1723,8 +1756,6 @@ Cell[BoxData[{
 Cell[CellGroupData[{
 
 Cell["Derivative", "Subsection"],
-
-Cell[CellGroupData[{
 
 Cell[BoxData[
  RowBox[{"\[IndentingNewLine]", 
@@ -1787,8 +1818,13 @@ Cell[BoxData[
        RowBox[{"(", 
         RowBox[{
          RowBox[{
-          RowBox[{"Domain", "[", "#", "]"}], "\[Equal]", "RealLine"}], "&"}], 
-        ")"}]}], "]"}], ":=", 
+          RowBox[{
+           RowBox[{"Domain", "[", "#", "]"}], "\[LeftDoubleBracket]", "1", 
+           "\[RightDoubleBracket]"}], "\[Equal]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "\[Infinity]"}], ",", "\[Infinity]"}], "}"}]}], 
+         "&"}], ")"}]}], "]"}], ":=", 
      RowBox[{
       RowBox[{
        RowBox[{"(", 
@@ -1975,17 +2011,7 @@ Cell[BoxData[
    "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"End", "[", "]"}], ";"}]}]}]], "Input",
- InitializationCell->True],
-
-Cell[BoxData[
- RowBox[{
-  StyleBox[
-   RowBox[{"End", "::", "noctx"}], "MessageName"], ":", 
-  " ", "\<\"No previous context defined. \\!\\(\\*ButtonBox[\\\"\
-\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
-ButtonData:>\\\"paclet:ref/message/End/noctx\\\", ButtonNote -> \
-\\\"End::noctx\\\"]\\)\"\>"}]], "Message", "MSG"]
-}, Open  ]]
+ InitializationCell->True]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -2214,7 +2240,7 @@ Cell[BoxData[{
      RowBox[{"if", "//", "Domain"}]}], "]"}]}], ";"}]}], "Input",
  InitializationCell->True]
 }, Open  ]]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -2245,7 +2271,39 @@ Cell[BoxData[
       RowBox[{"lf", ",", "UnitCircle"}], "]"}]}], ";"}], 
    "\[IndentingNewLine]"}]}]], "Input",
  InitializationCell->True]
-}, Closed]],
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Reverse", "Section"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Reverse", "[", 
+   RowBox[{"lf", ":", 
+    RowBox[{"LFun", "[", 
+     RowBox[{"_", ",", 
+      RowBox[{"Line", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "\[Infinity]"}], ",", "\[Infinity]"}], "}"}], ",", 
+        "___"}], "]"}]}], "]"}]}], "]"}], "^:=", 
+  RowBox[{"LFun", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Values", "[", "lf", "]"}], "\[LeftDoubleBracket]", "1", 
+       "\[RightDoubleBracket]"}], "}"}], "~", "Join", "~", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"lf", "//", "Values"}], "//", "Rest"}], "//", "Reverse"}], 
+      ")"}]}], ",", 
+    RowBox[{"lf", "//", "Domain"}]}], "]"}]}]], "Input",
+ InitializationCell->True]
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -3100,11 +3158,11 @@ Cell[BoxData[{
 },
 AutoGeneratedPackage->Automatic,
 WindowSize->{814, 809},
-WindowMargins->{{Automatic, 824}, {Automatic, 131}},
+WindowMargins->{{Automatic, 132}, {Automatic, 0}},
 PrivateNotebookOptions->{"FileOutlineCache"->False},
 ShowSelection->True,
 TrackCellChangeTimes->False,
-FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 5, \
+FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 23, \
 2011)",
 StyleDefinitions->"Default.nb"
 ]

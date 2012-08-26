@@ -187,8 +187,12 @@ MapToCircleD[RealLine,t_]:=-((2 I)/(I+t)^2);
 
 MapFromCircle[Line[{-\[Infinity],\[Infinity]},Stretch->L_],_?(#~NEqual~-1.&)]:=\[Infinity];
 MapFromCircle[Line[{-\[Infinity],\[Infinity]},Stretch->L_],z_]:=-((I (-1+z))/(L (1+z)));
+
 MapToCircle[Line[{-\[Infinity],\[Infinity]},Stretch->L_],_?InfinityQ]:=-1.;
 MapToCircle[Line[{-\[Infinity],\[Infinity]},Stretch->L_],t_]:=( I-L t)/( I+L t);
+
+MapFromCircleD[Line[{-\[Infinity],\[Infinity]},Stretch->L_],z_]:=-((2 I)/(L (1+z)^2));
+MapToCircleD[Line[{-\[Infinity],\[Infinity]},Stretch->L_],t_]:=-((2 I L)/(I+L t)^2);
 
 
 MapFromCircle[Line[{-\[Infinity],\[Infinity]},Stretch->L_,Centre->a_],_?(#~NEqual~-1.&)]:=\[Infinity];
@@ -300,7 +304,7 @@ MapFromCircleD[f_LFun,z_]:=MapFromCircleD[f//Domain,z];
 
 Points[lf_LFun]:=MapFromCircle[lf//Domain,Points[UnitCircle,lf//Length]];
 
-FinitePoints[if:LFun[_,RealLine]]:=if//Points//Rest;
+FinitePoints[if:LFun[_,Line[{-\[Infinity],\[Infinity]},___]]]:=if//Points//Rest;
 FinitePoints[if_LFun]:=if//Points;
 FiniteValues[if_LFun]:=Last/@Select[Thread[{Points[if],Values[if]}],!InfinityQ[First[#]]&];
 
@@ -317,7 +321,7 @@ LFun/:Derivative[k_?Positive][if_LFun]:=Derivative[1][Derivative[k-1][if]];
 LFun/:Derivative[if_LFun]:=if';
 
 
-DomainIntegrate[if_LFun?(Domain[#]==RealLine&)]:=((Values[if] Values[LFun[If[#==-1.,0,MapFromCircleD[if,#]]&,UnitCircle,if//Length]])//FFT)[[-1]] (2 \[Pi]\[NonBreakingSpace]I);
+DomainIntegrate[if_LFun?(Domain[#][[1]]=={-\[Infinity],\[Infinity]}&)]:=((Values[if] Values[LFun[If[#==-1.,0,MapFromCircleD[if,#]]&,UnitCircle,if//Length]])//FFT)[[-1]] (2 \[Pi]\[NonBreakingSpace]I);
 DomainIntegrate[if_LFun]:=((Values[if] Values[LFun[MapFromCircleD[if,#]&,UnitCircle,if//Length]])//FFT)[[-1]] (2 \[Pi]\[NonBreakingSpace]I);
 
 
@@ -411,6 +415,9 @@ LFun[f_IFun]:=LFun[Join[Values[f],Reverse[Values[f]][[2;;-2]]],UnitCircle];
 
 ToUnitCircle[lf_LFun]:=SetDomain[lf,UnitCircle];
 
+
+
+Reverse[lf:LFun[_,Line[{-\[Infinity],\[Infinity]},___]]]^:=LFun[{Values[lf][[1]]}~Join~(lf//Values//Rest//Reverse),lf//Domain]
 
 
 
