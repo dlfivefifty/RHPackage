@@ -658,6 +658,339 @@ YD[n_,z_]:=YD[n,z]=({
 ]
 
 
+HOOrthogonalPolynomialMatrixGenerator[V_,M_:40,L_:5.]:=Module[{g,l,z,\[Phi],supp,P,Pin,rngg,Cdefs,a,b,A,B,AP,BP,gs,m,U,\[CapitalPsi],\[CapitalPhi],p,slvr,Y,UD,\[CapitalPsi]D,\[Phi]D,\[CapitalPhi]D,YD,PD,BD,BinD,rnggR,\[Alpha]R,\[Alpha]L,rsc,lsc},
+supp=Line[{a,b}=EquilibriumMeasureSupport[V]];
+
+g[z_]=GFunction[V,z];
+g[+1,z_]=GFunction[+1,V,z];
+g[-1,z_]=GFunction[-1,V,z];
+l=-(g[+1,0.]+g[-1,0.]-V[0.]);
+
+
+
+\[Phi][z_]=(V[z]-l)/2-g[z];
+\[Phi]D[z_]=(V'[z])/2-g'[z];
+\[Phi][+1,z_]=-(g[+1,z]-(V[z]-l)/2);
+\[Phi][-1,z_]=-(g[-1,z]-(V[z]-l)/2);
+
+P[z_]=Parametrix[({
+ {0, 1},
+ {-1, 0}
+}),supp,z];
+PD[z_]=P'[z];
+P[-1,z_]=ParametrixBranch[({
+ {0, 1},
+ {-1, 0}
+}),supp,z,-2 \[Pi]];
+Pin[z_]=Inverse[P[z]];
+Pin[-1,z_]=Inverse[P[-1,z]];
+
+
+rngg={.5,L};
+rnggR={.5,2 L};
+
+\[Alpha]R=6/7;
+\[Alpha]L=2/3;
+
+rsc[n_]:=n^(2/7);
+lsc[n_]:=n^(2/3);
+Cdefs[m_]:={{Function[n,({
+ {a},
+ {-lsc[n]}
+})],({
+ {Line[rngg], m},
+ {Line[Exp[\[Alpha]L \[Pi] I]Reverse[rngg]], m},
+ {Line[Exp[-\[Alpha]L I \[Pi]]Reverse[rngg]], m},
+ {Line[{Exp[\[Alpha]L I \[Pi]] ,1 }rngg[[1]]], m},
+ {Line[{1 ,Exp[ -\[Alpha]L I \[Pi]] }rngg[[1]]], m},
+ {Line[{Exp[ -\[Alpha]L I \[Pi]] ,Exp[ \[Alpha]L I \[Pi]] }rngg[[1]]], m}
+})},
+{Function[n,({
+ {b},
+ {rsc[n]}
+})],({
+ {Line[rnggR], m},
+ {Line[Exp[\[Alpha]R \[Pi] I]Reverse[rnggR]], m},
+ {Line[Exp[-\[Alpha]R I \[Pi]]Reverse[rnggR]], m},
+ {Line[{Exp[\[Alpha]R I \[Pi]] ,1 }rnggR[[1]]], m},
+ {Line[{1 ,Exp[ -\[Alpha]R I \[Pi]] }rnggR[[1]]], m},
+ {Line[{Exp[ -\[Alpha]R I \[Pi]] ,Exp[ \[Alpha]R I \[Pi]] }rnggR[[1]]], m}
+})}};
+
+A[n_][z_]:=({
+ {1, Exp[-2 n \[Phi][z]]},
+ {0, 1}
+});
+B[n_][z_]:=({
+ {1, 0},
+ {Exp[2 n \[Phi][z]], 1}
+});
+AP[n_][z_]:=P[z].A[n][z].Pin[z];
+BP[n_][z_]:=P[z].B[n][z].Pin[z];
+
+
+BD[n_][z_]:=({
+ {0, 0},
+ {2 n \[Phi]D[z]Exp[2 n \[Phi][z]], 0}
+});
+BinD[n_][z_]:=({
+ {0, 0},
+ {-2 n \[Phi]D[z]Exp[2 n \[Phi][z]], 0}
+});
+
+
+
+gs[n_]:={({
+ {Inverse[AP[n][#]]&},
+ {Inverse[BP[n][#]]&},
+ {Inverse[BP[n][#]]&},
+ {({
+   {1, -1},
+   {1, 0}
+  }).({
+   {Exp[n \[Phi][#]], 0},
+   {0, Exp[-n \[Phi][#]]}
+  }).Pin[#]&},
+ {({
+   {1, 0},
+   {1, 1}
+  }).({
+   {Exp[n \[Phi][#]], 0},
+   {0, Exp[-n \[Phi][#]]}
+  }).Pin[#]&},
+ {({
+   {0, -1},
+   {1, 0}
+  }).({
+   {Exp[n \[Phi][-1,#]], 0},
+   {0, Exp[-n \[Phi][-1,#]]}
+  }).Pin[-1,#]&}
+}),({
+ {AP[n]},
+ {BP[n]},
+ {BP[n]},
+ {({
+   {Exp[n \[Phi][#]], 0},
+   {0, Exp[-n \[Phi][#]]}
+  }).Pin[#]&},
+ {({
+   {1, -1},
+   {0, 1}
+  }).({
+   {Exp[n \[Phi][#]], 0},
+   {0, Exp[-n \[Phi][#]]}
+  }).Pin[#]&},
+ {({
+   {0, -1},
+   {1, 1}
+  }).({
+   {Exp[n \[Phi][-1,#]], 0},
+   {0, Exp[-n \[Phi][-1,#]]}
+  }).Pin[-1,#]&}
+})};
+
+slvr=ScaledRHSolver[Cdefs[M]];
+
+U[n_]:=U[n]=slvr[n,gs[n]];
+U[n_,z_]:=Dot@@(IdentityMatrix[2]+Cauchy[#,z]&/@U[n]);
+
+
+\[CapitalPsi][n_,z_]/;RightOfLine[z-b,Line[{Exp[I \[Alpha]R \[Pi]] ,1 }rnggR[[1]]/rsc[n]]] &&0<=Arg[z-b]<\[Alpha]R \[Pi]:=U[n,z].({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi][n_,z_]/;Re[z]>b+Re[rnggR[[1]] Exp[ I \[Alpha]R \[Pi]]/rsc[n] ]&&\[Alpha]R \[Pi]<Arg[z-b]<=\[Pi]:=U[n,z].({
+ {1, 0},
+ {-1, 1}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi][n_,z_]/;Re[z]>b+Re[rnggR[[1]] Exp[ I \[Alpha]R \[Pi]]/rsc[n] ] &&-\[Pi]<Arg[z-b]<-\[Alpha]R \[Pi]:=U[n,z].({
+ {0, -1},
+ {1, 1}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi][n_,z_]/;RightOfLine[z-b,Line[{1,Exp[- I \[Pi] \[Alpha]R] }rnggR[[1]]/rsc[n]]] &&-\[Alpha]R \[Pi]<Arg[z-b]<0:=U[n,z].({
+ {1, -1},
+ {0, 1}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi][n_,z_]/;Re[z]<a-Re[rngg[[1]] Exp[2 I \[Pi]/3]/n^(2/3) ] &&0<=Arg[z-a]< \[Pi]/3:=U[n,z].({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi][n_,z_]/;LeftOfLine[a-z,Line[{1,Exp[-2 I \[Pi]/3] }rngg[[1]]/n^(2/3)]] && \[Pi]/3<Arg[z-a]<=\[Pi]:=U[n,z].({
+ {1, 0},
+ {1, 1}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi][n_,z_]/;LeftOfLine[a-z,Line[{Exp[2 I \[Pi]/3] ,1 }rngg[[1]]/n^(2/3)]] &&-\[Pi]<Arg[z-a]<-\[Pi]/3:=U[n,z].({
+ {1, -1},
+ {1, 0}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi][n_,z_]/;Re[z]<a-Re[rngg[[1]] Exp[2 I \[Pi]/3]/n^(2/3) ] &&-\[Pi]/3<Arg[z-a]<0:=U[n,z].({
+ {0, -1},
+ {1, 0}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi][n_,z_]:=U[n,z].P[z];
+
+
+\[CapitalPhi][n_,z_]/;Im[z]>=0&&2\[Pi]/3<Arg[z-b]&&0<=Arg[z-a]<\[Pi]/3:=\[CapitalPsi][n,z].B[n][z];
+\[CapitalPhi][n_,z_]/;Im[z]<0&&Arg[z-b]<-2\[Pi]/3&&-\[Pi]/3<Arg[z-a]<0:=\[CapitalPsi][n,z].Inverse[B[n][z]];
+\[CapitalPhi][n_,z_]:=\[CapitalPsi][n,z];
+    Y[n_,z_]:=Y[n,z]=({
+ {Exp[-n l/2], 0},
+ {0, Exp[n l/2]}
+}).\[CapitalPhi][n,z].({
+ {Exp[n l/2], 0},
+ {0, Exp[-n l/2]}
+}).({
+ {Exp[n g[z]], 0},
+ {0, Exp[-n g[z]]}
+});
+
+
+
+UD[n_,z_]:=(IdentityMatrix[2]+Cauchy[U[n][[1]],z]).CauchyD[U[n][[2]],z]+CauchyD[U[n][[1]],z].(IdentityMatrix[2]+Cauchy[U[n][[2]],z]);
+\[CapitalPsi]D[n_,z_]/;RightOfLine[z-b,Line[{Exp[ I \[Pi] \[Alpha]R] ,1 }rnggR[[1]]/rsc[n]]] &&0<=Arg[z-b]<\[Pi] \[Alpha]R:=UD[n,z].({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+})+\[Phi]D[z] U[n,z].({
+ {n Exp[n \[Phi][z]], 0},
+ {0, -n Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi]D[n_,z_]/;Re[z]>b+Re[rnggR[[1]] Exp[ I \[Pi] \[Alpha]R]/rsc[n] ] &&\[Pi] \[Alpha]R<Arg[z-b]<=\[Pi]:=UD[n,z].({
+ {1, 0},
+ {-1, 1}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+})+\[Phi]D[z] U[n,z].({
+ {1, 0},
+ {-1, 1}
+}).({
+ {n Exp[n \[Phi][z]], 0},
+ {0, -n Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi]D[n_,z_]/;Re[z]>b+Re[rnggR[[1]] Exp[ I \[Pi] \[Alpha]R]/rsc[n] ] &&-\[Pi]<Arg[z-b]<-\[Pi] \[Alpha]R:=UD[n,z].({
+ {0, -1},
+ {1, 1}
+}) .({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+})+\[Phi]D[z] U[n,z].({
+ {0, -1},
+ {1, 1}
+}) .({
+ {n Exp[n \[Phi][z]], 0},
+ {0, -n Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi]D[n_,z_]/;RightOfLine[z-b,Line[{1,Exp[- I \[Pi] \[Alpha]R] }rnggR[[1]]/rsc[n]]] &&-\[Pi] \[Alpha]R<Arg[z-b]<0:=UD[n,z].({
+ {1, -1},
+ {0, 1}
+}) .({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+})+\[Phi]D[z] U[n,z].({
+ {1, -1},
+ {0, 1}
+}) .({
+ {n Exp[n \[Phi][z]], 0},
+ {0, -n Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi]D[n_,z_]/;Re[z]<a-Re[rngg[[1]] Exp[2 I \[Pi]/3]/n^(2/3) ] &&0<=Arg[z-a]< \[Pi]/3:=UD[n,z].({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+})+\[Phi]D[z] U[n,z].({
+ {n Exp[n \[Phi][z]], 0},
+ {0, -n Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi]D[n_,z_]/;LeftOfLine[a-z,Line[{1,Exp[-2 I \[Pi]/3] }rngg[[1]]/n^(2/3)]] && \[Pi]/3<Arg[z-a]<=\[Pi]:=UD[n,z].({
+ {1, 0},
+ {1, 1}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+})+\[Phi]D[z] U[n,z].({
+ {1, 0},
+ {1, 1}
+}).({
+ {n Exp[n \[Phi][z]], 0},
+ {0, -n Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi]D[n_,z_]/;LeftOfLine[a-z,Line[{Exp[2 I \[Pi]/3] ,1 }rngg[[1]]/n^(2/3)]] &&-\[Pi]<Arg[z-a]<-\[Pi]/3:=UD[n,z].({
+ {1, -1},
+ {1, 0}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+})+\[Phi]D[z] U[n,z].({
+ {1, -1},
+ {1, 0}
+}).({
+ {n Exp[n \[Phi][z]], 0},
+ {0, -n Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi]D[n_,z_]/;Re[z]<a-Re[rngg[[1]] Exp[2 I \[Pi]/3]/n^(2/3) ] &&-\[Pi]/3<Arg[z-a]<0:=UD[n,z].({
+ {0, -1},
+ {1, 0}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+})+\[Phi]D[z] U[n,z].({
+ {0, -1},
+ {1, 0}
+}).({
+ {n Exp[n \[Phi][z]], 0},
+ {0, -n Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi]D[n_,z_]:=UD[n,z].P[z]+U[n,z].PD[z];
+\[CapitalPhi]D[n_,z_]/;Im[z]>=0&&2\[Pi]/3<Arg[z-b]&&0<=Arg[z-a]<\[Pi]/3:=\[CapitalPsi]D[n,z].B[n][z]+\[CapitalPsi][n,z].BD[n][z];
+\[CapitalPhi]D[n_,z_]/;Im[z]<0&&Arg[z-b]<-2\[Pi]/3&&-\[Pi]/3<Arg[z-a]<0:=\[CapitalPsi]D[n,z].Inverse[B[n][z]]+\[CapitalPsi][n,z].BinD[n][z];
+\[CapitalPhi]D[n_,z_]:=\[CapitalPsi]D[n,z];
+YD[n_,z_]:=YD[n,z]=({
+ {Exp[-n l/2], 0},
+ {0, Exp[n l/2]}
+}).\[CapitalPhi]D[n,z].({
+ {Exp[n l/2], 0},
+ {0, Exp[-n l/2]}
+}).({
+ {Exp[n g[z]], 0},
+ {0, Exp[-n g[z]]}
+})+n g'[z] ({
+ {Exp[-n l/2], 0},
+ {0, Exp[n l/2]}
+}).\[CapitalPhi][n,z].({
+ {Exp[n l/2], 0},
+ {0, Exp[-n l/2]}
+}).({
+ {Exp[n g[z]], 0},
+ {0, -Exp[-n g[z]]}
+});
+
+{Y,YD}
+
+];
+HOOrthogonalPolynomialGenerator[V_,M_:40,L_:5.]:=
+Module[{Y,p},
+Y=HOOrthogonalPolynomialMatrixGenerator[V,M,L][[1]];
+p[n_,z_]:=Y[n,z][[1,1]];
+p]
+
+
 InvariantEnsembleKernel[V_,opts___]:=Module[{Y,YD,K,eps},
 eps=$MachineEpsilon;
 {Y,YD}=OrthogonalPolynomialMatrixGeneratorConnected[V,opts];
