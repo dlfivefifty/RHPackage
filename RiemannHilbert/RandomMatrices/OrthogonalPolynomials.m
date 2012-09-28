@@ -1001,7 +1001,19 @@ Yy=Y[n,y+eps I];
 -(1/(2 \[Pi] I))Exp[-n/2 (V[x]+V[y])] (Yx[[1,1]] Yy[[2,1]] -Yy[[1,1]] Yx[[2,1]])/(x-y)
 ];
 K
-]
+];
+
+HOInvariantEnsembleKernel[V_,opts___]:=Module[{Y,YD,K,eps},
+eps=$MachineEpsilon;
+{Y,YD}=HOOrthogonalPolynomialMatrixGenerator[V,opts];
+K[n_][x_,x_]:=K[n][x,x]=1/(2 \[Pi] I) Exp[-n(V[x])](Y[n,x+eps I][[1,1]] YD[n,x+eps I][[2,1]] -YD[n,x+eps I][[1,1]] Y[n,x+eps I][[2,1]]);
+K[n_][x_,y_]:=K[n][x,y]=Module[{Yx,Yy},
+Yx=Y[n,x+eps I];
+Yy=Y[n,y+eps I];
+-(1/(2 \[Pi] I))Exp[-n/2 (V[x]+V[y])] (Yx[[1,1]] Yy[[2,1]] -Yy[[1,1]] Yx[[2,1]])/(x-y)
+];
+K
+];
 
 
 End[];
