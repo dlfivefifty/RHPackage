@@ -215,6 +215,7 @@ ShiftMatrix/:Transpose[ShiftMatrix[ls_?MatrixQ,{iind_,jind_}]]:=ShiftMatrix[ls//
 
 
 ToArray[ShiftMatrix[ls_,{_,_}]]:=ls;
+Normal[sl_ShiftMatrix]^:=sl//ToArray;
 
 
 ShiftMatrix/:Dimensions[ShiftMatrix[ls_?MatrixQ,{_,_}]]:=Dimensions[ls];

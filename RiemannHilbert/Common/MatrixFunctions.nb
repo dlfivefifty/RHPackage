@@ -1246,15 +1246,18 @@ Cell[BoxData[
  RowBox[{"\[IndentingNewLine]", 
   RowBox[{
    RowBox[{
-    RowBox[{"ToArray", "[", 
-     RowBox[{"ShiftMatrix", "[", 
-      RowBox[{"ls_", ",", 
-       RowBox[{"{", 
-        RowBox[{"_", ",", "_"}], "}"}]}], "]"}], "]"}], ":=", "ls"}], 
-   ";"}]}]], "Input",
- InitializationCell->True,
- CellChangeTimes->{
-  3.543015378524049*^9, {3.5430221360798388`*^9, 3.5430221479520607`*^9}}],
+    RowBox[{
+     RowBox[{"ToArray", "[", 
+      RowBox[{"ShiftMatrix", "[", 
+       RowBox[{"ls_", ",", 
+        RowBox[{"{", 
+         RowBox[{"_", ",", "_"}], "}"}]}], "]"}], "]"}], ":=", "ls"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Normal", "[", "sl_ShiftMatrix", "]"}], "^:=", 
+     RowBox[{"sl", "//", "ToArray"}]}], ";"}]}]}]], "Input",
+ InitializationCell->True],
 
 Cell[BoxData[{
  RowBox[{
@@ -1480,7 +1483,7 @@ Cell[BoxData[
 ButtonData:>\\\"paclet:ref/message/End/noctx\\\", ButtonNote -> \
 \\\"End::noctx\\\"]\\)\"\>"}]], "Message", "MSG"]
 }, Open  ]]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
