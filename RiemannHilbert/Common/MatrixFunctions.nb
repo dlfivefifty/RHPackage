@@ -1002,8 +1002,6 @@ Cell[BoxData[{
     RowBox[{"Abs", ",", "f"}], "]"}]}], ";"}]}], "Input",
  InitializationCell->True],
 
-Cell[CellGroupData[{
-
 Cell[BoxData[{
  RowBox[{
   RowBox[{
@@ -1155,17 +1153,7 @@ Cell[BoxData[{
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"End", "[", "]"}], ";"}]}], "Input",
- InitializationCell->True],
-
-Cell[BoxData[
- RowBox[{
-  StyleBox[
-   RowBox[{"End", "::", "noctx"}], "MessageName"], ":", 
-  " ", "\<\"No previous context defined. \\!\\(\\*ButtonBox[\\\"\
-\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
-ButtonData:>\\\"paclet:ref/message/End/noctx\\\", ButtonNote -> \
-\\\"End::noctx\\\"]\\)\"\>"}]], "Message", "MSG"]
-}, Open  ]]
+ InitializationCell->True]
 }, Closed]],
 
 Cell[CellGroupData[{
@@ -1423,8 +1411,6 @@ Cell[BoxData[{
   ";"}]}], "Input",
  InitializationCell->True],
 
-Cell[CellGroupData[{
-
 Cell[BoxData[{
  RowBox[{
   RowBox[{
@@ -1472,17 +1458,7 @@ Cell[BoxData[{
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"End", "[", "]"}], ";"}]}], "Input",
- InitializationCell->True],
-
-Cell[BoxData[
- RowBox[{
-  StyleBox[
-   RowBox[{"End", "::", "noctx"}], "MessageName"], ":", 
-  " ", "\<\"No previous context defined. \\!\\(\\*ButtonBox[\\\"\
-\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
-ButtonData:>\\\"paclet:ref/message/End/noctx\\\", ButtonNote -> \
-\\\"End::noctx\\\"]\\)\"\>"}]], "Message", "MSG"]
-}, Open  ]]
+ InitializationCell->True]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -1783,6 +1759,7 @@ Cell[BoxData[
    RowBox[{"ToArrayOfShiftLists", ";"}], "\[IndentingNewLine]", 
    "\[IndentingNewLine]", 
    RowBox[{"PLUDecomposition", ";"}], "\[IndentingNewLine]", 
+   RowBox[{"PULDecomposition", ";"}], "\[IndentingNewLine]", 
    "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"Begin", "[", "\"\<Private`\>\"", "]"}], ";"}], 
@@ -2240,6 +2217,33 @@ Cell[BoxData[
               RowBox[{"n", ",", "n"}], "}"}]}], "]"}]}]}], "}"}]}]}], "]"}]}],
      ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
+    RowBox[{
+     RowBox[{"PULDecomposition", "[", "M_", "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"P", ",", "L", ",", "U"}], "}"}], ",", "\[IndentingNewLine]", 
+       
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"P", ",", "L", ",", "U"}], "}"}], "=", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Reverse", "/@", "M"}], "//", "Reverse"}], "//", 
+           "PLUDecomposition"}], ")"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Reverse", "/@", "P"}], "//", "Reverse"}], ",", 
+          RowBox[{
+           RowBox[{"Reverse", "/@", "L"}], "//", "Reverse"}], ",", 
+          RowBox[{
+           RowBox[{"Reverse", "/@", "U"}], "//", "Reverse"}]}], "}"}]}]}], 
+      "]"}]}], ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{
     RowBox[{"End", "[", "]"}], ";"}]}]}]], "Input",
  InitializationCell->True]
 }, Open  ]],
@@ -2407,8 +2411,6 @@ Cell[BoxData[
  
  InitializationCell->True],
 
-Cell[CellGroupData[{
-
 Cell[BoxData[{
  RowBox[{
   RowBox[{
@@ -2436,17 +2438,7 @@ Cell[BoxData[{
         RowBox[{"{", 
          RowBox[{"1", ",", "1"}], "}"}]}]}], "]"}]}], "]"}]}], 
   ";"}], "\[IndentingNewLine]"}], "Input",
- InitializationCell->True],
-
-Cell[BoxData[
- RowBox[{
-  RowBox[{"End", "::", "\<\"noctx\"\>"}], ":", 
-  " ", "\<\"\\!\\(\\*StyleBox[\\\"\\\\\\\"No previous context \
-defined.\\\\\\\"\\\", \\\"MT\\\"]\\) \
-\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
-ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/End/noctx\\\", \
-ButtonNote -> \\\"End::noctx\\\"]\\)\"\>"}]], "Message", "MSG"]
-}, Open  ]]
+ InitializationCell->True]
 }, Open  ]],
 
 Cell[CellGroupData[{

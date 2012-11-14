@@ -341,6 +341,7 @@ ToShiftListOfArrays;
 ToArrayOfShiftLists;
 
 PLUDecomposition;
+PULDecomposition;
 
 Begin["Private`"];
 
@@ -417,6 +418,11 @@ n=M//Length;
 {IdentityMatrix[n][[p]]\[Transpose],
 lu SparseArray[{i_,j_}/;j<i->1,{n,n}]+IdentityMatrix[n],
 lu SparseArray[{i_,j_}/;j>=i->1,{n,n}]}];
+
+PULDecomposition[M_]:=Module[{P,L,U},
+{P,L,U}=(Reverse/@M//Reverse//PLUDecomposition);
+{Reverse/@P//Reverse,Reverse/@L//Reverse,Reverse/@U//Reverse}];
+
 
 End[];
 
