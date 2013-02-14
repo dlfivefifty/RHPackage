@@ -229,8 +229,8 @@ ReImListLogLogPlot[h_List,opts___]:=ListLogLogPlot[Thread[{Max[0,Re[#]],Max[0,-R
 
 EigenballPlot[A_,opts___]:=Module[{n,i,j},
 n=Length[A];Show[Graphics[Table[Circle[{Re[A[[i,i]]],Im[A[[i,i]]]},\!\(
-\*UnderoverscriptBox[\(\[Sum]\), \(j = 1\), \(i - 1\)]\(Abs[A[\([\)\(i, j\)\(]\)]]\)\)+\!\(
-\*UnderoverscriptBox[\(\[Sum]\), \(j = i + 1\), \(n\)]\(Abs[A[\([\)\(i, j\)\(]\)]]\)\)],{i,n}]],
+\*UnderoverscriptBox[\(\[Sum]\), \(j = 1\), \(i - 1\)]\(Abs[A[[i, j]]]\)\)+\!\(
+\*UnderoverscriptBox[\(\[Sum]\), \(j = i + 1\), \(n\)]\(Abs[A[[i, j]]]\)\)],{i,n}]],
 Graphics[Map[Point[{Re[#],Im[#]}]&,Eigenvalues[A]]
 ],Axes->Automatic,opts]
 ]
