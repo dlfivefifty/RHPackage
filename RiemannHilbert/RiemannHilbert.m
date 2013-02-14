@@ -162,7 +162,7 @@ FredholmDet[K_,a_,\[Infinity],m_]:=Module[{Ks,x,w,\[Phi]},
 Ks[s_][x_,y_]:=Sqrt[\[Phi][s]'[x]\[Phi][s]'[y]] K[\[Phi][s][x],\[Phi][s][y]];
 {x,w}=GaussianQuadratureWeights[m,0,1]//Thread;
 w=Sqrt[w];
-IdentityMatrix[m]-(Transpose[{w}].{w})Outer[Ks[a],x,x]//Det
+IdentityMatrix[m]-Chop[(Transpose[{w}].{w})Outer[Ks[a],x,x],$MachineEpsilon]//Det
 ];
 
 
