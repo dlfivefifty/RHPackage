@@ -156,7 +156,7 @@ FredholmDet[K_,a_,b_,m_]:=
 Module[{w,x},
 {x,w}=GaussianQuadratureWeights[m,a,b]//Thread;
 w=Sqrt[w];
-Det[IdentityMatrix[m]-(Transpose[{w}].{w})Outer[K,x,x]]];
+Det[IdentityMatrix[m]-Chop[(Transpose[{w}].{w})Outer[K,x,x],$MachineEpsilon]]];
 FredholmDet[K_,a_,\[Infinity],m_]:=Module[{Ks,x,w,\[Phi]},
 \[Phi][s_][x_]:=s+10 Tan[\[Pi] x/2];
 Ks[s_][x_,y_]:=Sqrt[\[Phi][s]'[x]\[Phi][s]'[y]] K[\[Phi][s][x],\[Phi][s][y]];

@@ -26,6 +26,7 @@ OrthogonalPolynomialGenerator;
 OrthogonalPolynomialMatrixGeneratorConnected;
 OrthogonalPolynomialMatrixGenerator;
 InvariantEnsembleKernel;
+HOInvariantEnsembleKernel;
 GFunction;
 LeftOfLine;
 RightOfLine;
@@ -658,7 +659,7 @@ YD[n_,z_]:=YD[n,z]=({
 ]
 
 
-HOOrthogonalPolynomialMatrixGenerator[V_,M_:40,L_:5.]:=Module[{g,l,z,\[Phi],supp,P,Pin,rngg,Cdefs,a,b,A,B,AP,BP,gs,m,U,\[CapitalPsi],\[CapitalPhi],p,slvr,Y,UD,\[CapitalPsi]D,\[Phi]D,\[CapitalPhi]D,YD,PD,BD,BinD,rnggR,\[Alpha]R,\[Alpha]L,rsc,lsc},
+HOOrthogonalPolynomialMatrixGenerator[V_,M_:50,L_:5.]:=Module[{g,l,z,\[Phi],supp,P,Pin,rngg,Cdefs,a,b,A,B,AP,BP,gs,m,U,\[CapitalPsi],\[CapitalPhi],p,slvr,Y,UD,\[CapitalPsi]D,\[Phi]D,\[CapitalPhi]D,YD,PD,BD,BinD,rnggR,\[Alpha]R,\[Alpha]L,rsc,lsc},
 supp=Line[{a,b}=EquilibriumMeasureSupport[V]];
 
 g[z_]=GFunction[V,z];
