@@ -30,6 +30,16 @@ TTransformInverseFunction;
 
 
 Begin["Private`"];
+Stieljes[\[Lambda]_ ArcSin,z_]:=1/(Sqrt[z+\[Lambda]] Sqrt[z-\[Lambda]]);
+StieljesInverseFunction[\[Lambda]_ ArcSin,y_]:=Sqrt[1+\[Lambda]^2 y^2]/y;
+StieljesInverseFunctionD[\[Lambda]_ ArcSin,y_]:=-(1/(y^2 Sqrt[1+\[Lambda]^2 y^2]));
+StieljesInverseFunctionD[2][\[Lambda]_ ArcSin,y_]:=(2 +3 \[Lambda]^2 y^2)/(y^3 (1+\[Lambda]^2 y^2)^(3/2));
+SlitPlanePoints[\[Lambda]_ ArcSin,n_]:=SlitPlanePoints[Line[{-\[Lambda],\[Lambda]}],n];
+End[];
+
+
+
+Begin["Private`"];
 
 
 EvenEvenDiskPoints[n_]:=Table[Points[Circle[0,r],n],{r,1/(n-1),1.,1/(n-1)}]//Flatten;
