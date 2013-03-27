@@ -340,8 +340,6 @@ BlockDiagonalMatrix;
 ToShiftListOfArrays;
 ToArrayOfShiftLists;
 
-PLUDecomposition;
-PULDecomposition;
 
 Begin["Private`"];
 
@@ -412,6 +410,18 @@ GrowShiftLeft[l_List]:=PadRight[ShiftLeft[l],Length[l]];
 GrowShiftLeft[l_List,k_]:=PadRight[ShiftLeft[l,k],Length[l]];
 GrowShiftRight[l_List]:=Join[{0},l];
 
+
+End[];
+
+
+PLUDecomposition;
+PULDecomposition;
+QLDecomposition;
+LQDecomposition;
+RQDecomposition;
+
+Begin["Private`"];
+
 PLUDecomposition[M_]:=Module[{lu,p,c,n},
 n=M//Length;
 {lu,p,c}=M//LUDecomposition;
@@ -423,7 +433,18 @@ PULDecomposition[M_]:=Module[{P,L,U},
 {P,L,U}=(Reverse/@M//Reverse//PLUDecomposition);
 {Reverse/@P//Reverse,Reverse/@L//Reverse,Reverse/@U//Reverse}];
 
-
+QLDecomposition[A_]:=Module[{Q,R},
+{Q,R}=Reverse/@A//Reverse//QRDecomposition;
+{Reverse/@Transpose[Q]//Reverse//Transpose,Reverse/@R//Reverse}
+];
+LQDecomposition[A_]:=Module[{Q,R},
+{Q,R}=A//Transpose//QRDecomposition;
+{R//Transpose,Q//Transpose}
+];
+RQDecomposition[A_]:=Module[{Q,L},
+{Q,L}=A//Transpose//QLDecomposition;
+{L//Transpose,Q//Transpose}
+];
 End[];
 
 

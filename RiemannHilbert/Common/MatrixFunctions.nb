@@ -1459,7 +1459,7 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{"End", "[", "]"}], ";"}]}], "Input",
  InitializationCell->True]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -1757,10 +1757,7 @@ Cell[BoxData[
    "\[IndentingNewLine]", 
    RowBox[{"ToShiftListOfArrays", ";"}], "\[IndentingNewLine]", 
    RowBox[{"ToArrayOfShiftLists", ";"}], "\[IndentingNewLine]", 
-   "\[IndentingNewLine]", 
-   RowBox[{"PLUDecomposition", ";"}], "\[IndentingNewLine]", 
-   RowBox[{"PULDecomposition", ";"}], "\[IndentingNewLine]", 
-   "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"Begin", "[", "\"\<Private`\>\"", "]"}], ";"}], 
    "\[IndentingNewLine]", "\[IndentingNewLine]", 
@@ -2169,42 +2166,53 @@ Cell[BoxData[
      RowBox[{"Join", "[", 
       RowBox[{
        RowBox[{"{", "0", "}"}], ",", "l"}], "]"}]}], ";"}], 
-   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
-    RowBox[{
-     RowBox[{"PLUDecomposition", "[", "M_", "]"}], ":=", 
-     RowBox[{"Module", "[", 
+    RowBox[{"End", "[", "]"}], ";"}]}]}]], "Input",
+ InitializationCell->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Matrix Factorization", "Section"],
+
+Cell[BoxData[{
+ RowBox[{"PLUDecomposition", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"PULDecomposition", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"QLDecomposition", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"LQDecomposition", ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"RQDecomposition", ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Begin", "[", "\"\<Private`\>\"", "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"PLUDecomposition", "[", "M_", "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"lu", ",", "p", ",", "c", ",", "n"}], "}"}], ",", 
+      "\[IndentingNewLine]", 
       RowBox[{
-       RowBox[{"{", 
-        RowBox[{"lu", ",", "p", ",", "c", ",", "n"}], "}"}], ",", 
-       "\[IndentingNewLine]", 
+       RowBox[{"n", "=", 
+        RowBox[{"M", "//", "Length"}]}], ";", "\[IndentingNewLine]", 
        RowBox[{
-        RowBox[{"n", "=", 
-         RowBox[{"M", "//", "Length"}]}], ";", "\[IndentingNewLine]", 
-        RowBox[{
-         RowBox[{"{", 
-          RowBox[{"lu", ",", "p", ",", "c"}], "}"}], "=", 
-         RowBox[{"M", "//", "LUDecomposition"}]}], ";", "\[IndentingNewLine]", 
         RowBox[{"{", 
+         RowBox[{"lu", ",", "p", ",", "c"}], "}"}], "=", 
+        RowBox[{"M", "//", "LUDecomposition"}]}], ";", "\[IndentingNewLine]", 
+       
+       RowBox[{"{", 
+        RowBox[{
          RowBox[{
           RowBox[{
-           RowBox[{
-            RowBox[{"IdentityMatrix", "[", "n", "]"}], "\[LeftDoubleBracket]",
-             "p", "\[RightDoubleBracket]"}], "\[Transpose]"}], ",", 
-          "\[IndentingNewLine]", 
-          RowBox[{
-           RowBox[{"lu", " ", 
-            RowBox[{"SparseArray", "[", 
-             RowBox[{
-              RowBox[{
-               RowBox[{
-                RowBox[{"{", 
-                 RowBox[{"i_", ",", "j_"}], "}"}], "/;", 
-                RowBox[{"j", "<", "i"}]}], "\[Rule]", "1"}], ",", 
-              RowBox[{"{", 
-               RowBox[{"n", ",", "n"}], "}"}]}], "]"}]}], "+", 
-           RowBox[{"IdentityMatrix", "[", "n", "]"}]}], ",", 
-          "\[IndentingNewLine]", 
+           RowBox[{"IdentityMatrix", "[", "n", "]"}], "\[LeftDoubleBracket]", 
+           "p", "\[RightDoubleBracket]"}], "\[Transpose]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{
           RowBox[{"lu", " ", 
            RowBox[{"SparseArray", "[", 
             RowBox[{
@@ -2212,39 +2220,114 @@ Cell[BoxData[
               RowBox[{
                RowBox[{"{", 
                 RowBox[{"i_", ",", "j_"}], "}"}], "/;", 
-               RowBox[{"j", "\[GreaterEqual]", "i"}]}], "\[Rule]", "1"}], ",", 
+               RowBox[{"j", "<", "i"}]}], "\[Rule]", "1"}], ",", 
              RowBox[{"{", 
-              RowBox[{"n", ",", "n"}], "}"}]}], "]"}]}]}], "}"}]}]}], "]"}]}],
-     ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{
-     RowBox[{"PULDecomposition", "[", "M_", "]"}], ":=", 
-     RowBox[{"Module", "[", 
-      RowBox[{
-       RowBox[{"{", 
-        RowBox[{"P", ",", "L", ",", "U"}], "}"}], ",", "\[IndentingNewLine]", 
-       
-       RowBox[{
-        RowBox[{
-         RowBox[{"{", 
-          RowBox[{"P", ",", "L", ",", "U"}], "}"}], "=", 
-         RowBox[{"(", 
-          RowBox[{
+              RowBox[{"n", ",", "n"}], "}"}]}], "]"}]}], "+", 
+          RowBox[{"IdentityMatrix", "[", "n", "]"}]}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"lu", " ", 
+          RowBox[{"SparseArray", "[", 
            RowBox[{
-            RowBox[{"Reverse", "/@", "M"}], "//", "Reverse"}], "//", 
-           "PLUDecomposition"}], ")"}]}], ";", "\[IndentingNewLine]", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"i_", ",", "j_"}], "}"}], "/;", 
+              RowBox[{"j", "\[GreaterEqual]", "i"}]}], "\[Rule]", "1"}], ",", 
+            
+            RowBox[{"{", 
+             RowBox[{"n", ",", "n"}], "}"}]}], "]"}]}]}], "}"}]}]}], "]"}]}], 
+   ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"PULDecomposition", "[", "M_", "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"P", ",", "L", ",", "U"}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{
         RowBox[{"{", 
+         RowBox[{"P", ",", "L", ",", "U"}], "}"}], "=", 
+        RowBox[{"(", 
          RowBox[{
           RowBox[{
-           RowBox[{"Reverse", "/@", "P"}], "//", "Reverse"}], ",", 
-          RowBox[{
-           RowBox[{"Reverse", "/@", "L"}], "//", "Reverse"}], ",", 
-          RowBox[{
-           RowBox[{"Reverse", "/@", "U"}], "//", "Reverse"}]}], "}"}]}]}], 
-      "]"}]}], ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
-   "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{"End", "[", "]"}], ";"}]}]}]], "Input",
+           RowBox[{"Reverse", "/@", "M"}], "//", "Reverse"}], "//", 
+          "PLUDecomposition"}], ")"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Reverse", "/@", "P"}], "//", "Reverse"}], ",", 
+         RowBox[{
+          RowBox[{"Reverse", "/@", "L"}], "//", "Reverse"}], ",", 
+         RowBox[{
+          RowBox[{"Reverse", "/@", "U"}], "//", "Reverse"}]}], "}"}]}]}], 
+     "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"QLDecomposition", "[", "A_", "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"Q", ",", "R"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"Q", ",", "R"}], "}"}], "=", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Reverse", "/@", "A"}], "//", "Reverse"}], "//", 
+        "QRDecomposition"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"Reverse", "/@", 
+           RowBox[{"Transpose", "[", "Q", "]"}]}], "//", "Reverse"}], "//", 
+         "Transpose"}], ",", 
+        RowBox[{
+         RowBox[{"Reverse", "/@", "R"}], "//", "Reverse"}]}], "}"}]}]}], 
+    "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LQDecomposition", "[", "A_", "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"Q", ",", "R"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"Q", ",", "R"}], "}"}], "=", 
+       RowBox[{
+        RowBox[{"A", "//", "Transpose"}], "//", "QRDecomposition"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"R", "//", "Transpose"}], ",", 
+        RowBox[{"Q", "//", "Transpose"}]}], "}"}]}]}], "\[IndentingNewLine]", 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"RQDecomposition", "[", "A_", "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"Q", ",", "L"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"Q", ",", "L"}], "}"}], "=", 
+       RowBox[{
+        RowBox[{"A", "//", "Transpose"}], "//", "QLDecomposition"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"L", "//", "Transpose"}], ",", 
+        RowBox[{"Q", "//", "Transpose"}]}], "}"}]}]}], "\[IndentingNewLine]", 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"End", "[", "]"}], ";"}]}], "Input",
  InitializationCell->True]
 }, Open  ]],
 
@@ -2439,7 +2522,7 @@ Cell[BoxData[{
          RowBox[{"1", ",", "1"}], "}"}]}]}], "]"}]}], "]"}]}], 
   ";"}], "\[IndentingNewLine]"}], "Input",
  InitializationCell->True]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -2478,12 +2561,12 @@ Cell[BoxData[{
 },
 AutoGeneratedPackage->Automatic,
 WindowSize->{1057, 856},
-WindowMargins->{{640, Automatic}, {Automatic, 99}},
+WindowMargins->{{79, Automatic}, {Automatic, 0}},
 PrivateNotebookOptions->{"FileOutlineCache"->False},
 ShowSelection->True,
 TrackCellChangeTimes->False,
-FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 5, \
-2011)",
+FrontEndVersion->"9.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (January 25, \
+2013)",
 StyleDefinitions->"Default.nb"
 ]
 
