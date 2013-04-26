@@ -1165,8 +1165,9 @@ Cell[BoxData[{
  RowBox[{"ToArray", ";"}], "\[IndentingNewLine]", 
  RowBox[{"RangeIndex", ";"}], "\[IndentingNewLine]", 
  RowBox[{"DomainIndex", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ShiftDiagonalMatrix", ";"}], "\[IndentingNewLine]", 
  RowBox[{
-  RowBox[{"ShiftDiagonalMatrix", ";"}], 
+  RowBox[{"SparseShiftMatrix", ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
@@ -1455,11 +1456,72 @@ Cell[BoxData[{
         RowBox[{"sm", "//", "ToArray"}], ",", 
         RowBox[{"sl", "//", "ToList"}]}], "]"}], ",", 
       RowBox[{"sm", "//", "DomainIndex"}]}], "]"}]}], ";"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SparseShiftMatrix", "[", 
+    RowBox[{"ls_Rule", ",", 
+     RowBox[{"{", 
+      RowBox[{"im_", ",", "iM_"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"jm_", ",", "jM_"}], "}"}]}], "]"}], ":=", 
+   RowBox[{"SparseShiftMatrix", "[", 
+    RowBox[{
+     RowBox[{"{", "ls", "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"im", ",", "iM"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"jm", ",", "jM"}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SparseShiftMatrix", "[", 
+   RowBox[{"ls_List", ",", 
+    RowBox[{"{", 
+     RowBox[{"im_", ",", "iM_"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"jm_", ",", "jM_"}], "}"}]}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"i", ",", "j"}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ShiftMatrix", "[", 
+     RowBox[{
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"i", ",", "j"}], "}"}], "/.", "ls"}], "/.", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"_", ",", "_"}], "}"}], "\[Rule]", "0"}]}], ",", 
+        RowBox[{"{", 
+         RowBox[{"i", ",", "im", ",", "iM"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"j", ",", "jm", ",", "jM"}], "}"}]}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"1", "-", "im"}], ",", 
+        RowBox[{"1", "-", "jm"}]}], "}"}]}], "]"}]}], "\[IndentingNewLine]", 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"SparseShiftMatrix", "[", 
+     RowBox[{"ls_", ",", 
+      RowBox[{"{", 
+       RowBox[{"im_", ",", "iM_"}], "}"}]}], "]"}], ":=", 
+    RowBox[{"SparseShiftMatrix", "[", 
+     RowBox[{"ls", ",", 
+      RowBox[{"{", 
+       RowBox[{"im", ",", "iM"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"im", ",", "iM"}], "}"}]}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"End", "[", "]"}], ";"}]}], "Input",
  InitializationCell->True]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 

@@ -204,6 +204,7 @@ ToArray;
 RangeIndex;
 DomainIndex;
 ShiftDiagonalMatrix;
+SparseShiftMatrix;
 
 Begin["Private`"];
 
@@ -247,6 +248,14 @@ ShiftDiagonalMatrix[A_,B_]:=ShiftMatrix[BlockDiagonalMatrix[{A,B}],Dimensions[A]
 ShiftMatrix[{A_?MatrixQ,B_?MatrixQ}]:=ShiftMatrix[A~RightJoin~B,{1,Dimensions[A][[2]]+1}];
 
 ShiftMatrix/:LinearSolve[sm_ShiftMatrix,sl_ShiftList]:=ShiftList[LinearSolve[sm//ToArray,sl//ToList],sm//DomainIndex];
+
+
+SparseShiftMatrix[ls_Rule,{im_,iM_},{jm_,jM_}]:=SparseShiftMatrix[{ls},{im,iM},{jm,jM}];
+SparseShiftMatrix[ls_List,{im_,iM_},{jm_,jM_}]:=Module[{i,j},
+ShiftMatrix[Table[{i,j}/.ls/.{_,_}->0,{i,im,iM},{j,jm,jM}],{1-im,1-jm}]
+]
+SparseShiftMatrix[ls_,{im_,iM_}]:=SparseShiftMatrix[ls,{im,iM},{im,iM}];
+
 
 End[];
 
