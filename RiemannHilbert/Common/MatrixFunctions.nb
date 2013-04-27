@@ -1228,6 +1228,20 @@ Cell[BoxData[{
     RowBox[{
      RowBox[{"ls", "//", "Transpose"}], ",", 
      RowBox[{"{", 
+      RowBox[{"jind", ",", "iind"}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ShiftMatrix", "/:", 
+   RowBox[{"Inverse", "[", 
+    RowBox[{"ShiftMatrix", "[", 
+     RowBox[{
+      RowBox[{"ls_", "?", "MatrixQ"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"iind_", ",", "jind_"}], "}"}]}], "]"}], "]"}], ":=", 
+   RowBox[{"ShiftMatrix", "[", 
+    RowBox[{
+     RowBox[{"ls", "//", "Inverse"}], ",", 
+     RowBox[{"{", 
       RowBox[{"jind", ",", "iind"}], "}"}]}], "]"}]}], ";"}]}], "Input",
  InitializationCell->True],
 

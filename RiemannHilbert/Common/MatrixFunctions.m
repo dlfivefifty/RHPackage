@@ -212,6 +212,7 @@ ShiftMatrix/:ShiftMatrix[ls_?MatrixQ,{iind_,jind_}][[i_,j_]]:=ls[[i+iind,j+jind]
 ShiftMatrix/:ShiftMatrix[ls_?MatrixQ,{iind_,jind_}][[i_]]:=ShiftList[ls[[i+iind]],jind];
 ShiftMatrix/:f_/@ShiftMatrix[ls_?MatrixQ,{iind_,jind_}]:=f[ShiftList[#,jind]]&/@ls;
 ShiftMatrix/:Transpose[ShiftMatrix[ls_?MatrixQ,{iind_,jind_}]]:=ShiftMatrix[ls//Transpose,{jind,iind}];
+ShiftMatrix/:Inverse[ShiftMatrix[ls_?MatrixQ,{iind_,jind_}]]:=ShiftMatrix[ls//Inverse,{jind,iind}];
 
 
 
