@@ -1,0 +1,155 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[      4243,        146]
+NotebookOptionsPosition[      3877,        128]
+NotebookOutlinePosition[      4235,        144]
+CellTagsIndexPosition[      4192,        141]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Multiply", "Section",
+ CellChangeTimes->{{3.576792368924752*^9, 3.576792369882904*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"ProbabilityMultiply", "[", 
+    RowBox[{
+     RowBox[{"c_", "?", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"#", ">", "0"}], "&"}], ")"}]}], ",", 
+     RowBox[{"lf", ":", 
+      RowBox[{"LFun", "[", 
+       RowBox[{"_", ",", 
+        RowBox[{"Line", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "\[Infinity]"}], ",", "\[Infinity]"}], "}"}], ",", 
+          RowBox[{"Stretch", "\[Rule]", "s_"}]}], "]"}]}], "]"}]}]}], "]"}], ":=", 
+   RowBox[{"SetDomain", "[", 
+    RowBox[{
+     RowBox[{"lf", "/", "c"}], ",", 
+     RowBox[{"Line", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", "\[Infinity]"}], ",", "\[Infinity]"}], "}"}], ",", 
+       RowBox[{"Stretch", "\[Rule]", 
+        RowBox[{"s", "/", "c"}]}]}], "]"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ProbabilityMultiply", "[", 
+    RowBox[{
+     RowBox[{"c_", "?", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"#", ">", "0"}], "&"}], ")"}]}], ",", 
+     RowBox[{"lf", ":", 
+      RowBox[{"LFun", "[", 
+       RowBox[{"_", ",", 
+        RowBox[{"Line", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "\[Infinity]"}], ",", "\[Infinity]"}], "}"}], "]"}]}],
+        "]"}]}]}], "]"}], ":=", 
+   RowBox[{"SetDomain", "[", 
+    RowBox[{
+     RowBox[{"lf", "/", "c"}], ",", 
+     RowBox[{"Line", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", "\[Infinity]"}], ",", "\[Infinity]"}], "}"}], ",", 
+       RowBox[{"Stretch", "\[Rule]", 
+        RowBox[{"1", "/", "c"}]}]}], "]"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ProbabilityMultiply", "[", 
+    RowBox[{
+     RowBox[{"c_", "?", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"#", "<", "0"}], ")"}], "&"}], ")"}]}], ",", 
+     RowBox[{"lf", ":", 
+      RowBox[{"LFun", "[", 
+       RowBox[{"_", ",", 
+        RowBox[{"Line", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "\[Infinity]"}], ",", "\[Infinity]"}], "}"}], ",", 
+          "___"}], "]"}]}], "]"}]}]}], "]"}], ":=", 
+   RowBox[{"ProbabilityMultiply", "[", 
+    RowBox[{
+     RowBox[{"-", "c"}], ",", 
+     RowBox[{"lf", "//", "Reverse"}]}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.554755686693656*^9, 3.554755765174206*^9}, {
+  3.5547565522897987`*^9, 3.554756561844377*^9}, {3.554756796397735*^9, 
+  3.5547568173282557`*^9}, {3.554757088366509*^9, 3.554757105357314*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"ProbabilityMultiply", "[", 
+    RowBox[{
+     RowBox[{"(", GridBox[{
+        {"a11_", "a12_"},
+        {"a21_", "a22_"}
+       }], ")"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"lf_LFun", ",", "0"}], "}"}]}], "]"}], ":=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"ProbabilityMultiply", "[", 
+      RowBox[{"a11", ",", "lf"}], "]"}], ",", 
+     RowBox[{"ProbabilityMultiply", "[", 
+      RowBox[{"a21", ",", "lf"}], "]"}]}], "}"}]}], 
+  "\[IndentingNewLine]"}]], "Input",
+ CellChangeTimes->{{3.554756465566803*^9, 3.554756503183209*^9}}]
+}, Open  ]]
+},
+WindowSize->{740, 867},
+WindowMargins->{{292, Automatic}, {Automatic, 164}},
+FrontEndVersion->"9.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (January 25, \
+2013)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 93, 1, 80, "Section"],
+Cell[675, 25, 2597, 80, 114, "Input"],
+Cell[3275, 107, 586, 18, 82, "Input"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
