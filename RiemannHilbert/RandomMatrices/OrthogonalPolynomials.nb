@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[    368246,      10177]
-NotebookOptionsPosition[    366642,      10117]
-NotebookOutlinePosition[    367010,      10133]
-CellTagsIndexPosition[    366967,      10130]
+NotebookDataLength[    368120,      10178]
+NotebookOptionsPosition[    366516,      10118]
+NotebookOutlinePosition[    366884,      10134]
+CellTagsIndexPosition[    366841,      10131]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -5173,7 +5173,8 @@ Cell[BoxData[{
         RowBox[{"n", 
          RowBox[{"(", 
           RowBox[{"l", "-", 
-           RowBox[{"V", "[", "z", "]"}], "+", 
+           RowBox[{
+            RowBox[{"V", "[", "z", "]"}], "/", "2"}], "+", 
            RowBox[{"g", "[", "z", "]"}]}], ")"}]}], "]"}]}]}], ";", 
      "\[IndentingNewLine]", 
      RowBox[{
@@ -5188,9 +5189,12 @@ Cell[BoxData[{
        RowBox[{"Exp", "[", 
         RowBox[{"n", 
          RowBox[{"(", 
-          RowBox[{"g", "[", "z", "]"}], ")"}]}], "]"}]}]}], ";", 
-     "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
-     "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"g", "[", "z", "]"}], "-", 
+           RowBox[{
+            RowBox[{"V", "[", "z", "]"}], "/", "2"}]}], ")"}]}], "]"}]}]}], 
+     ";", "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]",
+      "\[IndentingNewLine]", 
      RowBox[{
       RowBox[{"UD", "[", 
        RowBox[{"n_", ",", "z_"}], "]"}], ":=", 
@@ -5891,7 +5895,8 @@ Cell[BoxData[{
         RowBox[{"n", 
          RowBox[{"(", 
           RowBox[{"l", "-", 
-           RowBox[{"V", "[", "z", "]"}], "+", 
+           RowBox[{
+            RowBox[{"V", "[", "z", "]"}], "/", "2"}], "+", 
            RowBox[{"g", "[", "z", "]"}]}], ")"}]}], "]"}]}]}], ";", 
      "\[IndentingNewLine]", 
      RowBox[{
@@ -5916,8 +5921,11 @@ Cell[BoxData[{
        RowBox[{"Exp", "[", 
         RowBox[{"n", 
          RowBox[{"(", 
-          RowBox[{"g", "[", "z", "]"}], ")"}]}], "]"}]}]}], ";", 
-     "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"g", "[", "z", "]"}], "-", 
+           RowBox[{
+            RowBox[{"V", "[", "z", "]"}], "/", "2"}]}], ")"}]}], "]"}]}]}], 
+     ";", "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
      RowBox[{"{", 
       RowBox[{"Y", ",", "YD", ",", "U", ",", "USeries", ",", "ln", ",", 
        RowBox[{
@@ -6098,7 +6106,8 @@ Cell[BoxData[{
    3.577564784651029*^9}, {3.577564989585784*^9, 3.5775650176748*^9}, {
    3.577565114783169*^9, 3.577565118387061*^9}, {3.577565161754624*^9, 
    3.5775651631739902`*^9}, {3.577565201440604*^9, 3.577565238632525*^9}, {
-   3.577565472807136*^9, 3.5775654730784273`*^9}}]
+   3.577565472807136*^9, 3.5775654730784273`*^9}, {3.577568578866701*^9, 
+   3.577568608360729*^9}}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -7855,7 +7864,7 @@ KjsI61O9o3cMS5tXheNQel4yA60hvxmq6PUTmDMmdsKehtbG7TGWtlx28hIa
 sRZuLYS3Q+1SejeMzE+cgLrQhxFSs81TcFlRNgeFxA7vStp0rJ2TSbnmvVa+
 i0gL9/vfvP/pC+gh
   "]]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -8118,17 +8127,8 @@ Cell[BoxData[{
                RowBox[{"2", " ", "\[Pi]", " ", "I"}]]}], 
              FractionBox[
               RowBox[{
-               RowBox[{
-                RowBox[{"Y1x", "\[LeftDoubleBracket]", 
-                 RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}], " ", 
-                RowBox[{"Y2y", "\[LeftDoubleBracket]", 
-                 RowBox[{"2", ",", "1"}], "\[RightDoubleBracket]"}]}], " ", 
-               "-", 
-               RowBox[{
-                RowBox[{"Y1y", "\[LeftDoubleBracket]", 
-                 RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}], " ", 
-                RowBox[{"Y2x", "\[LeftDoubleBracket]", 
-                 RowBox[{"2", ",", "1"}], "\[RightDoubleBracket]"}]}]}], 
+               RowBox[{"Y1x", " ", "Y2y"}], "-", 
+               RowBox[{"Y1y", " ", "Y2x"}]}], 
               RowBox[{"x", "-", "y"}]]}]}]}], "\[IndentingNewLine]", 
           "]"}]}]}], ";", "\[IndentingNewLine]", "K"}]}], 
      "\[IndentingNewLine]", "]"}]}], ";"}], 
@@ -8258,7 +8258,8 @@ Cell[BoxData[{
   3.5540807380182467`*^9, 3.5540807383701887`*^9}, {3.554081820107893*^9, 
   3.554081838554685*^9}, {3.557835744788105*^9, 3.5578357536049623`*^9}, {
   3.5775645696420183`*^9, 3.577564569963211*^9}, {3.577566647281152*^9, 
-  3.57756665817365*^9}, {3.577566693396606*^9, 3.57756675091654*^9}}]
+  3.57756665817365*^9}, {3.577566693396606*^9, 3.57756675091654*^9}, {
+  3.5775673469730663`*^9, 3.577567356795206*^9}}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -10156,27 +10157,27 @@ Cell[65681, 1861, 58502, 1678, 2415, "Input",
 }, Closed]],
 Cell[CellGroupData[{
 Cell[124220, 3544, 255, 3, 42, "Section"],
-Cell[124478, 3549, 95837, 2551, 5594, "Input",
+Cell[124478, 3549, 96157, 2560, 5613, "Input",
  InitializationCell->True]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[220352, 6105, 153, 2, 72, "Section"],
-Cell[220508, 6109, 62520, 1747, 3700, "Input",
- InitializationCell->True]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[283065, 7861, 158, 2, 72, "Section"],
-Cell[283226, 7865, 15295, 395, 1163, "Input",
- InitializationCell->True]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[298558, 8265, 144, 2, 72, "Section"],
-Cell[298705, 8269, 67681, 1833, 3969, "Input",
+Cell[220672, 6114, 153, 2, 72, "Section"],
+Cell[220828, 6118, 62520, 1747, 3700, "Input",
  InitializationCell->True]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[366423, 10107, 25, 0, 42, "Section"],
-Cell[366451, 10109, 175, 5, 50, "Input",
+Cell[283385, 7870, 158, 2, 42, "Section"],
+Cell[283546, 7874, 14849, 387, 1163, "Input",
+ InitializationCell->True]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[298432, 8266, 144, 2, 72, "Section"],
+Cell[298579, 8270, 67681, 1833, 3969, "Input",
+ InitializationCell->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[366297, 10108, 25, 0, 42, "Section"],
+Cell[366325, 10110, 175, 5, 50, "Input",
  InitializationCell->True]
 }, Open  ]]
 }

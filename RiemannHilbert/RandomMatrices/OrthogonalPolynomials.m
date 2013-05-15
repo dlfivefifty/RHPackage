@@ -931,8 +931,8 @@ b\[Theta]=If[Degenerateb,6Pi/7,2Pi/3];
 
 );*)
 S[n_,z_]:=S[n,z]=\[CapitalPhi][n,z];
-y21[n_,z_]:=S[n,z][[2,1]]Exp[n(l-V[z]+g[z])];
-y11[n_,z_]:=S[n,z][[1,1]]Exp[n(g[z])];
+y21[n_,z_]:=S[n,z][[2,1]]Exp[n(l-V[z]/2+g[z])];
+y11[n_,z_]:=S[n,z][[1,1]]Exp[n(g[z]-V[z]/2)];
 
 
 
@@ -1063,8 +1063,8 @@ YD[n_,z_]:=YD[n,z]=({
  {0, -Exp[-n g[z]]}
 });
 SD[n_,z_]:=SD[n,z]=\[CapitalPhi]D[n,z];
-yd21[n_,z_]:=(SD[n,z][[2,1]]+n g'[z]S[n,z][[2,1]])Exp[n(l-V[z]+g[z])];
-yd11[n_,z_]:=(SD[n,z][[1,1]]+n g'[z]S[n,z][[1,1]])Exp[n(g[z])];
+yd21[n_,z_]:=(SD[n,z][[2,1]]+n g'[z]S[n,z][[2,1]])Exp[n(l-V[z]/2+g[z])];
+yd11[n_,z_]:=(SD[n,z][[1,1]]+n g'[z]S[n,z][[1,1]])Exp[n(g[z]-V[z]/2)];
 
 
 {Y,YD,U,USeries,ln,MakeListFun[adaptrhp[#]]&,MakeListFun[rhp[#]]&,{{y11,y21},{yd11,yd21}}}
@@ -1428,7 +1428,7 @@ Y1x=YY[[1,1]][n,x+eps I];
 Y2x=YY[[1,2]][n,x+eps I];
 Y1y=YY[[1,1]][n,y+eps I];
 Y2y=YY[[1,2]][n,y+eps I];
--(1/(2 \[Pi] I)) (Y1x[[1,1]] Y2y[[2,1]] -Y1y[[1,1]] Y2x[[2,1]])/(x-y)
+-(1/(2 \[Pi] I)) (Y1x Y2y-Y1y Y2x)/(x-y)
 ];
 K
 ];
