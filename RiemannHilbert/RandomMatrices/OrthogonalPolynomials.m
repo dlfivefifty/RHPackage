@@ -1423,10 +1423,12 @@ out=OrthogonalPolynomialMatrixGeneratorConnectedAdaptive[V,opts];
 YY=out[[-1]];
 K[n_]["test"]:=Show[DCTPlot/@(out[[3]][n])];
 K[n_][x_,x_]:=K[n][x,x]=1/(2 \[Pi] I) (YY[[1,1]][n,x+eps I]YY[[2,2]][n,x+eps I] -YY[[2,1]][n,x+eps I] YY[[1,2]][n,x+eps I]);
-K[n_][x_,y_]:=K[n][x,y]=Module[{Yx,Yy},
-Yx=Y[n,x+eps I];
-Yy=Y[n,y+eps I];
--(1/(2 \[Pi] I))Exp[-n/2 (V[x]+V[y])] (Yx[[1,1]] Yy[[2,1]] -Yy[[1,1]] Yx[[2,1]])/(x-y)
+K[n_][x_,y_]:=K[n][x,y]=Module[{Y1x,Y2x,Y1y,Y2y},
+Y1x=YY[[1,1]][n,x+eps I];
+Y2x=YY[[1,2]][n,x+eps I];
+Y1y=YY[[1,1]][n,y+eps I];
+Y2y=YY[[1,2]][n,y+eps I];
+-(1/(2 \[Pi] I)) (Y1x[[1,1]] Y2y[[2,1]] -Y1y[[1,1]] Y2x[[2,1]])/(x-y)
 ];
 K
 ];

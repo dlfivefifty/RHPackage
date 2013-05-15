@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[    367501,      10159]
-NotebookOptionsPosition[    365897,      10099]
-NotebookOutlinePosition[    366265,      10115]
-CellTagsIndexPosition[    366222,      10112]
+NotebookDataLength[    368246,      10177]
+NotebookOptionsPosition[    366642,      10117]
+NotebookOutlinePosition[    367010,      10133]
+CellTagsIndexPosition[    366967,      10130]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -8073,16 +8073,41 @@ Cell[BoxData[{
          RowBox[{"Module", "[", 
           RowBox[{
            RowBox[{"{", 
-            RowBox[{"Yx", ",", "Yy"}], "}"}], ",", "\[IndentingNewLine]", 
+            RowBox[{"Y1x", ",", "Y2x", ",", "Y1y", ",", "Y2y"}], "}"}], ",", 
+           "\[IndentingNewLine]", 
            RowBox[{
-            RowBox[{"Yx", "=", 
-             RowBox[{"Y", "[", 
+            RowBox[{"Y1x", "=", 
+             RowBox[{
+              RowBox[{"YY", "[", 
+               RowBox[{"[", 
+                RowBox[{"1", ",", "1"}], "]"}], "]"}], "[", 
               RowBox[{"n", ",", 
                RowBox[{"x", "+", 
                 RowBox[{"eps", " ", "I"}]}]}], "]"}]}], ";", 
             "\[IndentingNewLine]", 
-            RowBox[{"Yy", "=", 
-             RowBox[{"Y", "[", 
+            RowBox[{"Y2x", "=", 
+             RowBox[{
+              RowBox[{"YY", "[", 
+               RowBox[{"[", 
+                RowBox[{"1", ",", "2"}], "]"}], "]"}], "[", 
+              RowBox[{"n", ",", 
+               RowBox[{"x", "+", 
+                RowBox[{"eps", " ", "I"}]}]}], "]"}]}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"Y1y", "=", 
+             RowBox[{
+              RowBox[{"YY", "[", 
+               RowBox[{"[", 
+                RowBox[{"1", ",", "1"}], "]"}], "]"}], "[", 
+              RowBox[{"n", ",", 
+               RowBox[{"y", "+", 
+                RowBox[{"eps", " ", "I"}]}]}], "]"}]}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"Y2y", "=", 
+             RowBox[{
+              RowBox[{"YY", "[", 
+               RowBox[{"[", 
+                RowBox[{"1", ",", "2"}], "]"}], "]"}], "[", 
               RowBox[{"n", ",", 
                RowBox[{"y", "+", 
                 RowBox[{"eps", " ", "I"}]}]}], "]"}]}], ";", 
@@ -8091,26 +8116,18 @@ Cell[BoxData[{
              RowBox[{"-", 
               FractionBox["1", 
                RowBox[{"2", " ", "\[Pi]", " ", "I"}]]}], 
-             RowBox[{"Exp", "[", 
-              RowBox[{
-               RowBox[{
-                RowBox[{"-", "n"}], "/", "2"}], " ", 
-               RowBox[{"(", 
-                RowBox[{
-                 RowBox[{"V", "[", "x", "]"}], "+", 
-                 RowBox[{"V", "[", "y", "]"}]}], ")"}]}], "]"}], 
              FractionBox[
               RowBox[{
                RowBox[{
-                RowBox[{"Yx", "\[LeftDoubleBracket]", 
+                RowBox[{"Y1x", "\[LeftDoubleBracket]", 
                  RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}], " ", 
-                RowBox[{"Yy", "\[LeftDoubleBracket]", 
+                RowBox[{"Y2y", "\[LeftDoubleBracket]", 
                  RowBox[{"2", ",", "1"}], "\[RightDoubleBracket]"}]}], " ", 
                "-", 
                RowBox[{
-                RowBox[{"Yy", "\[LeftDoubleBracket]", 
+                RowBox[{"Y1y", "\[LeftDoubleBracket]", 
                  RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}], " ", 
-                RowBox[{"Yx", "\[LeftDoubleBracket]", 
+                RowBox[{"Y2x", "\[LeftDoubleBracket]", 
                  RowBox[{"2", ",", "1"}], "\[RightDoubleBracket]"}]}]}], 
               RowBox[{"x", "-", "y"}]]}]}]}], "\[IndentingNewLine]", 
           "]"}]}]}], ";", "\[IndentingNewLine]", "K"}]}], 
@@ -8240,7 +8257,8 @@ Cell[BoxData[{
   3.554073458633712*^9}, {3.554078597900989*^9, 3.554078599483601*^9}, {
   3.5540807380182467`*^9, 3.5540807383701887`*^9}, {3.554081820107893*^9, 
   3.554081838554685*^9}, {3.557835744788105*^9, 3.5578357536049623`*^9}, {
-  3.5775645696420183`*^9, 3.577564569963211*^9}}]
+  3.5775645696420183`*^9, 3.577564569963211*^9}, {3.577566647281152*^9, 
+  3.57756665817365*^9}, {3.577566693396606*^9, 3.57756675091654*^9}}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -10148,17 +10166,17 @@ Cell[220508, 6109, 62520, 1747, 3700, "Input",
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[283065, 7861, 158, 2, 72, "Section"],
-Cell[283226, 7865, 14550, 377, 1125, "Input",
+Cell[283226, 7865, 15295, 395, 1163, "Input",
  InitializationCell->True]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[297813, 8247, 144, 2, 72, "Section"],
-Cell[297960, 8251, 67681, 1833, 3969, "Input",
+Cell[298558, 8265, 144, 2, 72, "Section"],
+Cell[298705, 8269, 67681, 1833, 3969, "Input",
  InitializationCell->True]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[365678, 10089, 25, 0, 42, "Section"],
-Cell[365706, 10091, 175, 5, 50, "Input",
+Cell[366423, 10107, 25, 0, 42, "Section"],
+Cell[366451, 10109, 175, 5, 50, "Input",
  InitializationCell->True]
 }, Open  ]]
 }
