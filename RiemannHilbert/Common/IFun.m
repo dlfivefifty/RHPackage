@@ -128,7 +128,7 @@ Begin["Private`"];
 ToChebyshevUSeries[ts:{_}]:=ts;
 ToChebyshevUSeries[ts_]:=DoubleFirst[ts]/ 2-PadRight[(ts//Rest//Rest)/ 2,Length[ts]];
 ToChebyshevTSeries[us:{_}]:=us;
-ToChebyshevTSeries[us:{_,_}]:={1,2}.us;
+ToChebyshevTSeries[us:{_,_}]:={1,2} us;
 ToChebyshevTSeries[us_List]:=Module[{ds,k},
 ds=ZeroVector[Length[us]];
 ds[[-1]]=2 us[[-1]];

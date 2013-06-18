@@ -284,7 +284,7 @@ Cell[BoxData[{
       RowBox[{"_", ",", "_"}], "}"}]}], "]"}], ":=", 
    RowBox[{
     RowBox[{"{", 
-     RowBox[{"1", ",", "2"}], "}"}], ".", "us"}]}], 
+     RowBox[{"1", ",", "2"}], "}"}], " ", "us"}]}], 
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
@@ -346,7 +346,7 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]"}], "Input",
  InitializationCell->True]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -2907,7 +2907,7 @@ Cell[BoxData[
            RowBox[{"l", "[", 
             RowBox[{"[", 
              RowBox[{"-", "1"}], "]"}], "]"}]}], "}"}], ",", "d"}], "]"}], 
-       ",", "opts"}], "]"}]}], ";"}], "\[IndentingNewLine]", "\n", 
+       ",", "opts"}], "]"}]}], ";"}], "\n", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"JumpScaleDomainPlot", "[", 
@@ -3387,7 +3387,7 @@ indefinite integral.\>\""}], ";"}], "\[IndentingNewLine]",
              RowBox[{"d", "[", 
               RowBox[{"#", "-", "1"}], "]"}], "&"}], ",", 
             RowBox[{"{", "n", "}"}]}], "]"}]}]}], "]"}]}]}], "]"}]}], ";"}], 
-  "\[IndentingNewLine]"}], "\n", 
+  "\n"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -4033,8 +4033,8 @@ Cell[BoxData[
      RowBox[{"ReduceDimensionMatrix", "[", 
       RowBox[{
        RowBox[{"f", "//", "Domain"}], ",", 
-       RowBox[{"f", "//", "Length"}]}], "]"}]}], ";"}], "\[IndentingNewLine]",
-    "\n", 
+       RowBox[{"f", "//", "Length"}]}], "]"}]}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"ReduceDimensionIntegrateMatrix", "[", 
@@ -5503,8 +5503,8 @@ WindowMargins->{{241, Automatic}, {Automatic, 0}},
 PrivateNotebookOptions->{"FileOutlineCache"->False},
 ShowSelection->True,
 TrackCellChangeTimes->False,
-FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 5, \
-2011)",
+FrontEndVersion->"9.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (January 25, \
+2013)",
 StyleDefinitions->"Default.nb"
 ]
 
