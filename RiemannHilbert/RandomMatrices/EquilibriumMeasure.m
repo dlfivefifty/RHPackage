@@ -25,6 +25,7 @@ BeginPackage["RiemannHilbert`RandomMatrices`",{"RiemannHilbert`","RiemannHilbert
 PlotEquilibriumMeasure;
 EquilibriumMeasureSupport::usage="EquilibriumMeasureSupport[V] Computes the support of the equilibrium measure (currently only for convex V";
 EquilibriumMeasure::usage="EquilibriumMeasure[V,x] Computes the equilibrium measure at a point x inside the support";
+EquilibriumMeasureNewton;
 
 
 Begin["Private`"];
@@ -53,6 +54,49 @@ PlotEquilibriumMeasure[V_,opts:OptionsPattern[]]:=Module[{supp,x,\[Psi]},
 supp=EquilibriumMeasureSupport[V];
 \[Psi][x_]=EquilibriumMeasure[V,supp,x];
 Plot[\[Psi][x],{x,supp[[1]],supp[[2]]},opts]];
+
+
+EquilibriumMeasureNewton[V_,lin_,m_]:=Module[{F,J,x,n},
+F[l_,ci_]:=Module[{Pcl,H,i,j,a,b},
+b[j_]:=RightEndpoint[l[[j]]];
+a[j_]:=LeftEndpoint[l[[j]]];
+H[i_]:=CauchyInverseIntegralPlus[l,b[i]]-V[b[i]]-(CauchyInverseIntegralPlus[l,a[i+1]]-V[a[i+1]]);
+Join[
+	Mean/@ci,
+{CauchyInverseSeriesAtInfinity[l]-1},
+Array[H,Length[l]-1]]
+];
+J[fl_,ci_]:=Module[{HD,FD,a,b,i,j,spc},
+b[j_]:=RightEndpoint[fl[[j]]];
+a[j_]:=LeftEndpoint[fl[[j]]];
+HD[spc__][i_]:=CauchyInverseIntegralPlusDomainD[spc][fl,b[i]]-(CauchyInverseIntegralPlusDomainD[spc][fl,a[i+1]])+If[{spc}[[i]]=={0,1},
+CauchyInverseIntegralPlusD[fl,b[i]]-V'[b[i]],0]-If[{spc}[[i+1]]=={1,0},
+CauchyInverseIntegralPlusD[fl,a[i+1]]-V'[a[i+1]],0];
+FD[spc__]:=Join[Mean/@CauchyInverseCurvesD[spc][fl],
+{CauchyInverseSeriesAtInfinityD[spc][fl]},
+Table[HD[spc][j],{j,1,Length[fl]-1}]];
+(FD@@Partition[#,2])&/@IdentityMatrix[2 Length[fl]]//Transpose
+];
+x[0]=lin;
+x[n_]:=x[n]=Module[{fl,ci},
+fl=Fun[V',Line/@x[n-1],m OneVector[Length[x[n-1]]]];
+ci=fl//CauchyInverseCurves;
+x[n-1]-Partition[Inverse[J[fl,ci]].F[fl,ci],2]//Re];
+x
+];
+EquilibriumMeasureSupport[V_,retin_?MatrixQ,m_]:=Module[{x,k},
+x=EquilibriumMeasureNewton[V,retin,m];
+k=1;
+While[Norm[x[k]-x[k+1]]>$MachineTolerance,k++;];
+x[k]
+];
+EquilibriumMeasure[V_,retin_?MatrixQ,m_]:=Module[{xn,fl,ci},
+xn=EquilibriumMeasureSupport[V,retin,m];
+fl=Fun[V',Line/@xn,m OneVector[Length[xn]]];
+ci=fl//CauchyInverseCurves;
+-1/(2 \[Pi])HilbertInverse[SingFun[#,{0,0}]]&/@ci
+]
+
 
 
 End[];
