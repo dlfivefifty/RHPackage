@@ -28,6 +28,7 @@ Cell["Documentation", "Section"],
 
 Cell[BoxData[{
  RowBox[{"FreePlus", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"FreePlusNewton", ";"}], "\[IndentingNewLine]", 
  RowBox[{"FreeTimes", ";"}], "\[IndentingNewLine]", 
  RowBox[{"FreeCompress", ";"}], "\[IndentingNewLine]", 
  RowBox[{"TTransform", ";"}], "\[IndentingNewLine]", 
@@ -602,7 +603,35 @@ Cell[BoxData[
           RowBox[{"{", 
            RowBox[{"xia", ",", "xib"}], "}"}], ",", "m", ",", "sIpts"}], 
          "]"}]}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
-   "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"FreeInverseStieljesNewton", "[", 
+      RowBox[{"GAB_", ",", "GABD_", ",", "GABDD_", ",", "m_", ",", "sIpts_"}],
+       "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"xia", ",", "xib", ",", "a", ",", "b"}], "}"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"xia", ",", "xib"}], "}"}], "=", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"NewtonMethod", "[", 
+            RowBox[{"GABD", ",", "GABDD", ",", 
+             RowBox[{"-", ".1"}]}], "]"}], ",", 
+           RowBox[{"NewtonMethod", "[", 
+            RowBox[{"GABD", ",", "GABDD", ",", ".1"}], "]"}]}], "}"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"FreeInverseStieljes", "[", 
+         RowBox[{"GAB", ",", 
+          RowBox[{"{", 
+           RowBox[{"xia", ",", "xib"}], "}"}], ",", "m", ",", "sIpts"}], 
+         "]"}]}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"FreeInverseStieljes", "[", 
      RowBox[{"GAB_", ",", 
@@ -803,32 +832,79 @@ Cell[BoxData[
           RowBox[{"First", "::", "first"}], ",", 
           RowBox[{"Thread", "::", "tdlen"}]}], "MessageName"], "}"}]}], 
       StyleBox["]", "MessageName"]}]}], 
-    StyleBox[";", "MessageName"]}]}]}]], "Input",
- InitializationCell->True],
-
-Cell[BoxData[{
- RowBox[{
-  RowBox[{"Apts", "=", 
-   RowBox[{"SlitPlanePoints", "[", 
-    RowBox[{"sfA", ",", 
-     RowBox[{
-      RowBox[{"n", "/", "2"}], "//", "Floor"}]}], "]"}]}], 
-  ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"Bpts", "=", 
-   RowBox[{"SlitPlanePoints", "[", 
-    RowBox[{"sfB", ",", 
-     RowBox[{
-      RowBox[{"n", "/", "2"}], "//", "Floor"}]}], "]"}]}], 
-  ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"(", 
-   RowBox[{"sIpts", "=", 
+    StyleBox[";", "MessageName"]}], 
+   StyleBox["\[IndentingNewLine]", "MessageName"], 
+   StyleBox["\[IndentingNewLine]", "MessageName"], 
+   StyleBox["\[IndentingNewLine]", "MessageName"], 
+   RowBox[{
     RowBox[{
-     RowBox[{"Stieljes", "[", 
-      RowBox[{"sfA", ",", "Apts"}], "]"}], "~", "Union", "~", 
-     RowBox[{"Stieljes", "[", 
-      RowBox[{"sfB", ",", "Bpts"}], "]"}]}]}], ")"}], ";"}]}], "Input"]
+     RowBox[{"FreePlusNewton", "[", 
+      RowBox[{"sfA_", ",", "sfB_", ",", 
+       RowBox[{"m_:", "50"}], ",", 
+       RowBox[{"n_:", "30"}]}], "]"}], ":=", 
+     RowBox[{"Quiet", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"Module", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+          "GAB", ",", "GABD", ",", "GABDD", ",", "xia", ",", "xib", ",", 
+           "Apts", ",", "Bpts", ",", "sIptsA", ",", "sIptsB", ",", "sIpts", 
+           ",", "sgpts", ",", "gpts", ",", "ret", ",", "AB", ",", "a", ",", 
+           "b"}], "}"}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"GAB", "[", "y_", "]"}], ":=", 
+           RowBox[{
+            RowBox[{"StieljesInverseFunction", "[", 
+             RowBox[{"sfA", ",", "y"}], "]"}], "+", 
+            RowBox[{"StieljesInverseFunction", "[", 
+             RowBox[{"sfB", ",", "y"}], "]"}], "-", 
+            RowBox[{"1", "/", "y"}]}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"GABD", "[", "y_", "]"}], ":=", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"StieljesInverseFunctionD", "[", 
+              RowBox[{"sfA", ",", "y"}], "]"}], "+", 
+             RowBox[{"StieljesInverseFunctionD", "[", 
+              RowBox[{"sfB", ",", "y"}], "]"}], "+", 
+             RowBox[{"1", "/", 
+              RowBox[{"y", "^", "2"}]}]}], "//", "Re"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"GABDD", "[", "y_", "]"}], ":=", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"StieljesInverseFunctionD", "[", "2", "]"}], "[", 
+              RowBox[{"sfA", ",", "y"}], "]"}], "+", 
+             RowBox[{
+              RowBox[{"StieljesInverseFunctionD", "[", "2", "]"}], "[", 
+              RowBox[{"sfB", ",", "y"}], "]"}], "-", 
+             RowBox[{"2", "/", 
+              RowBox[{"y", "^", "3"}]}]}], "//", "Re"}]}], ";", 
+          "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          RowBox[{"Apts", "=", 
+           RowBox[{"SlitUpperPlanePoints", "[", 
+            RowBox[{"sfA", ",", "n"}], "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"(", 
+           RowBox[{"sIpts", "=", 
+            RowBox[{"Stieljes", "[", 
+             RowBox[{"sfA", ",", "Apts"}], "]"}]}], ")"}], ";", 
+          "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          RowBox[{"FreeInverseStieljesNewton", "[", 
+           RowBox[{"GAB", ",", "GABD", ",", "GABDD", ",", "m", ",", "sIpts"}],
+            "]"}]}]}], "\[IndentingNewLine]", "]"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"{", 
+        StyleBox[
+         RowBox[{
+          RowBox[{"First", "::", "first"}], ",", 
+          RowBox[{"Thread", "::", "tdlen"}]}], "MessageName"], "}"}]}], 
+      StyleBox["]", "MessageName"]}]}], 
+    StyleBox[";", "MessageName"]}]}]}]], "Input",
+ InitializationCell->True]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -1141,7 +1217,7 @@ Cell[BoxData[
              RowBox[{"sfA", ",", "Apts"}], "]"}]}], ")"}], ";", 
           "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
           RowBox[{"Sf", "=", 
-           RowBox[{"FreeInverseStieljes", "[", 
+           RowBox[{"FreeInverseStieljesNewton", "[", 
             RowBox[{
             "GAB", ",", "GABD", ",", "GABDD", ",", "m", ",", "sIpts"}], 
             "]"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
@@ -1252,7 +1328,7 @@ Cell[BoxData[{
             RowBox[{"sfA", ",", "Apts"}], "]"}]}], ")"}], ";", 
          "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
          
-         RowBox[{"FreeInverseStieljes", "[", 
+         RowBox[{"FreeInverseStieljesNewton", "[", 
           RowBox[{"GAB", ",", "GABD", ",", "GABDD", ",", "m", ",", "sIpts"}], 
           "]"}]}]}], "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
       RowBox[{"{", 
@@ -1332,7 +1408,7 @@ Cell[BoxData[{
 },
 AutoGeneratedPackage->Automatic,
 WindowSize->{839, 815},
-WindowMargins->{{Automatic, 223}, {Automatic, 28}},
+WindowMargins->{{Automatic, 348}, {Automatic, 47}},
 PrivateNotebookOptions->{"FileOutlineCache"->False},
 ShowSelection->True,
 TrackCellChangeTimes->False,

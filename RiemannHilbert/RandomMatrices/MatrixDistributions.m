@@ -44,7 +44,7 @@ HistogramPlot[M_,opts:OptionsPattern[SampleRate->100]]:=Module[{Evs},
 Evs=Table[M//Eigenvalues,{k,OptionValue[SampleRate]}];
 Show[Histogram[Evs//Flatten,60,"PDF"]]
 ];
-HistogramPlot[M_,dst_,opts:OptionsPattern[SampleRate->100]]:=Module[{Evs},
+HistogramPlot[M_,dst_,opts:OptionsPattern[{SampleRate->100}~Join~Options[ListLinePlot]]]:=Module[{Evs},
 Evs=Table[M//Eigenvalues,{k,OptionValue[SampleRate]}];
 Show[Histogram[Evs//Flatten,60,"PDF"],LinePlot[dst//Re,PlotStyle->{DarkRed,Thick}],opts]
 ];

@@ -23,6 +23,7 @@ BeginPackage["RiemannHilbert`RandomMatrices`",{"RiemannHilbert`","RiemannHilbert
 
 
 FreePlus;
+FreePlusNewton;
 FreeTimes;
 FreeCompress;
 TTransform;
@@ -120,6 +121,13 @@ True,
 
 FreeInverseStieljes[GAB,{xia,xib},m,sIpts]
 ];
+
+FreeInverseStieljesNewton[GAB_,GABD_,GABDD_,m_,sIpts_]:=Module[{xia,xib,a,b},
+{xia,xib}={NewtonMethod[GABD,GABDD,-.1],NewtonMethod[GABD,GABDD,.1]};
+FreeInverseStieljes[GAB,{xia,xib},m,sIpts]
+];
+
+
 FreeInverseStieljes[GAB_,{xia_,xib_},m_,sIpts_]:=Module[{ret,sgpts,gpts,AB,a,b},
 {a,b}=GAB/@{xia,xib}//Re;
 {sgpts,gpts}=CullPoints[sIpts,GAB,xia,xib];
@@ -160,6 +168,20 @@ FreeInverseStieljes[GAB,GABD,{oa0,ob0},m,sIpts]
 {First::first,Thread::tdlen}];
 
 
+FreePlusNewton[sfA_,sfB_,m_:50,n_:30]:=Quiet[
+Module[{GAB,GABD,GABDD,xia,xib,Apts,Bpts,sIptsA,sIptsB,sIpts,sgpts,gpts,ret,AB,a,b},
+GAB[y_]:=StieljesInverseFunction[sfA,y]+StieljesInverseFunction[sfB,y]-1/y;
+GABD[y_]:=StieljesInverseFunctionD[sfA,y]+StieljesInverseFunctionD[sfB,y]+1/y^2//Re;
+GABDD[y_]:=StieljesInverseFunctionD[2][sfA,y]+StieljesInverseFunctionD[2][sfB,y]-2/y^3//Re;
+
+Apts=SlitUpperPlanePoints[sfA,n];
+(sIpts=Stieljes[sfA,Apts]);
+
+FreeInverseStieljesNewton[GAB,GABD,GABDD,m,sIpts]
+],
+{First::first,Thread::tdlen}];
+
+
 
 TTransform[if_LFun,z_]:=Stieljes[if ZeroAtInfinityLFun[#&,if//Domain,Length[if]],z];
 TTransformInverseFunction[if_LFun,z_]:=StieljesInverseFunction[if ZeroAtInfinityLFun[#&,if//Domain,Length[if]],z];
@@ -188,7 +210,7 @@ Apts=SlitUpperPlanePoints[sfA,n];
 (sIpts=TTransform[sfA,Apts]);
 
 
-Sf=FreeInverseStieljes[GAB,GABD,GABDD,m,sIpts];
+Sf=FreeInverseStieljesNewton[GAB,GABD,GABDD,m,sIpts];
 
 
 SingFun[Sf[[1]] //# Fun[1/#&,#//Domain,#//Length]&,{1/2,1/2}]
@@ -206,7 +228,7 @@ Apts=SlitUpperPlanePoints[sfA,n];
 (sIpts=Stieljes[sfA,Apts]);
 
 
-FreeInverseStieljes[GAB,GABD,GABDD,m,sIpts]
+FreeInverseStieljesNewton[GAB,GABD,GABDD,m,sIpts]
 ],
 {First::first,Thread::tdlen}];
 
