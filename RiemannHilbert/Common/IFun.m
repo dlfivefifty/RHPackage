@@ -157,7 +157,7 @@ ChebyshevPoints[0,a_:-1,b_:1]:={};
 ChebyshevPoints[n_,a_:-1,b_:1]:=(b+a)/2+(b-a)/2 Cos[(2 Range[n,1,-1] -1)/(2 n) Pi];
 ChebyshevLobattoPoints[n_,a_:-1,b_:1]:=(b+a)/2+(b-a)/2 Cos[Pi Range[n-1,0,-1]/(n-1)];
 NChebyshevPoints[v__]:=N[ChebyshevPoints[v]];
-NChebyshevLobattoPoints[v__]:=N[ChebyshevLobattoPoints[v]];
+NChebyshevLobattoPoints[n_,a_:-1.,b_:1.]:=.5(b+a)+.5(b-a)Cos[Pi Range[n-1.,0.,-1.]/(n-1)];
 
 
 

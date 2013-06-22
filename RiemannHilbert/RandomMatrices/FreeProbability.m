@@ -75,8 +75,49 @@ FreeInverseStieljes[GAB_,{-\[Infinity],\[Infinity]},m_,sIpts_]:=Module[{ret,sgpt
 {sgpts,gpts}=CullPoints[sIpts,GAB];
 LFun[LeastSquares[-2 \[Pi]\[NonBreakingSpace]I (CauchyBasisS[+1,RealLine,1;;m,#])&/@gpts,sgpts]//ShiftList[Reverse[#//Conjugate],Join[{2 Re[#.AlternatingVector[Length[#]]]},#]]&,RealLine]
 ];
-FreeInverseStieljes[GAB_,GABD_,GABDD_,m_,sIpts_]:=Module[{xia,xib,a,b},
-{xia,xib}={NewtonMethod[GABD,GABDD,-.1],NewtonMethod[GABD,GABDD,.1]};
+
+Bisection::notopp="Input not opposite signs";
+Bisection[f_,{a0_,b0_}]:=Module[{a,b,fa,fb,val,c,fc},
+a=a0;b=b0;
+fa=f[a];
+fb=f[b];
+
+
+Which[Sign[fa]==Sign[fb],
+Message[Bisection::notopp],
+fa>0&&fb<0,
+Bisection[f,{b,a}],
+True,
+val=fa;
+While[Abs[val]>$MachineTolerance&&Abs[a-b]>$MachineTolerance,
+c=.5(b+a);
+fc=f[c];
+If[fc>0,
+fb=val=fc;
+b=c;,
+fa=val=fc;
+a=c;
+];
+];
+c
+]
+];
+
+
+FreeInverseStieljes[GAB_,GABD_,{oa0_,ob0_},m_,sIpts_]:=Module[{xia,xib,a,b,oa,ob},
+oa=oa0+10$MachineTolerance;
+ob=ob0-10$MachineTolerance;
+{xia,xib}=Which[
+Re[GABD[ob]]<0&& Re[GABD[oa]]<0,
+{oa,ob},
+Re[GABD[ob]]<0,
+{Bisection[GABD,{oa,-.001}],ob},
+Re[GABD[oa]]<0,
+{oa,Bisection[GABD,{.001,ob}]},
+True,
+{Bisection[GABD,{oa,-.001}],Bisection[GABD,{.001,ob}]}
+];
+
 FreeInverseStieljes[GAB,{xia,xib},m,sIpts]
 ];
 FreeInverseStieljes[GAB_,{xia_,xib_},m_,sIpts_]:=Module[{ret,sgpts,gpts,AB,a,b},
@@ -101,16 +142,20 @@ FreeInverseStieljes[GAB,{-\[Infinity],\[Infinity]},m,sIpts]
 ],
 {First::first,Thread::tdlen}];
 
+FreePlus::onesing="One singular endpoint is not implented yet";
 FreePlus[sfA_,sfB_,m_:50,n_:30]:=Quiet[
-Module[{GAB,GABD,GABDD,xia,xib,Apts,Bpts,sIptsA,sIptsB,sIpts,sgpts,gpts,ret,AB,a,b},
+Module[{GAB,GABD,GABDD,oa0,ob0,Apts,sIpts},
 GAB[y_]:=StieljesInverseFunction[sfA,y]+StieljesInverseFunction[sfB,y]-1/y;
 GABD[y_]:=StieljesInverseFunctionD[sfA,y]+StieljesInverseFunctionD[sfB,y]+1/y^2//Re;
-GABDD[y_]:=StieljesInverseFunctionD[2][sfA,y]+StieljesInverseFunctionD[2][sfB,y]-2/y^3//Re;
 
 Apts=SlitUpperPlanePoints[sfA,n];
 (sIpts=Stieljes[sfA,Apts]);
 
-FreeInverseStieljes[GAB,GABD,GABDD,m,sIpts]
+ob0=Min[Re[Stieljes[sfA,sfA//RightEndpoint]],Re[Stieljes[sfB,sfB//RightEndpoint]]];
+
+oa0=Max[Re[Stieljes[sfA,sfA//LeftEndpoint]],Re[Stieljes[sfB,sfB//LeftEndpoint]]];
+
+FreeInverseStieljes[GAB,GABD,{oa0,ob0},m,sIpts]
 ],
 {First::first,Thread::tdlen}];
 

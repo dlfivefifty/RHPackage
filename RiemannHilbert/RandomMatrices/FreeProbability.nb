@@ -451,28 +451,151 @@ Cell[BoxData[
                     RowBox[{"Length", "[", "#", "]"}], "]"}]}], "]"}]}], 
                  "}"}], ",", "#"}], "]"}]}], "]"}], "&"}]}], ",", 
           "RealLine"}], "]"}]}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
-   "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
-     RowBox[{"FreeInverseStieljes", "[", 
-      RowBox[{"GAB_", ",", "GABD_", ",", "GABDD_", ",", "m_", ",", "sIpts_"}],
-       "]"}], ":=", 
+     RowBox[{"Bisection", "::", "notopp"}], "=", 
+     "\"\<Input not opposite signs\>\""}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Bisection", "[", 
+      RowBox[{"f_", ",", 
+       RowBox[{"{", 
+        RowBox[{"a0_", ",", "b0_"}], "}"}]}], "]"}], ":=", 
      RowBox[{"Module", "[", 
       RowBox[{
        RowBox[{"{", 
-        RowBox[{"xia", ",", "xib", ",", "a", ",", "b"}], "}"}], ",", 
-       "\[IndentingNewLine]", 
+        RowBox[{
+        "a", ",", "b", ",", "fa", ",", "fb", ",", "val", ",", "c", ",", 
+         "fc"}], "}"}], ",", "\[IndentingNewLine]", 
        RowBox[{
+        RowBox[{"a", "=", "a0"}], ";", 
+        RowBox[{"b", "=", "b0"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"fa", "=", 
+         RowBox[{"f", "[", "a", "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"fb", "=", 
+         RowBox[{"f", "[", "b", "]"}]}], ";", "\[IndentingNewLine]", 
+        "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"Which", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Sign", "[", "fa", "]"}], "\[Equal]", 
+           RowBox[{"Sign", "[", "fb", "]"}]}], ",", "\[IndentingNewLine]", 
+          RowBox[{"Message", "[", 
+           RowBox[{"Bisection", "::", "notopp"}], "]"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"fa", ">", "0"}], "&&", 
+           RowBox[{"fb", "<", "0"}]}], ",", "\[IndentingNewLine]", 
+          RowBox[{"Bisection", "[", 
+           RowBox[{"f", ",", 
+            RowBox[{"{", 
+             RowBox[{"b", ",", "a"}], "}"}]}], "]"}], ",", 
+          "\[IndentingNewLine]", "True", ",", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"val", "=", "fa"}], ";", "\[IndentingNewLine]", 
+           RowBox[{"While", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"Abs", "[", "val", "]"}], ">", "$MachineTolerance"}], "&&", 
+              RowBox[{
+               RowBox[{"Abs", "[", 
+                RowBox[{"a", "-", "b"}], "]"}], ">", "$MachineTolerance"}]}], 
+             ",", "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{"c", "=", 
+               RowBox[{".5", 
+                RowBox[{"(", 
+                 RowBox[{"b", "+", "a"}], ")"}]}]}], ";", 
+              "\[IndentingNewLine]", 
+              RowBox[{"fc", "=", 
+               RowBox[{"f", "[", "c", "]"}]}], ";", "\[IndentingNewLine]", 
+              RowBox[{"If", "[", 
+               RowBox[{
+                RowBox[{"fc", ">", "0"}], ",", "\[IndentingNewLine]", 
+                RowBox[{
+                 RowBox[{"fb", "=", 
+                  RowBox[{"val", "=", "fc"}]}], ";", "\[IndentingNewLine]", 
+                 RowBox[{"b", "=", "c"}], ";"}], ",", "\[IndentingNewLine]", 
+                RowBox[{
+                 RowBox[{"fa", "=", 
+                  RowBox[{"val", "=", "fc"}]}], ";", "\[IndentingNewLine]", 
+                 RowBox[{"a", "=", "c"}], ";"}]}], "\[IndentingNewLine]", 
+               "]"}], ";"}]}], "\[IndentingNewLine]", "]"}], ";", 
+           "\[IndentingNewLine]", "c"}]}], "\[IndentingNewLine]", "]"}]}]}], 
+      "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"FreeInverseStieljes", "[", 
+      RowBox[{"GAB_", ",", "GABD_", ",", 
+       RowBox[{"{", 
+        RowBox[{"oa0_", ",", "ob0_"}], "}"}], ",", "m_", ",", "sIpts_"}], 
+      "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"xia", ",", "xib", ",", "a", ",", "b", ",", "oa", ",", "ob"}],
+         "}"}], ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"oa", "=", 
+         RowBox[{"oa0", "+", 
+          RowBox[{"10", "$MachineTolerance"}]}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"ob", "=", 
+         RowBox[{"ob0", "-", 
+          RowBox[{"10", "$MachineTolerance"}]}]}], ";", "\[IndentingNewLine]", 
         RowBox[{
          RowBox[{"{", 
           RowBox[{"xia", ",", "xib"}], "}"}], "=", 
-         RowBox[{"{", 
+         RowBox[{"Which", "[", "\[IndentingNewLine]", 
           RowBox[{
-           RowBox[{"NewtonMethod", "[", 
-            RowBox[{"GABD", ",", "GABDD", ",", 
-             RowBox[{"-", ".1"}]}], "]"}], ",", 
-           RowBox[{"NewtonMethod", "[", 
-            RowBox[{"GABD", ",", "GABDD", ",", ".1"}], "]"}]}], "}"}]}], ";", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"Re", "[", 
+              RowBox[{"GABD", "[", "ob", "]"}], "]"}], "<", "0"}], "&&", " ", 
+            
+            RowBox[{
+             RowBox[{"Re", "[", 
+              RowBox[{"GABD", "[", "oa", "]"}], "]"}], "<", "0"}]}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{"{", 
+            RowBox[{"oa", ",", "ob"}], "}"}], ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"Re", "[", 
+             RowBox[{"GABD", "[", "ob", "]"}], "]"}], "<", "0"}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Bisection", "[", 
+              RowBox[{"GABD", ",", 
+               RowBox[{"{", 
+                RowBox[{"oa", ",", 
+                 RowBox[{"-", ".001"}]}], "}"}]}], "]"}], ",", "ob"}], "}"}], 
+           ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"Re", "[", 
+             RowBox[{"GABD", "[", "oa", "]"}], "]"}], "<", "0"}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{"{", 
+            RowBox[{"oa", ",", 
+             RowBox[{"Bisection", "[", 
+              RowBox[{"GABD", ",", 
+               RowBox[{"{", 
+                RowBox[{".001", ",", "ob"}], "}"}]}], "]"}]}], "}"}], ",", 
+           "\[IndentingNewLine]", "True", ",", "\[IndentingNewLine]", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Bisection", "[", 
+              RowBox[{"GABD", ",", 
+               RowBox[{"{", 
+                RowBox[{"oa", ",", 
+                 RowBox[{"-", ".001"}]}], "}"}]}], "]"}], ",", 
+             RowBox[{"Bisection", "[", 
+              RowBox[{"GABD", ",", 
+               RowBox[{"{", 
+                RowBox[{".001", ",", "ob"}], "}"}]}], "]"}]}], "}"}]}], 
+          "\[IndentingNewLine]", "]"}]}], ";", "\[IndentingNewLine]", 
         "\[IndentingNewLine]", 
         RowBox[{"FreeInverseStieljes", "[", 
          RowBox[{"GAB", ",", 
@@ -599,6 +722,11 @@ Cell[BoxData[
    "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
+     RowBox[{"FreePlus", "::", "onesing"}], "=", 
+     "\"\<One singular endpoint is not implented yet\>\""}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
      RowBox[{"FreePlus", "[", 
       RowBox[{"sfA_", ",", "sfB_", ",", 
        RowBox[{"m_:", "50"}], ",", 
@@ -609,10 +737,8 @@ Cell[BoxData[
         RowBox[{
          RowBox[{"{", 
           RowBox[{
-          "GAB", ",", "GABD", ",", "GABDD", ",", "xia", ",", "xib", ",", 
-           "Apts", ",", "Bpts", ",", "sIptsA", ",", "sIptsB", ",", "sIpts", 
-           ",", "sgpts", ",", "gpts", ",", "ret", ",", "AB", ",", "a", ",", 
-           "b"}], "}"}], ",", "\[IndentingNewLine]", 
+          "GAB", ",", "GABD", ",", "GABDD", ",", "oa0", ",", "ob0", ",", 
+           "Apts", ",", "sIpts"}], "}"}], ",", "\[IndentingNewLine]", 
          RowBox[{
           RowBox[{
            RowBox[{"GAB", "[", "y_", "]"}], ":=", 
@@ -632,19 +758,6 @@ Cell[BoxData[
               RowBox[{"sfB", ",", "y"}], "]"}], "+", 
              RowBox[{"1", "/", 
               RowBox[{"y", "^", "2"}]}]}], "//", "Re"}]}], ";", 
-          "\[IndentingNewLine]", 
-          RowBox[{
-           RowBox[{"GABDD", "[", "y_", "]"}], ":=", 
-           RowBox[{
-            RowBox[{
-             RowBox[{
-              RowBox[{"StieljesInverseFunctionD", "[", "2", "]"}], "[", 
-              RowBox[{"sfA", ",", "y"}], "]"}], "+", 
-             RowBox[{
-              RowBox[{"StieljesInverseFunctionD", "[", "2", "]"}], "[", 
-              RowBox[{"sfB", ",", "y"}], "]"}], "-", 
-             RowBox[{"2", "/", 
-              RowBox[{"y", "^", "3"}]}]}], "//", "Re"}]}], ";", 
           "\[IndentingNewLine]", "\[IndentingNewLine]", 
           RowBox[{"Apts", "=", 
            RowBox[{"SlitUpperPlanePoints", "[", 
@@ -654,9 +767,35 @@ Cell[BoxData[
             RowBox[{"Stieljes", "[", 
              RowBox[{"sfA", ",", "Apts"}], "]"}]}], ")"}], ";", 
           "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          RowBox[{"ob0", "=", 
+           RowBox[{"Min", "[", 
+            RowBox[{
+             RowBox[{"Re", "[", 
+              RowBox[{"Stieljes", "[", 
+               RowBox[{"sfA", ",", 
+                RowBox[{"sfA", "//", "RightEndpoint"}]}], "]"}], "]"}], ",", 
+             RowBox[{"Re", "[", 
+              RowBox[{"Stieljes", "[", 
+               RowBox[{"sfB", ",", 
+                RowBox[{"sfB", "//", "RightEndpoint"}]}], "]"}], "]"}]}], 
+            "]"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          RowBox[{"oa0", "=", 
+           RowBox[{"Max", "[", 
+            RowBox[{
+             RowBox[{"Re", "[", 
+              RowBox[{"Stieljes", "[", 
+               RowBox[{"sfA", ",", 
+                RowBox[{"sfA", "//", "LeftEndpoint"}]}], "]"}], "]"}], ",", 
+             RowBox[{"Re", "[", 
+              RowBox[{"Stieljes", "[", 
+               RowBox[{"sfB", ",", 
+                RowBox[{"sfB", "//", "LeftEndpoint"}]}], "]"}], "]"}]}], 
+            "]"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
           RowBox[{"FreeInverseStieljes", "[", 
-           RowBox[{"GAB", ",", "GABD", ",", "GABDD", ",", "m", ",", "sIpts"}],
-            "]"}]}]}], "\[IndentingNewLine]", "]"}], ",", 
+           RowBox[{"GAB", ",", "GABD", ",", 
+            RowBox[{"{", 
+             RowBox[{"oa0", ",", "ob0"}], "}"}], ",", "m", ",", "sIpts"}], 
+           "]"}]}]}], "\[IndentingNewLine]", "]"}], ",", 
        "\[IndentingNewLine]", 
        RowBox[{"{", 
         StyleBox[
@@ -1193,7 +1332,7 @@ Cell[BoxData[{
 },
 AutoGeneratedPackage->Automatic,
 WindowSize->{839, 815},
-WindowMargins->{{388, Automatic}, {58, Automatic}},
+WindowMargins->{{Automatic, 223}, {Automatic, 28}},
 PrivateNotebookOptions->{"FileOutlineCache"->False},
 ShowSelection->True,
 TrackCellChangeTimes->False,

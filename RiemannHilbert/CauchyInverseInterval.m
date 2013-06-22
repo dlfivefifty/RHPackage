@@ -96,6 +96,10 @@ CauchyInverse[s_?SignQ,f_IFun,z_]:=MapDot[CauchyInverseBasis[s,f,#,z]&,f//DCT];
 BoundedCauchyInverse[f_IFun,z_]:=MapDot[BoundedCauchyInverseBasis[f,#,z]&,f//DCT];
 BoundedCauchyInverse[s_?SignQ,f_IFun,z_]:=MapDot[BoundedCauchyInverseBasis[s,f,#,z]&,f//DCT];
 
+
+BoundedCauchyInverseD[f_IFun,z_]/;(RightEndpoint[f]~NEqual~z):=\[Infinity];
+BoundedCauchyInverseD[f_IFun,z_]/;(LeftEndpoint[f]~NEqual~z):=\[Infinity];
+
 BoundedCauchyInverseD[f_IFun,z_]:=MapDot[BoundedCauchyInverseBasisD[f,#,z]&,f//DCT];
 BoundedCauchyInverseD[s_?SignQ,f_IFun,z_]:=MapDot[BoundedCauchyInverseBasisD[s,f,#,z]&,f//DCT];
 BoundedCauchyInverseD[2][f_IFun,z_]:=MapDot[BoundedCauchyInverseBasisD[2][f,#,z]&,f//DCT];
@@ -128,7 +132,9 @@ CauchyInverseSeriesAtInfinity[l_List]:=Plus@@(CauchyInverseSeriesAtInfinity[#]&/
 
 
 BoundedCauchyInverseBasisD[UnitInterval,1,z_]:=0 z;
-BoundedCauchyInverseBasisD[UnitInterval,k_,z_]:=(k-1)IntervalToInnerCircle[z]^(k-2)/2IntervalToInnerCircle'[z] ;
+BoundedCauchyInverseBasisD[UnitInterval,k_,z_]:=(k-1)IntervalToInnerCircle[z]^(k-2)/2IntervalToInnerCircle'[z];
+BoundedCauchyInverseBasisD[UnitInterval,k_,_?((#~NEqual~1.)&)]:=I \[Infinity];
+BoundedCauchyInverseBasisD[UnitInterval,k_,_?((#~NEqual~-1.)&)]:=(-1)^k I \[Infinity];
 
 BoundedCauchyInverseBasisD[2][UnitInterval,1,z_]:=0 z;
 BoundedCauchyInverseBasisD[2][UnitInterval,k_,z_]:=(k-1)(k-2)IntervalToInnerCircle[z]^(k-3)/2 IntervalToInnerCircle'[z]^2+(k-1)IntervalToInnerCircle[z]^(k-2)/2IntervalToInnerCircle''[z] ;
