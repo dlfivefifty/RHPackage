@@ -185,13 +185,8 @@ on the unit circle.\>\""}], ";"}],
       RowBox[{"n", "=", 
        RowBox[{"Length", "[", "f", "]"}]}], ";", "\[IndentingNewLine]", 
       RowBox[{"scale", "=", 
-       RowBox[{"First", "[", 
-        RowBox[{"Fourier", "[", 
-         RowBox[{
-          RowBox[{"(", 
-           RowBox[{"1", "&"}], ")"}], "/@", 
-          RowBox[{"LeftEvenPoints", "[", "n", "]"}]}], "]"}], "]"}]}], ";", 
-      "\[IndentingNewLine]", 
+       RowBox[{"Sqrt", "[", 
+        RowBox[{"1.", " ", "n"}], "]"}]}], ";", "\[IndentingNewLine]", 
       RowBox[{"cc", "=", 
        RowBox[{
         FractionBox[
@@ -1970,7 +1965,6 @@ Cell[BoxData[
               },
               AllowedDimensions->{2, Automatic},
               Editable->True,
-              
               GridBoxAlignment->{
                "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, 
                 "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
@@ -3162,8 +3156,8 @@ WindowMargins->{{Automatic, 132}, {Automatic, 0}},
 PrivateNotebookOptions->{"FileOutlineCache"->False},
 ShowSelection->True,
 TrackCellChangeTimes->False,
-FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 23, \
-2011)",
+FrontEndVersion->"9.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (January 25, \
+2013)",
 StyleDefinitions->"Default.nb"
 ]
 
