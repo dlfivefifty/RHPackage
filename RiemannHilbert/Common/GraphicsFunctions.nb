@@ -1937,8 +1937,11 @@ Cell[BoxData[{
     RowBox[{
      RowBox[{
       RowBox[{
-       RowBox[{"m", "//", "SVD"}], "//", "Second"}], "//", "Diagonal"}], ",", 
-     "opts"}], "]"}]}], ";"}]}], "Input",
+       RowBox[{"m", "//", "SingularValueDecomposition"}], "//", 
+       RowBox[{
+        RowBox[{"#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+        "&"}]}], "//", "Diagonal"}], ",", "opts"}], "]"}]}], ";"}]}], "Input",
+ 
  InitializationCell->True]
 }, Open  ]],
 

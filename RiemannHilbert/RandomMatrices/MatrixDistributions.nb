@@ -136,7 +136,8 @@ Cell[BoxData[
         RowBox[{"Evs", "=", 
          RowBox[{"Table", "[", 
           RowBox[{
-           RowBox[{"M", "//", "Eigenvalues"}], ",", 
+           RowBox[{
+            RowBox[{"M", "//", "Eigenvalues"}], "//", "Re"}], ",", 
            RowBox[{"{", 
             RowBox[{"k", ",", 
              RowBox[{"OptionValue", "[", "SampleRate", "]"}]}], "}"}]}], 
@@ -165,7 +166,8 @@ Cell[BoxData[
         RowBox[{"Evs", "=", 
          RowBox[{"Table", "[", 
           RowBox[{
-           RowBox[{"M", "//", "Eigenvalues"}], ",", 
+           RowBox[{
+            RowBox[{"M", "//", "Eigenvalues"}], "//", "Re"}], ",", 
            RowBox[{"{", 
             RowBox[{"k", ",", 
              RowBox[{"OptionValue", "[", "SampleRate", "]"}]}], "}"}]}], 
