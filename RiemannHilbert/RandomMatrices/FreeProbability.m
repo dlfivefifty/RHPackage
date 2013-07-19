@@ -28,6 +28,9 @@ FreeTimes;
 FreeCompress;
 TTransform;
 TTransformInverseFunction;
+SlitUpperPlanePoints;
+CullPoints;
+BoundedCauchyInverseMatrix;
 
 
 Begin["Private`"];
@@ -66,6 +69,11 @@ If[Sign[Im[#]]==Sign[Im[ret]]||!NumberQ[ret]||NZeroQ[Im[#]]&&Re[#]>xib||NZeroQ[I
 CullPoints[sIpts_,GAB_]:=Module[{ret},
 (((ret=GAB[#];
 If[Sign[Im[#]]==Sign[Im[ret]]||!NumberQ[ret],Null,{#,ret}])&/@sIpts)/.Null->Sequence[])//Transpose];
+
+CullPoints[sIpts_,GAB_,GABD_]:=Module[{ret},
+(((ret=GAB[#];
+If[Sign[Im[#]]==Sign[Im[ret]]||!NumberQ[ret]||(NZeroQ[Im[#]]&&GABD[#]>0),Null,{#,ret}])&/@sIpts)/.Null->Sequence[])//If[#=={},{},Transpose[#]]&
+];
 
 
 

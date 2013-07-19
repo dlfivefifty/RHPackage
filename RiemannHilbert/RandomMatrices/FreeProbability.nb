@@ -32,7 +32,10 @@ Cell[BoxData[{
  RowBox[{"FreeTimes", ";"}], "\[IndentingNewLine]", 
  RowBox[{"FreeCompress", ";"}], "\[IndentingNewLine]", 
  RowBox[{"TTransform", ";"}], "\[IndentingNewLine]", 
- RowBox[{"TTransformInverseFunction", ";"}]}], "Input",
+ RowBox[{"TTransformInverseFunction", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"SlitUpperPlanePoints", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"CullPoints", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"BoundedCauchyInverseMatrix", ";"}]}], "Input",
  InitializationCell->True]
 }, Open  ]],
 
@@ -346,8 +349,43 @@ Cell[BoxData[{
     "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
+   RowBox[{
+    RowBox[{"CullPoints", "[", 
+     RowBox[{"sIpts_", ",", "GAB_"}], "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", "ret", "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"ret", "=", 
+               RowBox[{"GAB", "[", "#", "]"}]}], ";", "\[IndentingNewLine]", 
+              RowBox[{"If", "[", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"Sign", "[", 
+                   RowBox[{"Im", "[", "#", "]"}], "]"}], "\[Equal]", 
+                  RowBox[{"Sign", "[", 
+                   RowBox[{"Im", "[", "ret", "]"}], "]"}]}], "||", 
+                 RowBox[{"!", 
+                  RowBox[{"NumberQ", "[", "ret", "]"}]}]}], ",", "Null", ",", 
+                
+                RowBox[{"{", 
+                 RowBox[{"#", ",", "ret"}], "}"}]}], "]"}]}], ")"}], "&"}], "/@",
+            "sIpts"}], ")"}], "/.", 
+         RowBox[{"Null", "\[Rule]", 
+          RowBox[{"Sequence", "[", "]"}]}]}], ")"}], "//", "Transpose"}]}], 
+     "]"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
    RowBox[{"CullPoints", "[", 
-    RowBox[{"sIpts_", ",", "GAB_"}], "]"}], ":=", 
+    RowBox[{"sIpts_", ",", "GAB_", ",", "GABD_"}], "]"}], ":=", 
    RowBox[{"Module", "[", 
     RowBox[{
      RowBox[{"{", "ret", "}"}], ",", "\[IndentingNewLine]", 
@@ -370,13 +408,27 @@ Cell[BoxData[{
                  RowBox[{"Sign", "[", 
                   RowBox[{"Im", "[", "ret", "]"}], "]"}]}], "||", 
                 RowBox[{"!", 
-                 RowBox[{"NumberQ", "[", "ret", "]"}]}]}], ",", "Null", ",", 
+                 RowBox[{"NumberQ", "[", "ret", "]"}]}], "||", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"NZeroQ", "[", 
+                   RowBox[{"Im", "[", "#", "]"}], "]"}], "&&", 
+                  RowBox[{
+                   RowBox[{"GABD", "[", "#", "]"}], ">", "0"}]}], ")"}]}], 
+               ",", "Null", ",", 
                RowBox[{"{", 
                 RowBox[{"#", ",", "ret"}], "}"}]}], "]"}]}], ")"}], "&"}], "/@",
            "sIpts"}], ")"}], "/.", 
         RowBox[{"Null", "\[Rule]", 
-         RowBox[{"Sequence", "[", "]"}]}]}], ")"}], "//", "Transpose"}]}], 
-    "]"}]}], ";"}]}], "Input",
+         RowBox[{"Sequence", "[", "]"}]}]}], ")"}], "//", 
+      RowBox[{
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"#", "\[Equal]", 
+          RowBox[{"{", "}"}]}], ",", 
+         RowBox[{"{", "}"}], ",", 
+         RowBox[{"Transpose", "[", "#", "]"}]}], "]"}], "&"}]}]}], 
+    "\[IndentingNewLine]", "]"}]}], ";"}]}], "Input",
  InitializationCell->True],
 
 Cell[BoxData[
