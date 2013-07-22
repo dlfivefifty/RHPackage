@@ -289,8 +289,11 @@ Cell[BoxData[{
    RowBox[{"sf_", ",", "n_"}], "]"}], ":=", 
   RowBox[{"Select", "[", 
    RowBox[{
-    RowBox[{"SlitPlanePoints", "[", 
-     RowBox[{"sf", ",", "n"}], "]"}], ",", 
+    RowBox[{"Chop", "[", 
+     RowBox[{
+      RowBox[{"SlitPlanePoints", "[", 
+       RowBox[{"sf", ",", "n"}], "]"}], ",", "$MachineTolerance"}], "]"}], 
+    ",", 
     RowBox[{
      RowBox[{
       RowBox[{"Im", "[", "#", "]"}], "\[GreaterEqual]", "0"}], "&"}]}], 
@@ -323,24 +326,29 @@ Cell[BoxData[{
              RowBox[{"If", "[", 
               RowBox[{
                RowBox[{
-                RowBox[{
-                 RowBox[{"Sign", "[", 
-                  RowBox[{"Im", "[", "#", "]"}], "]"}], "\[Equal]", 
-                 RowBox[{"Sign", "[", 
-                  RowBox[{"Im", "[", "ret", "]"}], "]"}]}], "||", 
                 RowBox[{"!", 
                  RowBox[{"NumberQ", "[", "ret", "]"}]}], "||", 
                 RowBox[{
                  RowBox[{"NZeroQ", "[", 
                   RowBox[{"Im", "[", "#", "]"}], "]"}], "&&", 
-                 RowBox[{
-                  RowBox[{"Re", "[", "#", "]"}], ">", "xib"}]}], "||", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"Re", "[", "#", "]"}], "<", "xia"}], " ", "||", 
+                   " ", 
+                   RowBox[{
+                    RowBox[{"Re", "[", "#", "]"}], ">", "xib"}]}], ")"}]}], "||", 
                 RowBox[{
-                 RowBox[{"NZeroQ", "[", 
-                  RowBox[{"Im", "[", "#", "]"}], "]"}], "&&", 
-                 RowBox[{
-                  RowBox[{"Re", "[", "#", "]"}], "<", "xia"}]}]}], ",", 
-               "Null", ",", 
+                 RowBox[{"!", 
+                  RowBox[{"NZeroQ", "[", 
+                   RowBox[{"Im", "[", "#", "]"}], "]"}]}], "&&", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"Sign", "[", 
+                    RowBox[{"Im", "[", "#", "]"}], "]"}], "\[Equal]", 
+                   RowBox[{"Sign", "[", 
+                    RowBox[{"Im", "[", "ret", "]"}], "]"}]}], ")"}]}]}], ",", 
+               "\[IndentingNewLine]", "Null", ",", "\[IndentingNewLine]", 
                RowBox[{"{", 
                 RowBox[{"#", ",", "ret"}], "}"}]}], "]"}]}], ")"}], "&"}], "/@",
            "sIpts"}], ")"}], "/.", 
@@ -402,20 +410,25 @@ Cell[BoxData[{
              RowBox[{"If", "[", 
               RowBox[{
                RowBox[{
-                RowBox[{
-                 RowBox[{"Sign", "[", 
-                  RowBox[{"Im", "[", "#", "]"}], "]"}], "\[Equal]", 
-                 RowBox[{"Sign", "[", 
-                  RowBox[{"Im", "[", "ret", "]"}], "]"}]}], "||", 
                 RowBox[{"!", 
                  RowBox[{"NumberQ", "[", "ret", "]"}]}], "||", 
-                RowBox[{"(", 
-                 RowBox[{
-                  RowBox[{"NZeroQ", "[", 
-                   RowBox[{"Im", "[", "#", "]"}], "]"}], "&&", 
+                RowBox[{
+                 RowBox[{"NZeroQ", "[", 
+                  RowBox[{"Im", "[", "#", "]"}], "]"}], "&&", 
+                 RowBox[{"(", 
                   RowBox[{
-                   RowBox[{"GABD", "[", "#", "]"}], ">", "0"}]}], ")"}]}], 
-               ",", "Null", ",", 
+                   RowBox[{"GABD", "[", "#", "]"}], ">", "0"}], ")"}]}], "||", 
+                RowBox[{
+                 RowBox[{"!", 
+                  RowBox[{"NZeroQ", "[", 
+                   RowBox[{"Im", "[", "#", "]"}], "]"}]}], "&&", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"Sign", "[", 
+                    RowBox[{"Im", "[", "#", "]"}], "]"}], "\[Equal]", 
+                   RowBox[{"Sign", "[", 
+                    RowBox[{"Im", "[", "ret", "]"}], "]"}]}], ")"}]}]}], ",", 
+               "Null", ",", 
                RowBox[{"{", 
                 RowBox[{"#", ",", "ret"}], "}"}]}], "]"}]}], ")"}], "&"}], "/@",
            "sIpts"}], ")"}], "/.", 
@@ -757,7 +770,8 @@ Cell[BoxData[
        RowBox[{
         RowBox[{"Domain", "[", "sfA", "]"}], "\[Equal]", "RealLine"}], "||", 
        RowBox[{
-        RowBox[{"Domain", "[", "sfB", "]"}], "\[Equal]", "RealLine"}]}]}], ":=", 
+        RowBox[{"Domain", "[", "sfB", "]"}], "\[Equal]", "RealLine"}]}]}], 
+     ":=", 
      RowBox[{"Quiet", "[", "\[IndentingNewLine]", 
       RowBox[{
        RowBox[{"Module", "[", 

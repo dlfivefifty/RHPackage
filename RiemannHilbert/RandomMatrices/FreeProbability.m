@@ -59,12 +59,14 @@ SlitPlanePoints[if_IFun,n_]:=MapFromInterval[if, DiskPoints[n]//CircleToInterval
 SlitPlanePoints[d_?IntervalDomainQ,n_]:=MapFromInterval[d,DiskPoints[n]//CircleToInterval];
 SlitPlanePoints[sf_SingFun,n_]:=SlitPlanePoints[sf//First,n];
 
-SlitUpperPlanePoints[sf_,n_]:=Select[SlitPlanePoints[sf,n],Im[#]>=0&]
+SlitUpperPlanePoints[sf_,n_]:=Select[Chop[SlitPlanePoints[sf,n],$MachineTolerance],Im[#]>=0&]
 
 
 CullPoints[sIpts_,GAB_,xia_,xib_]:=Module[{ret},
 (((ret=GAB[#];
-If[Sign[Im[#]]==Sign[Im[ret]]||!NumberQ[ret]||NZeroQ[Im[#]]&&Re[#]>xib||NZeroQ[Im[#]]&&Re[#]<xia,Null,{#,ret}])&/@sIpts)/.Null->Sequence[])//Transpose
+If[!NumberQ[ret]||NZeroQ[Im[#]]&&(Re[#]<xia || Re[#]>xib)||!NZeroQ[Im[#]]&&(Sign[Im[#]]==Sign[Im[ret]]),
+Null,
+{#,ret}])&/@sIpts)/.Null->Sequence[])//Transpose
 ];
 CullPoints[sIpts_,GAB_]:=Module[{ret},
 (((ret=GAB[#];
@@ -72,7 +74,7 @@ If[Sign[Im[#]]==Sign[Im[ret]]||!NumberQ[ret],Null,{#,ret}])&/@sIpts)/.Null->Sequ
 
 CullPoints[sIpts_,GAB_,GABD_]:=Module[{ret},
 (((ret=GAB[#];
-If[Sign[Im[#]]==Sign[Im[ret]]||!NumberQ[ret]||(NZeroQ[Im[#]]&&GABD[#]>0),Null,{#,ret}])&/@sIpts)/.Null->Sequence[])//If[#=={},{},Transpose[#]]&
+If[!NumberQ[ret]||NZeroQ[Im[#]]&&(GABD[#]>0)||!NZeroQ[Im[#]]&&(Sign[Im[#]]==Sign[Im[ret]]),Null,{#,ret}])&/@sIpts)/.Null->Sequence[])//If[#=={},{},Transpose[#]]&
 ];
 
 
