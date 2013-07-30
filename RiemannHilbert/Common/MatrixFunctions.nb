@@ -999,7 +999,17 @@ Cell[BoxData[{
   RowBox[{
    RowBox[{"Abs", "[", "f_ShiftList", "]"}], "^:=", 
    RowBox[{"Map", "[", 
-    RowBox[{"Abs", ",", "f"}], "]"}]}], ";"}]}], "Input",
+    RowBox[{"Abs", ",", "f"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Re", "[", "f_ShiftList", "]"}], "^:=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"Re", ",", "f"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Im", "[", "f_ShiftList", "]"}], "^:=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"Im", ",", "f"}], "]"}]}], ";"}]}], "Input",
  InitializationCell->True],
 
 Cell[BoxData[{
@@ -1532,6 +1542,28 @@ Cell[BoxData[{
       RowBox[{"{", 
        RowBox[{"im", ",", "iM"}], "}"}]}], "]"}]}], ";"}], 
   "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ShiftMatrix", "/:", 
+   RowBox[{"Re", "[", 
+    RowBox[{"ShiftMatrix", "[", 
+     RowBox[{
+      RowBox[{"ls_", "?", "MatrixQ"}], ",", "ind_"}], "]"}], "]"}], ":=", 
+   RowBox[{"ShiftMatrix", "[", 
+    RowBox[{
+     RowBox[{"ls", "//", "Re"}], ",", "ind"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ShiftMatrix", "/:", 
+    RowBox[{"Im", "[", 
+     RowBox[{"ShiftMatrix", "[", 
+      RowBox[{
+       RowBox[{"ls_", "?", "MatrixQ"}], ",", "ind_"}], "]"}], "]"}], ":=", 
+    RowBox[{"ShiftMatrix", "[", 
+     RowBox[{
+      RowBox[{"ls", "//", "Im"}], ",", "ind"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"End", "[", "]"}], ";"}]}], "Input",
  InitializationCell->True]

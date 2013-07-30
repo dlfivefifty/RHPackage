@@ -175,6 +175,8 @@ sll=sl2//ToList;
 sll[[i+Index[sl2]]]=p;
 ShiftList[sll,sl2//Index]];
 Abs[f_ShiftList]^:=Map[Abs,f];
+Re[f_ShiftList]^:=Map[Re,f];
+Im[f_ShiftList]^:=Map[Im,f];
 
 
 Indices[sl_ShiftList]^:=Array[#-Index[sl]&,Length[sl]];LinePlot[sl_ShiftList,opts___]^:=ListLinePlot[Thread[List[Indices[sl],ToList[sl]]],opts];
@@ -256,6 +258,11 @@ SparseShiftMatrix[ls_List,{im_,iM_},{jm_,jM_}]:=Module[{i,j},
 ShiftMatrix[Table[{i,j}/.ls/.{_,_}->0,{i,im,iM},{j,jm,jM}],{1-im,1-jm}]
 ]
 SparseShiftMatrix[ls_,{im_,iM_}]:=SparseShiftMatrix[ls,{im,iM},{im,iM}];
+
+
+ShiftMatrix/:Re[ShiftMatrix[ls_?MatrixQ,ind_]]:=ShiftMatrix[ls//Re,ind];
+ShiftMatrix/:Im[ShiftMatrix[ls_?MatrixQ,ind_]]:=ShiftMatrix[ls//Im,ind];
+
 
 
 End[];
