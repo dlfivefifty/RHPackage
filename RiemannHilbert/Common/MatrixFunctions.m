@@ -68,8 +68,23 @@ BasisShiftList;
 ReplaceEntry;
 IncreaseSize;
 Begin["Private`"];
-ShiftList/:ShiftList[ln_List,ind_Integer][[j_Span]]:=ln[[j[[1]]+ind;;j[[2]]+ind]];
-ShiftList/:ShiftList[ln_List,ind_Integer][[j_]]:=ln[[Mod[j+ind-1,Length[ln]]+1]];
+
+fixind[a_Integer,ind_]:=a+ind;
+fixind[All,ind_]:=All;
+fixind[All;;b_Integer,ind_]:=1;;b+ind;
+fixind[a_Integer;;b_Integer,ind_]:=a+ind;;b+ind;
+fixind[a_Integer;;All,ind_]:=a+ind;;All;
+fixind[All;;All,ind_]:=1;;All;
+
+fixind[a_Integer,ind_,n_]:=Mod[a+ind-1,n]+1;
+fixind[All,ind_,n_]:=All;
+fixind[All;;b_Integer,ind_,n_]:=1;;fixind[b,ind,n];
+fixind[a_Integer;;b_Integer,ind_,n_]:=fixind[a,ind,n];;fixind[b,ind,n];
+fixind[a_Integer;;All,ind_,n_]:=fixind[a,ind,n];;All;
+fixind[All;;All,ind_,n_]:=1;;All;
+
+
+ShiftList/:ShiftList[ln_List,ind_Integer][[j_]]:=ln[[fixind[j,ind,Length[ln]]]];
 ShiftList[ln_List,lp_List]:=ShiftList[Join[ln,lp],Length[ln]+1];
 
 
@@ -207,11 +222,15 @@ RangeIndex;
 DomainIndex;
 ShiftDiagonalMatrix;
 SparseShiftMatrix;
+RowIndex;
+ColumnIndex;
 
 Begin["Private`"];
 
-ShiftMatrix/:ShiftMatrix[ls_?MatrixQ,{iind_,jind_}][[i_,j_]]:=ls[[i+iind,j+jind]];
-ShiftMatrix/:ShiftMatrix[ls_?MatrixQ,{iind_,jind_}][[i_]]:=ShiftList[ls[[i+iind]],jind];
+
+
+ShiftMatrix/:ShiftMatrix[ls_?MatrixQ,{iind_,jind_}][[i_,j_]]:=ls[[fixind[i,iind],fixind[j,jind]]];
+ShiftMatrix/:ShiftMatrix[ls_?MatrixQ,{iind_,jind_}][[i_Integer]]:=ShiftList[ls[[fixind[i,iind]]],jind];
 ShiftMatrix/:f_/@ShiftMatrix[ls_?MatrixQ,{iind_,jind_}]:=f[ShiftList[#,jind]]&/@ls;
 ShiftMatrix/:Transpose[ShiftMatrix[ls_?MatrixQ,{iind_,jind_}]]:=ShiftMatrix[ls//Transpose,{jind,iind}];
 ShiftMatrix/:Inverse[ShiftMatrix[ls_?MatrixQ,{iind_,jind_}]]:=ShiftMatrix[ls//Inverse,{jind,iind}];
@@ -262,6 +281,9 @@ SparseShiftMatrix[ls_,{im_,iM_}]:=SparseShiftMatrix[ls,{im,iM},{im,iM}];
 
 ShiftMatrix/:Re[ShiftMatrix[ls_?MatrixQ,ind_]]:=ShiftMatrix[ls//Re,ind];
 ShiftMatrix/:Im[ShiftMatrix[ls_?MatrixQ,ind_]]:=ShiftMatrix[ls//Im,ind];
+
+
+
 
 
 
