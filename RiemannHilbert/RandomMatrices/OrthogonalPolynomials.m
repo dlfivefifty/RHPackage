@@ -713,9 +713,8 @@ save
 ];
 LineConjugate[L_List]:=Table[Line[L[[i,1]]//Conjugate],{i,1,Length[L]}];
 LineReverse[L_List]:=Table[Line[L[[i,1]]//Reverse],{i,1,Length[L]}];
-OrthogonalPolynomialMatrixGeneratorConnectedAdaptive[V_,M_:40,L_:3.,Degeneratea_,Degenerateb_]:=Module[{a\[Theta],b\[Theta],aScale,bScale,adaptrhp,UP,rhp,smrngg,con,Frac,USeries,min,supp,g,l,ln,z,\[Phi],P,Pin,rngg,Cdefs,a,b,A,B,AP,BP,gs,m,U,\[CapitalPsi],\[CapitalPhi],p,slvr,Y,UD,\[CapitalPsi]D,\[Phi]D,\[CapitalPhi]D,YD,PD,BD,BinD,contours,base,functions,points,y11,y21,yd21,yd11,S,SD},
+OrthogonalPolynomialMatrixGeneratorConnectedAdaptive[V_,M_:40,L_:3.,expa_:2/3,expb_:2/3,shrink_:1]:=Module[{a\[Theta],b\[Theta],aScale,bScale,adaptrhp,UP,rhp,smrngg,con,Frac,USeries,min,supp,g,l,ln,z,\[Phi],P,Pin,rngg,Cdefs,a,b,A,B,AP,BP,gs,m,U,\[CapitalPsi],\[CapitalPhi],p,slvr,Y,UD,\[CapitalPsi]D,\[Phi]D,\[CapitalPhi]D,YD,PD,BD,BinD,contours,base,functions,points,y11,y21,yd21,yd11,S,SD},
 (*NOTE: Y is only accurate for Im[z]>=0*)
-
 supp=Line[{a,b}=EquilibriumMeasureSupport[V]];
 g//Clear;
 g[z_]=GFunction[V,z];
@@ -723,7 +722,7 @@ g[+1,z_]=GFunction[+1,V,z];
 g[-1,z_]=GFunction[-1,V,z];
 l=-(g[+1,0.]+g[-1,0.]-V[0.]);
 ln[n_]:={{Exp[-l n/2],0},{0,Exp[l n/2]}};
-min=Abs[a-b]/3;
+min=Abs[a-b]/3*1/shrink;
 \[Phi][z_]=(V[z]-l)/2-g[z];
 \[Phi]D[z_]=(V'[z])/2-g'[z];
 \[Phi][+1,z_]=-(g[+1,z]-(V[z]-l)/2);
@@ -749,7 +748,7 @@ B[n_][z_]:=({
 });
 AP[n_][z_]:=P[z].A[n][z].Pin[z];
 BP[n_][z_]:=P[z].B[n][z].Pin[z];
-UP=Min[.8,min];
+UP=Min[.8/shrink,min];
 
 
 BD[n_][z_]:=({
@@ -825,12 +824,12 @@ out
 (*Add connections and return rhp*)
 rhp[n_]:=Module[{out,\[Theta]a,scalea,s,\[Theta]b,scaleb,Jumps,Domains,NumPts,start,end},
 Jumps=functions[n];
-{\[Theta]a,scalea}={2Pi/3,2/3};
-{\[Theta]b,scaleb}={\[Theta]a,scalea};
-If[Degeneratea,{\[Theta]a,scalea}={6Pi/7,2/7}];
-If[Degenerateb,{\[Theta]b,scaleb}={6Pi/7,2/7}];
+{\[Theta]a,scalea}={2Pi/3,expa};
+{\[Theta]b,scaleb}={\[Theta]a,expb};
+If[expa==2/7,{\[Theta]a,scalea}={6Pi/7,2/7}];
+If[expb==2/7,{\[Theta]b,scaleb}={6Pi/7,2/7}];
 Domains=contours[n,scaleb,scalea,\[Theta]b,\[Theta]a];
-NumPts=points[n,Degenerateb,Degeneratea];
+NumPts=points[n,expb==2/7,expa==2/7];
 start=Domains[[2]][[1]][[1]];
 end=Domains[[9]][[1]][[1]];
 Domains=Domains~Join~{Line[{start,end}//Reverse],Line[{start,end}//Conjugate//Reverse]};
@@ -853,10 +852,10 @@ U[n_]:=U[n]=adaptrhp[n]//MakeListFun//RHSolve;
 USeries[n_]:=-1/(2 Pi I) DomainIntegrate[U[n]];
 U[n_,z_]:=(IdentityMatrix[2]+Cauchy[U[n],z]);
 
-aScale[n_]:=If[Degeneratea,n^(2/7),n^(2/3)];
-bScale[n_]:=If[Degenerateb,n^(2/7),n^(2/3)];
-a\[Theta]=If[Degeneratea,6Pi/7,2Pi/3];
-b\[Theta]=If[Degenerateb,6Pi/7,2Pi/3];
+aScale[n_]:= n^expa;
+bScale[n_]:= n^expb;
+a\[Theta]=If[expa==2/7,6Pi/7,2Pi/3];
+b\[Theta]=If[expb==2/7,6Pi/7,2Pi/3];
 
 \[CapitalPsi][n_,z_]/;RightOfLine[z-b,Line[base[b\[Theta],n][[4]]/bScale[n]] ]&&0<=Arg[z-b]<b\[Theta]:=U[n,z].({
  {Exp[n \[Phi][z]], 0},
