@@ -713,8 +713,12 @@ save
 ];
 LineConjugate[L_List]:=Table[Line[L[[i,1]]//Conjugate],{i,1,Length[L]}];
 LineReverse[L_List]:=Table[Line[L[[i,1]]//Reverse],{i,1,Length[L]}];
-OrthogonalPolynomialMatrixGeneratorConnectedAdaptive[V_,M_:40,L_:3.,expa_:2/3,expb_:2/3,shrink_:1]:=Module[{a\[Theta],b\[Theta],aScale,bScale,adaptrhp,UP,rhp,smrngg,con,Frac,USeries,min,supp,g,l,ln,z,\[Phi],P,Pin,rngg,Cdefs,a,b,A,B,AP,BP,gs,m,U,\[CapitalPsi],\[CapitalPhi],p,slvr,Y,UD,\[CapitalPsi]D,\[Phi]D,\[CapitalPhi]D,YD,PD,BD,BinD,contours,base,functions,points,y11,y21,yd21,yd11,S,SD},
+
+
+
+OrthogonalPolynomialMatrixGeneratorConnectedAdaptiveNew[V_,N_,M_:40,L_:3.,expa_:2/3,expb_:2/3,shrink_:1,inUP_:1]:=Module[{a\[Theta],b\[Theta],aScale,bScale,adaptrhp,UP,rhp,smrngg,con,Frac,USeries,min,supp,g,l,ln,z,\[Phi],P,Pin,rngg,Cdefs,a,b,A,B,AP,BP,gs,m,U,\[CapitalPsi],\[CapitalPhi],p,slvr,Y,UD,\[CapitalPsi]D,\[Phi]D,\[CapitalPhi]D,YD,PD,BD,BinD,contours,base,functions,points,y11,y21,yd21,yd11,S,SD},
 (*NOTE: Y is only accurate for Im[z]>=0*)
+Print[V[xxx]];
 supp=Line[{a,b}=EquilibriumMeasureSupport[V]];
 g//Clear;
 g[z_]=GFunction[V,z];
@@ -739,19 +743,17 @@ P[-1,z_]=ParametrixBranch[({
 Pin[z_]=Inverse[P[z]];
 Pin[-1,z_]=Inverse[P[-1,z]];
 A[n_][z_]:=({
- {1, Exp[-2 n \[Phi][z]]},
+ {1, Exp[-2 n \[Phi][z]]/.Underflow[]->0.},
  {0, 1}
 });
 B[n_][z_]:=({
  {1, 0},
- {Exp[2 n \[Phi][z]], 1}
+ {Exp[2 n \[Phi][z]]/.Underflow[]->0., 1}
 });
 AP[n_][z_]:=P[z].A[n][z].Pin[z];
 BP[n_][z_]:=P[z].B[n][z].Pin[z];
-If[expa==0,
-UP=min shrink;,
-UP=Min[.8,min];
-];
+Print[inUP];
+UP=Min[inUP,min];
 
 
 BD[n_][z_]:=({
@@ -762,12 +764,8 @@ BinD[n_][z_]:=({
  {0, 0},
  {-2 n \[Phi]D[z]Exp[2 n \[Phi][z]], 0}
 });
-(*rngg[2Pi/3,n_]:={min/2,L n^(2/3)};
-rngg[6Pi/7,n_]:={min/2,L n^(2/7)};*)
 rngg[exp_,n_]:={min/2,L n^(exp)};
-smrngg[\[Theta]_,exp_,n_]:={min/2,UP/Abs[Sin[\[Theta]] ]n^(exp)};
-(*smrngg[2Pi/3,n_]:={min/2,UP/Abs[Sin[2Pi/3]] n^(2/3)};
-smrngg[6Pi/7,n_]:={min/2,UP/Abs[Sin[6Pi/7]] n^(2/7)};*)
+smrngg[\[Theta]_,exp_,n_]:={Min[min/2,UP/Abs[Sin[\[Theta]] ]n^(exp)/2],UP/Abs[Sin[\[Theta]] ]n^(exp)};
 base[\[Theta]_,exp_,n_]:={
 rngg[exp,n],
 Exp[I \[Theta]]Reverse[smrngg[\[Theta],exp,n]],
@@ -820,7 +818,7 @@ Inverse[BP[n][#]]&,
  {Exp[n \[Phi][-1,#]], 0},
  {0, Exp[-n \[Phi][-1,#]]}
 }).Pin[-1,#]&};
-points[m_,flag1_,flag2_]:=Module[{out},
+points[flag1_,flag2_]:=Module[{out},
 out=Table[M,{i,1,12}];
 If[flag1,out[[4;;5]]={2M,2M}];
 If[flag2,out[[10;;11]]={2M,2M}];
@@ -834,7 +832,7 @@ Jumps=functions[n];
 If[expa==2/7,{\[Theta]a,scalea}={6Pi/7,2/7}];
 If[expb==2/7,{\[Theta]b,scaleb}={6Pi/7,2/7}];
 Domains=contours[n,scaleb,scalea,\[Theta]b,\[Theta]a];
-NumPts=points[n,expb==2/7,expa==2/7];
+NumPts=points[expb==2/7,expa==2/7];
 start=Domains[[2]][[1]][[1]];
 end=Domains[[9]][[1]][[1]];
 Domains=Domains~Join~{Line[{start,end}//Reverse],Line[{start,end}//Conjugate//Reverse]};
@@ -843,12 +841,12 @@ NumPts=NumPts~Join~{M,M};
 {Jumps,Domains,NumPts}
 ];
 adaptrhp[n_]:=adaptrhp[n]=Module[{step,out},
-step=.05;
-out=Adapt[rhp[n],10.^(-12),step][rhp[n]];
+step=.001/2;
+out=Adapt[rhp[n],10.^(-14),step][rhp[n]];
 While[Length[out[[1]]]<=8,
 step=step/2;
 Print[step];
-out=Adapt[rhp[n],10.^(-12),step][rhp[n]];
+out=Adapt[rhp[n],10.^(-14),step][rhp[n]];
 ];
 out
 ];
