@@ -224,7 +224,8 @@ ShiftDiagonalMatrix;
 SparseShiftMatrix;
 RowIndex;
 ColumnIndex;
-
+RowIndexRange;
+ColumnIndexRange;
 Begin["Private`"];
 
 
@@ -253,6 +254,10 @@ DomainIndex:=ColumnIndex;
 RowIndexRange[l_ShiftMatrix]:={1-RowIndex[l],Dimensions[l][[1]]-RowIndex[l]};
 ColumnIndexRange[l_ShiftMatrix]:={1-ColumnIndex[l],Dimensions[l][[2]]-ColumnIndex[l]};
 
+ShiftMatrix/:PadRight[sm_ShiftMatrix,{m_,n_}]:=ShiftMatrix[PadRight[ToArray[sm],{m+RowIndex@sm,n+ColumnIndex@sm}],{RowIndex@sm,ColumnIndex@sm}];
+ShiftMatrix/:PadLeft[sm_ShiftMatrix,{m_,n_}]:=ShiftMatrix[PadLeft[ToArray[sm],{Length@ToArray@sm-RowIndex@sm+1-m,Second@Dimensions@ToArray@sm-ColumnIndex@sm+1-n}],{1-m,1-n}];
+SetIndexRange[sm_ShiftMatrix,{i_,j_},{m_,n_}]:=PadRight[PadLeft[sm,{i,m}],{j,n}];
+
 
 
 Format[sm:ShiftMatrix[_?MatrixQ,{_Integer,_Integer}]]:=Module[{i,j},
@@ -260,6 +265,7 @@ Table[If[i==0||j==0,Style[sm[[i,j]],Bold],sm[[i,j]]],{i,RowIndexRange[sm][[1]],R
 
 
 ShiftMatrix/:sm_ShiftMatrix.sl_ShiftList:=ShiftList[ToArray[sm].ToList[sl],RangeIndex[sm]];
+ShiftMatrix/:sl_ShiftList.sm_ShiftMatrix:=ShiftList[ToList[sl].ToArray[sm],ColumnIndex[sm]];
 ShiftMatrix/:sm_ShiftMatrix.sm2_ShiftMatrix:=ShiftMatrix[ToArray[sm].ToArray[sm2],{RangeIndex[sm],DomainIndex[sm2]}];
 ShiftMatrix/:sm_ShiftMatrix+sm2_ShiftMatrix:=ShiftMatrix[ToArray[sm]+ToArray[sm2],{RangeIndex[sm],DomainIndex[sm2]}];
 ShiftMatrix/:c_?NumberQ sm_ShiftMatrix:=ShiftMatrix[c ToArray[sm],{RangeIndex[sm],DomainIndex[sm]}];

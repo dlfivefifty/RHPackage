@@ -1241,7 +1241,7 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{"End", "[", "]"}], ";"}]}], "Input",
  InitializationCell->True]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -1255,9 +1255,9 @@ Cell[BoxData[{
  RowBox[{"ShiftDiagonalMatrix", ";"}], "\[IndentingNewLine]", 
  RowBox[{"SparseShiftMatrix", ";"}], "\[IndentingNewLine]", 
  RowBox[{"RowIndex", ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"ColumnIndex", ";"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"ColumnIndex", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"RowIndexRange", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ColumnIndexRange", ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"Begin", "[", "\"\<Private`\>\"", "]"}], ";"}], 
@@ -1407,16 +1407,84 @@ Cell[BoxData[{
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
-   RowBox[{"ColumnIndexRange", "[", "l_ShiftMatrix", "]"}], ":=", 
-   RowBox[{"{", 
-    RowBox[{
-     RowBox[{"1", "-", 
-      RowBox[{"ColumnIndex", "[", "l", "]"}]}], ",", 
+   RowBox[{
+    RowBox[{"ColumnIndexRange", "[", "l_ShiftMatrix", "]"}], ":=", 
+    RowBox[{"{", 
      RowBox[{
+      RowBox[{"1", "-", 
+       RowBox[{"ColumnIndex", "[", "l", "]"}]}], ",", 
       RowBox[{
-       RowBox[{"Dimensions", "[", "l", "]"}], "\[LeftDoubleBracket]", "2", 
-       "\[RightDoubleBracket]"}], "-", 
-      RowBox[{"ColumnIndex", "[", "l", "]"}]}]}], "}"}]}], 
+       RowBox[{
+        RowBox[{"Dimensions", "[", "l", "]"}], "\[LeftDoubleBracket]", "2", 
+        "\[RightDoubleBracket]"}], "-", 
+       RowBox[{"ColumnIndex", "[", "l", "]"}]}]}], "}"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ShiftMatrix", "/:", 
+   RowBox[{"PadRight", "[", 
+    RowBox[{"sm_ShiftMatrix", ",", 
+     RowBox[{"{", 
+      RowBox[{"m_", ",", "n_"}], "}"}]}], "]"}], ":=", 
+   RowBox[{"ShiftMatrix", "[", 
+    RowBox[{
+     RowBox[{"PadRight", "[", 
+      RowBox[{
+       RowBox[{"ToArray", "[", "sm", "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"m", "+", 
+          RowBox[{"RowIndex", "@", "sm"}]}], ",", 
+         RowBox[{"n", "+", 
+          RowBox[{"ColumnIndex", "@", "sm"}]}]}], "}"}]}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"RowIndex", "@", "sm"}], ",", 
+       RowBox[{"ColumnIndex", "@", "sm"}]}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ShiftMatrix", "/:", 
+   RowBox[{"PadLeft", "[", 
+    RowBox[{"sm_ShiftMatrix", ",", 
+     RowBox[{"{", 
+      RowBox[{"m_", ",", "n_"}], "}"}]}], "]"}], ":=", 
+   RowBox[{"ShiftMatrix", "[", 
+    RowBox[{
+     RowBox[{"PadLeft", "[", 
+      RowBox[{
+       RowBox[{"ToArray", "[", "sm", "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Length", "@", 
+           RowBox[{"ToArray", "@", "sm"}]}], "-", 
+          RowBox[{"RowIndex", "@", "sm"}], "+", "1", "-", "m"}], ",", 
+         RowBox[{
+          RowBox[{"Second", "@", 
+           RowBox[{"Dimensions", "@", 
+            RowBox[{"ToArray", "@", "sm"}]}]}], "-", 
+          RowBox[{"ColumnIndex", "@", "sm"}], "+", "1", "-", "n"}]}], "}"}]}],
+       "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"1", "-", "m"}], ",", 
+       RowBox[{"1", "-", "n"}]}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SetIndexRange", "[", 
+    RowBox[{"sm_ShiftMatrix", ",", 
+     RowBox[{"{", 
+      RowBox[{"i_", ",", "j_"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"m_", ",", "n_"}], "}"}]}], "]"}], ":=", 
+   RowBox[{"PadRight", "[", 
+    RowBox[{
+     RowBox[{"PadLeft", "[", 
+      RowBox[{"sm", ",", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", "m"}], "}"}]}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"j", ",", "n"}], "}"}]}], "]"}]}], 
   ";"}], "\[IndentingNewLine]"}], "Input",
  InitializationCell->True],
 
@@ -1477,6 +1545,16 @@ Cell[BoxData[{
       RowBox[{"ToArray", "[", "sm", "]"}], ".", 
       RowBox[{"ToList", "[", "sl", "]"}]}], ",", 
      RowBox[{"RangeIndex", "[", "sm", "]"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ShiftMatrix", "/:", 
+   RowBox[{"sl_ShiftList", ".", "sm_ShiftMatrix"}], ":=", 
+   RowBox[{"ShiftList", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"ToList", "[", "sl", "]"}], ".", 
+      RowBox[{"ToArray", "[", "sm", "]"}]}], ",", 
+     RowBox[{"ColumnIndex", "[", "sm", "]"}]}], "]"}]}], 
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"ShiftMatrix", "/:", 
@@ -1657,9 +1735,8 @@ Cell[BoxData[{
 Cell[BoxData[
  RowBox[{
   StyleBox[
-   RowBox[{"End", "::", "noctx"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"No previous context defined. \\!\\(\\*ButtonBox[\\\"\
+   RowBox[{"End", "::", "noctx"}], "MessageName"], ":", 
+  " ", "\<\"No previous context defined. \\!\\(\\*ButtonBox[\\\"\
 \[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
 ButtonData:>\\\"paclet:ref/message/End/noctx\\\", ButtonNote -> \
 \\\"End::noctx\\\"]\\)\"\>"}]], "Message", "MSG"]
