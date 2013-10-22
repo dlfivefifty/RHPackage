@@ -66,6 +66,7 @@ LastIndex;
 LaurentMatrix;
 BasisShiftList;
 ReplaceEntry;
+CirculantMatrix;
 IncreaseSize;
 Begin["Private`"];
 
@@ -208,6 +209,8 @@ ShiftList/:ToeplitzMatrix[sl_ShiftList,n_Integer]:=ToeplitzMatrix[PadRight[NonPo
 ToeplitzMatrix[sl_ShiftList]^:=ToeplitzMatrix[sl,Length[sl]];
 LaurentMatrix[lg_,{im_,iM_}]:=ShiftMatrix[ToeplitzMatrix[lg,iM-im+1],{1-im,1-im}];
 LaurentMatrix[lg_ShiftList]:=ShiftMatrix[ToeplitzMatrix[lg,Length[lg]],lg//IndexRange];
+CirculantMatrix[sl_ShiftList,n_]:=ToeplitzMatrix[PadRight[NonPositiveList[sl]//Reverse,n]+PadLeft[PositiveList[sl]//Reverse,n],PadRight[NonNegativeList[sl],n]+PadLeft[NegativeList[sl],n]];
+
 
 
 NZeroQ[sl_List]:=sl//Abs//Max//NZeroQ;
@@ -437,9 +440,18 @@ PartitionList[l_,d_?MatrixQ]:=PartitionList[PartitionList[l,Flatten[d]],Length/@
 
 RightJoin[v__]:=Join@@(VectorTranspose/@{v})//VectorTranspose;
 
-BlockDiagonalMatrix[Al_List]:=Module[{Asp,k,j},
-Asp=SparseZeroMatrix@@(Dimensions/@Al//Total);
-{k,j}={0,0};Function[A,Asp[[k+1;;(k=k+Dimensions[A][[1]]),j+1;;(j=j+Dimensions[A][[2]])]]=A;]/@Al;
+BlockDiagonalMatrix[Al_List]:=Module[{Asp,k,j,dim,sete},
+dim[al_?MatrixQ]:=al//Dimensions;
+dim[al_?VectorQ]:={al//Length,1};
+dim[al_]:={1,1};
+Asp=SparseZeroMatrix@@(dim/@Al//Total);
+
+{k,j}={0,0};
+sete[A_?MatrixQ]:=Asp[[k+1;;(k=k+Dimensions[A][[1]]),j+1;;(j=j+Dimensions[A][[2]])]]=A;
+sete[A_?VectorQ]:=Asp[[k+1;;(k=k+Length[A]),j+1;;(j=j+1)]]=A;
+sete[A_]:=Asp[[k+1;;(k=k+1),j+1;;(j=j+1)]]=A;
+
+sete/@Al;
 Asp
 ];
 
