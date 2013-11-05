@@ -21,8 +21,49 @@ Cell[BoxData[{
  RowBox[{"NewtonMethod", ";"}], "\[IndentingNewLine]", 
  RowBox[{"NewtonInverse", ";"}], "\[IndentingNewLine]", 
  RowBox[{"JacobiMatrix", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ToMachineNumber", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"MExp", ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"Begin", "[", "\"\<Private`\>\"", "]"}], ";"}]}], "Input",
+ InitializationCell->True]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Machine Number", "Section"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"ToMachineNumber", "[", 
+    RowBox[{"x_", "?", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"Abs", "[", "#", "]"}], "\[LessEqual]", 
+         "$MinMachineNumber"}], ")"}], "&"}], ")"}]}], "]"}], ":=", "0."}], 
+  ";", 
+  RowBox[{
+   RowBox[{"ToMachineNumber", "[", 
+    RowBox[{"x_", "?", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Abs", "[", "#", "]"}], "\[GreaterEqual]", 
+        "$MaxMachineNumber"}], "&"}], ")"}]}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"Sign", "[", "x", "]"}], " ", "$MaxMachineNumber"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ToMachineNumber", "[", "x_", "]"}], ":=", 
+   RowBox[{"x", "//", "N"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"MExp", "[", "x_", "]"}], ":=", 
+   RowBox[{"ToMachineNumber", "@", 
+    RowBox[{"Exp", "[", "x", "]"}]}]}], ";"}]}], "Input",
  InitializationCell->True]
 }, Open  ]],
 
@@ -1642,8 +1683,8 @@ WindowMargins->{{514, Automatic}, {Automatic, 43}},
 PrivateNotebookOptions->{"FileOutlineCache"->False},
 ShowSelection->True,
 TrackCellChangeTimes->False,
-FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 5, \
-2011)",
+FrontEndVersion->"9.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (January 25, \
+2013)",
 StyleDefinitions->"Default.nb"
 ]
 
