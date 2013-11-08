@@ -29,7 +29,7 @@ EquilibriumMeasureNewton;
 
 
 Begin["Private`"];
-EquilibriumMeasureSupport[V_,retin_:{-1,1}]:=Module[{ret,retold,F,J},
+EquilibriumMeasureSupport[V_,retin_:{-1,1}]:=Module[{ret,retold,F,J,k},
 F[{a_,b_}]:=Module[{Vf},
 Vf=Fun[V,Line[{a,b}]];
 {DCT[Vf'][[1]],(b-a)/8 DCT[Vf'][[2]]-1}];
@@ -41,12 +41,15 @@ x=IFun[Points[UnitInterval,Length[Vf]],Vf//Domain];
  {1/8 ((b-a)DCT[(1/2-x/2)Vf''][[2]]-DCT[Vf'][[2]]), 1/8 ((b-a)DCT[(1/2+x/2)Vf''][[2]]+DCT[Vf'][[2]])}
 })
 ];
+k=1;
 ret=retin;
 retold={0,0};
 While[Norm[ret-retold]>$MachineTolerance,
+k=k+1;
 retold=ret;
 ret=ret-LeastSquares[J[ret],F[ret]];
 ];
+Sow[k];
 ret//Sort];
 EquilibriumMeasure[V_,retin_,x_]:=EquilibriumMeasure[V,retin][x];
 EquilibriumMeasure[V_,retin_:{-1,1}]:=-1/(2 \[Pi]) SingFun[Fun[V',EquilibriumMeasureSupport[V,retin]//Line],{0,0}]//HilbertInverse;

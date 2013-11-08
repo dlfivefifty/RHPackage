@@ -25,9 +25,11 @@ BeginPackage["RiemannHilbert`RandomMatrices`",{"RiemannHilbert`","RiemannHilbert
 OrthogonalPolynomialGenerator;
 OrthogonalPolynomialMatrixGeneratorConnected;
 OrthogonalPolynomialMatrixGeneratorConnectedAdaptive;
+OrthogonalPolynomialMatrixGeneratorForRoots;
 OrthogonalPolynomialMatrixGenerator;
 InvariantEnsembleKernel;
 InvariantEnsembleKernelAdaptive;
+InvariantEnsembleKernelAdaptiveNew;
 HOInvariantEnsembleKernel;
 GFunction;
 LeftOfLine;
@@ -716,9 +718,365 @@ LineReverse[L_List]:=Table[Line[L[[i,1]]//Reverse],{i,1,Length[L]}];
 
 
 
-OrthogonalPolynomialMatrixGeneratorConnectedAdaptiveNew[V_,N_,M_:40,L_:3.,expa_:2/3,expb_:2/3,shrink_:1,inUP_:1]:=Module[{a\[Theta],b\[Theta],aScale,bScale,adaptrhp,UP,rhp,smrngg,con,Frac,USeries,min,supp,g,l,ln,z,\[Phi],P,Pin,rngg,Cdefs,a,b,A,B,AP,BP,gs,m,U,\[CapitalPsi],\[CapitalPhi],p,slvr,Y,UD,\[CapitalPsi]D,\[Phi]D,\[CapitalPhi]D,YD,PD,BD,BinD,contours,base,functions,points,y11,y21,yd21,yd11,S,SD},
+OrthogonalPolynomialMatrixGeneratorConnectedAdaptive[V_,N_,M_:40,L_:3.,expa_:2/3,expb_:2/3,shrink_:1,inUP_:1]:=Module[{a\[Theta],b\[Theta],aScale,bScale,adaptrhp,UP,rhp,smrngg,con,Frac,USeries,min,supp,g,l,ln,z,\[Phi],P,Pin,rngg,Cdefs,a,b,A,B,AP,BP,gs,m,U,\[CapitalPsi],\[CapitalPhi],p,slvr,Y,UD,\[CapitalPsi]D,\[Phi]D,\[CapitalPhi]D,YD,PD,BD,BinD,contours,base,functions,points,y11,y21,yd21,yd11,S,SD},
 (*NOTE: Y is only accurate for Im[z]>=0*)
-Print[V[xxx]];
+supp=Line[{a,b}=EquilibriumMeasureSupport[V]];
+g//Clear;
+g[z_]=GFunction[V,z];
+g[+1,z_]=GFunction[+1,V,z];
+g[-1,z_]=GFunction[-1,V,z];
+l=-(g[+1,0.]+g[-1,0.]-V[0.]);
+ln[n_]:={{Exp[-l n/2],0},{0,Exp[l n/2]}};
+min=Abs[a-b]/3*1/shrink;
+\[Phi][z_]=(V[z]-l)/2-g[z];
+\[Phi]D[z_]=(V'[z])/2-g'[z];
+\[Phi][+1,z_]=-(g[+1,z]-(V[z]-l)/2);
+\[Phi][-1,z_]=-(g[-1,z]-(V[z]-l)/2);
+P[z_]=Parametrix[({
+ {0, 1},
+ {-1, 0}
+}),supp,z];
+PD[z_]=P'[z];
+P[-1,z_]=ParametrixBranch[({
+ {0, 1},
+ {-1, 0}
+}),supp,z,-2 \[Pi]];
+Pin[z_]=Inverse[P[z]];
+Pin[-1,z_]=Inverse[P[-1,z]];
+A[n_][z_]:=({
+ {1, Exp[-2 n \[Phi][z]]/.Underflow[]->0.},
+ {0, 1}
+});
+B[n_][z_]:=({
+ {1, 0},
+ {Exp[2 n \[Phi][z]]/.Underflow[]->0., 1}
+});
+AP[n_][z_]:=P[z].A[n][z].Pin[z];
+BP[n_][z_]:=P[z].B[n][z].Pin[z];
+UP=Min[inUP,min];
+
+
+BD[n_][z_]:=({
+ {0, 0},
+ {2 n \[Phi]D[z]Exp[2 n \[Phi][z]], 0}
+});
+BinD[n_][z_]:=({
+ {0, 0},
+ {-2 n \[Phi]D[z]Exp[2 n \[Phi][z]], 0}
+});
+rngg[exp_,n_]:={min/2,L n^(exp)};
+smrngg[\[Theta]_,exp_,n_]:={Min[min/2,UP/Abs[Sin[\[Theta]] ]n^(exp)/2],UP/Abs[Sin[\[Theta]] ]n^(exp)};
+base[\[Theta]_,exp_,n_]:={
+rngg[exp,n],
+Exp[I \[Theta]]Reverse[smrngg[\[Theta],exp,n]],
+Exp[-I \[Theta]]Reverse[smrngg[\[Theta],exp,n]],
+{Exp[I \[Theta]] ,1 }rngg[exp,n][[1]],
+{1 ,Exp[ -I \[Theta]] }rngg[exp,n][[1]],
+{Exp[ -I \[Theta]] ,Exp[- I(2Pi-\[Theta])] }rngg[exp,n][[1]]};
+contours[m_,scale1_,scale2_,\[Theta]1_,\[Theta]2_]:=Join[Line/@((b+1/(m^(scale1)) #)&/@base[\[Theta]1,scale1,m]),Line/@((a-1/(m^(scale2)) #)&/@base[\[Theta]2,scale2,m])]//Flatten;
+functions[n_]:={AP[n],
+BP[n],
+BP[n],
+({
+ {Exp[n \[Phi][#]], 0},
+ {0, Exp[-n \[Phi][#]]}
+}).Pin[#]&,
+({
+ {1, -1},
+ {0, 1}
+}).({
+ {Exp[n \[Phi][#]], 0},
+ {0, Exp[-n \[Phi][#]]}
+}).Pin[#]&,({
+ {0, -1},
+ {1, 1}
+}).({
+ {Exp[n \[Phi][-1,#]], 0},
+ {0, Exp[-n \[Phi][-1,#]]}
+}).Pin[-1,#]&,
+Inverse[AP[n][#]]&,
+Inverse[BP[n][#]]&,
+Inverse[BP[n][#]]&,
+({
+ {1, -1},
+ {1, 0}
+}).({
+ {Exp[n \[Phi][#]], 0},
+ {0, Exp[-n \[Phi][#]]}
+}).Pin[#]&,
+({
+ {1, 0},
+ {1, 1}
+}).({
+ {Exp[n \[Phi][#]], 0},
+ {0, Exp[-n \[Phi][#]]}
+}).Pin[#]&,
+({
+ {0, -1},
+ {1, 0}
+}).({
+ {Exp[n \[Phi][-1,#]], 0},
+ {0, Exp[-n \[Phi][-1,#]]}
+}).Pin[-1,#]&};
+points[flag1_,flag2_]:=Module[{out},
+out=Table[M,{i,1,12}];
+If[flag1,out[[4;;5]]={2M,2M}];
+If[flag2,out[[10;;11]]={2M,2M}];
+out
+];
+(*Add connections and return rhp*)
+rhp[n_]:=Module[{out,\[Theta]a,scalea,s,\[Theta]b,scaleb,Jumps,Domains,NumPts,start,end},
+Jumps=functions[n];
+{\[Theta]a,scalea}={2Pi/3,expa};
+{\[Theta]b,scaleb}={\[Theta]a,expb};
+If[expa==2/7,{\[Theta]a,scalea}={6Pi/7,2/7}];
+If[expb==2/7,{\[Theta]b,scaleb}={6Pi/7,2/7}];
+Domains=contours[n,scaleb,scalea,\[Theta]b,\[Theta]a];
+NumPts=points[expb==2/7,expa==2/7];
+start=Domains[[2]][[1]][[1]];
+end=Domains[[9]][[1]][[1]];
+Domains=Domains~Join~{Line[{start,end}//Reverse],Line[{start,end}//Conjugate//Reverse]};
+Jumps=Jumps~Join~{BP[n],BP[n]};
+NumPts=NumPts~Join~{M,M};
+{Jumps,Domains,NumPts}
+];
+adaptrhp[n_]:=adaptrhp[n]=Module[{step,out},
+step=.001/2;
+out=Adapt[rhp[n],10.^(-14),step][rhp[n]];
+While[Length[out[[1]]]<=8,
+step=step/2;
+Print[step];
+out=Adapt[rhp[n],10.^(-14),step][rhp[n]];
+];
+out
+];
+
+U[n_]:=U[n]=adaptrhp[n]//MakeListFun//RHSolve;
+USeries[n_]:=-1/(2 Pi I) DomainIntegrate[U[n]];
+U[n_,z_]:=(IdentityMatrix[2]+Cauchy[U[n],z]);
+
+aScale[n_]:= n^expa;
+bScale[n_]:= n^expb;
+a\[Theta]=If[expa==2/7,6Pi/7,2Pi/3];
+b\[Theta]=If[expb==2/7,6Pi/7,2Pi/3];
+
+
+
+\[CapitalPsi][n_,z_]/;RightOfLine[z-b,Line[base[b\[Theta],expb,n][[4]]/bScale[n]] ]&&0<=Arg[z-b]<b\[Theta]:=U[n,z].({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi][n_,z_]/;Re[z]>b+Re[rngg[expb,n][[1]] Exp[I b\[Theta]]/bScale[n]]&&b\[Theta]<Arg[z-b]<=\[Pi]:=U[n,z].({
+ {1, 0},
+ {-1, 1}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+});
+
+
+\[CapitalPsi][n_,z_]/;Re[z]>b+Re[rngg[expb,n][[1]] Exp[I b\[Theta]]/bScale[n]] &&-\[Pi]<Arg[z-b]<-b\[Theta]:=U[n,z].({
+ {0, -1},
+ {1, 1}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi][n_,z_]/;RightOfLine[z-b,Line[base[b\[Theta],expb,n][[5]]/bScale[n]] ] &&-b\[Theta]<Arg[z-b]<0:=U[n,z].({
+ {1, -1},
+ {0, 1}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+});
+
+\[CapitalPsi][n_,z_]/;Re[z]<a-Re[rngg[expa,n][[1]] Exp[I a\[Theta]]/aScale[n] ] &&0<=Arg[z-a]< \[Pi]-a\[Theta]:=U[n,z].({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi][n_,z_]/;LeftOfLine[a-z,Line[base[a\[Theta],expa,n][[5]]/aScale[n]]] && \[Pi]-a\[Theta]<Arg[z-a]<=\[Pi]:=U[n,z].({
+ {1, 0},
+ {1, 1}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi][n_,z_]/;LeftOfLine[a-z,Line[Line[base[a\[Theta],expa,n][[4]]/aScale[n]]]] &&-\[Pi]<Arg[z-a]<-(\[Pi]-a\[Theta]):=U[n,z].({
+ {1, -1},
+ {1, 0}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi][n_,z_]/;Re[z]<a-Re[rngg[expa,n][[1]] Exp[I a\[Theta]]/aScale[n] ] &&-(\[Pi]-a\[Theta])<Arg[z-a]<0:=U[n,z].({
+ {0, -1},
+ {1, 0}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi][n_,z_]:=U[n,z].P[z];
+
+\[CapitalPhi][n_,z_]/;Im[z]>=0&&b\[Theta]<Arg[z-b]&&0<=Arg[z-a]<\[Pi]-a\[Theta]:=\[CapitalPsi][n,z].B[n][z];
+\[CapitalPhi][n_,z_]/;Im[z]<0&&Arg[z-b]<-b\[Theta]&&-(\[Pi]-a\[Theta])<Arg[z-a]<0:=\[CapitalPsi][n,z].Inverse[B[n][z]];
+\[CapitalPhi][n_,z_]:=\[CapitalPsi][n,z];
+    Y[n_,z_]:=Y[n,z]=({
+ {Exp[-n l/2], 0},
+ {0, Exp[n l/2]}
+}).\[CapitalPhi][n,z].({
+ {Exp[n l/2], 0},
+ {0, Exp[-n l/2]}
+}).({
+ {Exp[n g[z]], 0},
+ {0, Exp[-n g[z]]}
+});
+(*Y[n_,z_]:=Y[n,z]=\[CapitalPhi][n,z].(Exp[n g[z]]	0
+0	Exp[-n g[z]]
+
+);*)
+S[n_,z_]:=S[n,z]=\[CapitalPhi][n,z];
+y21[n_,z_]:=S[n,z][[2,1]]Exp[n(l-V[z]/2+g[z])];
+y11[n_,z_]:=S[n,z][[1,1]]Exp[n(g[z]-V[z]/2)];
+
+
+
+UD[n_,z_]:=CauchyD[U[n],z];
+\[CapitalPsi]D[n_,z_]/;RightOfLine[z-b,Line[base[b\[Theta],expb,n][[4]]/bScale[n]]]&&0<=Arg[z-b]<b\[Theta]:=UD[n,z].({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+})+\[Phi]D[z] U[n,z].({
+ {n Exp[n \[Phi][z]], 0},
+ {0, -n Exp[-n \[Phi][z]]}
+});
+
+\[CapitalPsi]D[n_,z_]/;Re[z]>b+Re[rngg[expb,n][[1]] Exp[I b\[Theta]]/bScale[n]]&&b\[Theta]<Arg[z-b]<=\[Pi]:=UD[n,z].({
+ {1, 0},
+ {-1, 1}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+})+\[Phi]D[z] U[n,z].({
+ {1, 0},
+ {-1, 1}
+}).({
+ {n Exp[n \[Phi][z]], 0},
+ {0, -n Exp[-n \[Phi][z]]}
+});
+
+\[CapitalPsi]D[n_,z_]/;Re[z]>b+Re[rngg[expb,n][[1]] Exp[I b\[Theta]]/bScale[n]]&&-\[Pi]<Arg[z-b]<-b\[Theta]:=UD[n,z].({
+ {0, -1},
+ {1, 1}
+}) .({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+})+\[Phi]D[z] U[n,z].({
+ {0, -1},
+ {1, 1}
+}) .({
+ {n Exp[n \[Phi][z]], 0},
+ {0, -n Exp[-n \[Phi][z]]}
+});
+
+\[CapitalPsi]D[n_,z_]/;RightOfLine[z-b,Line[base[b\[Theta],expb,n][[5]]/bScale[n]]]&&-b\[Theta]<Arg[z-b]<0:=UD[n,z].({
+ {1, -1},
+ {0, 1}
+}) .({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+})+\[Phi]D[z] U[n,z].({
+ {1, -1},
+ {0, 1}
+}) .({
+ {n Exp[n \[Phi][z]], 0},
+ {0, -n Exp[-n \[Phi][z]]}
+});
+
+
+
+\[CapitalPsi]D[n_,z_]/;Re[z]<a-Re[rngg[expb,n][[1]] Exp[I a\[Theta]]/aScale[n]]&&0<=Arg[z-a]<\[Pi]-a\[Theta]:=UD[n,z].({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+})+\[Phi]D[z] U[n,z].({
+ {n Exp[n \[Phi][z]], 0},
+ {0, -n Exp[-n \[Phi][z]]}
+});
+
+\[CapitalPsi]D[n_,z_]/;LeftOfLine[a-z,Line[base[a\[Theta],expa,n][[5]]/aScale[n]]]&&\[Pi]-a\[Theta]<Arg[z-a]<=\[Pi]:=UD[n,z].({
+ {1, 0},
+ {1, 1}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+})+\[Phi]D[z] U[n,z].({
+ {1, 0},
+ {1, 1}
+}).({
+ {n Exp[n \[Phi][z]], 0},
+ {0, -n Exp[-n \[Phi][z]]}
+});
+
+\[CapitalPsi]D[n_,z_]/;LeftOfLine[a-z,Line[Line[base[a\[Theta],expa,n][[4]]/aScale[n]]]]&&-\[Pi]<Arg[z-a]<-(\[Pi]-a\[Theta]):=UD[n,z].({
+ {1, -1},
+ {1, 0}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+})+\[Phi]D[z] U[n,z].({
+ {1, -1},
+ {1, 0}
+}).({
+ {n Exp[n \[Phi][z]], 0},
+ {0, -n Exp[-n \[Phi][z]]}
+});
+
+\[CapitalPsi]D[n_,z_]/;Re[z]<a-Re[rngg[expb,n][[1]] Exp[I a\[Theta]]/aScale[n]]&&-(\[Pi]-a\[Theta])<Arg[z-a]<0:=UD[n,z].({
+ {0, -1},
+ {1, 0}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+})+\[Phi]D[z] U[n,z].({
+ {0, -1},
+ {1, 0}
+}).({
+ {n Exp[n \[Phi][z]], 0},
+ {0, -n Exp[-n \[Phi][z]]}
+});
+
+\[CapitalPsi]D[n_,z_]:=UD[n,z].P[z]+U[n,z].PD[z];
+\[CapitalPhi]D[n_,z_]/;Im[z]>=0&&b\[Theta]<Arg[z-b]&&0<=Arg[z-a]<\[Pi]-a\[Theta]:=\[CapitalPsi]D[n,z].B[n][z]+\[CapitalPsi][n,z].BD[n][z];
+\[CapitalPhi]D[n_,z_]/;Im[z]<0&&Arg[z-b]<-b\[Theta]&&-(\[Pi]-a\[Theta])<Arg[z-a]<0:=\[CapitalPsi]D[n,z].Inverse[B[n][z]]+\[CapitalPsi][n,z].BinD[n][z];
+\[CapitalPhi]D[n_,z_]:=\[CapitalPsi]D[n,z];
+YD[n_,z_]:=YD[n,z]=({
+ {Exp[-n l/2], 0},
+ {0, Exp[n l/2]}
+}).\[CapitalPhi]D[n,z].({
+ {Exp[n l/2], 0},
+ {0, Exp[-n l/2]}
+}).({
+ {Exp[n g[z]], 0},
+ {0, Exp[-n g[z]]}
+})+n g'[z] ({
+ {Exp[-n l/2], 0},
+ {0, Exp[n l/2]}
+}).\[CapitalPhi][n,z].({
+ {Exp[n l/2], 0},
+ {0, Exp[-n l/2]}
+}).({
+ {Exp[n g[z]], 0},
+ {0, -Exp[-n g[z]]}
+});
+SD[n_,z_]:=SD[n,z]=\[CapitalPhi]D[n,z];
+yd21[n_,z_]:=(SD[n,z][[2,1]]+n g'[z]S[n,z][[2,1]])Exp[n(l-V[z]/2+g[z])];
+yd11[n_,z_]:=(SD[n,z][[1,1]]+n g'[z]S[n,z][[1,1]])Exp[n(g[z]-V[z]/2)];
+
+
+{Y,YD,U,USeries,ln,MakeListFun[adaptrhp[#]]&,MakeListFun[rhp[#]]&,{{y11,y21},{yd11,yd21}}}
+
+];
+
+OrthogonalPolynomialMatrixGeneratorForCoefficients[V_,N_,M_:40,L_:3.,expa_:2/3,expb_:2/3,shrink_:1,inUP_:1]:=Module[{a\[Theta],b\[Theta],aScale,bScale,adaptrhp,UP,rhp,smrngg,con,Frac,USeries,min,supp,g,l,ln,z,\[Phi],P,Pin,rngg,Cdefs,a,b,A,B,AP,BP,gs,m,U,\[CapitalPsi],\[CapitalPhi],p,slvr,Y,UD,\[CapitalPsi]D,\[Phi]D,\[CapitalPhi]D,YD,PD,BD,BinD,contours,base,functions,points,y11,y21,yd21,yd11,S,SD},
+(*NOTE: Y is only accurate for Im[z]>=0*)
 supp=Line[{a,b}=EquilibriumMeasureSupport[V]];
 g//Clear;
 g[z_]=GFunction[V,z];
@@ -860,7 +1218,7 @@ bScale[n_]:= n^expb;
 a\[Theta]=If[expa==2/7,6Pi/7,2Pi/3];
 b\[Theta]=If[expb==2/7,6Pi/7,2Pi/3];
 
-\[CapitalPsi][n_,z_]/;RightOfLine[z-b,Line[base[b\[Theta],n][[4]]/bScale[n]] ]&&0<=Arg[z-b]<b\[Theta]:=U[n,z].({
+\[CapitalPsi][n_,z_]/;RightOfLine[z-b,Line[base[b\[Theta],expb,n][[4]]/bScale[n]] ]&&0<=Arg[z-b]<b\[Theta]:=U[n,z].({
  {Exp[n \[Phi][z]], 0},
  {0, Exp[-n \[Phi][z]]}
 });
@@ -880,7 +1238,7 @@ b\[Theta]=If[expb==2/7,6Pi/7,2Pi/3];
  {Exp[n \[Phi][z]], 0},
  {0, Exp[-n \[Phi][z]]}
 });
-\[CapitalPsi][n_,z_]/;RightOfLine[z-b,Line[base[b\[Theta],n][[5]]/bScale[n]] ] &&-b\[Theta]<Arg[z-b]<0:=U[n,z].({
+\[CapitalPsi][n_,z_]/;RightOfLine[z-b,Line[base[b\[Theta],expb,n][[5]]/bScale[n]] ] &&-b\[Theta]<Arg[z-b]<0:=U[n,z].({
  {1, -1},
  {0, 1}
 }).({
@@ -892,14 +1250,14 @@ b\[Theta]=If[expb==2/7,6Pi/7,2Pi/3];
  {Exp[n \[Phi][z]], 0},
  {0, Exp[-n \[Phi][z]]}
 });
-\[CapitalPsi][n_,z_]/;LeftOfLine[a-z,Line[base[a\[Theta],n][[5]]/aScale[n]]] && \[Pi]-a\[Theta]<Arg[z-a]<=\[Pi]:=U[n,z].({
+\[CapitalPsi][n_,z_]/;LeftOfLine[a-z,Line[base[a\[Theta],expa,n][[5]]/aScale[n]]] && \[Pi]-a\[Theta]<Arg[z-a]<=\[Pi]:=U[n,z].({
  {1, 0},
  {1, 1}
 }).({
  {Exp[n \[Phi][z]], 0},
  {0, Exp[-n \[Phi][z]]}
 });
-\[CapitalPsi][n_,z_]/;LeftOfLine[a-z,Line[Line[base[a\[Theta],n][[4]]/aScale[n]]]] &&-\[Pi]<Arg[z-a]<-(\[Pi]-a\[Theta]):=U[n,z].({
+\[CapitalPsi][n_,z_]/;LeftOfLine[a-z,Line[Line[base[a\[Theta],expa,n][[4]]/aScale[n]]]] &&-\[Pi]<Arg[z-a]<-(\[Pi]-a\[Theta]):=U[n,z].({
  {1, -1},
  {1, 0}
 }).({
@@ -919,12 +1277,9 @@ b\[Theta]=If[expb==2/7,6Pi/7,2Pi/3];
 \[CapitalPhi][n_,z_]/;Im[z]<0&&Arg[z-b]<-b\[Theta]&&-(\[Pi]-a\[Theta])<Arg[z-a]<0:=\[CapitalPsi][n,z].Inverse[B[n][z]];
 \[CapitalPhi][n_,z_]:=\[CapitalPsi][n,z];
     Y[n_,z_]:=Y[n,z]=({
- {Exp[-n l/2], 0},
- {0, Exp[n l/2]}
-}).\[CapitalPhi][n,z].({
  {Exp[n l/2], 0},
  {0, Exp[-n l/2]}
-}).({
+}).\[CapitalPhi][n,z].({
  {Exp[n g[z]], 0},
  {0, Exp[-n g[z]]}
 });
@@ -939,7 +1294,7 @@ y11[n_,z_]:=S[n,z][[1,1]]Exp[n(g[z]-V[z]/2)];
 
 
 UD[n_,z_]:=CauchyD[U[n],z];
-\[CapitalPsi]D[n_,z_]/;RightOfLine[z-b,Line[base[b\[Theta],n][[4]]/bScale[n]]]&&0<=Arg[z-b]<b\[Theta]:=UD[n,z].({
+\[CapitalPsi]D[n_,z_]/;RightOfLine[z-b,Line[base[b\[Theta],expb,n][[4]]/bScale[n]]]&&0<=Arg[z-b]<b\[Theta]:=UD[n,z].({
  {Exp[n \[Phi][z]], 0},
  {0, Exp[-n \[Phi][z]]}
 })+\[Phi]D[z] U[n,z].({
@@ -975,7 +1330,7 @@ UD[n_,z_]:=CauchyD[U[n],z];
  {0, -n Exp[-n \[Phi][z]]}
 });
 
-\[CapitalPsi]D[n_,z_]/;RightOfLine[z-b,Line[base[b\[Theta],n][[5]]/bScale[n]]]&&-b\[Theta]<Arg[z-b]<0:=UD[n,z].({
+\[CapitalPsi]D[n_,z_]/;RightOfLine[z-b,Line[base[b\[Theta],expb,n][[5]]/bScale[n]]]&&-b\[Theta]<Arg[z-b]<0:=UD[n,z].({
  {1, -1},
  {0, 1}
 }) .({
@@ -999,7 +1354,7 @@ UD[n_,z_]:=CauchyD[U[n],z];
  {0, -n Exp[-n \[Phi][z]]}
 });
 
-\[CapitalPsi]D[n_,z_]/;LeftOfLine[a-z,Line[base[a\[Theta],n][[5]]/aScale[n]]]&&\[Pi]-a\[Theta]<Arg[z-a]<=\[Pi]:=UD[n,z].({
+\[CapitalPsi]D[n_,z_]/;LeftOfLine[a-z,Line[base[a\[Theta],expa,n][[5]]/aScale[n]]]&&\[Pi]-a\[Theta]<Arg[z-a]<=\[Pi]:=UD[n,z].({
  {1, 0},
  {1, 1}
 }).({
@@ -1013,7 +1368,7 @@ UD[n_,z_]:=CauchyD[U[n],z];
  {0, -n Exp[-n \[Phi][z]]}
 });
 
-\[CapitalPsi]D[n_,z_]/;LeftOfLine[a-z,Line[Line[base[a\[Theta],n][[4]]/aScale[n]]]]&&-\[Pi]<Arg[z-a]<-(\[Pi]-a\[Theta]):=UD[n,z].({
+\[CapitalPsi]D[n_,z_]/;LeftOfLine[a-z,Line[Line[base[a\[Theta],expa,n][[4]]/aScale[n]]]]&&-\[Pi]<Arg[z-a]<-(\[Pi]-a\[Theta]):=UD[n,z].({
  {1, -1},
  {1, 0}
 }).({
@@ -1046,21 +1401,15 @@ UD[n_,z_]:=CauchyD[U[n],z];
 \[CapitalPhi]D[n_,z_]/;Im[z]<0&&Arg[z-b]<-b\[Theta]&&-(\[Pi]-a\[Theta])<Arg[z-a]<0:=\[CapitalPsi]D[n,z].Inverse[B[n][z]]+\[CapitalPsi][n,z].BinD[n][z];
 \[CapitalPhi]D[n_,z_]:=\[CapitalPsi]D[n,z];
 YD[n_,z_]:=YD[n,z]=({
- {Exp[-n l/2], 0},
- {0, Exp[n l/2]}
-}).\[CapitalPhi]D[n,z].({
  {Exp[n l/2], 0},
  {0, Exp[-n l/2]}
-}).({
+}).\[CapitalPhi]D[n,z].({
  {Exp[n g[z]], 0},
  {0, Exp[-n g[z]]}
 })+n g'[z] ({
- {Exp[-n l/2], 0},
- {0, Exp[n l/2]}
-}).\[CapitalPhi][n,z].({
  {Exp[n l/2], 0},
  {0, Exp[-n l/2]}
-}).({
+}).\[CapitalPhi][n,z].({
  {Exp[n g[z]], 0},
  {0, -Exp[-n g[z]]}
 });
@@ -1071,7 +1420,404 @@ yd11[n_,z_]:=(SD[n,z][[1,1]]+n g'[z]S[n,z][[1,1]])Exp[n(g[z]-V[z]/2)];
 
 {Y,YD,U,USeries,ln,MakeListFun[adaptrhp[#]]&,MakeListFun[rhp[#]]&,{{y11,y21},{yd11,yd21}}}
 
-]
+];
+mGFunction[V_,supp_,z_]:=CauchyInverseIntegral[Fun[V',Line[supp]],z];
+mDGFunction[V_,supp_,z_]:=CauchyInverse[Fun[V',Line[supp]],z];
+mGFunction[s_?SignQ,V_,supp_,z_]:=CauchyInverseIntegralS[s,Fun[V',Line[supp]],z];
+OrthogonalPolynomialMatrixGeneratorForRoots[V_,N_,M_:40,L_:3.,expa_:2/3,expb_:2/3,shrink_:1,inUP_:1,{small_,large_}]:=Module[{a\[Theta],b\[Theta],gD,aScale,bScale,adaptrhp,UP,rhp,smrngg,con,Frac,USeries,min,supp,g,l,ln,z,\[Phi],P,Pin,rngg,F,Cdefs,a,b,A,Ue,B,AP,BP,gs,m,U,\[CapitalPhi],p,slvr,Y,UD,\[Phi]D,\[CapitalPhi]D,YD,PD,BD,funs,funsd,am,bm,ap,bp,BinD,UC,contours,base,functions,points,y11,y21,yd21,yd11,S,SD,UDC,EvalFun,Uo,UCo,UDCo,EvalFunD,Y2,Y2D,\[CapitalPsi],\[CapitalPsi]D},
+(*NOTE: Y is only accurate for Im[z]>=0*)
+supp=Line[{a,b}=EquilibriumMeasureSupport[V]];
+g[z_]:=g[z]=mGFunction[V,{a,b},z];
+gD[z_]:=gD[z]=mDGFunction[V,{a,b},z];
+g[+1,z_]:=mGFunction[+1,V,{a,b},z];
+g[-1,z_]:=mGFunction[-1,V,{a,b},z];
+(*g[z_]=GFunction[V,z];
+g[+1,z_]=GFunction[+1,V,z];
+g[-1,z_]=GFunction[-1,V,z];*)
+l=-(g[+1,0.]+g[-1,0.]-V[0.]);
+ln[n_]:={{Exp[-l n/2],0},{0,Exp[l n/2]}};
+min=Abs[a-b]/3*1/shrink;
+\[Phi][z_]=(V[z]-l)/2-g[z];
+\[Phi]D[z_]=(V'[z])/2-gD[z];
+\[Phi][+1,z_]=-(g[+1,z]-(V[z]-l)/2);
+\[Phi][-1,z_]=-(g[-1,z]-(V[z]-l)/2);
+P[z_]=Parametrix[({
+ {0, 1},
+ {-1, 0}
+}),supp,z];
+PD[z_]=P'[z];
+P[-1,z_]=ParametrixBranch[({
+ {0, 1},
+ {-1, 0}
+}),supp,z,-2 \[Pi]];
+Pin[z_]=Inverse[P[z]];
+Pin[-1,z_]=Inverse[P[-1,z]];
+A[n_][z_]:=({
+ {1, Exp[-2 n \[Phi][z]]/.Underflow[]->0.},
+ {0, 1}
+});
+B[n_][z_]:=({
+ {1, 0},
+ {Exp[2 n \[Phi][z]]/.Underflow[]->0., 1}
+});
+AP[n_][z_]:=P[z].A[n][z].Pin[z];
+BP[n_][z_]:=P[z].B[n][z].Pin[z];
+UP=Min[inUP,min];
+
+
+BD[n_][z_]:=({
+ {0, 0},
+ {2 n \[Phi]D[z]Exp[2 n \[Phi][z]], 0}
+});
+BinD[n_][z_]:=({
+ {0, 0},
+ {-2 n \[Phi]D[z]Exp[2 n \[Phi][z]], 0}
+});
+rngg[exp_,n_]:={min/2,L n^(exp)};
+smrngg[\[Theta]_,exp_,n_]:={Min[min/2,UP/Abs[Sin[\[Theta]] ]n^(exp)/2],UP/Abs[Sin[\[Theta]] ]n^(exp)};
+base[\[Theta]_,exp_,n_]:={
+rngg[exp,n],
+Exp[I \[Theta]]Reverse[smrngg[\[Theta],exp,n]],
+Exp[-I \[Theta]]Reverse[smrngg[\[Theta],exp,n]],
+{Exp[I \[Theta]] ,1 }rngg[exp,n][[1]],
+{1 ,Exp[ -I \[Theta]] }rngg[exp,n][[1]],
+{Exp[ -I \[Theta]] ,Exp[- I(2Pi-\[Theta])] }rngg[exp,n][[1]]};
+contours[m_,scale1_,scale2_,\[Theta]1_,\[Theta]2_]:=Join[Line/@((b+1/(m^(scale1)) #)&/@base[\[Theta]1,scale1,m]),Line/@((a-1/(m^(scale2)) #)&/@base[\[Theta]2,scale2,m])]//Flatten;
+functions[n_]:={AP[n],
+BP[n],
+BP[n],
+({
+ {Exp[n \[Phi][#]], 0},
+ {0, Exp[-n \[Phi][#]]}
+}).Pin[#]&,
+({
+ {1, -1},
+ {0, 1}
+}).({
+ {Exp[n \[Phi][#]], 0},
+ {0, Exp[-n \[Phi][#]]}
+}).Pin[#]&,({
+ {0, -1},
+ {1, 1}
+}).({
+ {Exp[n \[Phi][-1,#]], 0},
+ {0, Exp[-n \[Phi][-1,#]]}
+}).Pin[-1,#]&,
+Inverse[AP[n][#]]&,
+Inverse[BP[n][#]]&,
+Inverse[BP[n][#]]&,
+({
+ {1, -1},
+ {1, 0}
+}).({
+ {Exp[n \[Phi][#]], 0},
+ {0, Exp[-n \[Phi][#]]}
+}).Pin[#]&,
+({
+ {1, 0},
+ {1, 1}
+}).({
+ {Exp[n \[Phi][#]], 0},
+ {0, Exp[-n \[Phi][#]]}
+}).Pin[#]&,
+({
+ {0, -1},
+ {1, 0}
+}).({
+ {Exp[n \[Phi][-1,#]], 0},
+ {0, Exp[-n \[Phi][-1,#]]}
+}).Pin[-1,#]&};
+points[flag1_,flag2_]:=Module[{out},
+out=Table[M,{i,1,12}];
+If[flag1,out[[4;;5]]={2M,2M}];
+If[flag2,out[[10;;11]]={2M,2M}];
+out
+];
+(*Add connections and return rhp*)
+rhp[n_]:=Module[{out,\[Theta]a,scalea,s,\[Theta]b,scaleb,Jumps,Domains,NumPts,start,end},
+Jumps=functions[n];
+{\[Theta]a,scalea}={2Pi/3,expa};
+{\[Theta]b,scaleb}={\[Theta]a,expb};
+If[expa==2/7,{\[Theta]a,scalea}={6Pi/7,2/7}];
+If[expb==2/7,{\[Theta]b,scaleb}={6Pi/7,2/7}];
+Domains=contours[n,scaleb,scalea,\[Theta]b,\[Theta]a];
+NumPts=points[expb==2/7,expa==2/7];
+start=Domains[[2]][[1]][[1]];
+end=Domains[[9]][[1]][[1]];
+Domains=Domains~Join~{Line[{start,end}//Reverse],Line[{start,end}//Conjugate//Reverse]};
+Jumps=Jumps~Join~{BP[n],BP[n]};
+NumPts=NumPts~Join~{M,M};
+{Jumps,Domains,NumPts}
+];
+adaptrhp[n_]:=adaptrhp[n]=Module[{step,out},
+step=.001/2;
+out=Adapt[rhp[n],10.^(-14),step][rhp[n]];
+While[Length[out[[1]]]<=8,
+step=step/2;
+Print[step];
+out=Adapt[rhp[n],10.^(-14),step][rhp[n]];
+];
+out
+];
+F[x_,funs_]:=Module[{i},
+For[i=1,i<=Length[funs],i++,
+If[Domain[funs[[i]]][[1]][[1]]<=x<=Domain[funs[[i]]][[1]][[2]],
+Return[funs[[i]][x]];
+];
+];
+Return[0.];
+];
+
+
+U[n_]:=U[n]=adaptrhp[n]//MakeListFun//RHSolve;
+USeries[n_]:=-1/(2Pi I)DomainIntegrate[U[n]];
+Ue[n_]:=Ue[n]=Table[U[n][[i]][[1,All]],{i,1,Length[U[n]]}];
+Uo[n_]:=Uo[n]=Table[U[n][[i]][[2,All]],{i,1,Length[U[n]]}];
+UC[n_,z_]:={1,0}+Cauchy[Ue[n],z];
+UCo[n_,z_]:=UCo[n,z]={0,1}+Cauchy[Uo[n],z];
+
+bp[n_]:=U[n][[1]]//Points//First;
+bm[n_]:=U[n][[2]]//Points//Last//Re;
+ap[n_]:=U[n][[7]]//Points//First;
+am[n_]:=U[n][[8]]//Points//Last//Re;
+
+funs[n_]:=funs[n]=Module[{A1,B1,A2,B2,A3,B3,A4,B4,A5,B5,A6,B6},
+A1=Fun[UC[n,#]&,Line[{3am[n]/4,0}],large];
+A2=Fun[UC[n,#]&,Line[{3am[n]/4+1/4(1-.4/n^(1/6))am[n],3am[n]/4}],large];
+A3=Fun[UC[n,#]&,Line[{3am[n]/4+1/4(1-.2/n^(2/6))am[n],3am[n]/4+1/4(1-.4/n^(1/6))am[n]}],large];
+A4=Fun[UC[n,#]&,Line[{3am[n]/4+1/4(1-.1/n^(3/6))am[n],3am[n]/4+1/4(1-.2/n^(2/6))am[n]}],large];
+A5=Fun[UC[n,#]&,Line[{am[n]+10$MachineEpsilon,(1-.1/n^(3/6))am[n]}],large];
+A6=Fun[UC[n,#]&,Line[{(a+ap[n])/2,am[n]-10 $MachineEpsilon}],small];
+B1=Fun[UC[n,#]&,Line[{3bm[n]/4,0}//Reverse],large];
+B2=Fun[UC[n,#]&,Line[{3bm[n]/4+1/4(1-.4/n^(1/6))bm[n],3bm[n]/4}//Reverse],large];
+B3=Fun[UC[n,#]&,Line[{3bm[n]/4+1/4(1-.2/n^(2/6))bm[n],3bm[n]/4+1/4(1-.4/n^(1/6))bm[n]}//Reverse],large];
+B4=Fun[UC[n,#]&,Line[{3bm[n]/4+1/4(1-.1/n^(3/6))bm[n],3bm[n]/4+1/4(1-.2/n^(2/6))bm[n]}//Reverse],large];
+B5=Fun[UC[n,#]&,Line[{bm[n]-10$MachineEpsilon,(1-.1/n^(3/6))bm[n]}//Reverse],large];
+B6=Fun[UC[n,#]&,Line[{(b+bp[n])/2,bm[n]+10 $MachineEpsilon}//Reverse],small];
+{A1,A2,A3,A4,A5,A6,B1,B2,B3,B4,B5,B6}
+];
+
+U[n_,z_]:=U[n,z]=If[Im[z]==0.&&(a<=z<=b),F[z,funs[n]],UC[n,z]];
+
+
+aScale[n_]:= n^expa;
+bScale[n_]:= n^expb;
+a\[Theta]=If[expa==2/7,6Pi/7,2Pi/3];
+b\[Theta]=If[expb==2/7,6Pi/7,2Pi/3];
+
+
+\[CapitalPsi][n_,z_,U_]/;RightOfLine[z-b,Line[base[b\[Theta],expb,n][[4]]/bScale[n]] ]&&0<=Arg[z-b]<b\[Theta]:=U[n,z].({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi][n_,z_,U_]/;Re[z]>b+Re[rngg[expb,n][[1]] Exp[I b\[Theta]]/bScale[n]]&&b\[Theta]<Arg[z-b]<=\[Pi]:=U[n,z].({
+ {1, 0},
+ {-1, 1}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+});
+
+
+\[CapitalPsi][n_,z_,U_]/;Re[z]>b+Re[rngg[expb,n][[1]] Exp[I b\[Theta]]/bScale[n]] &&-\[Pi]<Arg[z-b]<-b\[Theta]:=U[n,z].({
+ {0, -1},
+ {1, 1}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi][n_,z_,U_]/;RightOfLine[z-b,Line[base[b\[Theta],expb,n][[5]]/bScale[n]] ] &&-b\[Theta]<Arg[z-b]<0:=U[n,z].({
+ {1, -1},
+ {0, 1}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+});
+
+\[CapitalPsi][n_,z_,U_]/;Re[z]<a-Re[rngg[expa,n][[1]] Exp[I a\[Theta]]/aScale[n] ] &&0<=Arg[z-a]< \[Pi]-a\[Theta]:=U[n,z].({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi][n_,z_,U_]/;LeftOfLine[a-z,Line[base[a\[Theta],expa,n][[5]]/aScale[n]]] && \[Pi]-a\[Theta]<Arg[z-a]<=\[Pi]:=U[n,z].({
+ {1, 0},
+ {1, 1}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi][n_,z_,U_]/;LeftOfLine[a-z,Line[Line[base[a\[Theta],expa,n][[4]]/aScale[n]]]] &&-\[Pi]<Arg[z-a]<-(\[Pi]-a\[Theta]):=U[n,z].({
+ {1, -1},
+ {1, 0}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi][n_,z_,U_]/;Re[z]<a-Re[rngg[expa,n][[1]] Exp[I a\[Theta]]/aScale[n] ] &&-(\[Pi]-a\[Theta])<Arg[z-a]<0:=U[n,z].({
+ {0, -1},
+ {1, 0}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+});
+\[CapitalPsi][n_,z_,U_]:=U[n,z].P[z];
+
+\[CapitalPhi][n_,z_,U_]/;Im[z]>=0&&b\[Theta]<Arg[z-b]&&0<=Arg[z-a]<\[Pi]-a\[Theta]:=\[CapitalPsi][n,z,U].B[n][z];
+\[CapitalPhi][n_,z_,U_]/;Im[z]<0&&Arg[z-b]<-b\[Theta]&&-(\[Pi]-a\[Theta])<Arg[z-a]<0:=\[CapitalPsi][n,z,U].Inverse[B[n][z]];
+\[CapitalPhi][n_,z_,U_]:=\[CapitalPsi][n,z,U];
+Y[n_,z_]:=\[CapitalPhi][n,z,U].({
+ {Exp[n g[z]+n l/2], 0},
+ {0, Exp[-n g[z]-n l/2]}
+});
+Y2[n_,z_]:=\[CapitalPhi][n,z,UCo].({
+ {Exp[n g[z]+n l/2], 0},
+ {0, Exp[-n g[z]-n l/2]}
+});
+
+
+UDC[n_,z_]:=CauchyD[Ue[n],z];
+UDCo[n_,z_]:=UDCo[n,z]=CauchyD[Uo[n],z];
+funsd[n_]:=funsd[n]=Module[{A1,B1,A2,B2,A3,B3,A4,B4,A5,B5,A6,B6},
+A1=Fun[UDC[n,#]&,Line[{3am[n]/4,0}],large];
+A2=Fun[UDC[n,#]&,Line[{3am[n]/4+1/4(1-.4/n^(1/6))am[n],3am[n]/4}],large];
+A3=Fun[UDC[n,#]&,Line[{3am[n]/4+1/4(1-.2/n^(2/6))am[n],3am[n]/4+1/4(1-.4/n^(1/6))am[n]}],large];
+A4=Fun[UDC[n,#]&,Line[{3am[n]/4+1/4(1-.1/n^(3/6))am[n],3am[n]/4+1/4(1-.2/n^(2/6))am[n]}],large];
+A5=Fun[UDC[n,#]&,Line[{am[n]+10$MachineEpsilon,(1-.1/n^(3/6))am[n]}],large];
+A6=Fun[UDC[n,#]&,Line[{(a+ap[n])/2,am[n]-10 $MachineEpsilon}],small];
+B1=Fun[UDC[n,#]&,Line[{3bm[n]/4,0}//Reverse],large];
+B2=Fun[UDC[n,#]&,Line[{3bm[n]/4+1/4(1-.4/n^(1/6))bm[n],3bm[n]/4}//Reverse],large];
+B3=Fun[UDC[n,#]&,Line[{3bm[n]/4+1/4(1-.2/n^(2/6))bm[n],3bm[n]/4+1/4(1-.4/n^(1/6))bm[n]}//Reverse],large];
+B4=Fun[UDC[n,#]&,Line[{3bm[n]/4+1/4(1-.1/n^(3/6))bm[n],3bm[n]/4+1/4(1-.2/n^(2/6))bm[n]}//Reverse],large];
+B5=Fun[UDC[n,#]&,Line[{bm[n]-10$MachineEpsilon,(1-.1/n^(3/6))bm[n]}//Reverse],large];
+B6=Fun[UDC[n,#]&,Line[{(b+bp[n])/2,bm[n]+10 $MachineEpsilon}//Reverse],small];
+{A1,A2,A3,A4,A5,A6,B1,B2,B3,B4,B5,B6}
+];
+UD[n_,z_]:=UD[n,z]=If[Im[z]==0.&&(a<=z<=b),F[z,funsd[n]],UDC[n,z]];
+
+\[CapitalPsi]D[n_,z_,U_,UD_]/;RightOfLine[z-b,Line[base[b\[Theta],expb,n][[4]]/bScale[n]]]&&0<=Arg[z-b]<b\[Theta]:=UD[n,z].({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+})+\[Phi]D[z] U[n,z].({
+ {n Exp[n \[Phi][z]], 0},
+ {0, -n Exp[-n \[Phi][z]]}
+});
+
+\[CapitalPsi]D[n_,z_,U_,UD_]/;Re[z]>b+Re[rngg[expb,n][[1]] Exp[I b\[Theta]]/bScale[n]]&&b\[Theta]<Arg[z-b]<=\[Pi]:=UD[n,z].({
+ {1, 0},
+ {-1, 1}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+})+\[Phi]D[z] U[n,z].({
+ {1, 0},
+ {-1, 1}
+}).({
+ {n Exp[n \[Phi][z]], 0},
+ {0, -n Exp[-n \[Phi][z]]}
+});
+
+\[CapitalPsi]D[n_,z_,U_,UD_]/;Re[z]>b+Re[rngg[expb,n][[1]] Exp[I b\[Theta]]/bScale[n]]&&-\[Pi]<Arg[z-b]<-b\[Theta]:=UD[n,z].({
+ {0, -1},
+ {1, 1}
+}) .({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+})+\[Phi]D[z] U[n,z].({
+ {0, -1},
+ {1, 1}
+}) .({
+ {n Exp[n \[Phi][z]], 0},
+ {0, -n Exp[-n \[Phi][z]]}
+});
+
+\[CapitalPsi]D[n_,z_,U_,UD_]/;RightOfLine[z-b,Line[base[b\[Theta],expb,n][[5]]/bScale[n]]]&&-b\[Theta]<Arg[z-b]<0:=UD[n,z].({
+ {1, -1},
+ {0, 1}
+}) .({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+})+\[Phi]D[z] U[n,z].({
+ {1, -1},
+ {0, 1}
+}) .({
+ {n Exp[n \[Phi][z]], 0},
+ {0, -n Exp[-n \[Phi][z]]}
+});
+
+
+
+\[CapitalPsi]D[n_,z_,U_,UD_]/;Re[z]<a-Re[rngg[expb,n][[1]] Exp[I a\[Theta]]/aScale[n]]&&0<=Arg[z-a]<\[Pi]-a\[Theta]:=UD[n,z].({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+})+\[Phi]D[z] U[n,z].({
+ {n Exp[n \[Phi][z]], 0},
+ {0, -n Exp[-n \[Phi][z]]}
+});
+
+\[CapitalPsi]D[n_,z_,U_,UD_]/;LeftOfLine[a-z,Line[base[a\[Theta],expa,n][[5]]/aScale[n]]]&&\[Pi]-a\[Theta]<Arg[z-a]<=\[Pi]:=UD[n,z].({
+ {1, 0},
+ {1, 1}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+})+\[Phi]D[z] U[n,z].({
+ {1, 0},
+ {1, 1}
+}).({
+ {n Exp[n \[Phi][z]], 0},
+ {0, -n Exp[-n \[Phi][z]]}
+});
+
+\[CapitalPsi]D[n_,z_,U_,UD_]/;LeftOfLine[a-z,Line[Line[base[a\[Theta],expa,n][[4]]/aScale[n]]]]&&-\[Pi]<Arg[z-a]<-(\[Pi]-a\[Theta]):=UD[n,z].({
+ {1, -1},
+ {1, 0}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+})+\[Phi]D[z] U[n,z].({
+ {1, -1},
+ {1, 0}
+}).({
+ {n Exp[n \[Phi][z]], 0},
+ {0, -n Exp[-n \[Phi][z]]}
+});
+
+\[CapitalPsi]D[n_,z_,U_,UD_]/;Re[z]<a-Re[rngg[expb,n][[1]] Exp[I a\[Theta]]/aScale[n]]&&-(\[Pi]-a\[Theta])<Arg[z-a]<0:=UD[n,z].({
+ {0, -1},
+ {1, 0}
+}).({
+ {Exp[n \[Phi][z]], 0},
+ {0, Exp[-n \[Phi][z]]}
+})+\[Phi]D[z] U[n,z].({
+ {0, -1},
+ {1, 0}
+}).({
+ {n Exp[n \[Phi][z]], 0},
+ {0, -n Exp[-n \[Phi][z]]}
+});
+
+\[CapitalPsi]D[n_,z_,U_,UD_]:=UD[n,z].P[z]+U[n,z].PD[z];
+
+\[CapitalPhi]D[n_,z_,U_,UD_]/;Im[z]>=0&&b\[Theta]<Arg[z-b]&&0<=Arg[z-a]<\[Pi]-a\[Theta]:=\[CapitalPsi]D[n,z,U,UD].B[n][z]+\[CapitalPsi][n,z,U].BD[n][z];
+\[CapitalPhi]D[n_,z_,U_,UD_]/;Im[z]<0&&Arg[z-b]<-b\[Theta]&&-(\[Pi]-a\[Theta])<Arg[z-a]<0:=\[CapitalPsi]D[n,z,U,UD].Inverse[B[n][z]]+\[CapitalPsi][n,z,U].BinD[n][z];
+\[CapitalPhi]D[n_,z_,U_,UD_]:=\[CapitalPsi]D[n,z,U,UD];
+YD[n_,z_]:=\[CapitalPhi]D[n,z,U,UD].({
+ {Exp[n g[z]+n l/2], 0},
+ {0, Exp[-n  g[z]-n l/2]}
+})+n gD[z] \[CapitalPhi][n,z,U].({
+ {Exp[n g[z]+n l/2], 0},
+ {0, -Exp[-n g[z]-n l/2]}
+});
+Y2D[n_,z_]:=\[CapitalPhi]D[n,z,UCo,UDCo].({
+ {Exp[n g[z]+n l/2], 0},
+ {0, Exp[-n  g[z]-n l/2]}
+})+n gD[z] \[CapitalPhi][n,z,UCo].({
+ {Exp[n g[z]+n l/2], 0},
+ {0, -Exp[-n g[z]-n l/2]}
+});
+
+{Y,YD,Y2,Y2D,U,funs,funsd,UC}
+
+];
 
 
 HOOrthogonalPolynomialMatrixGenerator[V_,M_:50,L_:5.]:=Module[{g,l,z,\[Phi],supp,P,Pin,rngg,Cdefs,a,b,A,B,AP,BP,gs,m,U,\[CapitalPsi],\[CapitalPhi],p,slvr,Y,UD,\[CapitalPsi]D,\[Phi]D,\[CapitalPhi]D,YD,PD,BD,BinD,rnggR,\[Alpha]R,\[Alpha]L,rsc,lsc},
