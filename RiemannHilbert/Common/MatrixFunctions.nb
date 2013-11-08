@@ -142,6 +142,7 @@ Cell[BoxData[{
  RowBox[{"LaurentMatrix", ";"}], "\[IndentingNewLine]", 
  RowBox[{"BasisShiftList", ";"}], "\[IndentingNewLine]", 
  RowBox[{"ReplaceEntry", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"CirculantMatrix", ";"}], "\[IndentingNewLine]", 
  RowBox[{"IncreaseSize", ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
@@ -1215,15 +1216,42 @@ Cell[BoxData[{
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
+   RowBox[{"LaurentMatrix", "[", "lg_ShiftList", "]"}], ":=", 
+   RowBox[{"ShiftMatrix", "[", 
+    RowBox[{
+     RowBox[{"ToeplitzMatrix", "[", 
+      RowBox[{"lg", ",", 
+       RowBox[{"Length", "[", "lg", "]"}]}], "]"}], ",", 
+     RowBox[{"lg", "//", "IndexRange"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
    RowBox[{
-    RowBox[{"LaurentMatrix", "[", "lg_ShiftList", "]"}], ":=", 
-    RowBox[{"ShiftMatrix", "[", 
+    RowBox[{"CirculantMatrix", "[", 
+     RowBox[{"sl_ShiftList", ",", "n_"}], "]"}], ":=", 
+    RowBox[{"ToeplitzMatrix", "[", 
      RowBox[{
-      RowBox[{"ToeplitzMatrix", "[", 
-       RowBox[{"lg", ",", 
-        RowBox[{"Length", "[", "lg", "]"}]}], "]"}], ",", 
-      RowBox[{"lg", "//", "IndexRange"}]}], "]"}]}], ";"}], 
-  "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"PadRight", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"NonPositiveList", "[", "sl", "]"}], "//", "Reverse"}], ",",
+          "n"}], "]"}], "+", 
+       RowBox[{"PadLeft", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"PositiveList", "[", "sl", "]"}], "//", "Reverse"}], ",", 
+         "n"}], "]"}]}], ",", 
+      RowBox[{
+       RowBox[{"PadRight", "[", 
+        RowBox[{
+         RowBox[{"NonNegativeList", "[", "sl", "]"}], ",", "n"}], "]"}], "+", 
+       
+       RowBox[{"PadLeft", "[", 
+        RowBox[{
+         RowBox[{"NegativeList", "[", "sl", "]"}], ",", "n"}], "]"}]}]}], 
+     "]"}]}], ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"NZeroQ", "[", "sl_List", "]"}], ":=", 
@@ -1255,9 +1283,9 @@ Cell[BoxData[{
  RowBox[{"ShiftDiagonalMatrix", ";"}], "\[IndentingNewLine]", 
  RowBox[{"SparseShiftMatrix", ";"}], "\[IndentingNewLine]", 
  RowBox[{"RowIndex", ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"ColumnIndex", ";"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"ColumnIndex", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"RowIndexRange", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ColumnIndexRange", ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"Begin", "[", "\"\<Private`\>\"", "]"}], ";"}], 
@@ -1407,16 +1435,84 @@ Cell[BoxData[{
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
-   RowBox[{"ColumnIndexRange", "[", "l_ShiftMatrix", "]"}], ":=", 
-   RowBox[{"{", 
-    RowBox[{
-     RowBox[{"1", "-", 
-      RowBox[{"ColumnIndex", "[", "l", "]"}]}], ",", 
+   RowBox[{
+    RowBox[{"ColumnIndexRange", "[", "l_ShiftMatrix", "]"}], ":=", 
+    RowBox[{"{", 
      RowBox[{
+      RowBox[{"1", "-", 
+       RowBox[{"ColumnIndex", "[", "l", "]"}]}], ",", 
       RowBox[{
-       RowBox[{"Dimensions", "[", "l", "]"}], "\[LeftDoubleBracket]", "2", 
-       "\[RightDoubleBracket]"}], "-", 
-      RowBox[{"ColumnIndex", "[", "l", "]"}]}]}], "}"}]}], 
+       RowBox[{
+        RowBox[{"Dimensions", "[", "l", "]"}], "\[LeftDoubleBracket]", "2", 
+        "\[RightDoubleBracket]"}], "-", 
+       RowBox[{"ColumnIndex", "[", "l", "]"}]}]}], "}"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ShiftMatrix", "/:", 
+   RowBox[{"PadRight", "[", 
+    RowBox[{"sm_ShiftMatrix", ",", 
+     RowBox[{"{", 
+      RowBox[{"m_", ",", "n_"}], "}"}]}], "]"}], ":=", 
+   RowBox[{"ShiftMatrix", "[", 
+    RowBox[{
+     RowBox[{"PadRight", "[", 
+      RowBox[{
+       RowBox[{"ToArray", "[", "sm", "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"m", "+", 
+          RowBox[{"RowIndex", "@", "sm"}]}], ",", 
+         RowBox[{"n", "+", 
+          RowBox[{"ColumnIndex", "@", "sm"}]}]}], "}"}]}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"RowIndex", "@", "sm"}], ",", 
+       RowBox[{"ColumnIndex", "@", "sm"}]}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ShiftMatrix", "/:", 
+   RowBox[{"PadLeft", "[", 
+    RowBox[{"sm_ShiftMatrix", ",", 
+     RowBox[{"{", 
+      RowBox[{"m_", ",", "n_"}], "}"}]}], "]"}], ":=", 
+   RowBox[{"ShiftMatrix", "[", 
+    RowBox[{
+     RowBox[{"PadLeft", "[", 
+      RowBox[{
+       RowBox[{"ToArray", "[", "sm", "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Length", "@", 
+           RowBox[{"ToArray", "@", "sm"}]}], "-", 
+          RowBox[{"RowIndex", "@", "sm"}], "+", "1", "-", "m"}], ",", 
+         RowBox[{
+          RowBox[{"Second", "@", 
+           RowBox[{"Dimensions", "@", 
+            RowBox[{"ToArray", "@", "sm"}]}]}], "-", 
+          RowBox[{"ColumnIndex", "@", "sm"}], "+", "1", "-", "n"}]}], "}"}]}],
+       "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"1", "-", "m"}], ",", 
+       RowBox[{"1", "-", "n"}]}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SetIndexRange", "[", 
+    RowBox[{"sm_ShiftMatrix", ",", 
+     RowBox[{"{", 
+      RowBox[{"i_", ",", "j_"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"m_", ",", "n_"}], "}"}]}], "]"}], ":=", 
+   RowBox[{"PadRight", "[", 
+    RowBox[{
+     RowBox[{"PadLeft", "[", 
+      RowBox[{"sm", ",", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", "m"}], "}"}]}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"j", ",", "n"}], "}"}]}], "]"}]}], 
   ";"}], "\[IndentingNewLine]"}], "Input",
  InitializationCell->True],
 
@@ -1477,6 +1573,16 @@ Cell[BoxData[{
       RowBox[{"ToArray", "[", "sm", "]"}], ".", 
       RowBox[{"ToList", "[", "sl", "]"}]}], ",", 
      RowBox[{"RangeIndex", "[", "sm", "]"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ShiftMatrix", "/:", 
+   RowBox[{"sl_ShiftList", ".", "sm_ShiftMatrix"}], ":=", 
+   RowBox[{"ShiftList", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"ToList", "[", "sl", "]"}], ".", 
+      RowBox[{"ToArray", "[", "sm", "]"}]}], ",", 
+     RowBox[{"ColumnIndex", "[", "sm", "]"}]}], "]"}]}], 
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"ShiftMatrix", "/:", 
@@ -1657,9 +1763,8 @@ Cell[BoxData[{
 Cell[BoxData[
  RowBox[{
   StyleBox[
-   RowBox[{"End", "::", "noctx"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"No previous context defined. \\!\\(\\*ButtonBox[\\\"\
+   RowBox[{"End", "::", "noctx"}], "MessageName"], ":", 
+  " ", "\<\"No previous context defined. \\!\\(\\*ButtonBox[\\\"\
 \[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
 ButtonData:>\\\"paclet:ref/message/End/noctx\\\", ButtonNote -> \
 \\\"End::noctx\\\"]\\)\"\>"}]], "Message", "MSG"]
@@ -2268,48 +2373,99 @@ Cell[BoxData[
      RowBox[{"Module", "[", 
       RowBox[{
        RowBox[{"{", 
-        RowBox[{"Asp", ",", "k", ",", "j"}], "}"}], ",", 
-       "\[IndentingNewLine]", 
+        RowBox[{"Asp", ",", "k", ",", "j", ",", "dim", ",", "sete"}], "}"}], 
+       ",", "\[IndentingNewLine]", 
        RowBox[{
+        RowBox[{
+         RowBox[{"dim", "[", 
+          RowBox[{"al_", "?", "MatrixQ"}], "]"}], ":=", 
+         RowBox[{"al", "//", "Dimensions"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"dim", "[", 
+          RowBox[{"al_", "?", "VectorQ"}], "]"}], ":=", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"al", "//", "Length"}], ",", "1"}], "}"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"dim", "[", "al_", "]"}], ":=", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "1"}], "}"}]}], ";", "\[IndentingNewLine]", 
         RowBox[{"Asp", "=", 
          RowBox[{"SparseZeroMatrix", "@@", 
           RowBox[{"(", 
            RowBox[{
-            RowBox[{"Dimensions", "/@", "Al"}], "//", "Total"}], ")"}]}]}], 
-        ";", "\[IndentingNewLine]", 
+            RowBox[{"dim", "/@", "Al"}], "//", "Total"}], ")"}]}]}], ";", 
+        "\[IndentingNewLine]", "\[IndentingNewLine]", 
         RowBox[{
          RowBox[{"{", 
           RowBox[{"k", ",", "j"}], "}"}], "=", 
          RowBox[{"{", 
-          RowBox[{"0", ",", "0"}], "}"}]}], ";", 
+          RowBox[{"0", ",", "0"}], "}"}]}], ";", "\[IndentingNewLine]", 
         RowBox[{
-         RowBox[{"Function", "[", 
-          RowBox[{"A", ",", 
+         RowBox[{"sete", "[", 
+          RowBox[{"A_", "?", "MatrixQ"}], "]"}], ":=", 
+         RowBox[{
+          RowBox[{"Asp", "\[LeftDoubleBracket]", 
            RowBox[{
             RowBox[{
-             RowBox[{"Asp", "\[LeftDoubleBracket]", 
-              RowBox[{
-               RowBox[{
-                RowBox[{"k", "+", "1"}], ";;", 
-                RowBox[{"(", 
-                 RowBox[{"k", "=", 
-                  RowBox[{"k", "+", 
-                   RowBox[{
-                    RowBox[{"Dimensions", "[", "A", "]"}], 
-                    "\[LeftDoubleBracket]", "1", 
-                    "\[RightDoubleBracket]"}]}]}], ")"}]}], ",", 
-               RowBox[{
-                RowBox[{"j", "+", "1"}], ";;", 
-                RowBox[{"(", 
-                 RowBox[{"j", "=", 
-                  RowBox[{"j", "+", 
-                   RowBox[{
-                    RowBox[{"Dimensions", "[", "A", "]"}], 
-                    "\[LeftDoubleBracket]", "2", 
-                    "\[RightDoubleBracket]"}]}]}], ")"}]}]}], 
-              "\[RightDoubleBracket]"}], "=", "A"}], ";"}]}], "]"}], "/@", 
-         "Al"}], ";", "\[IndentingNewLine]", "Asp"}]}], "\[IndentingNewLine]",
-       "]"}]}], ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+             RowBox[{"k", "+", "1"}], ";;", 
+             RowBox[{"(", 
+              RowBox[{"k", "=", 
+               RowBox[{"k", "+", 
+                RowBox[{
+                 RowBox[{"Dimensions", "[", "A", "]"}], 
+                 "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]}]}], 
+              ")"}]}], ",", 
+            RowBox[{
+             RowBox[{"j", "+", "1"}], ";;", 
+             RowBox[{"(", 
+              RowBox[{"j", "=", 
+               RowBox[{"j", "+", 
+                RowBox[{
+                 RowBox[{"Dimensions", "[", "A", "]"}], 
+                 "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}]}]}], 
+              ")"}]}]}], "\[RightDoubleBracket]"}], "=", "A"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"sete", "[", 
+          RowBox[{"A_", "?", "VectorQ"}], "]"}], ":=", 
+         RowBox[{
+          RowBox[{"Asp", "\[LeftDoubleBracket]", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"k", "+", "1"}], ";;", 
+             RowBox[{"(", 
+              RowBox[{"k", "=", 
+               RowBox[{"k", "+", 
+                RowBox[{"Length", "[", "A", "]"}]}]}], ")"}]}], ",", 
+            RowBox[{
+             RowBox[{"j", "+", "1"}], ";;", 
+             RowBox[{"(", 
+              RowBox[{"j", "=", 
+               RowBox[{"j", "+", "1"}]}], ")"}]}]}], 
+           "\[RightDoubleBracket]"}], "=", "A"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"sete", "[", "A_", "]"}], ":=", 
+         RowBox[{
+          RowBox[{"Asp", "\[LeftDoubleBracket]", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"k", "+", "1"}], ";;", 
+             RowBox[{"(", 
+              RowBox[{"k", "=", 
+               RowBox[{"k", "+", "1"}]}], ")"}]}], ",", 
+            RowBox[{
+             RowBox[{"j", "+", "1"}], ";;", 
+             RowBox[{"(", 
+              RowBox[{"j", "=", 
+               RowBox[{"j", "+", "1"}]}], ")"}]}]}], 
+           "\[RightDoubleBracket]"}], "=", "A"}]}], ";", 
+        "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"sete", "/@", "Al"}], ";", "\[IndentingNewLine]", "Asp"}]}], 
+      "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"LeastSquaresQR", "[", 
@@ -2766,7 +2922,7 @@ Cell[BoxData[{
 },
 AutoGeneratedPackage->Automatic,
 WindowSize->{1057, 856},
-WindowMargins->{{383, Automatic}, {Automatic, 150}},
+WindowMargins->{{Automatic, 420}, {Automatic, 81}},
 PrivateNotebookOptions->{"FileOutlineCache"->False},
 ShowSelection->True,
 TrackCellChangeTimes->False,

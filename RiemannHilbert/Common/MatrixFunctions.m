@@ -66,6 +66,7 @@ LastIndex;
 LaurentMatrix;
 BasisShiftList;
 ReplaceEntry;
+CirculantMatrix;
 IncreaseSize;
 Begin["Private`"];
 
@@ -208,6 +209,8 @@ ShiftList/:ToeplitzMatrix[sl_ShiftList,n_Integer]:=ToeplitzMatrix[PadRight[NonPo
 ToeplitzMatrix[sl_ShiftList]^:=ToeplitzMatrix[sl,Length[sl]];
 LaurentMatrix[lg_,{im_,iM_}]:=ShiftMatrix[ToeplitzMatrix[lg,iM-im+1],{1-im,1-im}];
 LaurentMatrix[lg_ShiftList]:=ShiftMatrix[ToeplitzMatrix[lg,Length[lg]],lg//IndexRange];
+CirculantMatrix[sl_ShiftList,n_]:=ToeplitzMatrix[PadRight[NonPositiveList[sl]//Reverse,n]+PadLeft[PositiveList[sl]//Reverse,n],PadRight[NonNegativeList[sl],n]+PadLeft[NegativeList[sl],n]];
+
 
 
 NZeroQ[sl_List]:=sl//Abs//Max//NZeroQ;
@@ -224,7 +227,8 @@ ShiftDiagonalMatrix;
 SparseShiftMatrix;
 RowIndex;
 ColumnIndex;
-
+RowIndexRange;
+ColumnIndexRange;
 Begin["Private`"];
 
 
@@ -253,6 +257,10 @@ DomainIndex:=ColumnIndex;
 RowIndexRange[l_ShiftMatrix]:={1-RowIndex[l],Dimensions[l][[1]]-RowIndex[l]};
 ColumnIndexRange[l_ShiftMatrix]:={1-ColumnIndex[l],Dimensions[l][[2]]-ColumnIndex[l]};
 
+ShiftMatrix/:PadRight[sm_ShiftMatrix,{m_,n_}]:=ShiftMatrix[PadRight[ToArray[sm],{m+RowIndex@sm,n+ColumnIndex@sm}],{RowIndex@sm,ColumnIndex@sm}];
+ShiftMatrix/:PadLeft[sm_ShiftMatrix,{m_,n_}]:=ShiftMatrix[PadLeft[ToArray[sm],{Length@ToArray@sm-RowIndex@sm+1-m,Second@Dimensions@ToArray@sm-ColumnIndex@sm+1-n}],{1-m,1-n}];
+SetIndexRange[sm_ShiftMatrix,{i_,j_},{m_,n_}]:=PadRight[PadLeft[sm,{i,m}],{j,n}];
+
 
 
 Format[sm:ShiftMatrix[_?MatrixQ,{_Integer,_Integer}]]:=Module[{i,j},
@@ -260,6 +268,7 @@ Table[If[i==0||j==0,Style[sm[[i,j]],Bold],sm[[i,j]]],{i,RowIndexRange[sm][[1]],R
 
 
 ShiftMatrix/:sm_ShiftMatrix.sl_ShiftList:=ShiftList[ToArray[sm].ToList[sl],RangeIndex[sm]];
+ShiftMatrix/:sl_ShiftList.sm_ShiftMatrix:=ShiftList[ToList[sl].ToArray[sm],ColumnIndex[sm]];
 ShiftMatrix/:sm_ShiftMatrix.sm2_ShiftMatrix:=ShiftMatrix[ToArray[sm].ToArray[sm2],{RangeIndex[sm],DomainIndex[sm2]}];
 ShiftMatrix/:sm_ShiftMatrix+sm2_ShiftMatrix:=ShiftMatrix[ToArray[sm]+ToArray[sm2],{RangeIndex[sm],DomainIndex[sm2]}];
 ShiftMatrix/:c_?NumberQ sm_ShiftMatrix:=ShiftMatrix[c ToArray[sm],{RangeIndex[sm],DomainIndex[sm]}];
@@ -431,9 +440,18 @@ PartitionList[l_,d_?MatrixQ]:=PartitionList[PartitionList[l,Flatten[d]],Length/@
 
 RightJoin[v__]:=Join@@(VectorTranspose/@{v})//VectorTranspose;
 
-BlockDiagonalMatrix[Al_List]:=Module[{Asp,k,j},
-Asp=SparseZeroMatrix@@(Dimensions/@Al//Total);
-{k,j}={0,0};Function[A,Asp[[k+1;;(k=k+Dimensions[A][[1]]),j+1;;(j=j+Dimensions[A][[2]])]]=A;]/@Al;
+BlockDiagonalMatrix[Al_List]:=Module[{Asp,k,j,dim,sete},
+dim[al_?MatrixQ]:=al//Dimensions;
+dim[al_?VectorQ]:={al//Length,1};
+dim[al_]:={1,1};
+Asp=SparseZeroMatrix@@(dim/@Al//Total);
+
+{k,j}={0,0};
+sete[A_?MatrixQ]:=Asp[[k+1;;(k=k+Dimensions[A][[1]]),j+1;;(j=j+Dimensions[A][[2]])]]=A;
+sete[A_?VectorQ]:=Asp[[k+1;;(k=k+Length[A]),j+1;;(j=j+1)]]=A;
+sete[A_]:=Asp[[k+1;;(k=k+1),j+1;;(j=j+1)]]=A;
+
+sete/@Al;
 Asp
 ];
 

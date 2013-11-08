@@ -30,7 +30,14 @@ HermiteQuadratureWeights;
 NewtonMethod;
 NewtonInverse;
 JacobiMatrix;
+ToMachineNumber;
+MExp;
 Begin["Private`"];
+
+
+ToMachineNumber[x_?((Abs[#]<=$MinMachineNumber)&)]:=0.;ToMachineNumber[x_?(Abs[#]>=$MaxMachineNumber&)]:=Sign[x] $MaxMachineNumber;
+ToMachineNumber[x_]:=x//N;
+MExp[x_]:=ToMachineNumber@Exp[x];
 
 
 JacobiMatrix[n_,\[Alpha]_,\[Beta]_]:=Module[{J,i,j,\[CapitalLambda],V},
