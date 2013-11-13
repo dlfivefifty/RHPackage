@@ -536,7 +536,7 @@ Cell[BoxData[
          RowBox[{"f", "//", "DCT"}], "//", "Rest"}]}], "]"}]}]}], 
     ";"}]}]}]], "Input",
  InitializationCell->True]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -714,7 +714,7 @@ g^-\>\""}], ";"}], "\[IndentingNewLine]",
       RowBox[{"CauchyInverseCurves", "[", "l", "]"}]}], ")"}]}]}], 
   ";"}]}], "Input",
  InitializationCell->True]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -1103,7 +1103,7 @@ Cell[BoxData[
    "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
    "\[IndentingNewLine]", "\[IndentingNewLine]"}]}]], "Input",
  InitializationCell->True]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -1454,7 +1454,7 @@ Cell[BoxData[
              RowBox[{"{", "spc", "}"}]}], "}"}], "]"}]}], ")"}]}], ")"}]}]}], 
     ";"}], "\[IndentingNewLine]"}]}]], "Input",
  InitializationCell->True]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -1501,7 +1501,7 @@ Cell[BoxData[{
     RowBox[{"f", "'"}], "[", "z", "]"}]}], ";"}]}], "Input",
  InitializationCell->True]
 }, Open  ]]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -1884,7 +1884,7 @@ Cell[BoxData[{
        RowBox[{"l", ",", "opts"}], "]"}]}], ")"}]}]}], 
   ";"}], "\[IndentingNewLine]"}], "Input",
  InitializationCell->True]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -2033,7 +2033,7 @@ Cell[BoxData[
        ")"}]}]}], ";"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
-     RowBox[{"CauchyInverseIntegralLogTerm", "[", 
+     RowBox[{"CauchyInverseIntegralLogTermS", "[", 
       RowBox[{
        RowBox[{"s_", "?", "SignQ"}], ",", "f_IFun", ",", "z_"}], "]"}], ":=", 
      
@@ -2117,7 +2117,7 @@ Cell[BoxData[
        RowBox[{"s", ",", 
         RowBox[{"SPCauchyInverseIntegral", "[", "f", "]"}], ",", "z"}], "]"}],
        "+", 
-      RowBox[{"CauchyInverseIntegralLogTerm", "[", 
+      RowBox[{"CauchyInverseIntegralLogTermS", "[", 
        RowBox[{"s", ",", "f", ",", "z"}], "]"}]}]}], ";"}], 
    "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
@@ -2165,63 +2165,6 @@ Cell[BoxData[
        RowBox[{"f_IFun", "?", "IntervalFunQ"}], ",", "z_"}], "]"}], ":=", 
      RowBox[{"CauchyInverseIntegral", "[", 
       RowBox[{"f", ",", "z"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
-   "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{
-     RowBox[{
-      RowBox[{"CauchyInverseIntegralPlus", "[", 
-       RowBox[{
-        RowBox[{"f_IFun", "?", "IntervalFunQ"}], ",", "z_"}], "]"}], "/;", 
-      RowBox[{"DomainMemberQ", "[", 
-       RowBox[{"f", ",", "z"}], "]"}]}], ":=", 
-     RowBox[{
-      RowBox[{"SPCauchyInverseIntegral", "[", "f", "]"}], "[", "z", "]"}]}], 
-    ";"}], "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{
-     RowBox[{
-      RowBox[{"CauchyInverseIntegralPlus", "[", 
-       RowBox[{
-        RowBox[{"f_IFun", "?", "IntervalFunQ"}], ",", "z_"}], "]"}], "/;", 
-      RowBox[{
-       RowBox[{"NZeroQ", "[", 
-        RowBox[{"Im", "[", 
-         RowBox[{"MapToInterval", "[", 
-          RowBox[{"f", ",", "z"}], "]"}], "]"}], "]"}], "&&", 
-       RowBox[{
-        RowBox[{"Re", "[", 
-         RowBox[{"MapToInterval", "[", 
-          RowBox[{"f", ",", "z"}], "]"}], "]"}], "\[LessEqual]", 
-        RowBox[{"-", "1."}]}]}]}], ":=", 
-     RowBox[{
-      RowBox[{"CauchyInversePlus", "[", 
-       RowBox[{
-        RowBox[{"SPCauchyInverseIntegral", "[", "f", "]"}], ",", "z"}], "]"}],
-       "-", 
-      RowBox[{
-       RowBox[{"1", "/", 
-        RowBox[{"(", 
-         RowBox[{"2", " ", 
-          RowBox[{"MapToIntervalD", "[", 
-           RowBox[{"f", ",", "0."}], "]"}]}], ")"}]}], " ", 
-       RowBox[{
-        RowBox[{"DCT", "[", "f", "]"}], "\[LeftDoubleBracket]", "2", 
-        "\[RightDoubleBracket]"}], 
-       RowBox[{"(", 
-        RowBox[{"Log", "[", 
-         RowBox[{"Abs", "[", 
-          RowBox[{"IntervalToInnerCircle", "[", 
-           RowBox[{"MapToInterval", "[", 
-            RowBox[{"f", ",", "z"}], "]"}], "]"}], "]"}], "]"}], ")"}]}]}]}], 
-    ";"}], "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{
-     RowBox[{"CauchyInverseIntegralPlus", "[", 
-      RowBox[{
-       RowBox[{"f_IFun", "?", "IntervalFunQ"}], ",", "z_"}], "]"}], ":=", 
-     RowBox[{"2", " ", 
-      RowBox[{"CauchyInverseIntegral", "[", 
-       RowBox[{"f", ",", "z"}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
    "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
@@ -2248,20 +2191,132 @@ Cell[BoxData[
          RowBox[{"CauchyInverseIntegral", "[", 
           RowBox[{"s", ",", "#", ",", "z"}], "]"}], "&"}], "/@", 
         RowBox[{"CauchyInverseCurves", "[", "l", "]"}]}], ")"}]}]}], ";"}], 
-   "\[IndentingNewLine]", "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{
-     RowBox[{"CauchyInverseIntegralPlus", "[", 
-      RowBox[{"l_", ",", "z_"}], "]"}], ":=", 
-     RowBox[{"Plus", "@@", 
-      RowBox[{"(", 
-       RowBox[{
-        RowBox[{
-         RowBox[{"CauchyInverseIntegralPlus", "[", 
-          RowBox[{"#", ",", "z"}], "]"}], "&"}], "/@", 
-        RowBox[{"CauchyInverseCurves", "[", "l", "]"}]}], ")"}]}]}], ";"}], 
    "\[IndentingNewLine]"}]}]], "Input",
  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Plus", "Subsection"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"CauchyInverseIntegralLogTermPlus", "[", 
+    RowBox[{"f_IFun", ",", "z_"}], "]"}], ":=", 
+   RowBox[{"2", " ", 
+    RowBox[{"CauchyInverseIntegralLogTerm", "[", 
+     RowBox[{"f", ",", "z"}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CauchyInverseIntegralLogTermSPlus", "[", 
+    RowBox[{"f_IFun", ",", "z_"}], "]"}], ":=", 
+   RowBox[{"2", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"DCT", "[", "f", "]"}], "\[LeftDoubleBracket]", "2", 
+      "\[RightDoubleBracket]"}], "/", 
+     RowBox[{"(", 
+      RowBox[{"4", 
+       RowBox[{"MapToIntervalD", "[", 
+        RowBox[{"f", ",", "0."}], "]"}]}], ")"}]}], " ", 
+    RowBox[{"(", 
+     RowBox[{"Log", "[", 
+      RowBox[{
+       FractionBox["1", "4"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"RightEndpoint", "[", "f", "]"}], "-", 
+         RowBox[{"LeftEndpoint", "[", "f", "]"}]}], ")"}]}], "]"}], ")"}]}]}],
+   ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"CauchyInverseIntegralLogTermLeftPlus", "[", 
+     RowBox[{"f_IFun", ",", "z_"}], "]"}], ":=", 
+    RowBox[{"2", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"DCT", "[", "f", "]"}], "\[LeftDoubleBracket]", "2", 
+       "\[RightDoubleBracket]"}], "/", 
+      RowBox[{"(", 
+       RowBox[{"4", 
+        RowBox[{"MapToIntervalD", "[", 
+         RowBox[{"f", ",", "0."}], "]"}]}], ")"}]}], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"Log", "[", 
+        RowBox[{
+         FractionBox["1", "4"], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"RightEndpoint", "[", "f", "]"}], "-", 
+           RowBox[{"LeftEndpoint", "[", "f", "]"}]}], ")"}]}], "]"}], "-", 
+       RowBox[{"Log", "[", 
+        RowBox[{"Abs", "[", 
+         RowBox[{"IntervalToInnerCircle", "[", 
+          RowBox[{"MapToInterval", "[", 
+           RowBox[{"f", ",", "z"}], "]"}], "]"}], "]"}], "]"}]}], ")"}]}]}], 
+   ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"CauchyInverseIntegralPlus", "[", 
+     RowBox[{
+      RowBox[{"f_IFun", "?", "IntervalFunQ"}], ",", "z_"}], "]"}], "/;", 
+    RowBox[{"DomainMemberQ", "[", 
+     RowBox[{"f", ",", "z"}], "]"}]}], ":=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"SPCauchyInverseIntegral", "[", "f", "]"}], "[", "z", "]"}], "+", 
+    RowBox[{"CauchyInverseIntegralLogTermSPlus", "[", 
+     RowBox[{"f", ",", "z"}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"CauchyInverseIntegralPlus", "[", 
+     RowBox[{
+      RowBox[{"f_IFun", "?", "IntervalFunQ"}], ",", "z_"}], "]"}], "/;", 
+    RowBox[{
+     RowBox[{"NZeroQ", "[", 
+      RowBox[{"Im", "[", 
+       RowBox[{"MapToInterval", "[", 
+        RowBox[{"f", ",", "z"}], "]"}], "]"}], "]"}], "&&", 
+     RowBox[{
+      RowBox[{"Re", "[", 
+       RowBox[{"MapToInterval", "[", 
+        RowBox[{"f", ",", "z"}], "]"}], "]"}], "\[LessEqual]", 
+      RowBox[{"-", "1."}]}]}]}], ":=", 
+   RowBox[{
+    RowBox[{"CauchyInversePlus", "[", 
+     RowBox[{
+      RowBox[{"SPCauchyInverseIntegral", "[", "f", "]"}], ",", "z"}], "]"}], 
+    "+", 
+    RowBox[{"CauchyInverseIntegralLogTermLeftPlus", "[", 
+     RowBox[{"f", ",", "z"}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"CauchyInverseIntegralPlus", "[", 
+     RowBox[{
+      RowBox[{"f_IFun", "?", "IntervalFunQ"}], ",", "z_"}], "]"}], ":=", 
+    RowBox[{"2", " ", 
+     RowBox[{"CauchyInverseIntegral", "[", 
+      RowBox[{"f", ",", "z"}], "]"}]}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CauchyInverseIntegralPlus", "[", 
+    RowBox[{"l_", ",", "z_"}], "]"}], ":=", 
+   RowBox[{"Plus", "@@", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"CauchyInverseIntegralPlus", "[", 
+        RowBox[{"#", ",", "z"}], "]"}], "&"}], "/@", 
+      RowBox[{"CauchyInverseCurves", "[", "l", "]"}]}], ")"}]}]}], 
+  ";"}], "\[IndentingNewLine]"}], "Input"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -2387,7 +2442,7 @@ Cell[BoxData[{
          RowBox[{"CauchyInverseCurves", "[", "l", "]"}], ",", "t"}], "}"}], 
        "]"}]}], ")"}]}]}], ";"}]}], "Input",
  InitializationCell->True]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -2569,7 +2624,7 @@ Cell[BoxData[{
      RowBox[{"TransformMatrix", "[", "f", "]"}]}]}]}], 
   ";"}], "\[IndentingNewLine]"}], "Input",
  InitializationCell->True]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -3294,6 +3349,272 @@ Cell[BoxData[{
           RowBox[{"LeftEndpoint", "[", "f", "]"}]}], ")"}]}]], " ", 
       ")"}]}]}]}], ";"}]}], "Input",
  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["LogtermPlus", "Subsubsection"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{
+     "CauchyInverseIntegralLogTermPlusDomainGrad", "[", "spc__", "]"}], "[", 
+     RowBox[{"f_IFun", ",", "z_"}], "]"}], ":=", 
+    RowBox[{"2", " ", 
+     RowBox[{
+      RowBox[{"CauchyInverseIntegralLogTermDomainGrad", "[", "spc", "]"}], 
+      "[", 
+      RowBox[{"f", ",", "z"}], "]"}]}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"CauchyInverseIntegralLogTermSPlusDomainGrad", "[", 
+     RowBox[{"1", ",", "0"}], "]"}], "[", "f_IFun", "]"}], ":=", 
+   RowBox[{"2", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"-", 
+        RowBox[{
+         RowBox[{"DCT", "[", "f", "]"}], "\[LeftDoubleBracket]", "2", 
+         "\[RightDoubleBracket]"}]}], " ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"MapToIntervalDDomainD", "[", 
+          RowBox[{"1", ",", "0"}], "]"}], "[", 
+         RowBox[{"f", ",", "0."}], "]"}], "/", 
+        RowBox[{"(", 
+         RowBox[{"4", " ", 
+          SuperscriptBox[
+           RowBox[{"MapToIntervalD", "[", 
+            RowBox[{"f", ",", "0."}], "]"}], "2"]}], ")"}]}], " ", 
+       RowBox[{"(", 
+        RowBox[{"Log", "[", 
+         RowBox[{
+          FractionBox["1", "4"], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"RightEndpoint", "[", "f", "]"}], "-", 
+            RowBox[{"LeftEndpoint", "[", "f", "]"}]}], ")"}]}], "]"}], 
+        ")"}]}], "+", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"DCT", "[", "f", "]"}], "\[LeftDoubleBracket]", "2", 
+          "\[RightDoubleBracket]"}], "/", 
+         RowBox[{"(", 
+          RowBox[{"4", " ", 
+           RowBox[{"MapToIntervalD", "[", 
+            RowBox[{"f", ",", "0."}], "]"}]}], ")"}]}], 
+        RowBox[{"(", 
+         FractionBox[
+          RowBox[{"-", "1"}], 
+          RowBox[{" ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"RightEndpoint", "[", "f", "]"}], "-", 
+             RowBox[{"LeftEndpoint", "[", "f", "]"}]}], ")"}]}]], ")"}]}], 
+       ")"}]}], ")"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"CauchyInverseIntegralLogTermSPlusDomainGrad", "[", 
+      RowBox[{"0", ",", "1"}], "]"}], "[", "f_IFun", "]"}], ":=", 
+    RowBox[{"2", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"-", 
+         RowBox[{
+          RowBox[{"DCT", "[", "f", "]"}], "\[LeftDoubleBracket]", "2", 
+          "\[RightDoubleBracket]"}]}], " ", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"MapToIntervalDDomainD", "[", 
+           RowBox[{"0", ",", "1"}], "]"}], "[", 
+          RowBox[{"f", ",", "0."}], "]"}], "/", 
+         RowBox[{"(", 
+          RowBox[{"4", " ", 
+           SuperscriptBox[
+            RowBox[{"MapToIntervalD", "[", 
+             RowBox[{"f", ",", "0."}], "]"}], "2"]}], ")"}]}], " ", 
+        RowBox[{"(", 
+         RowBox[{"Log", "[", 
+          RowBox[{
+           FractionBox["1", "4"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"RightEndpoint", "[", "f", "]"}], "-", 
+             RowBox[{"LeftEndpoint", "[", "f", "]"}]}], ")"}]}], "]"}], 
+         ")"}]}], "+", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"DCT", "[", "f", "]"}], "\[LeftDoubleBracket]", "2", 
+           "\[RightDoubleBracket]"}], "/", 
+          RowBox[{"(", 
+           RowBox[{"4", " ", 
+            RowBox[{"MapToIntervalD", "[", 
+             RowBox[{"f", ",", "0."}], "]"}]}], ")"}]}], 
+         RowBox[{"(", 
+          FractionBox["1", 
+           RowBox[{" ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"RightEndpoint", "[", "f", "]"}], "-", 
+              RowBox[{"LeftEndpoint", "[", "f", "]"}]}], ")"}]}]], ")"}]}], 
+        ")"}]}], ")"}]}]}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"CauchyInverseIntegralLogTermLeftPlusDomainGrad", "[", 
+     RowBox[{"1", ",", "0"}], "]"}], "[", 
+    RowBox[{"s_", ",", "f_IFun", ",", "z_"}], "]"}], ":=", 
+   RowBox[{"2", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"-", 
+        RowBox[{
+         RowBox[{"DCT", "[", "f", "]"}], "\[LeftDoubleBracket]", "2", 
+         "\[RightDoubleBracket]"}]}], " ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"MapToIntervalDDomainD", "[", 
+          RowBox[{"1", ",", "0"}], "]"}], "[", 
+         RowBox[{"f", ",", "0."}], "]"}], "/", 
+        RowBox[{"(", 
+         RowBox[{"4", " ", 
+          SuperscriptBox[
+           RowBox[{"MapToIntervalD", "[", 
+            RowBox[{"f", ",", "0."}], "]"}], "2"]}], ")"}]}], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"Log", "[", 
+          RowBox[{
+           FractionBox["1", "4"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"RightEndpoint", "[", "f", "]"}], "-", 
+             RowBox[{"LeftEndpoint", "[", "f", "]"}]}], ")"}]}], "]"}], "-", 
+         RowBox[{"Log", "[", 
+          RowBox[{"Abs", "[", 
+           RowBox[{"IntervalToInnerCircle", "[", 
+            RowBox[{"MapToInterval", "[", 
+             RowBox[{"f", ",", "z"}], "]"}], "]"}], "]"}], "]"}]}], ")"}]}], 
+      "+", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"DCT", "[", "f", "]"}], "\[LeftDoubleBracket]", "2", 
+          "\[RightDoubleBracket]"}], "/", 
+         RowBox[{"(", 
+          RowBox[{"4", " ", 
+           RowBox[{"MapToIntervalD", "[", 
+            RowBox[{"f", ",", "0."}], "]"}]}], ")"}]}], 
+        RowBox[{"(", 
+         RowBox[{
+          FractionBox[
+           RowBox[{"-", "1"}], 
+           RowBox[{" ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"RightEndpoint", "[", "f", "]"}], "-", 
+              RowBox[{"LeftEndpoint", "[", "f", "]"}]}], ")"}]}]], "-", 
+          FractionBox[
+           RowBox[{
+            RowBox[{"IntervalToInnerCircleD", "[", 
+             RowBox[{"MapToInterval", "[", 
+              RowBox[{"f", ",", "z"}], " ", "]"}], "]"}], 
+            RowBox[{
+             RowBox[{"MapToIntervalDomainD", "[", 
+              RowBox[{"1", ",", "0"}], "]"}], "[", 
+             RowBox[{"f", ",", "z"}], "]"}]}], 
+           RowBox[{"IntervalToInnerCircle", "[", 
+            RowBox[{"MapToInterval", "[", 
+             RowBox[{"f", ",", "z"}], "]"}], "]"}]]}], ")"}]}], ")"}]}], 
+     ")"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"CauchyInverseIntegralLogTermLeftPlusDomainGrad", "[", 
+     RowBox[{"0", ",", "1"}], "]"}], "[", 
+    RowBox[{"s_", ",", "f_IFun", ",", "z_"}], "]"}], ":=", 
+   RowBox[{"2", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"-", 
+        RowBox[{
+         RowBox[{"DCT", "[", "f", "]"}], "\[LeftDoubleBracket]", "2", 
+         "\[RightDoubleBracket]"}]}], " ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"MapToIntervalDDomainD", "[", 
+          RowBox[{"0", ",", "1"}], "]"}], "[", 
+         RowBox[{"f", ",", "0."}], "]"}], "/", 
+        RowBox[{"(", 
+         RowBox[{"4", " ", 
+          SuperscriptBox[
+           RowBox[{"MapToIntervalD", "[", 
+            RowBox[{"f", ",", "0."}], "]"}], "2"]}], ")"}]}], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"Log", "[", 
+          RowBox[{
+           FractionBox["1", "4"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"RightEndpoint", "[", "f", "]"}], "-", 
+             RowBox[{"LeftEndpoint", "[", "f", "]"}]}], ")"}]}], "]"}], "-", 
+         RowBox[{"Log", "[", 
+          RowBox[{"Abs", "[", 
+           RowBox[{"IntervalToInnerCircle", "[", 
+            RowBox[{"MapToInterval", "[", 
+             RowBox[{"f", ",", "z"}], "]"}], "]"}], "]"}], "]"}]}], ")"}]}], 
+      "+", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"DCT", "[", "f", "]"}], "\[LeftDoubleBracket]", "2", 
+          "\[RightDoubleBracket]"}], "/", 
+         RowBox[{"(", 
+          RowBox[{"4", " ", 
+           RowBox[{"MapToIntervalD", "[", 
+            RowBox[{"f", ",", "0."}], "]"}]}], ")"}]}], 
+        RowBox[{"(", 
+         RowBox[{
+          FractionBox["1", 
+           RowBox[{" ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"RightEndpoint", "[", "f", "]"}], "-", 
+              RowBox[{"LeftEndpoint", "[", "f", "]"}]}], ")"}]}]], "-", 
+          FractionBox[
+           RowBox[{
+            RowBox[{"IntervalToInnerCircleD", "[", 
+             RowBox[{"MapToInterval", "[", 
+              RowBox[{"f", ",", "z"}], " ", "]"}], "]"}], 
+            RowBox[{
+             RowBox[{"MapToIntervalDomainD", "[", 
+              RowBox[{"0", ",", "1"}], "]"}], "[", 
+             RowBox[{"f", ",", "z"}], "]"}]}], 
+           RowBox[{"IntervalToInnerCircle", "[", 
+            RowBox[{"MapToInterval", "[", 
+             RowBox[{"f", ",", "z"}], "]"}], "]"}]]}], ")"}]}], ")"}]}], 
+     ")"}]}]}], ";"}], "\[IndentingNewLine]"}], "Input",
+ InitializationCell->True]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -3522,11 +3843,11 @@ Cell[BoxData[
          RowBox[{"DomainD", "[", "spc", "]"}], "[", "f", "]"}], ",", "z"}], 
        "]"}]}]}], ";"}]}]}]], "Input",
  InitializationCell->True]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
-Cell["Inverse Integral Plus", "Subsubsection"],
+Cell["Inverse Integral Plus D", "Subsubsection"],
 
 Cell[BoxData[{
  RowBox[{
@@ -3541,8 +3862,11 @@ Cell[BoxData[{
       RowBox[{"f", ",", "z"}], "]"}]}], ":=", 
     RowBox[{
      RowBox[{
-      RowBox[{"SPCauchyInverseIntegralDomainGrad", "[", "spc", "]"}], "[", 
-      "f", "]"}], "[", "z", "]"}]}], ";"}], 
+      RowBox[{
+       RowBox[{"SPCauchyInverseIntegralDomainGrad", "[", "spc", "]"}], "[", 
+       "f", "]"}], "[", "z", "]"}], "+", 
+     RowBox[{"CauchyInverseIntegralLogTermSPlusDomainGrad", "[", 
+      RowBox[{"f", ",", "z"}], "]"}]}]}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
@@ -3642,53 +3966,6 @@ Cell[BoxData[{
     RowBox[{"2", " ", 
      RowBox[{
       RowBox[{"CauchyInverseIntegralDomainGrad", "[", "spc", "]"}], "[", 
-      RowBox[{"f", ",", "z"}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{
-    RowBox[{"CauchyInverseIntegralPlus", "[", 
-     RowBox[{
-      RowBox[{"f_IFun", "?", "IntervalFunQ"}], ",", "z_"}], "]"}], "/;", 
-    RowBox[{
-     RowBox[{"NZeroQ", "[", 
-      RowBox[{"Im", "[", 
-       RowBox[{"MapToInterval", "[", 
-        RowBox[{"f", ",", "z"}], "]"}], "]"}], "]"}], "&&", 
-     RowBox[{
-      RowBox[{"Re", "[", 
-       RowBox[{"MapToInterval", "[", 
-        RowBox[{"f", ",", "z"}], "]"}], "]"}], "\[LessEqual]", 
-      RowBox[{"-", "1."}]}]}]}], ":=", 
-   RowBox[{
-    RowBox[{"CauchyInversePlus", "[", 
-     RowBox[{
-      RowBox[{"SPCauchyInverseIntegral", "[", "f", "]"}], ",", "z"}], "]"}], 
-    "-", 
-    RowBox[{
-     RowBox[{"1", "/", 
-      RowBox[{"(", 
-       RowBox[{"2", " ", 
-        RowBox[{"MapToIntervalD", "[", 
-         RowBox[{"f", ",", "0."}], "]"}]}], ")"}]}], " ", 
-     RowBox[{
-      RowBox[{"DCT", "[", "f", "]"}], "\[LeftDoubleBracket]", "2", 
-      "\[RightDoubleBracket]"}], 
-     RowBox[{"(", 
-      RowBox[{"Log", "[", 
-       RowBox[{"Abs", "[", 
-        RowBox[{"IntervalToInnerCircle", "[", 
-         RowBox[{"MapToInterval", "[", 
-          RowBox[{"f", ",", "z"}], "]"}], "]"}], "]"}], "]"}], ")"}]}]}]}], 
-  ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{
-    RowBox[{"CauchyInverseIntegralPlus", "[", 
-     RowBox[{
-      RowBox[{"f_IFun", "?", "IntervalFunQ"}], ",", "z_"}], "]"}], ":=", 
-    RowBox[{"2", " ", 
-     RowBox[{"CauchyInverseIntegral", "[", 
       RowBox[{"f", ",", "z"}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
@@ -4332,7 +4609,7 @@ Cell[BoxData[{
 },
 AutoGeneratedPackage->Automatic,
 WindowSize->{948, 780},
-WindowMargins->{{Automatic, 106}, {37, Automatic}},
+WindowMargins->{{121, Automatic}, {Automatic, 0}},
 PrivateNotebookOptions->{"FileOutlineCache"->False},
 ShowSelection->True,
 TrackCellChangeTimes->False,
