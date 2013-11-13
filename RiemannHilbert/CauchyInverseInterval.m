@@ -283,6 +283,19 @@ CauchyInverseIntegral[s_?SignQ,l_List,z_]:=Plus@@(CauchyInverseIntegral[s,#,z]&/
 
 
 
+CauchyInverseIntegralLogTermPlus[f_IFun,z_]:=2 CauchyInverseIntegralLogTerm[f,z];
+CauchyInverseIntegralLogTermSPlus[f_IFun,z_]:=2DCT[f][[2]]/(4MapToIntervalD[f,0.]) (Log[1/4 (RightEndpoint[f]-LeftEndpoint[f])]);
+CauchyInverseIntegralLogTermLeftPlus[f_IFun,z_]:=2 DCT[f][[2]]/(4MapToIntervalD[f,0.]) (Log[1/4 (RightEndpoint[f]-LeftEndpoint[f])]-Log[Abs[IntervalToInnerCircle[MapToInterval[f,z]]]]);
+
+
+CauchyInverseIntegralPlus[f_IFun?IntervalFunQ,z_]/;DomainMemberQ[f,z]:=SPCauchyInverseIntegral[f][z]+CauchyInverseIntegralLogTermSPlus[f,z];
+CauchyInverseIntegralPlus[f_IFun?IntervalFunQ,z_]/;NZeroQ[Im[MapToInterval[f,z]]]&&Re[MapToInterval[f,z]]<=-1.:=CauchyInversePlus[SPCauchyInverseIntegral[f],z]+CauchyInverseIntegralLogTermLeftPlus[f,z];
+CauchyInverseIntegralPlus[f_IFun?IntervalFunQ,z_]:=2 CauchyInverseIntegral[f,z];
+
+CauchyInverseIntegralPlus[l_,z_]:=Plus@@(CauchyInverseIntegralPlus[#,z]&/@CauchyInverseCurves[l]);
+
+
+
 Module[{LogB},
 LogB[y_,t_?(#<=\[Pi]&)]:=Log[IntervalToInnerCircle[y]]+If[t<Arg[y+1]<=\[Pi],2I \[Pi],0];
 LogB[y_,t_?(2\[Pi]>=#>\[Pi]&)]:=Log[IntervalToInnerCircle[y]]+If[Arg[y+1]==\[Pi]||-\[Pi]<=Arg[y+1]<=t-2 \[Pi],-2I \[Pi],0];

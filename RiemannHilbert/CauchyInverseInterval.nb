@@ -2316,7 +2316,8 @@ Cell[BoxData[{
        RowBox[{"CauchyInverseIntegralPlus", "[", 
         RowBox[{"#", ",", "z"}], "]"}], "&"}], "/@", 
       RowBox[{"CauchyInverseCurves", "[", "l", "]"}]}], ")"}]}]}], 
-  ";"}], "\[IndentingNewLine]"}], "Input"]
+  ";"}], "\[IndentingNewLine]"}], "Input",
+ InitializationCell->True]
 }, Open  ]],
 
 Cell[CellGroupData[{
