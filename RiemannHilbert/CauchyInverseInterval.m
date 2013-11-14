@@ -59,6 +59,72 @@ Begin["Private`"];
 
 
 
+CauchyInverseOp[{d1_,n_},{d2_,m_}]:=With[{pts=Points[d2,m]},Transpose[Array[DCT@CauchyInverseBasis[d1,#,pts]&,n]]];
+CauchyInverseOp[g_?DomainQ,f_?DomainQ]:=Module[{n},
+n=CauchyIntervalPlusOptimalTrunc[g,f];
+CauchyInverseOp[{g,n[[1]]},{f,n[[2]]}]];
+
+CauchyIntervalPlusOptimalTrunc[f_,g_]:=Module[{\[Alpha],\[Rho],a,b},
+b=RightEndpoint[f];
+a=LeftEndpoint[g];
+If[b<a,
+\[Alpha]=MapToInterval[g,b]//Abs;
+\[Rho]=\[Alpha]+Sqrt[\[Alpha]^2-1];
+{Log[$MachineEpsilon]/Log[Abs[IntervalToInnerCircle[MapToInterval[f,a]]]]//Ceiling,
+(Log[2]-Log[$MachineEpsilon])/Log[\[Rho]]//Ceiling}
+,
+CauchyIntervalPlusOptimalTrunc[g,f]//Reverse
+]
+];
+CauchyInverseCurvesOptimal[{f_IFun,g_IFun}]:=Module[{GF,FG,n,m},
+GF=2CauchyInverseOp[g//Domain,f//Domain];
+FG=2CauchyInverseOp[f//Domain,g//Domain];
+{n,m}=GF//Dimensions;
+n=Max[f//Length,n];
+m=Max[g//Length,m];
+GF=PadRight[GF,{n,m}];
+FG=PadRight[FG,{m,n}];
+
+u=LinearSolve[BlockMatrix[({
+ {IdentityMatrix[n], GF},
+ {FG, IdentityMatrix[m]}
+})],Join[PadRight[f//DCT,n],PadRight[g//DCT,m]]];
+{Fun[InverseDCT[u[[;;n]]],f//Domain],Fun[InverseDCT[u[[n+1;;]]],g//Domain]}
+]
+
+
+CauchyInverseOpD[{spc__},{0,0}][{d1_?DomainQ,n_},{d2_?DomainQ,m_}]:=With[{pts=Points[d2,m]},Transpose[Array[DCT@CauchyInverseBasisDomainD[spc][d1,#,pts]&,n]]];
+CauchyInverseOpD[{0,0},{spc__}][{d1_?DomainQ,n_},{d2_?DomainQ,m_}]:=With[{pts=Points[d2,m]},Transpose[Array[DCT@(CauchyInverseBasisD[d1,#,pts]PointsD[spc][d2,m])&,n]]];
+
+CauchyInverseCurvesOptimalD[spc__][{f_IFun,g_IFun}]:=Module[{GF,FG,n,m,GFD,FGD,plusmat,u,fDD,gDD},
+GF=2CauchyInverseOp[g//Domain,f//Domain];
+FG=2CauchyInverseOp[f//Domain,g//Domain];
+
+{n,m}=GF//Dimensions;
+n=Max[f//Length,n];
+m=Max[g//Length,m];
+GF=PadRight[GF,{n,m}];
+FG=PadRight[FG,{m,n}];
+
+FGD=2CauchyInverseOpD[spc][{f//Domain,n},{g//Domain,m}];
+GFD=2CauchyInverseOpD[Sequence@@Reverse[{spc}]][{g//Domain,m},{f//Domain,n}];
+
+{fDD,gDD}=DCT/@FromValueList[{f,g},ToValueListD[spc][{f,g}]];
+
+plusmat=BlockMatrix[({
+ {IdentityMatrix[n], GF},
+ {FG, IdentityMatrix[m]}
+})];
+
+u=LinearSolve[plusmat,-BlockMatrix[({
+ {ZeroMatrix[n], GFD},
+ {FGD, ZeroMatrix[m]}
+})].LinearSolve[plusmat,Join[PadRight[f//DCT,n],PadRight[g//DCT,m]]]+Join[PadRight[fDD,n],PadRight[gDD,m]]];
+{Fun[InverseDCT[u[[;;n]]],f//Domain],Fun[InverseDCT[u[[n+1;;]]],g//Domain]}
+]
+
+
+
 BoundedCauchyInverseBasis[f_?FunQ,k_,x_]:=BoundedCauchyInverseBasis[f//Domain,k,x];
 BoundedCauchyInverseBasis[s_?SignQ,f_?FunQ,k_,x_]:=BoundedCauchyInverseBasis[s,f//Domain,k,x];
 BoundedCauchyInverseBasisD[f_?FunQ,k_,x_]:=BoundedCauchyInverseBasisD[f//Domain,k,x];
