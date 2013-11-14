@@ -29,7 +29,7 @@ EquilibriumMeasureNewton;
 
 
 Begin["Private`"];
-EquilibriumMeasureSupport[V_,retin_:{-1,1}]:=Module[{ret,retold,F,J,k},
+EquilibriumMeasureSupport[V_,retin_?VectorQ]:=Module[{ret,retold,F,J,k},
 F[{a_,b_}]:=Module[{Vf},
 Vf=Fun[V,Line[{a,b}]];
 {DCT[Vf'][[1]],(b-a)/8 DCT[Vf'][[2]]-1}];
@@ -51,19 +51,19 @@ ret=ret-LeastSquares[J[ret],F[ret]];
 ];
 Sow[k];
 ret//Sort];
-EquilibriumMeasure[V_,retin_,x_]:=EquilibriumMeasure[V,retin][x];
-EquilibriumMeasure[V_,retin_:{-1,1}]:=-1/(2 \[Pi]) SingFun[Fun[V',EquilibriumMeasureSupport[V,retin]//Line],{0,0}]//HilbertInverse;
+EquilibriumMeasure[V_,retin_?VectorQ,x_]:=EquilibriumMeasure[V,retin][x];
+EquilibriumMeasure[V_,retin_?VectorQ]:=-1/(2 \[Pi]) SingFun[Fun[V',EquilibriumMeasureSupport[V,retin]//Line],{0,0}]//HilbertInverse;
 PlotEquilibriumMeasure[V_,opts:OptionsPattern[]]:=Module[{supp,x,\[Psi]},
 supp=EquilibriumMeasureSupport[V];
 \[Psi][x_]=EquilibriumMeasure[V,supp,x];
 Plot[\[Psi][x],{x,supp[[1]],supp[[2]]},opts]];
 
 
-EquilibriumMeasureNewton[V_,lin_,m_]:=Module[{FJ,x,n},
+EquilibriumMeasureNewton[V_,lin_?MatrixQ]:=Module[{FJ,x,n},
 FJ[fl_,ci_]:=Module[{HD,FD,a,b,i,j,spc,ciD,H},
 b[j_]:=RightEndpoint[fl[[j]]];
 a[j_]:=LeftEndpoint[fl[[j]]];
-ciD[spc__]:=ciD[spc]=CauchyInverseCurvesD[spc][fl];
+ciD[spc__]:=ciD[spc]=CauchyInverseCurvesOptimalD[spc][fl];
 
 H[i_]:=CauchyInverseIntegralPlusSum[ci,b[i]]-V[b[i]]-(CauchyInverseIntegralPlusSum[ci,a[i+1]]-V[a[i+1]]);
 
@@ -82,24 +82,39 @@ Array[H,Length[fl]-1]],
 ];
 x[0]=lin;
 x[n_]:=x[n]=Module[{fl,ci,F,J},
-fl=Fun[V',Line/@x[n-1],m OneVector[Length[x[n-1]]]];
-ci=fl//CauchyInverseCurves;
+fl=Fun[V',Line/@x[n-1]];
+ci=fl//CauchyInverseCurvesOptimal;
 {F,J}=FJ[fl,ci];
 x[n-1]-Partition[Inverse[J].F,2]//Re];
 x
 ];
-EquilibriumMeasureSupport[V_,retin_?MatrixQ,m_]:=Module[{x,k},
-x=EquilibriumMeasureNewton[V,retin,m];
+EquilibriumMeasureSupport[V_,retin_?MatrixQ]:=Module[{x,k},
+x=EquilibriumMeasureNewton[V,retin];
 k=1;
 While[Norm[x[k]-x[k+1]]>$MachineTolerance,k++;];
 x[k]
 ];
-EquilibriumMeasure[V_,retin_?MatrixQ,m_]:=Module[{xn,fl,ci},
-xn=EquilibriumMeasureSupport[V,retin,m];
-fl=Fun[V',Line/@xn,m OneVector[Length[xn]]];
-ci=fl//CauchyInverseCurves;
+EquilibriumMeasure[V_,retin_?MatrixQ]:=Module[{xn,fl,ci},
+xn=EquilibriumMeasureSupport[V,retin];
+fl=Fun[V',Line/@xn];
+ci=fl//CauchyInverseCurvesOptimal;
 -1/(2 \[Pi])HilbertInverse[SingFun[#,{0,0}]]&/@ci
 ]
+
+
+
+EquilibriumMeasure[V_]:=Module[{em,roots,lin},
+em=EquilibriumMeasure[V,{-1,1}];
+roots=em[[1]]//Roots;
+If[roots=={},
+em
+,
+lin=Partition[Join[em//First//Domain//First,
+roots]//Sort,2];
+EquilibriumMeasure[V,lin]
+]
+];
+EquilibriumMeasureSupport[V_]:=V//EquilibriumMeasure//Domain
 
 
 
