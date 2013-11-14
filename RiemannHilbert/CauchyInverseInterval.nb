@@ -704,17 +704,21 @@ g^-\>\""}], ";"}], "\[IndentingNewLine]",
       RowBox[{"f", ",", "1"}], "]"}]}]]}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
-   RowBox[{"CauchyInverseSeriesAtInfinity", "[", "l_List", "]"}], ":=", 
+   RowBox[{"CauchyInverseSeriesAtInfinitySum", "[", "ci_List", "]"}], ":=", 
    RowBox[{"Plus", "@@", 
     RowBox[{"(", 
      RowBox[{
       RowBox[{
        RowBox[{"CauchyInverseSeriesAtInfinity", "[", "#", "]"}], "&"}], "/@", 
-      
-      RowBox[{"CauchyInverseCurves", "[", "l", "]"}]}], ")"}]}]}], 
-  ";"}]}], "Input",
+      "ci"}], ")"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CauchyInverseSeriesAtInfinity", "[", "l_List", "]"}], ":=", 
+   RowBox[{"CauchyInverseSeriesAtInfinitySum", "[", 
+    RowBox[{"CauchyInverseCurves", "[", "l", "]"}], "]"}]}], ";"}]}], "Input",
+ 
  InitializationCell->True]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -1270,7 +1274,7 @@ Cell[BoxData[{
        "\[IndentingNewLine]", "]"}]}]}], "]"}]}], 
   ";"}], "\[IndentingNewLine]"}], "Input",
  InitializationCell->True]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -1393,6 +1397,18 @@ Cell[BoxData[
      RowBox[{
       RowBox[{"CauchyInverseSeriesAtInfinityD", "[", "spc__", "]"}], "[", 
       "fl_List", "]"}], ":=", 
+     RowBox[{
+      RowBox[{"CauchyInverseSeriesAtInfinityD", "[", "spc", "]"}], "[", 
+      RowBox[{"fl", ",", 
+       RowBox[{"CauchyInverseCurves", "[", "fl", "]"}], ",", 
+       RowBox[{
+        RowBox[{"CauchyInverseCurvesD", "[", "spc", "]"}], "[", "fl", "]"}]}],
+       "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"CauchyInverseSeriesAtInfinityD", "[", "spc__", "]"}], "[", 
+      RowBox[{"fl_List", ",", "ci_", ",", "ciD_"}], "]"}], ":=", 
      RowBox[{"Plus", "@@", 
       RowBox[{"(", 
        RowBox[{
@@ -1407,9 +1423,7 @@ Cell[BoxData[
              RowBox[{"4", " ", 
               RowBox[{"MapToIntervalSeriesAtInfinity", "[", 
                RowBox[{"#", ",", "1"}], "]"}]}], ")"}]}], "&"}], "/@", 
-          RowBox[{
-           RowBox[{"CauchyInverseCurvesD", "[", "spc", "]"}], "[", "fl", 
-           "]"}]}], ")"}], "-", 
+          "ciD"}], ")"}], "-", 
         RowBox[{"(", 
          RowBox[{
           RowBox[{
@@ -1449,12 +1463,11 @@ Cell[BoxData[
                   "2"}]}], ")"}]}]}]}], "]"}], "&"}], "/@", 
           RowBox[{"Thread", "[", 
            RowBox[{"{", 
-            RowBox[{
-             RowBox[{"CauchyInverseCurves", "[", "fl", "]"}], ",", 
+            RowBox[{"ci", ",", 
              RowBox[{"{", "spc", "}"}]}], "}"}], "]"}]}], ")"}]}], ")"}]}]}], 
     ";"}], "\[IndentingNewLine]"}]}]], "Input",
  InitializationCell->True]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -1501,7 +1514,7 @@ Cell[BoxData[{
     RowBox[{"f", "'"}], "[", "z", "]"}]}], ";"}]}], "Input",
  InitializationCell->True]
 }, Open  ]]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -2307,16 +2320,24 @@ Cell[BoxData[{
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
-   RowBox[{"CauchyInverseIntegralPlus", "[", 
-    RowBox[{"l_", ",", "z_"}], "]"}], ":=", 
+   RowBox[{"CauchyInverseIntegralPlusSum", "[", 
+    RowBox[{"ci_List", ",", "z_"}], "]"}], ":=", 
    RowBox[{"Plus", "@@", 
     RowBox[{"(", 
      RowBox[{
       RowBox[{
        RowBox[{"CauchyInverseIntegralPlus", "[", 
-        RowBox[{"#", ",", "z"}], "]"}], "&"}], "/@", 
-      RowBox[{"CauchyInverseCurves", "[", "l", "]"}]}], ")"}]}]}], 
-  ";"}], "\[IndentingNewLine]"}], "Input",
+        RowBox[{"#", ",", "z"}], "]"}], "&"}], "/@", "ci"}], ")"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"CauchyInverseIntegralPlus", "[", 
+     RowBox[{"l_List", ",", "z_"}], "]"}], ":=", 
+    RowBox[{"CauchyInverseIntegralPlusSum", "[", 
+     RowBox[{
+      RowBox[{"l", "//", "CauchyInverseCurves"}], ",", "z"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]"}], "Input",
  InitializationCell->True]
 }, Open  ]],
 
@@ -2674,7 +2695,7 @@ Cell[BoxData[{
         "f", "]"}], "//", "DCT"}]}], "]"}]}], 
    ")"}]}], "\[IndentingNewLine]"}], "Input",
  InitializationCell->True]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -4257,98 +4278,52 @@ Cell[BoxData[{
     RowBox[{
      RowBox[{"CauchyInverseIntegralPlusDomainD", "[", "spc__", "]"}], "[", 
      RowBox[{"fl_List", ",", "z_"}], "]"}], ":=", 
-    RowBox[{"Plus", "@@", 
-     RowBox[{"(", "\[IndentingNewLine]", 
-      RowBox[{
-       RowBox[{
-        RowBox[{"Which", "[", "\[IndentingNewLine]", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"ci", ",", "ciD", ",", "sp"}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Plus", "@@", 
+       RowBox[{"(", "\[IndentingNewLine]", 
+        RowBox[{
          RowBox[{
-          RowBox[{
-           RowBox[{"DomainMemberQ", "[", 
+          RowBox[{"(", 
+           RowBox[{
             RowBox[{
+             RowBox[{"{", 
+              RowBox[{"ci", ",", "ciD", ",", "sp"}], "}"}], "=", "#"}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"sp", "=", 
+             RowBox[{"Sequence", "@@", "sp"}]}], ";", "\[IndentingNewLine]", 
+            RowBox[{"Which", "[", "\[IndentingNewLine]", 
              RowBox[{
-             "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",",
-              "z"}], "]"}], "&&", 
-           RowBox[{
-            RowBox[{
-            "#", "\[LeftDoubleBracket]", "3", "\[RightDoubleBracket]"}], 
-            "\[Equal]", 
-            RowBox[{"{", 
-             RowBox[{"0", ",", "0"}], "}"}]}]}], ",", "\[IndentingNewLine]", 
-          RowBox[{
-           RowBox[{"SPCauchyInverseIntegral", "[", 
-            RowBox[{
-            "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
-            "]"}], "[", "z", "]"}], ",", "\[IndentingNewLine]", 
-          RowBox[{"DomainMemberQ", "[", 
-           RowBox[{
-            RowBox[{
-            "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",", 
-            "z"}], "]"}], ",", "\[IndentingNewLine]", 
-          RowBox[{
-           RowBox[{
-            RowBox[{
-             RowBox[{"SPCauchyInverseIntegralDomainGrad", "[", 
-              RowBox[{"Sequence", "@@", 
+              RowBox[{
+               RowBox[{"{", "sp", "}"}], "\[Equal]", 
+               RowBox[{"{", 
+                RowBox[{"0", ",", "0"}], "}"}]}], ",", "\[IndentingNewLine]", 
+              
+              RowBox[{"CauchyInverseIntegralPlus", "[", 
+               RowBox[{"ciD", ",", "z"}], "]"}], ",", "\[IndentingNewLine]", 
+              "True", ",", "\[IndentingNewLine]", 
+              RowBox[{
+               RowBox[{"CauchyInverseIntegralPlus", "[", 
+                RowBox[{"ciD", ",", "z"}], "]"}], "+", 
                RowBox[{
-               "#", "\[LeftDoubleBracket]", "3", "\[RightDoubleBracket]"}]}], 
-              "]"}], "[", 
-             RowBox[{
-             "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
-             "]"}], "[", "z", "]"}], "+", 
+                RowBox[{
+                "CauchyInverseIntegralPlusDomainGrad", "[", "sp", "]"}], "[", 
+                
+                RowBox[{"ci", ",", "z"}], "]"}]}]}], "\[IndentingNewLine]", 
+             "]"}]}], ")"}], "&"}], "/@", 
+         RowBox[{"Thread", "[", 
+          RowBox[{"{", 
            RowBox[{
-            RowBox[{"SPCauchyInverseIntegral", "[", 
-             RowBox[{
-             "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
-             "]"}], "[", "z", "]"}], "+", 
-           RowBox[{
-            RowBox[{"BaryDomainD", "[", 
-             RowBox[{"Sequence", "@@", 
-              RowBox[{
-              "#", "\[LeftDoubleBracket]", "3", "\[RightDoubleBracket]"}]}], 
-             "]"}], "[", 
+            RowBox[{"CauchyInverseCurves", "[", "fl", "]"}], ",", 
             RowBox[{
-             RowBox[{"SPCauchyInverseIntegral", "[", 
-              RowBox[{
-              "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
-              "]"}], ",", "z"}], "]"}]}], ",", "\[IndentingNewLine]", 
-          RowBox[{
-           RowBox[{
-           "#", "\[LeftDoubleBracket]", "3", "\[RightDoubleBracket]"}], 
-           "\[Equal]", 
-           RowBox[{"{", 
-            RowBox[{"0", ",", "0"}], "}"}]}], ",", "\[IndentingNewLine]", 
-          RowBox[{"CauchyInverseIntegralPlus", "[", 
-           RowBox[{
-            RowBox[{
-            "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], ",", 
-            "z"}], "]"}], ",", "\[IndentingNewLine]", "True", ",", 
-          "\[IndentingNewLine]", 
-          RowBox[{
-           RowBox[{
-            RowBox[{"CauchyInverseIntegralPlusDomainGrad", "[", 
-             RowBox[{"Sequence", "@@", 
-              RowBox[{
-              "#", "\[LeftDoubleBracket]", "3", "\[RightDoubleBracket]"}]}], 
-             "]"}], "[", 
-            RowBox[{
-             RowBox[{
-             "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], ",",
-              "z"}], "]"}], "+", 
-           RowBox[{"CauchyInverseIntegralPlus", "[", 
-            RowBox[{
-             RowBox[{
-             "#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], ",",
-              "z"}], "]"}]}]}], "\[IndentingNewLine]", "]"}], "&"}], "/@", 
-       RowBox[{"Thread", "[", 
-        RowBox[{"{", 
-         RowBox[{
-          RowBox[{"CauchyInverseCurves", "[", "fl", "]"}], ",", 
-          RowBox[{
-           RowBox[{"CauchyInverseCurvesD", "[", "spc", "]"}], "[", "fl", 
-           "]"}], ",", 
-          RowBox[{"{", "spc", "}"}]}], "}"}], "]"}]}], "\[IndentingNewLine]", 
-      ")"}]}]}], ";"}], "\[IndentingNewLine]", 
+             RowBox[{"CauchyInverseCurvesD", "[", "spc", "]"}], "[", "fl", 
+             "]"}], ",", 
+            RowBox[{"{", "spc", "}"}]}], "}"}], "]"}]}], 
+        "\[IndentingNewLine]", ")"}]}]}], "\[IndentingNewLine]", "]"}]}], 
+   ";"}], "\[IndentingNewLine]", 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
@@ -4534,8 +4509,146 @@ Cell[BoxData[{
         ")"}]}]}], "\[IndentingNewLine]", "]"}]}], 
   ";"}], "\[IndentingNewLine]"}], "Input",
  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["List Endpoint", "Subsubsection"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"CauchyInverseIntegralPlusEndpointD", "[", "spc__", "]"}], "[", 
+    RowBox[{"fl_List", ",", "k_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"CauchyInverseIntegralPlusEndpointD", "[", "spc", "]"}], "[", 
+    RowBox[{"fl", ",", "k", ",", 
+     RowBox[{"CauchyInverseCurves", "[", "fl", "]"}], ",", 
+     RowBox[{
+      RowBox[{"CauchyInverseCurvesD", "[", "spc", "]"}], "[", "fl", "]"}]}], 
+    "]"}]}], ";", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"CauchyInverseIntegralPlusEndpointD", "[", "spc__", "]"}], "[", 
+     RowBox[{"fl_List", ",", "k_", ",", "cii_", ",", "ciiD_"}], "]"}], "/;", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Flatten", "[", 
+       RowBox[{"{", "spc", "}"}], "]"}], "\[LeftDoubleBracket]", "k", 
+      "\[RightDoubleBracket]"}], "\[Equal]", "0"}]}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"ci", ",", "ciD", ",", "sp", ",", "z"}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"z", "=", 
+       RowBox[{
+        RowBox[{"Endpoints", "[", "fl", "]"}], "\[LeftDoubleBracket]", "k", 
+        "\[RightDoubleBracket]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Plus", "@@", 
+       RowBox[{"(", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"ci", ",", "ciD", ",", "sp"}], "}"}], "=", "#"}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"sp", "=", 
+             RowBox[{"Sequence", "@@", "sp"}]}], ";", "\[IndentingNewLine]", 
+            RowBox[{"Which", "[", "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"{", "sp", "}"}], "\[Equal]", 
+               RowBox[{"{", 
+                RowBox[{"0", ",", "0"}], "}"}]}], ",", "\[IndentingNewLine]", 
+              
+              RowBox[{"CauchyInverseIntegralPlus", "[", 
+               RowBox[{"ciD", ",", "z"}], "]"}], ",", "\[IndentingNewLine]", 
+              "True", ",", "\[IndentingNewLine]", 
+              RowBox[{
+               RowBox[{"CauchyInverseIntegralPlus", "[", 
+                RowBox[{"ciD", ",", "z"}], "]"}], "+", 
+               RowBox[{
+                RowBox[{
+                "CauchyInverseIntegralPlusDomainGrad", "[", "sp", "]"}], "[", 
+                
+                RowBox[{"ci", ",", "z"}], "]"}]}]}], "\[IndentingNewLine]", 
+             "]"}]}], ")"}], "&"}], "/@", 
+         RowBox[{"Thread", "[", 
+          RowBox[{"{", 
+           RowBox[{"cii", ",", "ciiD", ",", 
+            RowBox[{"{", "spc", "}"}]}], "}"}], "]"}]}], 
+        "\[IndentingNewLine]", ")"}]}]}]}], "\[IndentingNewLine]", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"CauchyInverseIntegralPlusEndpointD", "[", "spc__", "]"}], "[", 
+     RowBox[{"fl_List", ",", "k_", ",", "cii_", ",", "ciiD_"}], "]"}], "/;", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Flatten", "[", 
+       RowBox[{"{", "spc", "}"}], "]"}], "\[LeftDoubleBracket]", "k", 
+      "\[RightDoubleBracket]"}], "\[Equal]", "1"}]}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"ci", ",", "ciD", ",", "sp", ",", "z"}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"z", "=", 
+       RowBox[{
+        RowBox[{"Endpoints", "[", "fl", "]"}], "\[LeftDoubleBracket]", "k", 
+        "\[RightDoubleBracket]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Plus", "@@", 
+       RowBox[{"(", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"ci", ",", "ciD", ",", "sp"}], "}"}], "=", "#"}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"sp", "=", 
+             RowBox[{"Sequence", "@@", "sp"}]}], ";", "\[IndentingNewLine]", 
+            RowBox[{"Which", "[", "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"{", "sp", "}"}], "\[Equal]", 
+               RowBox[{"{", 
+                RowBox[{"0", ",", "0"}], "}"}]}], ",", "\[IndentingNewLine]", 
+              
+              RowBox[{
+               RowBox[{"CauchyInverseIntegralPlus", "[", 
+                RowBox[{"ciD", ",", "z"}], "]"}], "+", 
+               RowBox[{"CauchyInverseIntegralPlusD", "[", 
+                RowBox[{"ci", ",", "z"}], "]"}]}], ",", "\[IndentingNewLine]",
+               "True", ",", "\[IndentingNewLine]", 
+              RowBox[{
+               RowBox[{"CauchyInverseIntegralPlus", "[", 
+                RowBox[{"ciD", ",", "z"}], "]"}], "+", 
+               RowBox[{
+                RowBox[{
+                "CauchyInverseIntegralPlusDomainGrad", "[", "sp", "]"}], "[", 
+                
+                RowBox[{"ci", ",", "z"}], "]"}]}]}], "\[IndentingNewLine]", 
+             "]"}]}], ")"}], "&"}], "/@", 
+         RowBox[{"Thread", "[", 
+          RowBox[{"{", 
+           RowBox[{"cii", ",", "ciiD", ",", 
+            RowBox[{"{", "spc", "}"}]}], "}"}], "]"}]}], 
+        "\[IndentingNewLine]", ")"}]}]}]}], "\[IndentingNewLine]", "]"}]}], 
+  ";"}], "\[IndentingNewLine]"}], "Input",
+ InitializationCell->True]
 }, Open  ]]
-}, Open  ]]
+}, Closed]]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -4640,7 +4753,7 @@ Cell[BoxData[{
 }, Open  ]]
 },
 AutoGeneratedPackage->Automatic,
-WindowSize->{948, 780},
+WindowSize->{1175, 1396},
 WindowMargins->{{121, Automatic}, {Automatic, 0}},
 PrivateNotebookOptions->{"FileOutlineCache"->False},
 ShowSelection->True,

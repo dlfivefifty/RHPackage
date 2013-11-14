@@ -127,7 +127,8 @@ CauchyInverse[l_List,z_]:=Plus@@(CauchyInverse[#,z]&/@CauchyInverseCurves[l]);
 CauchyInverse[s_?SignQ,l_List,z_]:=Plus@@(If[DomainMemberQ[#,z],CauchyInverse[s,#,z],CauchyInverse[#,z]]&/@CauchyInverseCurves[l]);
 
 CauchyInverseSeriesAtInfinity[f_IFun]:=DCT[f][[2]]/(4 MapToIntervalSeriesAtInfinity[f,1]);
-CauchyInverseSeriesAtInfinity[l_List]:=Plus@@(CauchyInverseSeriesAtInfinity[#]&/@CauchyInverseCurves[l]);
+CauchyInverseSeriesAtInfinitySum[ci_List]:=Plus@@(CauchyInverseSeriesAtInfinity[#]&/@ci);
+CauchyInverseSeriesAtInfinity[l_List]:=CauchyInverseSeriesAtInfinitySum[CauchyInverseCurves[l]];
 
 
 
@@ -215,7 +216,8 @@ CauchyInverseSeriesAtInfinityDomainD[spc__][f_IFun]:=DCT[ValuesDomainD[spc][f]][
 CauchyInverseSeriesAtInfinityValuesD[f_IFun]:=TransformMatrix[f][[2,All]]/(4 MapToIntervalSeriesAtInfinity[f,1]);
 
 
-CauchyInverseSeriesAtInfinityD[spc__][fl_List]:=Plus@@((DCT[#][[2]]/(4 MapToIntervalSeriesAtInfinity[#,1])&/@CauchyInverseCurvesD[spc][fl])-(If[#[[2]]=={0,0},0,DCT[#[[1]]][[2]]MapToIntervalSeriesAtInfinityD[Sequence@@#[[2]]][#[[1]],1]/(4 MapToIntervalSeriesAtInfinity[#[[1]],1]^2)]&/@Thread[{CauchyInverseCurves[fl],{spc}}]));
+CauchyInverseSeriesAtInfinityD[spc__][fl_List]:=CauchyInverseSeriesAtInfinityD[spc][fl,CauchyInverseCurves[fl],CauchyInverseCurvesD[spc][fl]];
+CauchyInverseSeriesAtInfinityD[spc__][fl_List,ci_,ciD_]:=Plus@@((DCT[#][[2]]/(4 MapToIntervalSeriesAtInfinity[#,1])&/@ciD)-(If[#[[2]]=={0,0},0,DCT[#[[1]]][[2]]MapToIntervalSeriesAtInfinityD[Sequence@@#[[2]]][#[[1]],1]/(4 MapToIntervalSeriesAtInfinity[#[[1]],1]^2)]&/@Thread[{ci,{spc}}]));
 
 
 
@@ -292,7 +294,9 @@ CauchyInverseIntegralPlus[f_IFun?IntervalFunQ,z_]/;DomainMemberQ[f,z]:=SPCauchyI
 CauchyInverseIntegralPlus[f_IFun?IntervalFunQ,z_]/;NZeroQ[Im[MapToInterval[f,z]]]&&Re[MapToInterval[f,z]]<=-1.:=CauchyInversePlus[SPCauchyInverseIntegral[f],z]+CauchyInverseIntegralLogTermLeftPlus[f,z];
 CauchyInverseIntegralPlus[f_IFun?IntervalFunQ,z_]:=2 CauchyInverseIntegral[f,z];
 
-CauchyInverseIntegralPlus[l_,z_]:=Plus@@(CauchyInverseIntegralPlus[#,z]&/@CauchyInverseCurves[l]);
+CauchyInverseIntegralPlusSum[ci_List,z_]:=Plus@@(CauchyInverseIntegralPlus[#,z]&/@ci);
+CauchyInverseIntegralPlus[l_List,z_]:=CauchyInverseIntegralPlusSum[l//CauchyInverseCurves,z];
+
 
 
 
@@ -424,18 +428,18 @@ CauchyInverseIntegralPlusD[f_IFun?IntervalFunQ,z_]:=2 CauchyInverseIntegralD[f,z
 CauchyInverseIntegralPlusD[l_List,z_]:=Plus@@(CauchyInverseIntegralPlusD[#,z]&/@CauchyInverseCurves[l]);
 
 
-CauchyInverseIntegralPlusDomainD[spc__][fl_List,z_]:=Plus@@(
+CauchyInverseIntegralPlusDomainD[spc__][fl_List,z_]:=Module[{ci,ciD,sp},
+Plus@@(
+({ci,ciD,sp}=#;
+sp=Sequence@@sp;
 Which[
-DomainMemberQ[#[[1]],z]&&#[[3]]=={0,0},
-SPCauchyInverseIntegral[#[[2]]][z],
-DomainMemberQ[#[[1]],z],
-SPCauchyInverseIntegralDomainGrad[Sequence@@#[[3]]][#[[1]]][z]+SPCauchyInverseIntegral[#[[2]]][z]+BaryDomainD[Sequence@@#[[3]]][SPCauchyInverseIntegral[#[[1]]],z],
-#[[3]]=={0,0},
-CauchyInverseIntegralPlus[#[[2]],z],
+{sp}=={0,0},
+CauchyInverseIntegralPlus[ciD,z],
 True,
-CauchyInverseIntegralPlusDomainGrad[Sequence@@#[[3]]][#[[1]],z]+CauchyInverseIntegralPlus[#[[2]],z]
-]&/@Thread[{CauchyInverseCurves[fl],CauchyInverseCurvesD[spc][fl],{spc}}]
-);
+CauchyInverseIntegralPlus[ciD,z]+CauchyInverseIntegralPlusDomainGrad[sp][ci,z]
+])&/@Thread[{CauchyInverseCurves[fl],CauchyInverseCurvesD[spc][fl],{spc}}]
+)
+];
 
 
 CauchyInverseIntegralDomainD[spc__][fl_List,z_]:=Plus@@(
@@ -478,6 +482,35 @@ True,
 CauchyInverseIntegralDomainGrad[Sequence@@sc][crv,z]+CauchyInverseIntegral[s,crvD,z]
 ]
 )&/@Thread[{CauchyInverseCurves[fl],CauchyInverseCurvesD[spc][fl],{spc}}]
+)
+];
+
+
+
+CauchyInverseIntegralPlusEndpointD[spc__][fl_List,k_]:=CauchyInverseIntegralPlusEndpointD[spc][fl,k,CauchyInverseCurves[fl],CauchyInverseCurvesD[spc][fl]];CauchyInverseIntegralPlusEndpointD[spc__][fl_List,k_,cii_,ciiD_]/;Flatten[{spc}][[k]]==0:=Module[{ci,ciD,sp,z},
+z=Endpoints[fl][[k]];
+Plus@@(
+({ci,ciD,sp}=#;
+sp=Sequence@@sp;
+Which[
+{sp}=={0,0},
+CauchyInverseIntegralPlus[ciD,z],
+True,
+CauchyInverseIntegralPlus[ciD,z]+CauchyInverseIntegralPlusDomainGrad[sp][ci,z]
+])&/@Thread[{cii,ciiD,{spc}}]
+)
+];
+CauchyInverseIntegralPlusEndpointD[spc__][fl_List,k_,cii_,ciiD_]/;Flatten[{spc}][[k]]==1:=Module[{ci,ciD,sp,z},
+z=Endpoints[fl][[k]];
+Plus@@(
+({ci,ciD,sp}=#;
+sp=Sequence@@sp;
+Which[
+{sp}=={0,0},
+CauchyInverseIntegralPlus[ciD,z]+CauchyInverseIntegralPlusD[ci,z],
+True,
+CauchyInverseIntegralPlus[ciD,z]+CauchyInverseIntegralPlusDomainGrad[sp][ci,z]
+])&/@Thread[{cii,ciiD,{spc}}]
 )
 ];
 
