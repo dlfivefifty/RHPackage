@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     22619,        642]
-NotebookOptionsPosition[     21628,        602]
-NotebookOutlinePosition[     21995,        618]
-CellTagsIndexPosition[     21952,        615]
+NotebookDataLength[     22228,        630]
+NotebookOptionsPosition[     21216,        589]
+NotebookOutlinePosition[     21605,        606]
+CellTagsIndexPosition[     21562,        603]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -312,70 +312,17 @@ Cell[BoxData[{
    RowBox[{"Module", "[", 
     RowBox[{
      RowBox[{"{", 
-      RowBox[{"F", ",", "J", ",", "x", ",", "n"}], "}"}], ",", 
-     "\[IndentingNewLine]", 
+      RowBox[{"FJ", ",", "x", ",", "n"}], "}"}], ",", "\[IndentingNewLine]", 
      RowBox[{
       RowBox[{
-       RowBox[{"F", "[", 
-        RowBox[{"l_", ",", "ci_"}], "]"}], ":=", 
-       RowBox[{"Module", "[", 
-        RowBox[{
-         RowBox[{"{", 
-          RowBox[{"Pcl", ",", "H", ",", "i", ",", "j", ",", "a", ",", "b"}], 
-          "}"}], ",", "\[IndentingNewLine]", 
-         RowBox[{
-          RowBox[{
-           RowBox[{"b", "[", "j_", "]"}], ":=", 
-           RowBox[{"RightEndpoint", "[", 
-            RowBox[{
-            "l", "\[LeftDoubleBracket]", "j", "\[RightDoubleBracket]"}], 
-            "]"}]}], ";", "\[IndentingNewLine]", 
-          RowBox[{
-           RowBox[{"a", "[", "j_", "]"}], ":=", 
-           RowBox[{"LeftEndpoint", "[", 
-            RowBox[{
-            "l", "\[LeftDoubleBracket]", "j", "\[RightDoubleBracket]"}], 
-            "]"}]}], ";", "\[IndentingNewLine]", 
-          RowBox[{
-           RowBox[{"H", "[", "i_", "]"}], ":=", 
-           RowBox[{
-            RowBox[{"CauchyInverseIntegralPlus", "[", 
-             RowBox[{"l", ",", 
-              RowBox[{"b", "[", "i", "]"}]}], "]"}], "-", 
-            RowBox[{"V", "[", 
-             RowBox[{"b", "[", "i", "]"}], "]"}], "-", 
-            RowBox[{"(", 
-             RowBox[{
-              RowBox[{"CauchyInverseIntegralPlus", "[", 
-               RowBox[{"l", ",", 
-                RowBox[{"a", "[", 
-                 RowBox[{"i", "+", "1"}], "]"}]}], "]"}], "-", 
-              RowBox[{"V", "[", 
-               RowBox[{"a", "[", 
-                RowBox[{"i", "+", "1"}], "]"}], "]"}]}], ")"}]}]}], ";", 
-          "\[IndentingNewLine]", 
-          RowBox[{"Join", "[", "\[IndentingNewLine]", "\t", 
-           RowBox[{
-            RowBox[{"Mean", "/@", "ci"}], ",", "\[IndentingNewLine]", 
-            RowBox[{"{", 
-             RowBox[{
-              RowBox[{"CauchyInverseSeriesAtInfinity", "[", "l", "]"}], "-", 
-              "1"}], "}"}], ",", "\[IndentingNewLine]", 
-            RowBox[{"Array", "[", 
-             RowBox[{"H", ",", 
-              RowBox[{
-               RowBox[{"Length", "[", "l", "]"}], "-", "1"}]}], "]"}]}], 
-           "]"}]}]}], "\[IndentingNewLine]", "]"}]}], ";", 
-      "\[IndentingNewLine]", 
-      RowBox[{
-       RowBox[{"J", "[", 
+       RowBox[{"FJ", "[", 
         RowBox[{"fl_", ",", "ci_"}], "]"}], ":=", 
        RowBox[{"Module", "[", 
         RowBox[{
          RowBox[{"{", 
           RowBox[{
-          "HD", ",", "FD", ",", "a", ",", "b", ",", "i", ",", "j", ",", 
-           "spc"}], "}"}], ",", "\[IndentingNewLine]", 
+          "HD", ",", "FD", ",", "a", ",", "b", ",", "i", ",", "j", ",", "spc",
+            ",", "ciD", ",", "H"}], "}"}], ",", "\[IndentingNewLine]", 
          RowBox[{
           RowBox[{
            RowBox[{"b", "[", "j_", "]"}], ":=", 
@@ -390,21 +337,48 @@ Cell[BoxData[{
             "fl", "\[LeftDoubleBracket]", "j", "\[RightDoubleBracket]"}], 
             "]"}]}], ";", "\[IndentingNewLine]", 
           RowBox[{
+           RowBox[{"ciD", "[", "spc__", "]"}], ":=", 
+           RowBox[{
+            RowBox[{"ciD", "[", "spc", "]"}], "=", 
+            RowBox[{
+             RowBox[{"CauchyInverseCurvesD", "[", "spc", "]"}], "[", "fl", 
+             "]"}]}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"H", "[", "i_", "]"}], ":=", 
+           RowBox[{
+            RowBox[{"CauchyInverseIntegralPlusSum", "[", 
+             RowBox[{"ci", ",", 
+              RowBox[{"b", "[", "i", "]"}]}], "]"}], "-", 
+            RowBox[{"V", "[", 
+             RowBox[{"b", "[", "i", "]"}], "]"}], "-", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"CauchyInverseIntegralPlusSum", "[", 
+               RowBox[{"ci", ",", 
+                RowBox[{"a", "[", 
+                 RowBox[{"i", "+", "1"}], "]"}]}], "]"}], "-", 
+              RowBox[{"V", "[", 
+               RowBox[{"a", "[", 
+                RowBox[{"i", "+", "1"}], "]"}], "]"}]}], ")"}]}]}], ";", 
+          "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          RowBox[{
            RowBox[{
             RowBox[{"HD", "[", "spc__", "]"}], "[", "i_", "]"}], ":=", 
            RowBox[{
             RowBox[{
-             RowBox[{"CauchyInverseIntegralPlusDomainD", "[", "spc", "]"}], 
+             RowBox[{"CauchyInverseIntegralPlusEndpointD", "[", "spc", "]"}], 
              "[", 
              RowBox[{"fl", ",", 
-              RowBox[{"b", "[", "i", "]"}]}], "]"}], "-", 
+              RowBox[{"2", " ", "i"}], ",", "ci", ",", 
+              RowBox[{"ciD", "[", "spc", "]"}]}], "]"}], "-", 
             RowBox[{"(", 
              RowBox[{
-              RowBox[{"CauchyInverseIntegralPlusDomainD", "[", "spc", "]"}], 
-              "[", 
+              RowBox[{"CauchyInverseIntegralPlusEndpointD", "[", "spc", "]"}],
+               "[", 
               RowBox[{"fl", ",", 
-               RowBox[{"a", "[", 
-                RowBox[{"i", "+", "1"}], "]"}]}], "]"}], ")"}], "+", 
+               RowBox[{
+                RowBox[{"2", " ", "i"}], "+", "1"}], ",", "ci", ",", 
+               RowBox[{"ciD", "[", "spc", "]"}]}], "]"}], ")"}], "+", 
             RowBox[{"If", "[", 
              RowBox[{
               RowBox[{
@@ -414,10 +388,7 @@ Cell[BoxData[{
                RowBox[{"{", 
                 RowBox[{"0", ",", "1"}], "}"}]}], ",", "\[IndentingNewLine]", 
               
-              RowBox[{
-               RowBox[{"CauchyInverseIntegralPlusD", "[", 
-                RowBox[{"fl", ",", 
-                 RowBox[{"b", "[", "i", "]"}]}], "]"}], "-", 
+              RowBox[{"-", 
                RowBox[{
                 RowBox[{"V", "'"}], "[", 
                 RowBox[{"b", "[", "i", "]"}], "]"}]}], ",", "0"}], "]"}], "-", 
@@ -431,11 +402,7 @@ Cell[BoxData[{
                RowBox[{"{", 
                 RowBox[{"1", ",", "0"}], "}"}]}], ",", "\[IndentingNewLine]", 
               
-              RowBox[{
-               RowBox[{"CauchyInverseIntegralPlusD", "[", 
-                RowBox[{"fl", ",", 
-                 RowBox[{"a", "[", 
-                  RowBox[{"i", "+", "1"}], "]"}]}], "]"}], "-", 
+              RowBox[{"-", 
                RowBox[{
                 RowBox[{"V", "'"}], "[", 
                 RowBox[{"a", "[", 
@@ -446,13 +413,15 @@ Cell[BoxData[{
            RowBox[{"Join", "[", 
             RowBox[{
              RowBox[{"Mean", "/@", 
-              RowBox[{
-               RowBox[{"CauchyInverseCurvesD", "[", "spc", "]"}], "[", "fl", 
-               "]"}]}], ",", "\[IndentingNewLine]", 
+              RowBox[{"ciD", "[", "spc", "]"}]}], ",", "\[IndentingNewLine]", 
+             
              RowBox[{"{", 
               RowBox[{
                RowBox[{"CauchyInverseSeriesAtInfinityD", "[", "spc", "]"}], 
-               "[", "fl", "]"}], "}"}], ",", "\[IndentingNewLine]", 
+               "[", 
+               RowBox[{"fl", ",", "ci", ",", 
+                RowBox[{"ciD", "[", "spc", "]"}]}], "]"}], "}"}], ",", 
+             "\[IndentingNewLine]", 
              RowBox[{"Table", "[", 
               RowBox[{
                RowBox[{
@@ -462,18 +431,32 @@ Cell[BoxData[{
                  RowBox[{
                   RowBox[{"Length", "[", "fl", "]"}], "-", "1"}]}], "}"}]}], 
               "]"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
-          RowBox[{
+          RowBox[{"{", 
            RowBox[{
+            RowBox[{"Join", "[", "\[IndentingNewLine]", "\t", 
+             RowBox[{
+              RowBox[{"Mean", "/@", "ci"}], ",", "\[IndentingNewLine]", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"CauchyInverseSeriesAtInfinitySum", "[", "ci", "]"}], 
+                "-", "1"}], "}"}], ",", "\[IndentingNewLine]", 
+              RowBox[{"Array", "[", 
+               RowBox[{"H", ",", 
+                RowBox[{
+                 RowBox[{"Length", "[", "fl", "]"}], "-", "1"}]}], "]"}]}], 
+             "]"}], ",", "\[IndentingNewLine]", 
             RowBox[{
-             RowBox[{"(", 
-              RowBox[{"FD", "@@", 
-               RowBox[{"Partition", "[", 
-                RowBox[{"#", ",", "2"}], "]"}]}], ")"}], "&"}], "/@", 
-            RowBox[{"IdentityMatrix", "[", 
-             RowBox[{"2", " ", 
-              RowBox[{"Length", "[", "fl", "]"}]}], "]"}]}], "//", 
-           "Transpose"}]}]}], "\[IndentingNewLine]", "]"}]}], ";", 
-      "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{"FD", "@@", 
+                 RowBox[{"Partition", "[", 
+                  RowBox[{"#", ",", "2"}], "]"}]}], ")"}], "&"}], "/@", 
+              RowBox[{"IdentityMatrix", "[", 
+               RowBox[{"2", " ", 
+                RowBox[{"Length", "[", "fl", "]"}]}], "]"}]}], "//", 
+             "Transpose"}]}], "\[IndentingNewLine]", "}"}]}]}], 
+        "\[IndentingNewLine]", "]"}]}], ";", "\[IndentingNewLine]", 
       RowBox[{
        RowBox[{"x", "[", "0", "]"}], "=", "lin"}], ";", "\[IndentingNewLine]", 
       RowBox[{
@@ -483,7 +466,8 @@ Cell[BoxData[{
         RowBox[{"Module", "[", 
          RowBox[{
           RowBox[{"{", 
-           RowBox[{"fl", ",", "ci"}], "}"}], ",", "\[IndentingNewLine]", 
+           RowBox[{"fl", ",", "ci", ",", "F", ",", "J"}], "}"}], ",", 
+          "\[IndentingNewLine]", 
           RowBox[{
            RowBox[{"fl", "=", 
             RowBox[{"Fun", "[", 
@@ -502,19 +486,21 @@ Cell[BoxData[{
             RowBox[{"fl", "//", "CauchyInverseCurves"}]}], ";", 
            "\[IndentingNewLine]", 
            RowBox[{
+            RowBox[{"{", 
+             RowBox[{"F", ",", "J"}], "}"}], "=", 
+            RowBox[{"FJ", "[", 
+             RowBox[{"fl", ",", "ci"}], "]"}]}], ";", "\[IndentingNewLine]", 
+           RowBox[{
             RowBox[{
              RowBox[{"x", "[", 
               RowBox[{"n", "-", "1"}], "]"}], "-", 
              RowBox[{"Partition", "[", 
               RowBox[{
                RowBox[{
-                RowBox[{"Inverse", "[", 
-                 RowBox[{"J", "[", 
-                  RowBox[{"fl", ",", "ci"}], "]"}], "]"}], ".", 
-                RowBox[{"F", "[", 
-                 RowBox[{"fl", ",", "ci"}], "]"}]}], ",", "2"}], "]"}]}], "//",
-             "Re"}]}]}], "]"}]}]}], ";", "\[IndentingNewLine]", "x"}]}], 
-    "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
+                RowBox[{"Inverse", "[", "J", "]"}], ".", "F"}], ",", "2"}], 
+              "]"}]}], "//", "Re"}]}]}], "]"}]}]}], ";", 
+      "\[IndentingNewLine]", "x"}]}], "\[IndentingNewLine]", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"EquilibriumMeasureSupport", "[", 
@@ -585,7 +571,8 @@ Cell[BoxData[{
    "]"}]}], "\[IndentingNewLine]"}], "Input",
  InitializationCell->True,
  CellChangeTimes->{{3.59189658437649*^9, 3.591896605475442*^9}, {
-  3.591896665223662*^9, 3.591896665659124*^9}}]
+  3.591896665223662*^9, 3.591896665659124*^9}, {3.5933882236299343`*^9, 
+  3.593388250337523*^9}}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -601,9 +588,10 @@ Cell[BoxData[{
 }, Open  ]]
 },
 AutoGeneratedPackage->Automatic,
-WindowSize->{800, 823},
+WindowSize->{1188, 1342},
 WindowMargins->{{0, Automatic}, {Automatic, 0}},
-FrontEndVersion->"8.0 for Linux x86 (64-bit) (November 7, 2010)",
+FrontEndVersion->"9.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (January 25, \
+2013)",
 StyleDefinitions->"Default.nb"
 ]
 (* End of Notebook Content *)
@@ -617,31 +605,31 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[557, 20, 184, 4, 30, "Input"],
+Cell[557, 20, 184, 4, 28, "Input"],
 Cell[744, 26, 181, 6, 106, "Text"],
 Cell[CellGroupData[{
-Cell[950, 36, 24, 0, 72, "Section"],
-Cell[977, 38, 285, 8, 50, "Input",
+Cell[950, 36, 24, 0, 80, "Section"],
+Cell[977, 38, 285, 8, 28, "Input",
  InitializationCell->True]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1299, 51, 32, 0, 72, "Section"],
-Cell[1334, 53, 616, 13, 164, "Input",
+Cell[1299, 51, 32, 0, 80, "Section"],
+Cell[1334, 53, 616, 13, 97, "Input",
  InitializationCell->True]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1987, 71, 28, 0, 72, "Section"],
-Cell[2018, 73, 8344, 226, 747, "Input",
+Cell[1987, 71, 28, 0, 80, "Section"],
+Cell[2018, 73, 8344, 226, 591, "Input",
  InitializationCell->True]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[10399, 304, 37, 0, 72, "Section"],
-Cell[10439, 306, 10933, 281, 829, "Input",
+Cell[10399, 304, 37, 0, 80, "Section"],
+Cell[10439, 306, 10521, 268, 743, "Input",
  InitializationCell->True]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[21409, 592, 25, 0, 72, "Section"],
-Cell[21437, 594, 175, 5, 50, "Input",
+Cell[20997, 579, 25, 0, 80, "Section"],
+Cell[21025, 581, 175, 5, 46, "Input",
  InitializationCell->True]
 }, Open  ]]
 }

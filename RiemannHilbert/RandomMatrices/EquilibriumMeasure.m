@@ -59,32 +59,33 @@ supp=EquilibriumMeasureSupport[V];
 Plot[\[Psi][x],{x,supp[[1]],supp[[2]]},opts]];
 
 
-EquilibriumMeasureNewton[V_,lin_,m_]:=Module[{F,J,x,n},
-F[l_,ci_]:=Module[{Pcl,H,i,j,a,b},
-b[j_]:=RightEndpoint[l[[j]]];
-a[j_]:=LeftEndpoint[l[[j]]];
-H[i_]:=CauchyInverseIntegralPlus[l,b[i]]-V[b[i]]-(CauchyInverseIntegralPlus[l,a[i+1]]-V[a[i+1]]);
-Join[
-	Mean/@ci,
-{CauchyInverseSeriesAtInfinity[l]-1},
-Array[H,Length[l]-1]]
-];
-J[fl_,ci_]:=Module[{HD,FD,a,b,i,j,spc},
+EquilibriumMeasureNewton[V_,lin_,m_]:=Module[{FJ,x,n},
+FJ[fl_,ci_]:=Module[{HD,FD,a,b,i,j,spc,ciD,H},
 b[j_]:=RightEndpoint[fl[[j]]];
 a[j_]:=LeftEndpoint[fl[[j]]];
-HD[spc__][i_]:=CauchyInverseIntegralPlusDomainD[spc][fl,b[i]]-(CauchyInverseIntegralPlusDomainD[spc][fl,a[i+1]])+If[{spc}[[i]]=={0,1},
-CauchyInverseIntegralPlusD[fl,b[i]]-V'[b[i]],0]-If[{spc}[[i+1]]=={1,0},
-CauchyInverseIntegralPlusD[fl,a[i+1]]-V'[a[i+1]],0];
-FD[spc__]:=Join[Mean/@CauchyInverseCurvesD[spc][fl],
-{CauchyInverseSeriesAtInfinityD[spc][fl]},
+ciD[spc__]:=ciD[spc]=CauchyInverseCurvesD[spc][fl];
+
+H[i_]:=CauchyInverseIntegralPlusSum[ci,b[i]]-V[b[i]]-(CauchyInverseIntegralPlusSum[ci,a[i+1]]-V[a[i+1]]);
+
+HD[spc__][i_]:=CauchyInverseIntegralPlusEndpointD[spc][fl,2 i,ci,ciD[spc]]-(CauchyInverseIntegralPlusEndpointD[spc][fl,2 i+1,ci,ciD[spc]])+If[{spc}[[i]]=={0,1},
+-V'[b[i]],0]-If[{spc}[[i+1]]=={1,0},
+-V'[a[i+1]],0];
+FD[spc__]:=Join[Mean/@ciD[spc],
+{CauchyInverseSeriesAtInfinityD[spc][fl,ci,ciD[spc]]},
 Table[HD[spc][j],{j,1,Length[fl]-1}]];
+{Join[
+	Mean/@ci,
+{CauchyInverseSeriesAtInfinitySum[ci]-1},
+Array[H,Length[fl]-1]],
 (FD@@Partition[#,2])&/@IdentityMatrix[2 Length[fl]]//Transpose
+}
 ];
 x[0]=lin;
-x[n_]:=x[n]=Module[{fl,ci},
+x[n_]:=x[n]=Module[{fl,ci,F,J},
 fl=Fun[V',Line/@x[n-1],m OneVector[Length[x[n-1]]]];
 ci=fl//CauchyInverseCurves;
-x[n-1]-Partition[Inverse[J[fl,ci]].F[fl,ci],2]//Re];
+{F,J}=FJ[fl,ci];
+x[n-1]-Partition[Inverse[J].F,2]//Re];
 x
 ];
 EquilibriumMeasureSupport[V_,retin_?MatrixQ,m_]:=Module[{x,k},
