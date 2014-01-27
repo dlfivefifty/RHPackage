@@ -114,7 +114,7 @@ roots]//Sort,2];
 EquilibriumMeasure[V,lin]
 ]
 ];
-EquilibriumMeasureSupport[V_]:=V//EquilibriumMeasure//Domain
+EquilibriumMeasureSupport[V_]:=V//EquilibriumMeasure//Domain//First
 
 
 

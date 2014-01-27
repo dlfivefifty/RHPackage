@@ -35,6 +35,7 @@ GFunction;
 LeftOfLine;
 RightOfLine;
 EMInvariantEnsembleKernel;
+TracyWidomEdgeScalingConstant;
 Begin["Private`"];
 
 
@@ -719,7 +720,7 @@ LineReverse[L_List]:=Table[Line[L[[i,1]]//Reverse],{i,1,Length[L]}];
 
 
 OrthogonalPolynomialMatrixGeneratorConnectedAdaptive[V_,N_,M_:40,L_:3.,expa_:2/3,expb_:2/3,shrink_:1,inUP_:1]:=Module[{a\[Theta],b\[Theta],aScale,bScale,adaptrhp,UP,rhp,smrngg,con,Frac,USeries,min,supp,g,l,ln,z,\[Phi],P,Pin,rngg,Cdefs,a,b,A,B,AP,BP,gs,m,U,\[CapitalPsi],\[CapitalPhi],p,slvr,Y,UD,\[CapitalPsi]D,\[Phi]D,\[CapitalPhi]D,YD,PD,BD,BinD,contours,base,functions,points,y11,y21,yd21,yd11,S,SD},
-(*NOTE: Y is only accurate for Im[z]>=0*)
+(*NOTE: Y is only accurate for Im[z]\[GreaterEqual]0*)
 supp=Line[{a,b}=EquilibriumMeasureSupport[V]];
 g//Clear;
 g[z_]=GFunction[V,z];
@@ -1076,7 +1077,7 @@ yd11[n_,z_]:=(SD[n,z][[1,1]]+n g'[z]S[n,z][[1,1]])Exp[n(g[z]-V[z]/2)];
 ];
 
 OrthogonalPolynomialMatrixGeneratorForCoefficients[V_,N_,M_:40,L_:3.,expa_:2/3,expb_:2/3,shrink_:1,inUP_:1]:=Module[{a\[Theta],b\[Theta],aScale,bScale,adaptrhp,UP,rhp,smrngg,con,Frac,USeries,min,supp,g,l,ln,z,\[Phi],P,Pin,rngg,Cdefs,a,b,A,B,AP,BP,gs,m,U,\[CapitalPsi],\[CapitalPhi],p,slvr,Y,UD,\[CapitalPsi]D,\[Phi]D,\[CapitalPhi]D,YD,PD,BD,BinD,contours,base,functions,points,y11,y21,yd21,yd11,S,SD},
-(*NOTE: Y is only accurate for Im[z]>=0*)
+(*NOTE: Y is only accurate for Im[z]\[GreaterEqual]0*)
 supp=Line[{a,b}=EquilibriumMeasureSupport[V]];
 g//Clear;
 g[z_]=GFunction[V,z];
@@ -1425,7 +1426,7 @@ mGFunction[V_,supp_,z_]:=CauchyInverseIntegral[Fun[V',Line[supp]],z];
 mDGFunction[V_,supp_,z_]:=CauchyInverse[Fun[V',Line[supp]],z];
 mGFunction[s_?SignQ,V_,supp_,z_]:=CauchyInverseIntegralS[s,Fun[V',Line[supp]],z];
 OrthogonalPolynomialMatrixGeneratorForRoots[V_,N_,M_:40,L_:3.,expa_:2/3,expb_:2/3,shrink_:1,inUP_:1,{small_,large_}]:=Module[{a\[Theta],b\[Theta],gD,aScale,bScale,adaptrhp,UP,rhp,smrngg,con,Frac,USeries,min,supp,g,l,ln,z,\[Phi],P,Pin,rngg,F,Cdefs,a,b,A,Ue,B,AP,BP,gs,m,U,\[CapitalPhi],p,slvr,Y,UD,\[Phi]D,\[CapitalPhi]D,YD,PD,BD,funs,funsd,am,bm,ap,bp,BinD,UC,contours,base,functions,points,y11,y21,yd21,yd11,S,SD,UDC,EvalFun,Uo,UCo,UDCo,EvalFunD,Y2,Y2D,\[CapitalPsi],\[CapitalPsi]D},
-(*NOTE: Y is only accurate for Im[z]>=0*)
+(*NOTE: Y is only accurate for Im[z]\[GreaterEqual]0*)
 supp=Line[{a,b}=EquilibriumMeasureSupport[V]];
 g[z_]:=g[z]=mGFunction[V,{a,b},z];
 gD[z_]:=gD[z]=mDGFunction[V,{a,b},z];
@@ -2192,6 +2193,9 @@ Yy=Y[n,y+eps I];
 ];
 K
 ];
+
+TracyWidomEdgeScalingConstant[\[Mu]_SingFun]:=
+(RightEndpoint[\[Mu]]-LeftEndpoint[\[Mu]])^(-1/3) MapDot[#&,2 \[Pi]\[NonBreakingSpace]\[Mu][[1]]//DCT//ToChebyshevUSeries]^(2/3);
 
 
 EMOrthogonalPolynomialMatrixGeneratorConnected[\[Mu]_SingFun,M_:40,L_:3.]:=Module[{supp,g,l,z,\[Phi],P,Pin,rngg,Cdefs,a,b,A,B,AP,BP,gs,m,U,\[CapitalPsi],\[CapitalPhi],p,slvr,Y,UD,\[CapitalPsi]D,\[Phi]D,\[CapitalPhi]D,YD,PD,BD,BinD,V},
