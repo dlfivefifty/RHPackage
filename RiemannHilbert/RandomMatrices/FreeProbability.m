@@ -31,6 +31,7 @@ TTransformInverseFunction;
 SlitUpperPlanePoints;
 CullPoints;
 BoundedCauchyInverseMatrix;
+FreeInverseStieljes;
 
 
 Begin["Private`"];
