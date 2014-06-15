@@ -346,7 +346,7 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]"}], "Input",
  InitializationCell->True]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -896,22 +896,7 @@ Cell[BoxData[
        SqrtBox[
         RowBox[{"1", "-", 
          SuperscriptBox["x", "2"]}]]]}]}], ";"}], "\[IndentingNewLine]", 
-   "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{
-     RowBox[{"IntervalToRealLine", "[", "x_", "]"}], ":=", 
-     FractionBox["x", 
-      SqrtBox[
-       RowBox[{"1", "-", 
-        SuperscriptBox["x", "2"]}]]]}], ";"}], "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{
-     RowBox[{"RealLineToInterval", "[", "u_", "]"}], ":=", 
-     FractionBox["u", 
-      SqrtBox[
-       RowBox[{"1", "+", 
-        SuperscriptBox["u", "2"]}]]]}], ";"}], "\[IndentingNewLine]", 
-   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"InfinityInDomainQ", "[", "_", "]"}], ":=", "False"}], ";"}], 
@@ -1065,6 +1050,103 @@ Cell[BoxData[
            RowBox[{"10", " ", "$MachineTolerance"}]}]}]}], "&"}], ")"}]}]}], 
     ";"}]}]}]], "Input",
  InitializationCell->True]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["RealLine", "Subsection"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"IntervalToRealLine", "[", 
+    RowBox[{"_", "?", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"#", "~", "NEqual", "~", "1."}], "&"}], ")"}]}], "]"}], ":=", 
+   "\[Infinity]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"IntervalToRealLine", "[", 
+    RowBox[{"_", "?", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"#", "~", "NEqual", "~", 
+        RowBox[{"-", "1."}]}], "&"}], ")"}]}], "]"}], ":=", 
+   RowBox[{"-", "\[Infinity]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"IntervalToRealLine", "[", 
+     RowBox[{"x_", "?", "NumberQ"}], "]"}], ":=", 
+    FractionBox["x", 
+     SqrtBox[
+      RowBox[{"1", "-", 
+       SuperscriptBox["x", "2"]}]]]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"RealLineToInterval", "[", 
+    RowBox[{"y_", "?", "NumberQ"}], "]"}], ":=", 
+   FractionBox["y", 
+    SqrtBox[
+     RowBox[{"1", "+", 
+      SuperscriptBox["y", "2"]}]]]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SetAttributes", "[", 
+   RowBox[{"IntervalToRealLine", ",", "Listable"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SetAttributes", "[", 
+    RowBox[{"RealLineToInterval", ",", "Listable"}], "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"MapToInterval", "[", 
+    RowBox[{
+     RowBox[{"Line", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"_", "?", "InfinityQ"}], ",", 
+        RowBox[{"_", "?", "InfinityQ"}]}], "}"}], "]"}], ",", "y_"}], "]"}], ":=", 
+   RowBox[{"RealLineToInterval", "[", "y", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"MapToIntervalD", "[", 
+    RowBox[{
+     RowBox[{"Line", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"_", "?", "InfinityQ"}], ",", 
+        RowBox[{"_", "?", "InfinityQ"}]}], "}"}], "]"}], ",", "y_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"RealLineToInterval", "'"}], "[", "y", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"MapFromInterval", "[", 
+    RowBox[{
+     RowBox[{"Line", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"_", "?", "InfinityQ"}], ",", 
+        RowBox[{"_", "?", "InfinityQ"}]}], "}"}], "]"}], ",", "x_"}], "]"}], ":=", 
+   RowBox[{"IntervalToRealLine", "[", "x", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"MapFromIntervalD", "[", 
+    RowBox[{
+     RowBox[{"Line", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"_", "?", "InfinityQ"}], ",", 
+        RowBox[{"_", "?", "InfinityQ"}]}], "}"}], "]"}], ",", "x_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"IntervalToRealLine", "'"}], "[", "x", "]"}]}], ";"}]}], "Input",
+ InitializationCell->True]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -1129,7 +1211,8 @@ Cell[BoxData[{
      RowBox[{"Line", "[", 
       RowBox[{
        RowBox[{"{", 
-        RowBox[{"a_", ",", 
+        RowBox[{
+         RowBox[{"a_", "?", "NumberQ"}], ",", 
          RowBox[{"b_", "?", "InfinityQ"}]}], "}"}], ",", 
        RowBox[{"Stretch", "\[Rule]", "L_"}]}], "]"}], ",", "z_"}], "]"}], ":=", 
    RowBox[{"HalfLineToInterval", "[", 
@@ -1149,7 +1232,8 @@ Cell[BoxData[{
      RowBox[{"Line", "[", 
       RowBox[{
        RowBox[{"{", 
-        RowBox[{"a_", ",", 
+        RowBox[{
+         RowBox[{"a_", "?", "NumberQ"}], ",", 
          RowBox[{"b_", "?", "InfinityQ"}]}], "}"}], ",", 
        RowBox[{"Stretch", "\[Rule]", "L_"}]}], "]"}], ",", "z_"}], "]"}], ":=", 
    FractionBox[
@@ -1174,7 +1258,8 @@ Cell[BoxData[{
       RowBox[{"Line", "[", 
        RowBox[{
         RowBox[{"{", 
-         RowBox[{"a_", ",", 
+         RowBox[{
+          RowBox[{"a_", "?", "NumberQ"}], ",", 
           RowBox[{"b_", "?", "InfinityQ"}]}], "}"}], ",", 
         RowBox[{"Stretch", "\[Rule]", "L_"}]}], "]"}], ",", "x_"}], "]"}], ":=", 
     RowBox[{
@@ -1191,7 +1276,8 @@ Cell[BoxData[{
      RowBox[{"Line", "[", 
       RowBox[{
        RowBox[{"{", 
-        RowBox[{"a_", ",", 
+        RowBox[{
+         RowBox[{"a_", "?", "NumberQ"}], ",", 
          RowBox[{"b_", "?", "InfinityQ"}]}], "}"}], ",", 
        RowBox[{"Stretch", "\[Rule]", "L_"}]}], "]"}], ",", "1."}], "]"}], ":=",
     "0."}], ";"}], "\[IndentingNewLine]", 
@@ -1203,7 +1289,8 @@ Cell[BoxData[{
       RowBox[{"Line", "[", 
        RowBox[{
         RowBox[{"{", 
-         RowBox[{"a_", ",", 
+         RowBox[{
+          RowBox[{"a_", "?", "NumberQ"}], ",", 
           RowBox[{"b_", "?", "InfinityQ"}]}], "}"}], ",", 
         RowBox[{"Stretch", "\[Rule]", "L_"}]}], "]"}], ",", "x_"}], "]"}], ":=", 
     FractionBox[
@@ -1224,7 +1311,8 @@ Cell[BoxData[{
       RowBox[{
        RowBox[{"{", 
         RowBox[{
-         RowBox[{"a_", "?", "InfinityQ"}], ",", "b_"}], "}"}], ",", 
+         RowBox[{"a_", "?", "InfinityQ"}], ",", 
+         RowBox[{"b_", "?", "NumberQ"}]}], "}"}], ",", 
        RowBox[{"Stretch", "\[Rule]", "L_"}]}], "]"}], ",", "z_"}], "]"}], ":=", 
    RowBox[{"-", 
     RowBox[{"MapToInterval", "[", 
@@ -1243,7 +1331,8 @@ Cell[BoxData[{
       RowBox[{
        RowBox[{"{", 
         RowBox[{
-         RowBox[{"a_", "?", "InfinityQ"}], ",", "b_"}], "}"}], ",", 
+         RowBox[{"a_", "?", "InfinityQ"}], ",", 
+         RowBox[{"b_", "?", "NumberQ"}]}], "}"}], ",", 
        RowBox[{"Stretch", "\[Rule]", "L_"}]}], "]"}], ",", "z_"}], "]"}], ":=", 
    RowBox[{"-", 
     RowBox[{"MapToIntervalD", "[", 
@@ -1262,7 +1351,8 @@ Cell[BoxData[{
       RowBox[{
        RowBox[{"{", 
         RowBox[{
-         RowBox[{"a_", "?", "InfinityQ"}], ",", "b_"}], "}"}], ",", 
+         RowBox[{"a_", "?", "InfinityQ"}], ",", 
+         RowBox[{"b_", "?", "NumberQ"}]}], "}"}], ",", 
        RowBox[{"Stretch", "\[Rule]", "L_"}]}], "]"}], ",", "x_"}], "]"}], ":=", 
    RowBox[{"MapFromInterval", "[", 
     RowBox[{
@@ -1281,7 +1371,8 @@ Cell[BoxData[{
        RowBox[{
         RowBox[{"{", 
          RowBox[{
-          RowBox[{"a_", "?", "InfinityQ"}], ",", "b_"}], "}"}], ",", 
+          RowBox[{"a_", "?", "InfinityQ"}], ",", 
+          RowBox[{"b_", "?", "NumberQ"}]}], "}"}], ",", 
         RowBox[{"Stretch", "\[Rule]", "L_"}]}], "]"}], ",", "x_"}], "]"}], ":=", 
     RowBox[{"-", 
      RowBox[{"MapFromIntervalD", "[", 
@@ -1299,7 +1390,8 @@ Cell[BoxData[{
     RowBox[{
      RowBox[{"Line", "[", 
       RowBox[{"{", 
-       RowBox[{"a_", ",", 
+       RowBox[{
+        RowBox[{"a_", "?", "NumberQ"}], ",", 
         RowBox[{"b_", "?", "InfinityQ"}]}], "}"}], "]"}], ",", "z_"}], "]"}], 
    ":=", 
    RowBox[{"MapToInterval", "[", 
@@ -1316,7 +1408,8 @@ Cell[BoxData[{
     RowBox[{
      RowBox[{"Line", "[", 
       RowBox[{"{", 
-       RowBox[{"a_", ",", 
+       RowBox[{
+        RowBox[{"a_", "?", "NumberQ"}], ",", 
         RowBox[{"b_", "?", "InfinityQ"}]}], "}"}], "]"}], ",", "z_"}], "]"}], 
    ":=", 
    RowBox[{"MapToIntervalD", "[", 
@@ -1333,7 +1426,8 @@ Cell[BoxData[{
     RowBox[{
      RowBox[{"Line", "[", 
       RowBox[{"{", 
-       RowBox[{"a_", ",", 
+       RowBox[{
+        RowBox[{"a_", "?", "NumberQ"}], ",", 
         RowBox[{"b_", "?", "InfinityQ"}]}], "}"}], "]"}], ",", "x_"}], "]"}], 
    ":=", 
    RowBox[{"MapFromInterval", "[", 
@@ -1350,7 +1444,8 @@ Cell[BoxData[{
     RowBox[{
      RowBox[{"Line", "[", 
       RowBox[{"{", 
-       RowBox[{"a_", ",", 
+       RowBox[{
+        RowBox[{"a_", "?", "NumberQ"}], ",", 
         RowBox[{"b_", "?", "InfinityQ"}]}], "}"}], "]"}], ",", "1."}], "]"}], 
    ":=", "0."}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
@@ -1360,7 +1455,8 @@ Cell[BoxData[{
      RowBox[{
       RowBox[{"Line", "[", 
        RowBox[{"{", 
-        RowBox[{"a_", ",", 
+        RowBox[{
+         RowBox[{"a_", "?", "NumberQ"}], ",", 
          RowBox[{"b_", "?", "InfinityQ"}]}], "}"}], "]"}], ",", "x_"}], "]"}],
      ":=", 
     RowBox[{"MapFromIntervalD", "[", 
@@ -1378,8 +1474,8 @@ Cell[BoxData[{
      RowBox[{"Line", "[", 
       RowBox[{"{", 
        RowBox[{
-        RowBox[{"a_", "?", "InfinityQ"}], ",", "b_"}], "}"}], "]"}], ",", 
-     "z_"}], "]"}], ":=", 
+        RowBox[{"a_", "?", "InfinityQ"}], ",", 
+        RowBox[{"b_", "?", "NumberQ"}]}], "}"}], "]"}], ",", "z_"}], "]"}], ":=", 
    RowBox[{"MapToInterval", "[", 
     RowBox[{
      RowBox[{"Line", "[", 
@@ -1395,8 +1491,8 @@ Cell[BoxData[{
      RowBox[{"Line", "[", 
       RowBox[{"{", 
        RowBox[{
-        RowBox[{"a_", "?", "InfinityQ"}], ",", "b_"}], "}"}], "]"}], ",", 
-     "z_"}], "]"}], ":=", 
+        RowBox[{"a_", "?", "InfinityQ"}], ",", 
+        RowBox[{"b_", "?", "NumberQ"}]}], "}"}], "]"}], ",", "z_"}], "]"}], ":=", 
    RowBox[{"MapToIntervalD", "[", 
     RowBox[{
      RowBox[{"Line", "[", 
@@ -1412,8 +1508,8 @@ Cell[BoxData[{
      RowBox[{"Line", "[", 
       RowBox[{"{", 
        RowBox[{
-        RowBox[{"a_", "?", "InfinityQ"}], ",", "b_"}], "}"}], "]"}], ",", 
-     "x_"}], "]"}], ":=", 
+        RowBox[{"a_", "?", "InfinityQ"}], ",", 
+        RowBox[{"b_", "?", "NumberQ"}]}], "}"}], "]"}], ",", "x_"}], "]"}], ":=", 
    RowBox[{"MapFromInterval", "[", 
     RowBox[{
      RowBox[{"Line", "[", 
@@ -1429,7 +1525,8 @@ Cell[BoxData[{
      RowBox[{"Line", "[", 
       RowBox[{"{", 
        RowBox[{
-        RowBox[{"a_", "?", "InfinityQ"}], ",", "b_"}], "}"}], "]"}], ",", 
+        RowBox[{"a_", "?", "InfinityQ"}], ",", 
+        RowBox[{"b_", "?", "NumberQ"}]}], "}"}], "]"}], ",", 
      RowBox[{"-", "1."}]}], "]"}], ":=", "0."}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
@@ -1438,8 +1535,8 @@ Cell[BoxData[{
      RowBox[{"Line", "[", 
       RowBox[{"{", 
        RowBox[{
-        RowBox[{"a_", "?", "InfinityQ"}], ",", "b_"}], "}"}], "]"}], ",", 
-     "x_"}], "]"}], ":=", 
+        RowBox[{"a_", "?", "InfinityQ"}], ",", 
+        RowBox[{"b_", "?", "NumberQ"}]}], "}"}], "]"}], ",", "x_"}], "]"}], ":=", 
    RowBox[{"MapFromIntervalD", "[", 
     RowBox[{
      RowBox[{"Line", "[", 
@@ -2600,7 +2697,7 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]"}], "Input",
  InitializationCell->True]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -2611,23 +2708,30 @@ Cell[BoxData[
   "\[IndentingNewLine]", 
   RowBox[{
    RowBox[{"FinitePoints", ";"}], "\[IndentingNewLine]", 
-   "\[IndentingNewLine]", 
+   RowBox[{"IntervalPoints", ";"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"Begin", "[", "\"\<Private`\>\"", "]"}], ";"}], 
-   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"IntervalPoints", "[", 
+      RowBox[{"d_", ",", "n_"}], "]"}], ":=", 
+     RowBox[{"MapFromInterval", "[", 
+      RowBox[{"d", ",", 
+       RowBox[{"NChebyshevLobattoPoints", "[", "n", "]"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"Points", "[", 
       RowBox[{
        RowBox[{"d_", "?", "IntervalDomainQ"}], ",", "n_"}], "]"}], ":=", 
-     RowBox[{"MapFromInterval", "[", 
-      RowBox[{"d", ",", 
-       RowBox[{"NChebyshevLobattoPoints", "[", "n", "]"}]}], "]"}]}], ";"}], 
+     RowBox[{"IntervalPoints", "[", 
+      RowBox[{"d", ",", "n"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
    "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]"}]}]], "Input",
  InitializationCell->True]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -2924,7 +3028,7 @@ Cell[BoxData[
            RowBox[{"l", "[", 
             RowBox[{"[", 
              RowBox[{"-", "1"}], "]"}], "]"}]}], "}"}], ",", "d"}], "]"}], 
-       ",", "opts"}], "]"}]}], ";"}], "\[IndentingNewLine]", "\n", 
+       ",", "opts"}], "]"}]}], ";"}], "\n", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"JumpScaleDomainPlot", "[", 
@@ -2980,7 +3084,7 @@ Cell[BoxData[
   RowBox[{"End", "[", "]"}], ";"}]], "Input",
  InitializationCell->True]
 }, Open  ]]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -3030,7 +3134,7 @@ Cell[BoxData[
      RowBox[{"IFun", "[", 
       RowBox[{
        RowBox[{"f", "/@", 
-        RowBox[{"Points", "[", 
+        RowBox[{"IntervalPoints", "[", 
          RowBox[{"d", ",", "n"}], "]"}]}], ",", "d"}], "]"}]}], ";"}], 
    "\[IndentingNewLine]", 
    RowBox[{
@@ -3053,7 +3157,14 @@ Cell[BoxData[
    "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"SetupFun", "[", "IFun", "]"}], ";"}], "\[IndentingNewLine]", 
-   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Points", "[", "if_IFun", "]"}], ":=", 
+     RowBox[{"IntervalPoints", "[", 
+      RowBox[{
+       RowBox[{"if", "//", "Domain"}], ",", 
+       RowBox[{"if", "//", "Length"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"DCT", "[", 
@@ -3230,8 +3341,8 @@ Cell[BoxData[
        "]"}], ":=", 
      RowBox[{
       RowBox[{
-       RowBox[{"if", "//", "Points"}], "//", "Most"}], "//", "Rest"}]}], 
-    ";"}], "\[IndentingNewLine]", 
+       RowBox[{"if", "//", "IntervalPoints"}], "//", "Most"}], "//", 
+      "Rest"}]}], ";"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"FiniteValues", "[", 
@@ -3251,7 +3362,7 @@ Cell[BoxData[
      RowBox[{"FinitePoints", "[", 
       RowBox[{"if_IFun", "?", "LeftEndpointInfinityQ"}], "]"}], ":=", 
      RowBox[{
-      RowBox[{"if", "//", "Points"}], "//", "Rest"}]}], ";"}], 
+      RowBox[{"if", "//", "IntervalPoints"}], "//", "Rest"}]}], ";"}], 
    "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
@@ -3265,7 +3376,7 @@ Cell[BoxData[
      RowBox[{"FinitePoints", "[", 
       RowBox[{"if_IFun", "?", "RightEndpointInfinityQ"}], "]"}], ":=", 
      RowBox[{
-      RowBox[{"if", "//", "Points"}], "//", "Most"}]}], ";"}], 
+      RowBox[{"if", "//", "IntervalPoints"}], "//", "Most"}]}], ";"}], 
    "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
@@ -3281,8 +3392,8 @@ Cell[BoxData[
    RowBox[{
     RowBox[{
      RowBox[{"FinitePoints", "[", "if_IFun", "]"}], ":=", 
-     RowBox[{"Points", "[", "if", "]"}]}], ";"}], "\[IndentingNewLine]", 
-   "\[IndentingNewLine]", 
+     RowBox[{"IntervalPoints", "[", "if", "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{
@@ -3309,7 +3420,7 @@ Cell[BoxData[
    RowBox[{
     RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]"}]}]], "Input",
  InitializationCell->True]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -3404,7 +3515,7 @@ indefinite integral.\>\""}], ";"}], "\[IndentingNewLine]",
              RowBox[{"d", "[", 
               RowBox[{"#", "-", "1"}], "]"}], "&"}], ",", 
             RowBox[{"{", "n", "}"}]}], "]"}]}]}], "]"}]}]}], "]"}]}], ";"}], 
-  "\[IndentingNewLine]"}], "\n", 
+  "\n"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -4050,8 +4161,8 @@ Cell[BoxData[
      RowBox[{"ReduceDimensionMatrix", "[", 
       RowBox[{
        RowBox[{"f", "//", "Domain"}], ",", 
-       RowBox[{"f", "//", "Length"}]}], "]"}]}], ";"}], "\[IndentingNewLine]",
-    "\n", 
+       RowBox[{"f", "//", "Length"}]}], "]"}]}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"ReduceDimensionIntegrateMatrix", "[", 
@@ -4102,7 +4213,7 @@ Cell[BoxData[
  InitializationCell->True],
 
 Cell[BoxData[""], "Input"]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -4620,7 +4731,8 @@ Cell[BoxData[{
     RowBox[{
      RowBox[{"Curve", "[", 
       RowBox[{"cr_IFun", ",", 
-       RowBox[{"Stretch", "\[Rule]", "L_"}]}], "]"}], ",", "z_"}], "]"}], ":=", 
+       RowBox[{"Stretch", "\[Rule]", "L_"}]}], "]"}], ",", "z_"}], "]"}], ":=", \
+
    RowBox[{
     RowBox[{"MapFromIntervalD", "[", 
      RowBox[{
@@ -5454,7 +5566,7 @@ Cell[BoxData[{
       RowBox[{"-", "2"}]}], ",", "All"}], "\[RightDoubleBracket]"}]}], 
   ";"}]}], "Input",
  InitializationCell->True]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 

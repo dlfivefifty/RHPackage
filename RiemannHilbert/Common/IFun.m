@@ -263,10 +263,6 @@ IntervalToOuterCircleD[x_]:=1+x/(Sqrt[-1+x] Sqrt[1+x]);
 IntervalToTopCircleD[x_]:=1-(I x)/Sqrt[1-x^2];
 IntervalToBottomCircleD[x_]:=1-(I x)/Sqrt[1-x^2];
 
-IntervalToRealLine[x_]:=x/Sqrt[1-x^2];
-RealLineToInterval[u_]:=u/Sqrt[1+u^2];
-
-
 
 InfinityInDomainQ[_]:=False;
 InfinityInDomainQ[Line[{_?InfinityQ,_},___]]:=True;
@@ -297,6 +293,20 @@ BoundedDomainQ[_?(!LeftEndpointInfinityQ[#]&&!RightEndpointInfinityQ[#]&)]:=True
 DomainMemberQ[d_?IntervalDomainQ,x_]:=MapToInterval[d,x]//(NumberQ[#]&&Abs[Im[#]]<10 $MachineTolerance&&Abs[#]<=1.+10 $MachineTolerance&);
 
 
+IntervalToRealLine[_?(#~NEqual~1.&)]:=\[Infinity];
+IntervalToRealLine[_?(#~NEqual~-1.&)]:=-\[Infinity];
+IntervalToRealLine[x_?NumberQ]:=x/Sqrt[1-x^2];
+
+RealLineToInterval[y_?NumberQ]:=y/Sqrt[1+y^2];
+SetAttributes[IntervalToRealLine,Listable];
+SetAttributes[RealLineToInterval,Listable];
+
+MapToInterval[Line[{_?InfinityQ,_?InfinityQ}],y_]:=RealLineToInterval[y];
+MapToIntervalD[Line[{_?InfinityQ,_?InfinityQ}],y_]:=RealLineToInterval'[y];
+MapFromInterval[Line[{_?InfinityQ,_?InfinityQ}],x_]:=IntervalToRealLine[x];
+MapFromIntervalD[Line[{_?InfinityQ,_?InfinityQ}],x_]:=IntervalToRealLine'[x];
+
+
 SetAttributes[IntervalToHalfLine,Listable];
 IntervalToHalfLine[_?(#~NEqual~1.&)]:=\[Infinity] ;
 IntervalToHalfLine[_?InfinityQ]:=-1.;
@@ -309,31 +319,31 @@ HalfLineToInterval[y_]:=(-1+y)/(1+y) ;
 
 
 
-MapToInterval[Line[{a_,b_?InfinityQ},Stretch->L_],z_]:=HalfLineToInterval[Exp[-I Arg[b]](z-a)/L];
-MapToIntervalD[Line[{a_,b_?InfinityQ},Stretch->L_],z_]:=(2 E^(I Arg[b]) L)/(-a+E^(I Arg[b]) L+z)^2;
-MapFromInterval[Line[{a_,b_?InfinityQ},Stretch->L_],x_]:=L Exp[I Arg[b]] IntervalToHalfLine[x]+a;
+MapToInterval[Line[{a_?NumberQ,b_?InfinityQ},Stretch->L_],z_]:=HalfLineToInterval[Exp[-I Arg[b]](z-a)/L];
+MapToIntervalD[Line[{a_?NumberQ,b_?InfinityQ},Stretch->L_],z_]:=(2 E^(I Arg[b]) L)/(-a+E^(I Arg[b]) L+z)^2;
+MapFromInterval[Line[{a_?NumberQ,b_?InfinityQ},Stretch->L_],x_]:=L Exp[I Arg[b]] IntervalToHalfLine[x]+a;
 
-MapFromIntervalD[Line[{a_,b_?InfinityQ},Stretch->L_],1.]:=0.;
-MapFromIntervalD[Line[{a_,b_?InfinityQ},Stretch->L_],x_]:=(2 E^(I Arg[b]) L)/(-1+x)^2;
+MapFromIntervalD[Line[{a_?NumberQ,b_?InfinityQ},Stretch->L_],1.]:=0.;
+MapFromIntervalD[Line[{a_?NumberQ,b_?InfinityQ},Stretch->L_],x_]:=(2 E^(I Arg[b]) L)/(-1+x)^2;
 
-MapToInterval[Line[{a_?InfinityQ,b_},Stretch->L_],z_]:=-MapToInterval[Line[{b,a},Stretch->L],z];
-MapToIntervalD[Line[{a_?InfinityQ,b_},Stretch->L_],z_]:=-MapToIntervalD[Line[{b,a},Stretch->L],z];
-MapFromInterval[Line[{a_?InfinityQ,b_},Stretch->L_],x_]:=MapFromInterval[Line[{b,a},Stretch->L],-x];
-MapFromIntervalD[Line[{a_?InfinityQ,b_},Stretch->L_],x_]:=-MapFromIntervalD[Line[{b,a},Stretch->L],-x];
+MapToInterval[Line[{a_?InfinityQ,b_?NumberQ},Stretch->L_],z_]:=-MapToInterval[Line[{b,a},Stretch->L],z];
+MapToIntervalD[Line[{a_?InfinityQ,b_?NumberQ},Stretch->L_],z_]:=-MapToIntervalD[Line[{b,a},Stretch->L],z];
+MapFromInterval[Line[{a_?InfinityQ,b_?NumberQ},Stretch->L_],x_]:=MapFromInterval[Line[{b,a},Stretch->L],-x];
+MapFromIntervalD[Line[{a_?InfinityQ,b_?NumberQ},Stretch->L_],x_]:=-MapFromIntervalD[Line[{b,a},Stretch->L],-x];
 
 
 
-MapToInterval[Line[{a_,b_?InfinityQ}],z_]:=MapToInterval[Line[{a,b},Stretch->1.],z];
-MapToIntervalD[Line[{a_,b_?InfinityQ}],z_]:=MapToIntervalD[Line[{a,b},Stretch->1.],z];
-MapFromInterval[Line[{a_,b_?InfinityQ}],x_]:=MapFromInterval[Line[{a,b},Stretch->1.],x];
-MapFromIntervalD[Line[{a_,b_?InfinityQ}],1.]:=0.;
-MapFromIntervalD[Line[{a_,b_?InfinityQ}],x_]:=MapFromIntervalD[Line[{a,b},Stretch->1.],x];
+MapToInterval[Line[{a_?NumberQ,b_?InfinityQ}],z_]:=MapToInterval[Line[{a,b},Stretch->1.],z];
+MapToIntervalD[Line[{a_?NumberQ,b_?InfinityQ}],z_]:=MapToIntervalD[Line[{a,b},Stretch->1.],z];
+MapFromInterval[Line[{a_?NumberQ,b_?InfinityQ}],x_]:=MapFromInterval[Line[{a,b},Stretch->1.],x];
+MapFromIntervalD[Line[{a_?NumberQ,b_?InfinityQ}],1.]:=0.;
+MapFromIntervalD[Line[{a_?NumberQ,b_?InfinityQ}],x_]:=MapFromIntervalD[Line[{a,b},Stretch->1.],x];
 
-MapToInterval[Line[{a_?InfinityQ,b_}],z_]:=MapToInterval[Line[{a,b},Stretch->1.],z];
-MapToIntervalD[Line[{a_?InfinityQ,b_}],z_]:=MapToIntervalD[Line[{a,b},Stretch->1.],z];
-MapFromInterval[Line[{a_?InfinityQ,b_}],x_]:=MapFromInterval[Line[{a,b},Stretch->1.],x];
-MapFromIntervalD[Line[{a_?InfinityQ,b_}],-1.]:=0.;
-MapFromIntervalD[Line[{a_?InfinityQ,b_}],x_]:=MapFromIntervalD[Line[{a,b},Stretch->1.],x];
+MapToInterval[Line[{a_?InfinityQ,b_?NumberQ}],z_]:=MapToInterval[Line[{a,b},Stretch->1.],z];
+MapToIntervalD[Line[{a_?InfinityQ,b_?NumberQ}],z_]:=MapToIntervalD[Line[{a,b},Stretch->1.],z];
+MapFromInterval[Line[{a_?InfinityQ,b_?NumberQ}],x_]:=MapFromInterval[Line[{a,b},Stretch->1.],x];
+MapFromIntervalD[Line[{a_?InfinityQ,b_?NumberQ}],-1.]:=0.;
+MapFromIntervalD[Line[{a_?InfinityQ,b_?NumberQ}],x_]:=MapFromIntervalD[Line[{a,b},Stretch->1.],x];
 
 
 MapToInterval[Line[{a_,b_}],z_]:=(a+b-2z)/(a-b);
@@ -475,10 +485,11 @@ End[];
 
 
 FinitePoints;
-
+IntervalPoints;
 Begin["Private`"];
+IntervalPoints[d_,n_]:=MapFromInterval[d,NChebyshevLobattoPoints[n]];
+Points[d_?IntervalDomainQ,n_]:=IntervalPoints[d,n];
 
-Points[d_?IntervalDomainQ,n_]:=MapFromInterval[d,NChebyshevLobattoPoints[n]];
 
 End[];
 
@@ -536,7 +547,7 @@ SetLength;
 Begin["Private`"];
 
 IFun[l_List,d_][z_]:=ChebyshevLobattoBarycentricInterpolation[l,MapToInterval[d,z]];
-IFun[f_?NotListOrPatternQ,d_,n_Integer]:=IFun[f/@Points[d,n],d];
+IFun[f_?NotListOrPatternQ,d_,n_Integer]:=IFun[f/@IntervalPoints[d,n],d];
 IFun[a_]:=IFun[a,UnitInterval];
 
 Values[IFun[l_List,_]]:=l;
@@ -544,6 +555,8 @@ Domain[IFun[_List,d_]]:=d;
 
 
 SetupFun[IFun];
+Points[if_IFun]:=IntervalPoints[if//Domain,if//Length];
+
 
 DCT[f_IFun?ArrayFunQ]:=ArrayMap[DCT,f]//ToListOfArrays;
 DCT[if_IFun]:=if//Values//DCT;
@@ -581,15 +594,15 @@ SetLength[if_IFun,n_]:=IFun[PadRight[if//DCT,n]//InverseDCT,if//Domain];
 
 
 
-FinitePoints[if_IFun?(LeftEndpointInfinityQ[#]&&RightEndpointInfinityQ[#]&)]:=if//Points//Most//Rest;
+FinitePoints[if_IFun?(LeftEndpointInfinityQ[#]&&RightEndpointInfinityQ[#]&)]:=if//IntervalPoints//Most//Rest;
 FiniteValues[if_IFun?(LeftEndpointInfinityQ[#]&&RightEndpointInfinityQ[#]&)]:=if//Values//Most//Rest;
-FinitePoints[if_IFun?LeftEndpointInfinityQ]:=if//Points//Rest;
+FinitePoints[if_IFun?LeftEndpointInfinityQ]:=if//IntervalPoints//Rest;
 FiniteValues[if_IFun?LeftEndpointInfinityQ]:=if//Values//Rest;
-FinitePoints[if_IFun?RightEndpointInfinityQ]:=if//Points//Most;
+FinitePoints[if_IFun?RightEndpointInfinityQ]:=if//IntervalPoints//Most;
 FiniteValues[if_IFun?RightEndpointInfinityQ]:=if//Values//Most;
 
 FiniteValues[if_IFun]:=Values[if];
-FinitePoints[if_IFun]:=Points[if];
+FinitePoints[if_IFun]:=IntervalPoints[if];
 
 FiniteRealPoints[if_IFun]/;Re[LeftEndpoint[if]]~NEqual~Re[RightEndpoint[if]]:=if//FinitePoints//Im;
 
