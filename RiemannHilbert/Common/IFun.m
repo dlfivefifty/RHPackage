@@ -556,6 +556,7 @@ Domain[IFun[_List,d_]]:=d;
 
 SetupFun[IFun];
 Points[if_IFun]:=IntervalPoints[if//Domain,if//Length];
+IntervalPoints[f_IFun]:=Points[f];
 
 
 DCT[f_IFun?ArrayFunQ]:=ArrayMap[DCT,f]//ToListOfArrays;
@@ -603,6 +604,8 @@ FiniteValues[if_IFun?RightEndpointInfinityQ]:=if//Values//Most;
 
 FiniteValues[if_IFun]:=Values[if];
 FinitePoints[if_IFun]:=IntervalPoints[if];
+
+FiniteRealPoints[if:IFun[_,Line[{-\[Infinity],\[Infinity]}]]]:=if//FinitePoints;
 
 FiniteRealPoints[if_IFun]/;Re[LeftEndpoint[if]]~NEqual~Re[RightEndpoint[if]]:=if//FinitePoints//Im;
 
