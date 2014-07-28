@@ -550,7 +550,7 @@ IFun[l_List,d_][z_]:=ChebyshevLobattoBarycentricInterpolation[l,MapToInterval[d,
 IFun[f_?NotListOrPatternQ,d_,n_Integer]:=IFun[f/@IntervalPoints[d,n],d];
 IFun[a_]:=IFun[a,UnitInterval];
 
-Values[IFun[l_List,_]]:=l;
+IFun/:Values[IFun[l_List,_]]:=l;
 Domain[IFun[_List,d_]]:=d;
 
 

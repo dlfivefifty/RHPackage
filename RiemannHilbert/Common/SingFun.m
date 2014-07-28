@@ -29,7 +29,7 @@ SingFun;
 Begin["Private`"];
 
 SetupSingFun[head_]:=Module[{MapToValues},
-Values[if_head]:=if//First//Values;
+head/:Values[if_head]:=if//First//Values;
 Domain[if_head]:=if//First//Domain;
 LeftEndpoint[if_head]:=if//First//LeftEndpoint;
 RightEndpoint[if_head]:=if//First//RightEndpoint;

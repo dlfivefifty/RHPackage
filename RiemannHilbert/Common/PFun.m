@@ -88,7 +88,7 @@ PFun[f_?(NotListOrPatternQ[#]&&!ScalarQ[#] &&!ScalarQ[First[Flatten[#]]]&)&,d_,1
 PFun[f_?(NotListOrPatternQ[#]&&!ScalarQ[#]&&!ScalarQ[First[Flatten[#]]]&)&,d_,opts:OptionsPattern[]]:=PFun[f,d,1];
 
 
-Values[PFun[c0_,_]]:=c0;
+PFun/:Values[PFun[c0_,_]]:=c0;
 FiniteValues[pf_PFun]:=Values[pf];
 Domain[PFun[_,d_]]:=d;
 

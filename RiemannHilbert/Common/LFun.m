@@ -277,7 +277,7 @@ LFun[l_ShiftList,d_]:=LFun[l//MakeFFTIndexRange//InverseFFT,d];
 
 LFun[a_]:=LFun[a,UnitCircle];
 
-Values[LFun[l_List,_]]:=l;
+LFun/:Values[LFun[l_List,_]]:=l;
 Domain[LFun[_,d_]]:=d;
 
 SetupFun[LFun];
