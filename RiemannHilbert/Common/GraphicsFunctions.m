@@ -267,7 +267,9 @@ MoviePlot[f_,boundsAndOpts__]:=
 ]
 
 
-Simplex[2]:=Module[{x,y},{x+y<=1,{x,0,1},{y,0,1}}]
+(* WARNING: Conflicts with builtin function simplex
+Simplex[2]:=Module[{x,y},{x+y\[LessEqual]1,{x,0,1},{y,0,1}}]
+*)
 
 
 DefaultFontSize=12;$TextStyle={FontFamily->"Cmr12",FontSize->DefaultFontSize};RomanFont[str_,size_:DefaultFontSize]:=\!\(\*
