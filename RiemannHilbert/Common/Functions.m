@@ -30,6 +30,9 @@ BasisVector::usage="BasisVector[n][j] constructs a vector of length n with the j
 NEqual::usage="NEqual[i,j] determines whether two values are within $MachineTolerence of each other.";
 NEqualRelative::usage="NEqualRelative[i,j] determines whether two values are within $MachineTolerence of each other, relative error.";
 $MachineTolerance::usage="A specified tolerance for when two numerical values should be treated as equal.";
+$RHWorkingPrecision::usage="Working precision for all numerical evaluations";
+$RHWorkingEpsilon::usage="Epsilon corresponding to RHWorkingPrecision";
+Nwp::usage="Evaluate an expression with RHWorkingPrecision Precision";
 AlternatingVector::usage=
 "Alternating vector.";
 ScalarQ::usage=
@@ -63,6 +66,11 @@ SDot[f_List,g_List]:=f.g;
 SDot[f_,g_]:=f g;
 
 $MachineTolerance=10.^(-13);
+
+$RHWorkingPrecision=MachinePrecision;
+$RHWorkingEpsilon = 10^-$RHWorkingPrecision;
+
+Nwp[x_] := N[x,$RHWorkingPrecision];
 
 ZeroQ[f_]:=f==0;
 NEqual[f_List,g_List]:=Norm[f-g]<$MachineTolerance;

@@ -35,8 +35,8 @@ MExp;
 Begin["Private`"];
 
 
-ToMachineNumber[x_?((Abs[#]<=$MinMachineNumber)&)]:=0.;ToMachineNumber[x_?(Abs[#]>=$MaxMachineNumber&)]:=Sign[x] $MaxMachineNumber;
-ToMachineNumber[x_]:=x//N;
+ToMachineNumber[x_?((Abs[#]<=$MinMachineNumber)&)]:=Nwp[0];ToMachineNumber[x_?(Abs[#]>=$MaxMachineNumber&)]:=Sign[x] $MaxMachineNumber;
+ToMachineNumber[x_]:=x//Nwp;
 MExp[x_]:=ToMachineNumber@Exp[x];
 
 
@@ -47,7 +47,7 @@ SparseArray[{{i_,i_}:>\[Alpha][i],{i_,j_}/;j==i-1:>\[Beta][j],{i_,j_}/;j==i+1:>\
 
 
 GolubWelschWeights[n_,\[Mu]0_,\[Alpha]_,\[Beta]_]:=Module[{J,i,j,\[CapitalLambda],V},
-{\[CapitalLambda],V}=Eigensystem[N[JacobiMatrix[n,\[Alpha],\[Beta]]]];
+{\[CapitalLambda],V}=Eigensystem[Nwp[JacobiMatrix[n,\[Alpha],\[Beta]]]];
 Thread[{\[CapitalLambda],Map[\[Mu]0 First[#]^2/Norm[#]^2&,V]}]
 ];
 
@@ -108,11 +108,11 @@ LegendreQuadrature[f_,n_,a_,b_,prec_]:=Plus@@Map[f[#[[1]]]#[[2]]&,GaussianQuadra
 
 
 LobattoPoints[2,a_:-1,b_:1]:={a,b};
-LobattoPoints[n_,a_:-1,b_:1,prec_:$MachinePrecision]:=LobattoPoints[n,a,b,prec]=N[Join[{a,b},(b+a)/2+(b-a)/2 Map[#[[2]]&,Apply[List,Roots[0==D[LegendreP[n-1,x],x],x]]]],prec]//Sort;
-LobattoPoints[n_,a_:-1,b_:1]:=LobattoPoints[n,a,b]=N[Join[{a,b},(b+a)/2+(b-a)/2 Map[#[[2]]&,Apply[List,Roots[0==D[LegendreP[n-1,x],x],x]]]]]//Sort;
-LobattoPoints[3,a_:-1,b_:1]:=LobattoPoints[3,a,b]=N[Join[{a,b},{(b+a)/2+(b-a)/2 Apply[List,Roots[0==D[LegendreP[2,x],x],x]][[2]]}]]//Sort;
+LobattoPoints[n_,a_:-1,b_:1,prec_:$MachinePrecision]:=LobattoPoints[n,a,b,prec]=Nwp[Join[{a,b},(b+a)/2+(b-a)/2 Map[#[[2]]&,Apply[List,Roots[0==D[LegendreP[n-1,x],x],x]]]],prec]//Sort;
+LobattoPoints[n_,a_:-1,b_:1]:=LobattoPoints[n,a,b]=Nwp[Join[{a,b},(b+a)/2+(b-a)/2 Map[#[[2]]&,Apply[List,Roots[0==D[LegendreP[n-1,x],x],x]]]]]//Sort;
+LobattoPoints[3,a_:-1,b_:1]:=LobattoPoints[3,a,b]=Nwp[Join[{a,b},{(b+a)/2+(b-a)/2 Apply[List,Roots[0==D[LegendreP[2,x],x],x]][[2]]}]]//Sort;
 LobattoWeights[n_,a_:-1,b_:1]:=LobattoWeights[n,a,b]=Thread[{LobattoPoints[n,a,b],Map[Function[x,(b-a)/(n(n-1)LegendreP[n-1,x]^2)],LobattoPoints[n,-1,1]]}]//N//Chop//Sort;
-LobattoWeights[n_,a_:-1,b_:1,prec_:$MachinePrecision]:=LobattoWeights[n,a,b,prec]=N[Thread[{LobattoPoints[n,a,b,prec],Map[Function[x,(b-a)/(n(n-1)LegendreP[n-1,x]^2)],LobattoPoints[n,-1,1,prec]]}],prec]//Chop//Sort;
+LobattoWeights[n_,a_:-1,b_:1,prec_:$MachinePrecision]:=LobattoWeights[n,a,b,prec]=Nwp[Thread[{LobattoPoints[n,a,b,prec],Map[Function[x,(b-a)/(n(n-1)LegendreP[n-1,x]^2)],LobattoPoints[n,-1,1,prec]]}],prec]//Chop//Sort;
 
 
 SetAttributes[WeightIntegrate,HoldFirst];
@@ -148,7 +148,7 @@ LegendreQuadrature[f,n,a,b]
 
 
 TIntegrate[h_,{x_,a_,b_,m_}]:=Module[{},
-(b-a)/m(((h/.x->N[a])+(h/.x->N[b]))/2+Sum[h/.x->N[a+j (b-a)/m],{j,1,m-1}])]
+(b-a)/m(((h/.x->Nwp[a])+(h/.x->Nwp[b]))/2+Sum[h/.x->Nwp[a+j (b-a)/m],{j,1,m-1}])]
 
 
 ConstructTInnerProduct[m_,a_,b_][f_,g_]:=TIntegrate[f[t] Conjugate[g[t]],{t,a,b,m}]
