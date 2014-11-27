@@ -34,7 +34,9 @@ Begin["Private`"];
 
 
 RandomSymmetric[n_,dist_:NormalDistribution[0,1/Sqrt[2]]]:=RandomVariate[dist,{n,n}]//(#+Transpose[#])/Sqrt[2 n]&;
-RandomOrthogonal[n_,dist_:NormalDistribution[0,1/Sqrt[2]]]:=RandomVariate[dist,{n,n}]//QRDecomposition//First;
+RandomOrthogonal[n_,dist_:NormalDistribution[0,1/Sqrt[2]]]:=Module[{Q},
+Q=RandomVariate[dist,{n,n}]//QRDecomposition//First//Transpose;Q .DiagonalMatrix[RandomChoice[{-1,1},n]]
+];
 RandomHermitian[n_,dist_:NormalDistribution[0,1/Sqrt[2]]]:=Module[{GG},
 (GG=(RandomVariate[dist,{n,n}]+I RandomVariate[dist,{n,n}]);
 (GG+ConjugateTranspose[GG])/Sqrt[4 n] )
