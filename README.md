@@ -14,3 +14,18 @@ The computation is reliable for all real x.
 
 The software was developed by Sheehan Olver with contributions from Georg Wechslberger, 
 based on the framework described in _Found. Comput. Maths_, **11**: 153–179 and  _Numer. Math._ **122**: 305–340
+
+
+# Installation instructions
+
+Download the repository and follow the installation instructions in the file INSTALL.nb.
+
+# License
+
+The file
+```
+    RiemannHilbert/Data/McLeodSolution.txt 
+```	
+is included with permission from Michael Prahofer and Herbert Spohn, and is available online. All other files are © Sheehan Olver, 2010, subject to a BSD license. 
+
+The package includes contributions from Georg Wechslberger.
