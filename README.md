@@ -1,8 +1,7 @@
 # RHPackage
 A Mathematica package for solving Riemann–Hilbert problems numerically
 
-![Painlevé II RH Problem](sixrays.jpg)
-
+<img src="sixrays.jpg" height="250" alt=".">  
 
 Examples include computing Cauchy and Hilbert transforms, homogeneous Painlevé II 
 (such as the Hastings–McLeod solution and Ablowitz–Stegun solutions for large x), Painlevé III and Painlevé IV. 
