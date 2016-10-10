@@ -1303,7 +1303,7 @@ Cell[BoxData[
    "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
-     RowBox[{"CirclePoints", "[", "n_", "]"}], ":=", 
+     RowBox[{"ComplexCirclePoints", "[", "n_", "]"}], ":=", 
      RowBox[{"Exp", "[", 
       RowBox[{"I", " ", "\[Pi]", " ", 
        RowBox[{"LeftEvenPoints", "[", "n", "]"}]}], "]"}]}], ";"}], 
@@ -1312,7 +1312,7 @@ Cell[BoxData[
     RowBox[{
      RowBox[{"NCirclePoints", "[", "n_", "]"}], ":=", 
      RowBox[{
-      RowBox[{"CirclePoints", "[", "n", "]"}], "//", "N"}]}], ";"}], 
+      RowBox[{"ComplexCirclePoints", "[", "n", "]"}], "//", "N"}]}], ";"}], 
    "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
@@ -1321,7 +1321,7 @@ Cell[BoxData[
        RowBox[{"d_", "?", "CircleDomainQ"}], ",", "n_"}], "]"}], ":=", 
      RowBox[{"MapFromCircle", "[", 
       RowBox[{"d", ",", 
-       RowBox[{"NCirclePoints", "[", "n", "]"}]}], "]"}]}], ";"}], 
+       RowBox[{"ComplexCirclePoints", "[", "n", "]"}]}], "]"}]}], ";"}], 
    "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]"}]}]], "Input",
@@ -1963,6 +1963,7 @@ Cell[BoxData[
               },
               AllowedDimensions->{2, Automatic},
               Editable->True,
+              
               GridBoxAlignment->{
                "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, 
                 "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
@@ -3154,8 +3155,8 @@ WindowMargins->{{Automatic, 302}, {Automatic, 12}},
 PrivateNotebookOptions->{"FileOutlineCache"->False},
 ShowSelection->True,
 TrackCellChangeTimes->False,
-FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (June 27, \
-2014)",
+FrontEndVersion->"10.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 9, \
+2015)",
 StyleDefinitions->"Default.nb"
 ]
 

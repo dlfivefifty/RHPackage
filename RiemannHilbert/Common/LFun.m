@@ -241,10 +241,10 @@ Begin["Private`"];
 
 
 
-CirclePoints[n_]:=Exp[I \[Pi] LeftEvenPoints[n]];
-NCirclePoints[n_]:=CirclePoints[n]//N;
+ComplexCirclePoints[n_]:=Exp[I \[Pi] LeftEvenPoints[n]];
+NCirclePoints[n_]:=ComplexCirclePoints[n]//N;
 
-Points[d_?CircleDomainQ,n_]:=MapFromCircle[d,NCirclePoints[n]];
+Points[d_?CircleDomainQ,n_]:=MapFromCircle[d,ComplexCirclePoints[n]];
 
 End[];
 
