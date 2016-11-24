@@ -126,7 +126,7 @@ Cell[BoxData[
             RowBox[{"Floor", "[", 
              FractionBox[
               RowBox[{"1", "+", "n"}], "2"], "]"}]}]}], "]"}]}], ")"}]}], "//",
-       "N"}]}], ";"}], "\[IndentingNewLine]", 
+       "Nwp"}]}], ";"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{
@@ -170,7 +170,7 @@ Cell[BoxData[
      RowBox[{"\[Psi]p", "[", 
       RowBox[{"0", ",", "z_"}], "]"}], ":=", 
      RowBox[{
-      RowBox[{"ArcTanh", "[", "z", "]"}], "//", "N"}]}], ";"}], 
+      RowBox[{"ArcTanh", "[", "z", "]"}], "//", "Nwp"}]}], ";"}], 
    "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"SetAttributes", "[", 
@@ -215,8 +215,8 @@ Cell[BoxData[
      RowBox[{"\[Psi]pS", "[", 
       RowBox[{
        RowBox[{"n_", "?", "EvenQ"}], ",", 
-       RowBox[{"z_", "?", "ZeroQ"}]}], "]"}], ":=", "0."}], ";"}], 
-   "\[IndentingNewLine]", 
+       RowBox[{"z_", "?", "ZeroQ"}]}], "]"}], ":=", 
+     RowBox[{"0", "//", "Nwp"}]}], ";"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"\[Psi]pS", "[", 
@@ -225,8 +225,8 @@ Cell[BoxData[
        RowBox[{"z_", "?", "ZeroQ"}]}], "]"}], ":=", 
      RowBox[{
       RowBox[{"-", 
-       FractionBox["1", "n"]}], "//", "N"}]}], ";"}], "\[IndentingNewLine]", 
-   "\[IndentingNewLine]", 
+       FractionBox["1", "n"]}], "//", "Nwp"}]}], ";"}], "\[IndentingNewLine]",
+    "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"\[Psi]p\[Phi]", "[", 
@@ -374,8 +374,8 @@ Cell[BoxData[
      RowBox[{"\[Psi]p", "[", 
       RowBox[{
        RowBox[{"n_", "?", "EvenQ"}], ",", 
-       RowBox[{"z_", "?", "ZeroQ"}]}], "]"}], ":=", "0."}], ";"}], 
-   "\[IndentingNewLine]", 
+       RowBox[{"z_", "?", "ZeroQ"}]}], "]"}], ":=", 
+     RowBox[{"0", "//", "Nwp"}]}], ";"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"\[Psi]p", "[", 
@@ -384,8 +384,8 @@ Cell[BoxData[
        RowBox[{"z_", "?", "ZeroQ"}]}], "]"}], ":=", 
      RowBox[{
       RowBox[{"-", 
-       FractionBox["1", "n"]}], "//", "N"}]}], ";"}], "\[IndentingNewLine]", 
-   "\[IndentingNewLine]", 
+       FractionBox["1", "n"]}], "//", "Nwp"}]}], ";"}], "\[IndentingNewLine]",
+    "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"\[Psi]p", "[", 
@@ -394,7 +394,7 @@ Cell[BoxData[
      RowBox[{
       RowBox[{"\[Psi]pS", "[", 
        RowBox[{"n", ",", 
-        RowBox[{"z", "//", "N"}]}], "]"}], "//", "N"}]}], ";"}], 
+        RowBox[{"z", "//", "Nwp"}]}], "]"}], "//", "Nwp"}]}], ";"}], 
    "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
@@ -404,7 +404,7 @@ Cell[BoxData[
      RowBox[{
       RowBox[{"\[Psi]pH", "[", 
        RowBox[{"n", ",", 
-        RowBox[{"z", "//", "N"}]}], "]"}], "//", "N"}]}], ";"}], 
+        RowBox[{"z", "//", "Nwp"}]}], "]"}], "//", "Nwp"}]}], ";"}], 
    "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
@@ -593,10 +593,12 @@ Cell[BoxData[{
        RowBox[{
         RowBox[{"\[Mu]", "[", 
          RowBox[{
-          RowBox[{"k", "-", "1"}], ",", "1."}], "]"}], "+", 
+          RowBox[{"k", "-", "1"}], ",", 
+          RowBox[{"Nwp", "[", "1", "]"}]}], "]"}], "+", 
         RowBox[{"\[Mu]", "[", 
          RowBox[{
-          RowBox[{"k", "-", "2"}], ",", "1."}], "]"}]}], ")"}]}]}]}], ";"}], 
+          RowBox[{"k", "-", "2"}], ",", 
+          RowBox[{"Nwp", "[", "1", "]"}]}], "]"}]}], ")"}]}]}]}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
@@ -622,10 +624,12 @@ Cell[BoxData[{
        RowBox[{
         RowBox[{"\[Mu]", "[", 
          RowBox[{
-          RowBox[{"k", "-", "1"}], ",", "1."}], "]"}], "+", 
+          RowBox[{"k", "-", "1"}], ",", 
+          RowBox[{"Nwp", "[", "1", "]"}]}], "]"}], "+", 
         RowBox[{"\[Mu]", "[", 
          RowBox[{
-          RowBox[{"k", "-", "2"}], ",", "1."}], "]"}]}], ")"}]}]}]}], ";"}], 
+          RowBox[{"k", "-", "2"}], ",", 
+          RowBox[{"Nwp", "[", "1", "]"}]}], "]"}]}], ")"}]}]}]}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
@@ -660,11 +664,13 @@ Cell[BoxData[{
         RowBox[{"\[Mu]", "[", 
          RowBox[{
           RowBox[{"k", "-", "1"}], ",", 
-          RowBox[{"-", "1."}]}], "]"}], "+", 
+          RowBox[{"Nwp", "[", 
+           RowBox[{"-", "1"}], "]"}]}], "]"}], "+", 
         RowBox[{"\[Mu]", "[", 
          RowBox[{
           RowBox[{"k", "-", "2"}], ",", 
-          RowBox[{"-", "1."}]}], "]"}]}], ")"}]}]}]}], ";"}], 
+          RowBox[{"Nwp", "[", 
+           RowBox[{"-", "1"}], "]"}]}], "]"}]}], ")"}]}]}]}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
@@ -700,11 +706,13 @@ Cell[BoxData[{
         RowBox[{"\[Mu]", "[", 
          RowBox[{
           RowBox[{"k", "-", "1"}], ",", 
-          RowBox[{"-", "1."}]}], "]"}], "+", 
+          RowBox[{"Nwp", "[", 
+           RowBox[{"-", "1"}], "]"}]}], "]"}], "+", 
         RowBox[{"\[Mu]", "[", 
          RowBox[{
           RowBox[{"k", "-", "2"}], ",", 
-          RowBox[{"-", "1."}]}], "]"}]}], ")"}]}]}]}], ";"}], 
+          RowBox[{"Nwp", "[", 
+           RowBox[{"-", "1"}], "]"}]}], "]"}]}], ")"}]}]}]}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
@@ -779,7 +787,7 @@ Cell[BoxData[{
      RowBox[{"0", ",", "z_"}], "]"}], ":=", 
     RowBox[{
      RowBox[{
-      RowBox[{"ArcTanh", "'"}], "[", "z", "]"}], "//", "N"}]}], ";"}], 
+      RowBox[{"ArcTanh", "'"}], "[", "z", "]"}], "//", "Nwp"}]}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"SetAttributes", "[", 
@@ -871,7 +879,8 @@ Cell[BoxData[{
    RowBox[{
     RowBox[{"-", 
      FractionBox["1", 
-      RowBox[{"n", "-", "1"}]]}], "//", "N"}]}], ";"}], "\[IndentingNewLine]", 
+      RowBox[{"n", "-", "1"}]]}], "//", "Nwp"}]}], 
+  ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -883,8 +892,9 @@ Cell[BoxData[{
          RowBox[{
           RowBox[{"Negative", "[", "#", "]"}], "&&", 
           RowBox[{"OddQ", "[", "#", "]"}]}], "&"}], ")"}]}], ",", 
-      RowBox[{"z_", "?", "ZeroQ"}]}], "]"}], ":=", "0."}], ";"}], 
-  "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+      RowBox[{"z_", "?", "ZeroQ"}]}], "]"}], ":=", 
+    RowBox[{"0", "//", "Nwp"}]}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"\[Psi]pHD", "[", 
@@ -1072,7 +1082,7 @@ Cell[BoxData[{
    RowBox[{
     RowBox[{"\[Psi]pSD", "[", 
      RowBox[{"n", ",", 
-      RowBox[{"z", "//", "N"}]}], "]"}], "//", "N"}]}], 
+      RowBox[{"z", "//", "Nwp"}]}], "]"}], "//", "Nwp"}]}], 
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
@@ -1082,7 +1092,7 @@ Cell[BoxData[{
    RowBox[{
     RowBox[{"\[Psi]pHD", "[", 
      RowBox[{"n", ",", 
-      RowBox[{"z", "//", "N"}]}], "]"}], "//", "N"}]}], ";"}]}], "Input",
+      RowBox[{"z", "//", "Nwp"}]}], "]"}], "//", "Nwp"}]}], ";"}]}], "Input",
  InitializationCell->True],
 
 Cell[BoxData[{
@@ -1331,7 +1341,7 @@ Cell[BoxData[{
      ")"}]}]}], ";"}]}], "Input",
  InitializationCell->True]
 }, Open  ]]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -1954,7 +1964,8 @@ Cell[BoxData[
                     RowBox[{
                     RowBox[{"1", "/", "j"}], ",", 
                     RowBox[{"{", 
-                    RowBox[{"j", ",", "1.", ",", 
+                    RowBox[{"j", ",", 
+                    RowBox[{"Nwp", "[", "1", "]"}], ",", 
                     RowBox[{"k", "-", "1"}], ",", "2"}], "}"}]}], "]"}], 
                     "]"}], ",", "0"}], "]"}]}], "//", 
                     RowBox[{"(", 
@@ -2038,7 +2049,8 @@ Cell[BoxData[
                     RowBox[{
                     RowBox[{"1", "/", "j"}], ",", 
                     RowBox[{"{", 
-                    RowBox[{"j", ",", "1.", ",", 
+                    RowBox[{"j", ",", 
+                    RowBox[{"Nwp", "[", "1", "]"}], ",", 
                     RowBox[{"k", "-", "1"}], ",", "2"}], "}"}]}], "]"}], 
                     "]"}], ",", "0"}], "]"}]}], "//", 
                     RowBox[{"(", 
@@ -2094,11 +2106,12 @@ Cell[BoxData[
            RowBox[{
             RowBox[{"\[Mu]", "[", 
              RowBox[{
-              RowBox[{"k", "-", "1"}], ",", "1."}], "]"}], "+", 
+              RowBox[{"k", "-", "1"}], ",", 
+              RowBox[{"Nwp", "[", "1", "]"}]}], "]"}], "+", 
             RowBox[{"\[Mu]", "[", 
              RowBox[{
-              RowBox[{"k", "-", "2"}], ",", "1."}], "]"}]}], ")"}]}]}], "//", 
-        
+              RowBox[{"k", "-", "2"}], ",", 
+              RowBox[{"Nwp", "[", "1", "]"}]}], "]"}]}], ")"}]}]}], "//", 
         RowBox[{
          RowBox[{"#", "+", 
           RowBox[{
@@ -2156,11 +2169,13 @@ Cell[BoxData[
             RowBox[{"\[Mu]", "[", 
              RowBox[{
               RowBox[{"k", "-", "1"}], ",", 
-              RowBox[{"-", "1."}]}], "]"}], "+", 
+              RowBox[{"Nwp", "[", 
+               RowBox[{"-", "1"}], "]"}]}], "]"}], "+", 
             RowBox[{"\[Mu]", "[", 
              RowBox[{
               RowBox[{"k", "-", "2"}], ",", 
-              RowBox[{"-", "1."}]}], "]"}]}], ")"}]}]}], "//", 
+              RowBox[{"Nwp", "[", 
+               RowBox[{"-", "1"}], "]"}]}], "]"}]}], ")"}]}]}], "//", 
         RowBox[{
          RowBox[{"#", "+", 
           RowBox[{
@@ -2233,7 +2248,7 @@ Cell[BoxData[
        RowBox[{"g", "//", "Domain"}]}], "]"}]}], ";"}], "\[IndentingNewLine]",
     "\[IndentingNewLine]"}]}]], "Input",
  InitializationCell->True]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -2591,7 +2606,7 @@ Cell[BoxData[{
       "]"}], ",", 
      RowBox[{"Domain", "[", "g", "]"}]}], "]"}]}], ";"}]}], "Input",
  InitializationCell->True]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -2614,7 +2629,7 @@ Cell[BoxData[
       RowBox[{"Domain", "[", "g", "]"}]}], "]"}]}], ";"}]}]], "Input",
  InitializationCell->True]
 }, Open  ]]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -3064,12 +3079,13 @@ Cell[BoxData[
                RowBox[{
                 RowBox[{"\[Mu]", "[", 
                  RowBox[{
-                  RowBox[{"#", "-", "1"}], ",", "1."}], "]"}], "+", 
+                  RowBox[{"#", "-", "1"}], ",", 
+                  RowBox[{"Nwp", "[", "1", "]"}]}], "]"}], "+", 
                 RowBox[{"\[Mu]", "[", 
                  RowBox[{
-                  RowBox[{"#", "-", "2"}], ",", "1."}], "]"}]}], ")"}]}]}], 
-            "&"}], ",", "k"}], "]"}]}]}], "]"}]}]}], ";"}], 
-   "\[IndentingNewLine]", 
+                  RowBox[{"#", "-", "2"}], ",", 
+                  RowBox[{"Nwp", "[", "1", "]"}]}], "]"}]}], ")"}]}]}], "&"}],
+            ",", "k"}], "]"}]}]}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"CauchyBasis", "[", 
@@ -3106,14 +3122,16 @@ Cell[BoxData[
                   RowBox[{"\[Mu]", "[", 
                    RowBox[{
                     RowBox[{"#", "-", "1"}], ",", 
-                    RowBox[{"-", "1."}]}], "]"}], "+", 
+                    RowBox[{"Nwp", "[", 
+                    RowBox[{"-", "1"}], "]"}]}], "]"}], "+", 
                   RowBox[{"\[Mu]", "[", 
                    RowBox[{
                     RowBox[{"#", "-", "2"}], ",", 
-                    RowBox[{"-", "1."}]}], "]"}]}], ")"}]}]}], ")"}]}], "&"}],
-            ",", "k"}], "]"}]}]}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+                    RowBox[{"Nwp", "[", 
+                    RowBox[{"-", "1"}], "]"}]}], "]"}]}], ")"}]}]}], ")"}]}], 
+            "&"}], ",", "k"}], "]"}]}]}], "]"}]}]}], ";"}], 
    "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
-   "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"CauchyBasisS", "[", 
@@ -3144,12 +3162,13 @@ Cell[BoxData[
                RowBox[{
                 RowBox[{"\[Mu]", "[", 
                  RowBox[{
-                  RowBox[{"#", "-", "1"}], ",", "1."}], "]"}], "+", 
+                  RowBox[{"#", "-", "1"}], ",", 
+                  RowBox[{"Nwp", "[", "1", "]"}]}], "]"}], "+", 
                 RowBox[{"\[Mu]", "[", 
                  RowBox[{
-                  RowBox[{"#", "-", "2"}], ",", "1."}], "]"}]}], ")"}]}]}], 
-            "&"}], ",", "k"}], "]"}]}]}], "]"}]}]}], ";"}], 
-   "\[IndentingNewLine]", 
+                  RowBox[{"#", "-", "2"}], ",", 
+                  RowBox[{"Nwp", "[", "1", "]"}]}], "]"}]}], ")"}]}]}], "&"}],
+            ",", "k"}], "]"}]}]}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"CauchyBasisS", "[", 
@@ -3187,13 +3206,15 @@ Cell[BoxData[
                   RowBox[{"\[Mu]", "[", 
                    RowBox[{
                     RowBox[{"#", "-", "1"}], ",", 
-                    RowBox[{"-", "1."}]}], "]"}], "+", 
+                    RowBox[{"Nwp", "[", 
+                    RowBox[{"-", "1"}], "]"}]}], "]"}], "+", 
                   RowBox[{"\[Mu]", "[", 
                    RowBox[{
                     RowBox[{"#", "-", "2"}], ",", 
-                    RowBox[{"-", "1."}]}], "]"}]}], ")"}]}]}], ")"}]}], "&"}],
-            ",", "k"}], "]"}]}]}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
-   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+                    RowBox[{"Nwp", "[", 
+                    RowBox[{"-", "1"}], "]"}]}], "]"}]}], ")"}]}]}], ")"}]}], 
+            "&"}], ",", "k"}], "]"}]}]}], "]"}]}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
      RowBox[{"CauchyBasisS", "[", 
@@ -4296,11 +4317,12 @@ Cell[BoxData[{
                 RowBox[{
                  RowBox[{"\[Mu]", "[", 
                   RowBox[{
-                   RowBox[{"#", "-", "1"}], ",", "1."}], "]"}], "+", 
+                   RowBox[{"#", "-", "1"}], ",", 
+                   RowBox[{"Nwp", "[", "1", "]"}]}], "]"}], "+", 
                  RowBox[{"\[Mu]", "[", 
                   RowBox[{
-                   RowBox[{"#", "-", "2"}], ",", "1."}], "]"}]}], ")"}]}], 
-              "-", 
+                   RowBox[{"#", "-", "2"}], ",", 
+                   RowBox[{"Nwp", "[", "1", "]"}]}], "]"}]}], ")"}]}], "-", 
               RowBox[{
                RowBox[{
                 RowBox[{"LeftSingularityDataBasis", "[", 
@@ -4366,11 +4388,14 @@ Cell[BoxData[{
                     RowBox[{"\[Mu]", "[", 
                     RowBox[{
                     RowBox[{"#", "-", "1"}], ",", 
-                    RowBox[{"-", "1."}]}], "]"}], "+", 
+                    RowBox[{"Nwp", "[", 
+                    RowBox[{"-", "1"}], "]"}]}], "]"}], "+", 
                     RowBox[{"\[Mu]", "[", 
                     RowBox[{
                     RowBox[{"#", "-", "2"}], ",", 
-                    RowBox[{"-", "1."}]}], "]"}]}], ")"}]}]}], ")"}]}], "+", 
+                    RowBox[{"Nwp", "[", 
+                    RowBox[{"-", "1"}], "]"}]}], "]"}]}], ")"}]}]}], ")"}]}], 
+              "+", 
               RowBox[{
                RowBox[{
                 RowBox[{"RightSingularityDataBasis", "[", 
@@ -4453,7 +4478,7 @@ Cell[BoxData[{
          "&"}], ",", "k"}], "]"}]}], ")"}]}]}], 
   ";"}], "\[IndentingNewLine]"}], "Input",
  InitializationCell->True]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -6211,13 +6236,13 @@ Cell[BoxData[{
 }, Open  ]]
 },
 AutoGeneratedPackage->Automatic,
-WindowSize->{839, 815},
-WindowMargins->{{Automatic, 584}, {Automatic, 208}},
+WindowSize->{1199, 845},
+WindowMargins->{{Automatic, 255}, {Automatic, 112}},
 PrivateNotebookOptions->{"FileOutlineCache"->False},
 ShowSelection->True,
 TrackCellChangeTimes->False,
-FrontEndVersion->"8.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (October 5, \
-2011)",
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (June 27, \
+2014)",
 StyleDefinitions->"Default.nb"
 ]
 

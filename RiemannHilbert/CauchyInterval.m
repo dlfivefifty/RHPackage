@@ -50,7 +50,7 @@ Begin["`Private`"];
 Clear[\[Psi]p,\[Psi]m,\[Phi]];
 \[Phi][n_,z_]:=(1/2) z^(2 Floor[(n+1)/2] + 1) LerchPhi[z^2,1,1/2+ Floor[(n+1)/2] ];
 \[Mu][n_,z_]:=ArcTanh[z]-\[Phi][n,z];
-\[Mu][n_,z_]/;z~NEqual~1:=1/2 (-PolyGamma[0,1/2]+PolyGamma[0,1/2+Floor[(1+n)/2]])//N;
+\[Mu][n_,z_]/;z~NEqual~1:=1/2 (-PolyGamma[0,1/2]+PolyGamma[0,1/2+Floor[(1+n)/2]])//Nwp;
 \[Mu][n_,z_]/;z==-1:=-\[Mu][n,1];
 
 \[Mu]ms[m_,z_]:=\!\(
@@ -59,14 +59,14 @@ Clear[\[Psi]p,\[Psi]m,\[Phi]];
 \[Mu]S[n_,z_]:=\[Mu]ms[Floor[(n+1)/2],z];
 
 
-\[Psi]p[0,z_]:=ArcTanh[z]//N;
+\[Psi]p[0,z_]:=ArcTanh[z]//Nwp;
 
 SetAttributes[\[Psi]pS,Listable];
 \[Psi]pS[0,z_]:=ArcTanh[z];
 \[Psi]pS[n_?Positive,z_]:=z^n( ArcTanh[z]-\[Mu]S[n,1/z]);
 \[Psi]pS[n_?Negative,z_]:=z^n( ArcTanh[z]-\[Mu]S[-n-1,z]);
-\[Psi]pS[n_?EvenQ,z_?ZeroQ]:=0.;
-\[Psi]pS[n_?OddQ,z_?ZeroQ]:=-(1/n)//N;
+\[Psi]pS[n_?EvenQ,z_?ZeroQ]:=0//Nwp;
+\[Psi]pS[n_?OddQ,z_?ZeroQ]:=-(1/n)//Nwp;
 
 \[Psi]p\[Phi][n_?Positive,z_]:=z^n( ArcTanh[z]-ArcTanh[1/z]+\[Phi][n,1/z]);
 \[Psi]p\[Phi][n_?Negative,z_]:=z^n( \[Phi][-n-1,z]);
@@ -78,11 +78,11 @@ SetAttributes[\[Psi]pS,Listable];
 \[Psi]pH[n_?Positive,z_]:=With[{M=Floor[(n+1)/2]},z^n  (ArcTanh[z]-ArcTanh[1/z])+1/(1+2 M) z^(n-1-2 M) 1/(1-z^(-2))  Hypergeometric2F1[1,1,3/2+M,z^-2/(z^(-2)-1)]];
 SetAttributes[\[Psi]p,Listable];
 
-\[Psi]p[n_?EvenQ,z_?ZeroQ]:=0.;
-\[Psi]p[n_?OddQ,z_?ZeroQ]:=-(1/n)//N;
+\[Psi]p[n_?EvenQ,z_?ZeroQ]:=0//Nwp;
+\[Psi]p[n_?OddQ,z_?ZeroQ]:=-(1/n)//Nwp;
 
-\[Psi]p[n_?Positive,z_]:=\[Psi]pS[n,z//N]//N;
-\[Psi]p[n_?Negative,z_]:=\[Psi]pH[n,z//N]//N;
+\[Psi]p[n_?Positive,z_]:=\[Psi]pS[n,z//Nwp]//Nwp;
+\[Psi]p[n_?Negative,z_]:=\[Psi]pH[n,z//Nwp]//Nwp;
 
 
 \[Psi]m[0,z_]:=ArcTanh[1/z];
@@ -100,13 +100,13 @@ CauchyBasis[+1,UnitInterval,k_Integer,x_]:=
 CauchyBasis[-1,UnitInterval,k_Integer,x_]:=
 -1/(I \[Pi])(\[Psi]p[k-1,IntervalToTopCircle[x]]+\[Psi]p[-k+1,IntervalToTopCircle[x]]);
 
-CauchyBasis[f_?RightEndpointInfinityQ,k_Integer,z_]:=CauchyBasis[UnitInterval,k,MapToInterval[f,z]]-CauchyBasis[UnitInterval,1,MapToInterval[f,z]]-1/(I \[Pi]) (\[Mu][k-1,1.]+\[Mu][k-2,1.]);
+CauchyBasis[f_?RightEndpointInfinityQ,k_Integer,z_]:=CauchyBasis[UnitInterval,k,MapToInterval[f,z]]-CauchyBasis[UnitInterval,1,MapToInterval[f,z]]-1/(I \[Pi]) (\[Mu][k-1,Nwp[1]]+\[Mu][k-2,Nwp[1]]);
 
-CauchyBasis[s_?SignQ,f_?RightEndpointInfinityQ,k_Integer,z_]:=CauchyBasis[s,UnitInterval,k,MapToInterval[f,z]]-CauchyBasis[s,UnitInterval,1,MapToInterval[f,z]]-1/(I \[Pi]) (\[Mu][k-1,1.]+\[Mu][k-2,1.]);
+CauchyBasis[s_?SignQ,f_?RightEndpointInfinityQ,k_Integer,z_]:=CauchyBasis[s,UnitInterval,k,MapToInterval[f,z]]-CauchyBasis[s,UnitInterval,1,MapToInterval[f,z]]-1/(I \[Pi]) (\[Mu][k-1,Nwp[1]]+\[Mu][k-2,Nwp[1]]);
 
-CauchyBasis[f_?LeftEndpointInfinityQ,k_Integer,z_]:=CauchyBasis[UnitInterval,k,MapToInterval[f,z]]+(-1)^(k)CauchyBasis[UnitInterval,1,MapToInterval[f,z]]+(-1)^(k)/(I \[Pi]) (\[Mu][k-1,-1.]+\[Mu][k-2,-1.]);
+CauchyBasis[f_?LeftEndpointInfinityQ,k_Integer,z_]:=CauchyBasis[UnitInterval,k,MapToInterval[f,z]]+(-1)^(k)CauchyBasis[UnitInterval,1,MapToInterval[f,z]]+(-1)^(k)/(I \[Pi]) (\[Mu][k-1,Nwp[-1]]+\[Mu][k-2,Nwp[-1]]);
 
-CauchyBasis[s_?SignQ,f_?LeftEndpointInfinityQ,k_Integer,z_]:=CauchyBasis[s,UnitInterval,k,MapToInterval[f,z]]+(-1)^(k)CauchyBasis[s,UnitInterval,1,MapToInterval[f,z]]+(-1)^(k)/(I \[Pi]) (\[Mu][k-1,-1.]+\[Mu][k-2,-1.]);
+CauchyBasis[s_?SignQ,f_?LeftEndpointInfinityQ,k_Integer,z_]:=CauchyBasis[s,UnitInterval,k,MapToInterval[f,z]]+(-1)^(k)CauchyBasis[s,UnitInterval,1,MapToInterval[f,z]]+(-1)^(k)/(I \[Pi]) (\[Mu][k-1,Nwp[-1]]+\[Mu][k-2,Nwp[-1]]);
 
 CauchyBasis[f_?IntervalDomainQ,k_Integer,z_]:=CauchyBasis[UnitInterval,k,MapToInterval[f,z]]-CauchyBasis[UnitInterval,k,MapToInterval[f,\[Infinity]]];
 CauchyBasis[s_?SignQ,f_?IntervalDomainQ,k_Integer,z_]:=CauchyBasis[s,UnitInterval,k,MapToInterval[f,z]]-CauchyBasis[UnitInterval,k,MapToInterval[f,\[Infinity]]];
@@ -117,7 +117,7 @@ CauchyBasis[s_?SignQ,f_?IntervalDomainQ,k_Integer,z_]:=CauchyBasis[s,UnitInterva
 \[Mu]SD[n_,z_]:=\[Mu]msD[Floor[(n+1)/2],z];
 
 
-\[Psi]pD[0,z_]:=ArcTanh'[z]//N;
+\[Psi]pD[0,z_]:=ArcTanh'[z]//Nwp;
 
 SetAttributes[\[Psi]pSD,Listable];
 \[Psi]pSD[0,z_]:=ArcTanh[z];
@@ -126,16 +126,16 @@ SetAttributes[\[Psi]pSD,Listable];
 
 
 \[Psi]pD[n_?Negative,z_?InfinityQ]:=0;
-\[Psi]pD[n_?(Negative[#]&&EvenQ[#]&),z_?ZeroQ]:=-(1/(n-1))//N;
-\[Psi]pD[n_?(Negative[#]&&OddQ[#]&),z_?ZeroQ]:=0.;
+\[Psi]pD[n_?(Negative[#]&&EvenQ[#]&),z_?ZeroQ]:=-(1/(n-1))//Nwp;
+\[Psi]pD[n_?(Negative[#]&&OddQ[#]&),z_?ZeroQ]:=0//Nwp;
 
 
 \[Psi]pHD[n_?Negative,z_]:=With[{M=Floor[(-n)/2]},1/(1+2 M) ((2 z^(2+2 M+n) Hypergeometric2F1[1,1,3/2+M,z^2/(-1+z^2)])/(1-z^2)^2+((1+2 M+n) z^(2 M+n) Hypergeometric2F1[1,1,3/2+M,z^2/(-1+z^2)])/(1-z^2)+(z^(1+2 M+n) (-((2 z^3)/(-1+z^2)^2)+(2 z)/(-1+z^2)) Hypergeometric2F1[2,2,5/2+M,z^2/(-1+z^2)])/((3/2+M) (1-z^2)))];
 \[Psi]pHD[n_?Positive,z_]:=With[{M=Floor[(n+1)/2]},z^n ((n (-ArcTanh[1/z]+ArcTanh[z]))/z-(z^(-2 M) (1+n+z^2-n z^2+2 M (-1+z^2)) Hypergeometric2F1[1,1,3/2+M,1/(1-z^2)])/((1+2 M) (-1+z^2)^2)+(4 z^(2-2 M) Hypergeometric2F1[2,2,5/2+M,1/(1-z^2)])/((3+8 M+4 M^2) (-1+z^2)^3))];
 SetAttributes[\[Psi]pD,Listable];
 
-\[Psi]pD[n_?Positive,z_]:=\[Psi]pSD[n,z//N]//N;
-\[Psi]pD[n_?Negative,z_]:=\[Psi]pHD[n,z//N]//N;
+\[Psi]pD[n_?Positive,z_]:=\[Psi]pSD[n,z//Nwp]//Nwp;
+\[Psi]pD[n_?Negative,z_]:=\[Psi]pHD[n,z//Nwp]//Nwp;
 
 
 CauchyBasisD[_?SignQ,_Integer,_?InfinityQ]:=0;
@@ -199,18 +199,18 @@ RightSingularityData[s_?SignQ,f_IFun]:=RightSingularityData[f]//{#[[1]]+#[[2]] I
 
 
 FPCauchyBasis[+1,UnitInterval,k_Integer,g_IFun?UnitIntervalFunQ]:=IFun[Module[{j},
-Join[{LeftSingularityDataBasis[+1,UnitInterval,k]//First},-2(ArcTanh[IntervalToBottomCircle[Points[g]//Rest//Most]])/(I \[Pi]) ChebyshevT[k-1, Points[g]//Rest//Most]+(((PadRight[4 Riffle[Reverse[Table[1/j,{j,1.,k-1,2}]],0]//(If[OddQ[k],Join[{0},#],#]&),Length[g]])//HalfFirst//InverseDCT)/(2 I \[Pi])//Rest//Most),
+Join[{LeftSingularityDataBasis[+1,UnitInterval,k]//First},-2(ArcTanh[IntervalToBottomCircle[Points[g]//Rest//Most]])/(I \[Pi]) ChebyshevT[k-1, Points[g]//Rest//Most]+(((PadRight[4 Riffle[Reverse[Table[1/j,{j,Nwp[1],k-1,2}]],0]//(If[OddQ[k],Join[{0},#],#]&),Length[g]])//HalfFirst//InverseDCT)/(2 I \[Pi])//Rest//Most),
 {RightSingularityDataBasis[+1,UnitInterval,k]//First}]
 ],g//Domain];
 FPCauchyBasis[-1,UnitInterval,k_Integer,g_IFun?UnitIntervalFunQ]:=IFun[Module[{j},
-Join[{LeftSingularityDataBasis[-1,UnitInterval,k]//First},-2(ArcTanh[IntervalToTopCircle[Points[g]//Rest//Most]])/(I \[Pi]) ChebyshevT[k-1, Points[g]//Rest//Most]+(((PadRight[4 Riffle[Reverse[Table[1/j,{j,1.,k-1,2}]],0]//(If[OddQ[k],Join[{0},#],#]&),Length[g]])//HalfFirst//InverseDCT)/(2 I \[Pi])//Rest//Most),
+Join[{LeftSingularityDataBasis[-1,UnitInterval,k]//First},-2(ArcTanh[IntervalToTopCircle[Points[g]//Rest//Most]])/(I \[Pi]) ChebyshevT[k-1, Points[g]//Rest//Most]+(((PadRight[4 Riffle[Reverse[Table[1/j,{j,Nwp[1],k-1,2}]],0]//(If[OddQ[k],Join[{0},#],#]&),Length[g]])//HalfFirst//InverseDCT)/(2 I \[Pi])//Rest//Most),
 {RightSingularityDataBasis[-1,UnitInterval,k]//First}]
 ],g//Domain];
 
 
-FPCauchyBasis[s_?SignQ,f_?RightEndpointInfinityQ,k_Integer,g_IFun]/;f~NEqual~Domain[g]:=IFun[Values[FPCauchyBasis[s,UnitInterval,k,g//ToUnitInterval]]-Values[FPCauchyBasis[s,UnitInterval,1,g//ToUnitInterval]]-1/(I \[Pi]) (\[Mu][k-1,1.]+\[Mu][k-2,1.])//#+LeftSingularityDataBasis[UnitInterval,k][[2]] Log[Abs[MapToIntervalD[f,f//LeftEndpoint]]] BasisVector[Length[#]][1]&
+FPCauchyBasis[s_?SignQ,f_?RightEndpointInfinityQ,k_Integer,g_IFun]/;f~NEqual~Domain[g]:=IFun[Values[FPCauchyBasis[s,UnitInterval,k,g//ToUnitInterval]]-Values[FPCauchyBasis[s,UnitInterval,1,g//ToUnitInterval]]-1/(I \[Pi]) (\[Mu][k-1,Nwp[1]]+\[Mu][k-2,Nwp[1]])//#+LeftSingularityDataBasis[UnitInterval,k][[2]] Log[Abs[MapToIntervalD[f,f//LeftEndpoint]]] BasisVector[Length[#]][1]&
 ,g//Domain];
-FPCauchyBasis[s_?SignQ,f_?LeftEndpointInfinityQ,k_Integer,g_]/;f~NEqual~Domain[g]:=IFun[Values[FPCauchyBasis[s,UnitInterval,k,g//ToUnitInterval]]+(-1)^(k)Values[FPCauchyBasis[s,UnitInterval,1,g//ToUnitInterval]]+(-1)^(k)/(I \[Pi]) (\[Mu][k-1,-1.]+\[Mu][k-2,-1.])//#+RightSingularityDataBasis[UnitInterval,k][[2]] Log[Abs[MapToIntervalD[f,f//RightEndpoint]]] BasisVector[Length[#]][-1]&
+FPCauchyBasis[s_?SignQ,f_?LeftEndpointInfinityQ,k_Integer,g_]/;f~NEqual~Domain[g]:=IFun[Values[FPCauchyBasis[s,UnitInterval,k,g//ToUnitInterval]]+(-1)^(k)Values[FPCauchyBasis[s,UnitInterval,1,g//ToUnitInterval]]+(-1)^(k)/(I \[Pi]) (\[Mu][k-1,Nwp[-1]]+\[Mu][k-2,Nwp[-1]])//#+RightSingularityDataBasis[UnitInterval,k][[2]] Log[Abs[MapToIntervalD[f,f//RightEndpoint]]] BasisVector[Length[#]][-1]&
 ,g//Domain];
 
 
@@ -311,14 +311,14 @@ CauchyBasis[cr:Curve[cf_IFun,Stretch->L_],1;;k_,z_]:=(Total/@CauchyBasis[UnitInt
 CauchyBasis[s_?SignQ,cr:Curve[cf_IFun,Stretch->L_],1;;k_,z_]:=(Total/@CauchyBasis[s,UnitInterval,1;;k,ComplexMapToInterval[cr,z]])-((cf//Length)-1)CauchyBasis[UnitInterval,;;k,MapToInterval[Line[{-1,1},Stretch->L],\[Infinity]]];
 
 
-CauchyBasis[f_?RightEndpointInfinityQ,1;;k_,z_]:=CauchyBasis[UnitInterval,1;;k,MapToInterval[f,z]]//Function[mat,mat-Array[mat[[1]]+1/(I \[Pi]) (\[Mu][#-1,1.]+\[Mu][#-2,1.])&,k]];
-CauchyBasis[f_?LeftEndpointInfinityQ,1;;k_,z_]:=CauchyBasis[UnitInterval,1;;k,MapToInterval[f,z]]//Function[mat,mat+Array[(-1)^(#)(mat[[1]]+1/(I \[Pi]) (\[Mu][#-1,-1.]+\[Mu][#-2,-1.]))&,k]];
+CauchyBasis[f_?RightEndpointInfinityQ,1;;k_,z_]:=CauchyBasis[UnitInterval,1;;k,MapToInterval[f,z]]//Function[mat,mat-Array[mat[[1]]+1/(I \[Pi]) (\[Mu][#-1,Nwp[1]]+\[Mu][#-2,Nwp[1]])&,k]];
+CauchyBasis[f_?LeftEndpointInfinityQ,1;;k_,z_]:=CauchyBasis[UnitInterval,1;;k,MapToInterval[f,z]]//Function[mat,mat+Array[(-1)^(#)(mat[[1]]+1/(I \[Pi]) (\[Mu][#-1,Nwp[-1]]+\[Mu][#-2,Nwp[-1]]))&,k]];
 
 
 
 
-CauchyBasisS[s_?SignQ,f_?RightEndpointInfinityQ,1;;k_,z_]:=CauchyBasisS[s,UnitInterval,1;;k,MapToInterval[f,z]]//Function[mat,mat-Array[mat[[1]]+1/(I \[Pi]) (\[Mu][#-1,1.]+\[Mu][#-2,1.])&,k]];
-CauchyBasisS[s_?SignQ,f_?LeftEndpointInfinityQ,1;;k_,z_]:=CauchyBasisS[s,UnitInterval,1;;k,MapToInterval[f,z]]//Function[mat,mat+Array[(-1)^(#)(mat[[1]]+1/(I \[Pi]) (\[Mu][#-1,-1.]+\[Mu][#-2,-1.]))&,k]];
+CauchyBasisS[s_?SignQ,f_?RightEndpointInfinityQ,1;;k_,z_]:=CauchyBasisS[s,UnitInterval,1;;k,MapToInterval[f,z]]//Function[mat,mat-Array[mat[[1]]+1/(I \[Pi]) (\[Mu][#-1,Nwp[1]]+\[Mu][#-2,Nwp[1]])&,k]];
+CauchyBasisS[s_?SignQ,f_?LeftEndpointInfinityQ,1;;k_,z_]:=CauchyBasisS[s,UnitInterval,1;;k,MapToInterval[f,z]]//Function[mat,mat+Array[(-1)^(#)(mat[[1]]+1/(I \[Pi]) (\[Mu][#-1,Nwp[-1]]+\[Mu][#-2,Nwp[-1]]))&,k]];
 
 
 CauchyBasisS[s_?SignQ,f_?IntervalDomainQ,1;;k_,z_]:=CauchyBasisS[s,UnitInterval,1;;k,MapToInterval[f,z]]-CauchyBasis[UnitInterval,1;;k,MapToInterval[f,\[Infinity]]];
@@ -429,9 +429,9 @@ Array[RightSingularityDataBasis[UnitInterval,#][[2]]Log[Abs[rD]] BasisVector[Len
 
 (** TODO: Works because RightENdpointInfinityQ returns false for real line.  This should be made consistent **)
 
-FPCauchyBasis[s_?SignQ,f_?RightEndpointInfinityQ,1;;k_Integer,g_IFun]/;f~NEqual~Domain[g]:=IFun[#,g//Domain]&/@((Values/@FPCauchyBasis[s,UnitInterval,1;;k,g//ToUnitInterval])//Function[mat,mat-Array[mat[[1]]+1/(I \[Pi]) (\[Mu][#-1,1.]+\[Mu][#-2,1.])-LeftSingularityDataBasis[UnitInterval,#][[2]] Log[Abs[MapToIntervalD[f,f//LeftEndpoint]]] BasisVector[Length[g]][1]&,k]]);
+FPCauchyBasis[s_?SignQ,f_?RightEndpointInfinityQ,1;;k_Integer,g_IFun]/;f~NEqual~Domain[g]:=IFun[#,g//Domain]&/@((Values/@FPCauchyBasis[s,UnitInterval,1;;k,g//ToUnitInterval])//Function[mat,mat-Array[mat[[1]]+1/(I \[Pi]) (\[Mu][#-1,Nwp[1]]+\[Mu][#-2,Nwp[1]])-LeftSingularityDataBasis[UnitInterval,#][[2]] Log[Abs[MapToIntervalD[f,f//LeftEndpoint]]] BasisVector[Length[g]][1]&,k]]);
 
-FPCauchyBasis[s_?SignQ,f_?LeftEndpointInfinityQ,1;;k_Integer,g_IFun]/;f~NEqual~Domain[g]:=IFun[#,g//Domain]&/@((Values/@FPCauchyBasis[s,UnitInterval,1;;k,g//ToUnitInterval])//Function[mat,mat+Array[(-1)^(#)(mat[[1]]+1/(I \[Pi]) (\[Mu][#-1,-1.]+\[Mu][#-2,-1.]))+RightSingularityDataBasis[UnitInterval,#][[2]] Log[Abs[MapToIntervalD[f,f//RightEndpoint]]] BasisVector[Length[g]][-1]&,k]]);
+FPCauchyBasis[s_?SignQ,f_?LeftEndpointInfinityQ,1;;k_Integer,g_IFun]/;f~NEqual~Domain[g]:=IFun[#,g//Domain]&/@((Values/@FPCauchyBasis[s,UnitInterval,1;;k,g//ToUnitInterval])//Function[mat,mat+Array[(-1)^(#)(mat[[1]]+1/(I \[Pi]) (\[Mu][#-1,Nwp[-1]]+\[Mu][#-2,Nwp[-1]]))+RightSingularityDataBasis[UnitInterval,#][[2]] Log[Abs[MapToIntervalD[f,f//RightEndpoint]]] BasisVector[Length[g]][-1]&,k]]);
 
 
 FPCauchyBasis[s_?SignQ,f_?IntervalDomainQ,1;;k_Integer,g_IFun]/;f~NEqual~Domain[g]:=IFun[#,g//Domain]&/@((Values/@FPCauchyBasis[s,UnitInterval,;;k,g//ToUnitInterval])-CauchyBasis[UnitInterval,;;k,MapToInterval[f,\[Infinity]]]+

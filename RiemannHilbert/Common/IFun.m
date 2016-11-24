@@ -156,12 +156,14 @@ Begin["Private`"];
 ChebyshevPoints[0,a_:-1,b_:1]:={};
 ChebyshevPoints[n_,a_:-1,b_:1]:=(b+a)/2+(b-a)/2 Cos[(2 Range[n,1,-1] -1)/(2 n) Pi];
 ChebyshevLobattoPoints[n_,a_:-1,b_:1]:=(b+a)/2+(b-a)/2 Cos[Pi Range[n-1,0,-1]/(n-1)];
-NChebyshevPoints[v__]:=N[ChebyshevPoints[v]];
-NChebyshevLobattoPoints[n_,a_:-1.,b_:1.]:=.5(b+a)+.5(b-a)Cos[Pi Range[n-1.,0.,-1.]/(n-1)];
+NChebyshevPoints[v__]:=Nwp@ChebyshevPoints[v];
+NChebyshevLobattoPoints[n_,a_:-1,b_:1]:=
+Nwp@ChebyshevLobattoPoints[n,a,b];
 
 
-
-DCT[f:{__?ScalarQ}]:=AlternatingVector[Length[f]] HalfFirstAndLast[FourierDCT[f,1]Sqrt[2/(Length[f]-1)]];
+DCT[f:{0..}]:=f; (* this shortcut is needed for arbritrary precision calculations: 
+Nwp[0] = 0 if $RHWorkingPrecision \[NotEqual] MachinePrecision, so FourierDCT[{0,...}] = {0., 0. , ...} because FourierDCT applies N to infinite precision input. *)
+DCT[f:{__?ScalarQ}]:=AlternatingVector[Length[f]] HalfFirstAndLast[FourierDCT[Nwp@f,1]Sqrt[2/(Length[f]-1)]];
 InverseDCT[f:{__?ScalarQ}]:= (Length[f]-1)/2 AlternatingVector[Length[f]] DoubleFirstAndLast[DCT[DoubleFirstAndLast[f]]]//Reverse;
 DCT[f:{__?VectorQ}]:=DCT/@ToArrayOfLists[f]//ToListOfArrays;
 DCT[f:{__?MatrixQ}]:=MatrixMap[DCT,ToArrayOfLists[f]]//ToListOfArrays;
@@ -174,7 +176,7 @@ n=NChebyshevLobattoPoints[k];
 w[1]=1/2;
 w[j_]=(-1)^(j+1);
 w[k]=(-1)^(k+1) 1/2;
-If[MemberQ[n,N[Chop[x,$MachineEpsilon]]],f[[Position[n,N[Chop[x,$MachineEpsilon]]][[1,1]]]],
+If[MemberQ[n,Chop[Nwp@x,$RHWorkingEpsilon]],f[[Position[n,Chop[Nwp@x,$RHWorkingEpsilon]][[1,1]]]],
 \!\(
 \*UnderoverscriptBox[\(\[Sum]\), \(j = 1\), \(k\)]\(w[j]/\((x - n[[j]])\) f[[j]]\)\)/\!\(
 \*UnderoverscriptBox[\(\[Sum]\), \(j = 1\), \(k\)]\(w[j]/\((x - n[[j]])\)\)\)]
@@ -290,7 +292,7 @@ BoundedDomainQ[_]:=False;
 BoundedDomainQ[_?(!LeftEndpointInfinityQ[#]&&!RightEndpointInfinityQ[#]&)]:=True;
 
 
-DomainMemberQ[d_?IntervalDomainQ,x_]:=MapToInterval[d,x]//(NumberQ[#]&&Abs[Im[#]]<10 $MachineTolerance&&Abs[#]<=1.+10 $MachineTolerance&);
+DomainMemberQ[d_?IntervalDomainQ,x_]:=MapToInterval[d,x]//(NumberQ[#]&&Abs[Im[#]]<10 $MachineTolerance&&Abs[#]<=Nwp[1]+10 $MachineTolerance&);
 
 
 IntervalToRealLine[_?(#~NEqual~1.&)]:=\[Infinity];
@@ -308,12 +310,12 @@ MapFromIntervalD[Line[{_?InfinityQ,_?InfinityQ}],x_]:=IntervalToRealLine'[x];
 
 
 SetAttributes[IntervalToHalfLine,Listable];
-IntervalToHalfLine[_?(#~NEqual~1.&)]:=\[Infinity] ;
-IntervalToHalfLine[_?InfinityQ]:=-1.;
+IntervalToHalfLine[_?(#~NEqual~Nwp[1]&)]:=\[Infinity] ;
+IntervalToHalfLine[_?InfinityQ]:=Nwp[-1];
 IntervalToHalfLine[x_]:=(x+1)/(1-x) ;
 
 SetAttributes[HalfLineToInterval,Listable];
-HalfLineToInterval[y_?InfinityQ]:=1.;
+HalfLineToInterval[y_?InfinityQ]:=Nwp[1];
 HalfLineToInterval[y_]/;y==-1:=\[Infinity] ;
 HalfLineToInterval[y_]:=(-1+y)/(1+y) ;
 
@@ -323,7 +325,7 @@ MapToInterval[Line[{a_?NumberQ,b_?InfinityQ},Stretch->L_],z_]:=HalfLineToInterva
 MapToIntervalD[Line[{a_?NumberQ,b_?InfinityQ},Stretch->L_],z_]:=(2 E^(I Arg[b]) L)/(-a+E^(I Arg[b]) L+z)^2;
 MapFromInterval[Line[{a_?NumberQ,b_?InfinityQ},Stretch->L_],x_]:=L Exp[I Arg[b]] IntervalToHalfLine[x]+a;
 
-MapFromIntervalD[Line[{a_?NumberQ,b_?InfinityQ},Stretch->L_],1.]:=0.;
+MapFromIntervalD[Line[{a_?NumberQ,b_?InfinityQ},Stretch->L_],Nwp[1]]:=Nwp[0];
 MapFromIntervalD[Line[{a_?NumberQ,b_?InfinityQ},Stretch->L_],x_]:=(2 E^(I Arg[b]) L)/(-1+x)^2;
 
 MapToInterval[Line[{a_?InfinityQ,b_?NumberQ},Stretch->L_],z_]:=-MapToInterval[Line[{b,a},Stretch->L],z];
@@ -333,17 +335,17 @@ MapFromIntervalD[Line[{a_?InfinityQ,b_?NumberQ},Stretch->L_],x_]:=-MapFromInterv
 
 
 
-MapToInterval[Line[{a_?NumberQ,b_?InfinityQ}],z_]:=MapToInterval[Line[{a,b},Stretch->1.],z];
-MapToIntervalD[Line[{a_?NumberQ,b_?InfinityQ}],z_]:=MapToIntervalD[Line[{a,b},Stretch->1.],z];
-MapFromInterval[Line[{a_?NumberQ,b_?InfinityQ}],x_]:=MapFromInterval[Line[{a,b},Stretch->1.],x];
-MapFromIntervalD[Line[{a_?NumberQ,b_?InfinityQ}],1.]:=0.;
-MapFromIntervalD[Line[{a_?NumberQ,b_?InfinityQ}],x_]:=MapFromIntervalD[Line[{a,b},Stretch->1.],x];
+MapToInterval[Line[{a_?NumberQ,b_?InfinityQ}],z_]:=MapToInterval[Line[{a,b},Stretch->Nwp[1]],z];
+MapToIntervalD[Line[{a_?NumberQ,b_?InfinityQ}],z_]:=MapToIntervalD[Line[{a,b},Stretch->Nwp[1]],z];
+MapFromInterval[Line[{a_?NumberQ,b_?InfinityQ}],x_]:=MapFromInterval[Line[{a,b},Stretch->Nwp[1]],x];
+MapFromIntervalD[Line[{a_?NumberQ,b_?InfinityQ}],Nwp[1]]:=Nwp[0];
+MapFromIntervalD[Line[{a_?NumberQ,b_?InfinityQ}],x_]:=MapFromIntervalD[Line[{a,b},Stretch->Nwp[1]],x];
 
-MapToInterval[Line[{a_?InfinityQ,b_?NumberQ}],z_]:=MapToInterval[Line[{a,b},Stretch->1.],z];
-MapToIntervalD[Line[{a_?InfinityQ,b_?NumberQ}],z_]:=MapToIntervalD[Line[{a,b},Stretch->1.],z];
-MapFromInterval[Line[{a_?InfinityQ,b_?NumberQ}],x_]:=MapFromInterval[Line[{a,b},Stretch->1.],x];
-MapFromIntervalD[Line[{a_?InfinityQ,b_?NumberQ}],-1.]:=0.;
-MapFromIntervalD[Line[{a_?InfinityQ,b_?NumberQ}],x_]:=MapFromIntervalD[Line[{a,b},Stretch->1.],x];
+MapToInterval[Line[{a_?InfinityQ,b_?NumberQ}],z_]:=MapToInterval[Line[{a,b},Stretch->Nwp[1]],z];
+MapToIntervalD[Line[{a_?InfinityQ,b_?NumberQ}],z_]:=MapToIntervalD[Line[{a,b},Stretch->Nwp[1]],z];
+MapFromInterval[Line[{a_?InfinityQ,b_?NumberQ}],x_]:=MapFromInterval[Line[{a,b},Stretch->Nwp[1]],x];
+MapFromIntervalD[Line[{a_?InfinityQ,b_?NumberQ}],Nwp[-1]]:=Nwp[0];
+MapFromIntervalD[Line[{a_?InfinityQ,b_?NumberQ}],x_]:=MapFromIntervalD[Line[{a,b},Stretch->Nwp[1]],x];
 
 
 MapToInterval[Line[{a_,b_}],z_]:=(a+b-2z)/(a-b);
@@ -359,7 +361,7 @@ MapFromInterval[z_]:=z;
 
 
 UnitInterval=Line[{-1,1}];
-UnitIntervalFunQ[f_IFun]:=N[Domain[f]]===N[UnitInterval];
+UnitIntervalFunQ[f_IFun]:=Nwp[Domain[f]]===Nwp[UnitInterval];
 UnitIntervalFunQ[_]:=False;
 IntervalFunQ[f_IFun]:=MatchQ[Domain[f],Line[{_?FiniteQ,_?FiniteQ}]];
 IntervalFunQ[_]:=False;
@@ -367,8 +369,8 @@ IntervalFunQ[_]:=False;
 
 
 
-MapToInterval[Line[{a_,b_},Stretch->_?(1.~NEqual~#&)],_?InfinityQ]:=\[Infinity];
-MapFromInterval[Line[{a_,b_},Stretch->_?(1.~NEqual~#&)],_?InfinityQ]:=\[Infinity];
+MapToInterval[Line[{a_,b_},Stretch->_?(Nwp[1]~NEqual~#&)],_?InfinityQ]:=\[Infinity];
+MapFromInterval[Line[{a_,b_},Stretch->_?(Nwp[1]~NEqual~#&)],_?InfinityQ]:=\[Infinity];
 MapFromInterval[Line[{a_,b_},Stretch->L_],_?InfinityQ]:=(-a+b L)/(-1+L) ;
 MapToInterval[Line[{a_,b_},Stretch->L_],_?InfinityQ]:=(1+L)/(1-L) ;
 MapFromInterval[Line[{a_,b_},Stretch->L_],_?InfinityQ]:=(-a+b L)/(-1+L) ;
@@ -393,13 +395,13 @@ MapFromIntervalD[Arc[z0_,r_,{t0_,t1_}],x_]:=(2 E^(1/2 I (t0+t1)) (-E^(I t0)+E^(I
 MapToIntervalD[Arc[z0_,r_,{t0_,t1_}],z_]:=(2 E^((I t0)/2) (E^(I t1)+E^(1/2 I (t0+t1))) r)/((-E^(((I t0)/2))+E^((I t1)/2)) (E^(1/2 I (t0+t1)) r+z-z0)^2);
 
 
-LeftEndpoint[Arc[z0_,r_,{t0_,t1_}]]:=z0+r Exp[I t0]//N;
-RightEndpoint[Arc[z0_,r_,{t0_,t1_}]]:=z0+r Exp[I t1]//N;
+LeftEndpoint[Arc[z0_,r_,{t0_,t1_}]]:=z0+r Exp[I t0]//Nwp;
+RightEndpoint[Arc[z0_,r_,{t0_,t1_}]]:=z0+r Exp[I t1]//Nwp;
 
 ReverseOrientation[Arc[z0_,r_,{t0_,t1_}]]:=Arc[z0,r,{t1,t0}];
 
-LeftContourArg[Arc[z0_,r_,{t0_,t1_}]]:=t0+Sign[t1-t0] \[Pi]/2//N;
-RightContourArg[Arc[z0_,r_,{t0_,t1_}]]:=t1-Sign[t1-t0] \[Pi]/2//N;
+LeftContourArg[Arc[z0_,r_,{t0_,t1_}]]:=t0+Sign[t1-t0] \[Pi]/2//Nwp;
+RightContourArg[Arc[z0_,r_,{t0_,t1_}]]:=t1-Sign[t1-t0] \[Pi]/2//Nwp;
 
 IntervalDomainQ[_Arc]:=True;
 
@@ -587,7 +589,7 @@ RightContourArg[f_IFun]:=f//Domain//RightContourArg;
 
 ReverseOrientation[f_IFun]:=IFun[Reverse[Values[f]],ReverseOrientation[Domain[f]]];
 
-ZeroAtZero[f_IFun]/;OddQ[Length[f]]:=f-f[0.];
+ZeroAtZero[f_IFun]/;OddQ[Length[f]]:=f-f[Nwp[0]];
 ZeroAtRight[f_]:=f-Last[f];
 ZeroAtLeft[f_]:=f-First[f];
 
@@ -785,7 +787,7 @@ True,
 ComplexRoots[cf_IFun]:=MapFromInterval[cf,cf//ToUnitInterval//ComplexRoots];
 
 Roots[cf_IFun]^:=
-MapFromInterval[cf,Select[cf//ToUnitInterval//ComplexRoots,(Abs[Im[#]]<100$MachineTolerance)&&(-1.<=Re[#]<=1.)&]//Re//Sort];
+MapFromInterval[cf,Select[cf//ToUnitInterval//ComplexRoots,(Abs[Im[#]]<100$MachineTolerance)&&(Nwp[-1]<=Re[#]<=Nwp[1])&]//Re//Sort];
 
 
 
@@ -803,9 +805,9 @@ Fun[a_]:=Fun[a,UnitInterval];
 ZeroAtInfinityFun[f_List,d_?IntervalDomainQ]:=ZeroAtInfinityIFun[f,d];
 
 
-ZeroAtInfinityIFun[f_?NotListOrPatternQ,d_,opts___]:=IFun[If[InfinityQ[#],0 f[0.],f[#]/.Underflow[]->0]&,d,opts];
+ZeroAtInfinityIFun[f_?NotListOrPatternQ,d_,opts___]:=IFun[If[InfinityQ[#],0 f[Nwp[0]],f[#]/.Underflow[]->0]&,d,opts];
 
-IdentityAtInfinityIFun[G_?NotListOrPatternQ,pars___]:=IFun[If[InfinityQ[#],If[G[0.]//MatrixQ,IdentityMatrix[Length[G[0.]]],1],G[#]/.Underflow[]->0]&,pars];
+IdentityAtInfinityIFun[G_?NotListOrPatternQ,pars___]:=IFun[If[InfinityQ[#],If[G[Nwp[0]]//MatrixQ,IdentityMatrix[Length[G[Nwp[0]]]],1],G[#]/.Underflow[]->0]&,pars];
 
 
 DCTPlot[f_IFun,opts:OptionsPattern[]]:=ListLineLogPlot[Norm/@(f//DCT),opts];
@@ -822,8 +824,8 @@ MapFromInterval[Curve[cr_IFun],z_]:=MapDot[ChebyshevT[#-1,z]&,DCT[cr]];
 MapFromIntervalD[Curve[cr_IFun],z_]:=MapDot[ChebyshevT[#-1,z]&,DCT[cr']];
 MapToInterval[Curve[cr_],z_?InfinityQ]:=z;
 MapFromInterval[Curve[cr_],z_?InfinityQ]:=z;
-MapToInterval[Curve[cr_],z_]/;z~NEqual~First[cr]:=-1.;
-MapToInterval[Curve[cr_],z_]/;z~NEqual~Last[cr]:=1.;
+MapToInterval[Curve[cr_],z_]/;z~NEqual~First[cr]:=Nwp[-1];
+MapToInterval[Curve[cr_],z_]/;z~NEqual~Last[cr]:=Nwp[1];
 MapToInterval[Curve[cr_],z_]:=cr-z//Roots//If[#=={},{},First[#]]&;
 MapToIntervalD[cr:Curve[_],z_]:=1/MapFromIntervalD[cr,MapToInterval[cr,z]];
 ComplexMapToInterval[Curve[cr_],z_]:=cr-z//ComplexRoots;
@@ -854,7 +856,7 @@ Curve/:c_?NumberQ Curve[cr_IFun,opts___]:=Curve[c cr,opts];
 Arc/:c_?NumberQ Arc[x0_,r_,{t0_,t1_}]:=Arc[c x0,r,{\[Pi]-t0,\[Pi]-t1}];
 
 
-Line[ls_,___]~NEqual~Line[ls2_,___]:=NZeroQ[(If[#[[1]]==#[[2]],0,#[[1]]-#[[2]]]&/@Thread[{Sort[ls],Sort[ls2]}])//Flatten//Abs//Max];
+Line[ls_,___]~NEqual~Line[ls2_,___]:=NZeroQ[(If[#[[1]]==#[[2]],0,#[[1]]-#[[2]]]&/@Thread[{Sort[Nwp@ls],Sort[Nwp@ls2]}])//Flatten//Abs//Max];
 Arc[x0_,r_,t0_]~NEqual~Arc[x2_,r2_,t2_]:=NZeroQ[{x0-x2,r-r2,Exp[I t0]-Exp[I t2]}//Flatten//Abs//Max];
 
 
@@ -870,7 +872,7 @@ LeftContourArg[#1],
 RightContourArg[#1]]<If[LeftEndpoint[#2]//InfinityQ,
 LeftContourArg[#2],
 RightContourArg[#2]]&];
-Endpoints[GG_IFun]:={GG//LeftEndpoint//N//Chop,GG//RightEndpoint//N//Chop}/._?InfinityQ->\[Infinity];
+Endpoints[GG_IFun]:={GG//LeftEndpoint//Nwp//Chop,GG//RightEndpoint//Nwp//Chop}/._?InfinityQ->\[Infinity];
 Endpoints[GG_List]:=Union[Endpoints/@GG//Flatten,SameTest->NEqual];
 FiniteEndpoints[GG_]:=Select[Endpoints[GG],!InfinityQ[#]&];
 
@@ -893,7 +895,7 @@ n=NChebyshevLobattoPoints[k];
 w[1]=1/2;
 w[j_]=(-1)^(j+1);
 w[k]=(-1)^(k+1) 1/2;
-If[MemberQ[n,N[Chop[#,$MachineEpsilon]]],BasisVector[k][Position[n,N[Chop[#,$MachineEpsilon]]][[1,1]]],
+If[MemberQ[n,Chop[Nwp@#,$RHWorkingEpsilon]],BasisVector[k][Position[n,Chop[Nwp@#,$RHWorkingEpsilon]][[1,1]]],
 Table[w[j]/(#-n[[j]]),{j,1,k}]/\!\(
 \*UnderoverscriptBox[\(\[Sum]\), \(j = 1\), \(k\)]\(w[j]/\((# - n[[j]])\)\)\)]&/@x
 ];

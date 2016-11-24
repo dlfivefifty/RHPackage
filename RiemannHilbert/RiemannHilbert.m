@@ -40,6 +40,8 @@ RHSolverMatrix;
 CauchySeriesAtInfinity;
 SowCondition::usage="Option for RHSolve";
 SparseSolve::usage="Option for RHSolve";
+SowMatrix::usage="Option for RHSolve";
+SowRightSide::usage="Option for RHSolve";
 Begin["Private`"];
 
 
@@ -68,7 +70,7 @@ CauchySeriesAtInfinity[U:{__?FunQ}]:=CauchySeriesAtInfinity/@U//Total;
 
 
 
-MakeMachineNumber[x_]:=Chop[x,$MinMachineNumber]//N;
+MakeMachineNumber[x_]:=Chop[x,$MinMachineNumber]//Nwp;
 RHSolverTop[GGIn:{__?FunQ},opts:OptionsPattern[] ]:=
 RHSolverTop[CauchyMatrix[-1,#[[1,1]]&/@GGIn]//MakeMachineNumber,opts];
 
@@ -82,14 +84,24 @@ RHSolverMatrix[R_RHSolverTop,GG_?FunQ]:=RHSolverMatrix[R,{GG}];
 RHSolverMatrix[GG_]:=RHSolverMatrix[GG//RHSolverTop,GG];
 
 
-RHSolverTop[matmS_,opts:OptionsPattern[{SowCondition->False,SparseSolve->False}]][GG_List,GR:{__List}]:=Module[{matt,solv,sol,cond,matm},
+RHSolverTop[matmS_,opts:OptionsPattern[{SowCondition->False,SparseSolve->False,SowMatrix->False,SowRightSide->False}]][GG_List,GR:{__List}]:=Module[{matt,solv,sol,cond,matm,kernel},
 matm=matmS//ScalarToVectorMatrix;
 matt =RHSolverMatrix[RHSolverTop[matmS,opts],GG];
 If[OptionValue[SowCondition],
 cond=LinearAlgebra`MatrixConditionNumber[matt];
 Sow[cond];
 ];
+If[OptionValue[SowMatrix],
+Sow[matt];
+];
+If[OptionValue[SowRightSide],
+Sow[ToValueList/@GR//MakeMachineNumber];
+];
 solv=LinearSolve[If[OptionValue[SparseSolve],matt,matt//Normal]];
+(* experimental - leastsqueares will return a result even if the the matrix is ill conditioned; the solution is wrong but can be used for some experiments anyway *)
+(*
+solv=LeastSquares[If[OptionValue[SparseSolve],matt,matt//Normal],#]&;
+*)
 sol=FromValueList[#,solv[#//ToValueList//MakeMachineNumber]]&/@GR
 ];
 
