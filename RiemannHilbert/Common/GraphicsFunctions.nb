@@ -1,38 +1,31 @@
 Notebook[{
-Cell["\[Copyright] Sheehan Olver, 2010, subject to BSD license.", "Text"],
+Cell["\[Copyright] Sheehan Olver, 2010, subject to BSD license.", \
+"Text",ExpressionUUID->"309b1497-f3f4-4bf6-b268-fc7f726b6738"],
 
 Cell[CellGroupData[{
 
-Cell["Package setup", "Section"],
+Cell["Package setup", \
+"Section",ExpressionUUID->"bdd9c9d2-d784-42f9-888f-f9d0602242d1"],
 
 Cell[BoxData[
  RowBox[{
   RowBox[{"BeginPackage", "[", "$CommonPackage", "]"}], ";"}]], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"6febf19a-4839-4583-988b-004ed09f78be"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Documentation", "Section"],
+Cell["Documentation", \
+"Section",ExpressionUUID->"f7776dfb-c055-4767-9b67-c03eec65adde"],
 
 Cell[BoxData[{
- RowBox[{
-  RowBox[{
-   RowBox[{"ComplexPlot", "::", "usage"}], "=", "\[IndentingNewLine]", 
-   "\"\<ComplexPlot[f[t],{t,a,b}] plots the trajectory in the complex plane \
-of f from a to b.\>\""}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"ComplexArrowPlot", "::", "usage"}], "=", "\[IndentingNewLine]", 
    "\"\<ComplexArrowPlot[f[t],{t,a,b}] plots the trajectory in the complex \
 plane of f from a to b with an arrow showing flow.\>\""}], 
   ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{"ComplexPlot3D", "::", "usage"}], "=", "\[IndentingNewLine]", 
-   "\"\<ComplexPlot3D[f[z],{z,a,b}] plots absolute value, real and imaginary \
-parts in the complex plane in the rectangle defined by {{Re[a],Im[a]}, \
-{Re[b],Im[b]}}\>\""}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"TablePlot", "::", "usage"}], "=", "\[IndentingNewLine]", 
@@ -51,12 +44,6 @@ range v with a logarithmic scale.\>\""}], ";"}],
     RowBox[{"ReImTablePlot", "::", "usage"}], "=", "\[IndentingNewLine]", 
     "\"\<ReImTablePlot[h[k],{k,v}] plots the real and imaginary points of \
 h[k].\>\""}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{
-    RowBox[{"ReImPlot", "::", "usage"}], "=", "\[IndentingNewLine]", 
-    "\"\<ReImPlot[h[x],{x,v}] plots the real and imaginary points of \
-h[x].\>\""}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"DotPlot", "::", "usage"}], "=", "\[IndentingNewLine]", 
@@ -83,12 +70,14 @@ h[x].\>\""}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]",
    RowBox[{"TablePlot3D", "::", "usage"}], "=", "\[IndentingNewLine]", 
    "\"\<TablePlot3D[h[i,k],{i,v1},{k,v2}] plots the data points {i,k,h[i,k]} \
 for i over range v1 and k over range v2.\>\""}], ";"}]}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"c7f68b8a-adee-4d8d-88a4-bc1e417acfdf"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Colours", "Section"],
+Cell["Colours", \
+"Section",ExpressionUUID->"8a4eaf9f-a088-4be8-ba49-0a9b07ca6712"],
 
 Cell[BoxData[{
  RowBox[{
@@ -109,12 +98,14 @@ Cell[BoxData[{
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{"DefaultFontSize", ";", "RomanFont", ";", "ItalicFont", 
   ";"}]}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"b7ce87dc-6250-4db8-a7d2-8a6fdb35576d"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Complex Graphs", "Section"],
+Cell["Complex Graphs", \
+"Section",ExpressionUUID->"6ccadce5-9a28-4602-a806-4dfc02b93dfd"],
 
 Cell[BoxData[{
  RowBox[{"ReImComplexContourPlot", ";"}], "\[IndentingNewLine]", 
@@ -127,41 +118,8 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{"SVDPlot", ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
-  RowBox[{"Begin", "[", "\"\<Private`\>\"", "]"}], 
-  ";"}], "\[IndentingNewLine]", 
- RowBox[{
   RowBox[{
-   RowBox[{"Options", "[", "ComplexPlot", "]"}], "=", 
-   RowBox[{"Options", "[", "ParametricPlot", "]"}]}], 
-  ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{"ComplexPlot", "[", 
-    RowBox[{"hlis_", ",", "b_List", ",", 
-     RowBox[{"opts", ":", 
-      RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", 
-   RowBox[{"Module", "[", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"h", ",", "hlist"}], "}"}], ",", "\[IndentingNewLine]", 
-     RowBox[{
-      RowBox[{"hlist", "=", 
-       RowBox[{
-        RowBox[{"{", "hlis", "}"}], "//", "Flatten"}]}], ";", 
-      "\[IndentingNewLine]", 
-      RowBox[{
-       RowBox[{"Map", "[", 
-        RowBox[{
-         RowBox[{"Function", "[", 
-          RowBox[{"h", ",", "\[IndentingNewLine]", 
-           RowBox[{"ParametricPlot", "[", 
-            RowBox[{
-             RowBox[{"{", 
-              RowBox[{
-               RowBox[{"Re", "[", "h", "]"}], ",", 
-               RowBox[{"Im", "[", "h", "]"}]}], "}"}], ",", "b", ",", 
-             "opts"}], "]"}]}], "]"}], ",", "\[IndentingNewLine]", "hlist"}], 
-        "]"}], "//", "Show"}]}]}], "\[IndentingNewLine]", "]"}]}], 
+   RowBox[{"Begin", "[", "\"\<Private`\>\"", "]"}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
@@ -289,74 +247,10 @@ Cell[BoxData[{
     RowBox[{"h", ",", 
      RowBox[{"{", 
       RowBox[{"z", ",", "1"}], "}"}], ",", "opts"}], "]"}]}], ";"}]}], "Input",
- InitializationCell->True],
+ InitializationCell->
+  True,ExpressionUUID->"366194cf-4fc0-4db6-a0b7-775fe9474e68"],
 
-Cell[BoxData[{
- RowBox[{
-  RowBox[{
-   RowBox[{"Options", "[", "ComplexPlot3D", "]"}], "=", 
-   RowBox[{"Options", "[", "Plot3D", "]"}]}], ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{"ComplexPlot3D", "[", 
-    RowBox[{"h_", ",", "v_", ",", 
-     RowBox[{"opts", ":", 
-      RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", 
-   RowBox[{"Module", "[", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"x", ",", "y", ",", "h2", ",", "xv", ",", "yv"}], "}"}], ",", 
-     "\[IndentingNewLine]", "\t", 
-     RowBox[{
-      RowBox[{"h2", "=", 
-       RowBox[{"h", "/.", 
-        RowBox[{
-         RowBox[{"First", "[", "v", "]"}], "\[Rule]", 
-         RowBox[{"x", "+", 
-          RowBox[{"I", " ", "y"}]}]}]}]}], ";", "\[IndentingNewLine]", "\t", 
-      RowBox[{"xv", "=", 
-       RowBox[{"{", 
-        RowBox[{"x", ",", 
-         RowBox[{"Re", "[", 
-          RowBox[{"v", "[", 
-           RowBox[{"[", "2", "]"}], "]"}], "]"}], ",", 
-         RowBox[{"Re", "[", 
-          RowBox[{"Last", "[", "v", "]"}], "]"}]}], "}"}]}], ";", 
-      "\[IndentingNewLine]", "\t", 
-      RowBox[{"yv", "=", 
-       RowBox[{"{", 
-        RowBox[{"y", ",", 
-         RowBox[{"Im", "[", 
-          RowBox[{"v", "[", 
-           RowBox[{"[", "2", "]"}], "]"}], "]"}], ",", 
-         RowBox[{"Im", "[", 
-          RowBox[{"Last", "[", "v", "]"}], "]"}]}], "}"}]}], ";", 
-      "\[IndentingNewLine]", "\[IndentingNewLine]", "\t", 
-      RowBox[{
-       RowBox[{"Plot3D", "[", 
-        RowBox[{
-         RowBox[{"h2", "//", "Abs"}], ",", 
-         RowBox[{"Evaluate", "[", "xv", "]"}], ",", 
-         RowBox[{"Evaluate", "[", "yv", "]"}], ",", 
-         RowBox[{"PlotLabel", "\[Rule]", "Abs"}], ",", "opts"}], "]"}], "//", 
-       "Print"}], ";", "\[IndentingNewLine]", "\t", 
-      RowBox[{
-       RowBox[{"Plot3D", "[", 
-        RowBox[{
-         RowBox[{"h2", "//", "Re"}], ",", 
-         RowBox[{"Evaluate", "[", "xv", "]"}], ",", 
-         RowBox[{"Evaluate", "[", "yv", "]"}], ",", 
-         RowBox[{"PlotLabel", "\[Rule]", "Re"}], ",", "opts"}], "]"}], "//", 
-       "Print"}], ";", "\n", "\t", 
-      RowBox[{
-       RowBox[{"Plot3D", "[", 
-        RowBox[{
-         RowBox[{"h2", "//", "Im"}], ",", 
-         RowBox[{"Evaluate", "[", "xv", "]"}], ",", 
-         RowBox[{"Evaluate", "[", "yv", "]"}], ",", 
-         RowBox[{"PlotLabel", "\[Rule]", "Im"}], ",", "opts"}], "]"}], "//", 
-       "Print"}], ";"}]}], "\[IndentingNewLine]", "]"}]}], 
-  ";"}], "\[IndentingNewLine]", 
+Cell[BoxData[
  RowBox[{
   RowBox[{"ReComplexPlot3D", "[", 
    RowBox[{"h_", ",", "v_", ",", "opts___"}], "]"}], ":=", 
@@ -397,8 +291,9 @@ Cell[BoxData[{
         RowBox[{"Evaluate", "[", "xv", "]"}], ",", 
         RowBox[{"Evaluate", "[", "yv", "]"}], ",", 
         RowBox[{"PlotLabel", "\[Rule]", "Re"}], ",", "opts"}], "]"}], "//", 
-      "Print"}], ";"}]}], "\[IndentingNewLine]", "]"}]}]}], "Input",
- InitializationCell->True],
+      "Print"}], ";"}]}], "\[IndentingNewLine]", "]"}]}]], "Input",
+ InitializationCell->
+  True,ExpressionUUID->"0256abfd-854d-4b3e-a35a-602d953420d0"],
 
 Cell[BoxData[
  RowBox[{
@@ -413,7 +308,8 @@ Cell[BoxData[
      RowBox[{
       RowBox[{"h", "//", "Log10"}], ",", "opts"}], "]"}]}], 
    "\[IndentingNewLine]", "]"}]}]], "Input",
- InitializationCell->True],
+ InitializationCell->
+  True,ExpressionUUID->"b04fc245-1d3f-48f8-a63e-547242cbd5ad"],
 
 Cell[BoxData[
  RowBox[{
@@ -475,7 +371,8 @@ Cell[BoxData[
         RowBox[{"Evaluate", "[", "yv", "]"}], ",", 
         RowBox[{"PlotLabel", "\[Rule]", "Im"}], ",", "opts"}], "]"}], "//", 
       "Print"}], ";"}]}], "\[IndentingNewLine]", "]"}]}]], "Input",
- InitializationCell->True],
+ InitializationCell->
+  True,ExpressionUUID->"31d9577d-bdd4-4cf7-b73a-96dd129f4a87"],
 
 Cell[BoxData[{
  RowBox[{
@@ -582,18 +479,22 @@ Cell[BoxData[{
       "]"}]}]}], "\[IndentingNewLine]", "]"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"End", "[", "]"}], ";"}]}], "Input",
- InitializationCell->True],
+ InitializationCell->
+  True,ExpressionUUID->"ec2f0b16-d953-4830-8c22-f98dd41429a8"],
 
-Cell[BoxData["\[IndentingNewLine]"], "Input"]
+Cell[BoxData["\[IndentingNewLine]"], \
+"Input",ExpressionUUID->"c38ea01d-9f04-4354-b9de-17c8b8faf847"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Table Plots", "Section"],
+Cell["Table Plots", \
+"Section",ExpressionUUID->"5531f03d-6400-40fe-a225-538f4e67da16"],
 
 Cell[CellGroupData[{
 
-Cell["ListLog and ListLogLog", "Subsection"],
+Cell["ListLog and ListLogLog", \
+"Subsection",ExpressionUUID->"c53efa61-1f62-471b-84a3-3775a8b3fc24"],
 
 Cell[BoxData[{
  RowBox[{"ListLineLogLogPlot", ";"}], "\[IndentingNewLine]", 
@@ -642,12 +543,14 @@ Cell[BoxData[{
      RowBox[{"h", ",", 
       RowBox[{"Joined", "\[Rule]", "True"}], ",", "opts"}], "]"}]}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]"}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"7a357097-1982-4ece-8bac-6c570e019640"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Table,TableLog", "Subsection"],
+Cell["Table,TableLog", \
+"Subsection",ExpressionUUID->"19f0ea40-a30e-46f2-87d0-eda0aa08329e"],
 
 Cell[BoxData[{
  RowBox[{
@@ -743,7 +646,8 @@ Cell[BoxData[{
          RowBox[{"#", ",", 
           RowBox[{"h", "[", "#", "]"}]}], "}"}], "&"}], ",", "sp"}], "]"}], 
      ",", "opts"}], "]"}]}], ";"}]}], "Input",
- InitializationCell->True],
+ InitializationCell->
+  True,ExpressionUUID->"1e1e9dd1-b355-442d-9ade-c9635b67f5aa"],
 
 Cell[BoxData[{
  RowBox[{
@@ -839,12 +743,14 @@ Cell[BoxData[{
          RowBox[{"#", ",", 
           RowBox[{"h", "[", "#", "]"}]}], "}"}], "&"}], ",", "sp"}], "]"}], 
      ",", "opts"}], "]"}]}], ";"}]}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"4f27db46-d278-44e0-8fc3-fddba7ee2213"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["MonitorTable", "Subsection"],
+Cell["MonitorTable", \
+"Subsection",ExpressionUUID->"8b8f12ba-ea01-48c7-ad24-450183d26b6e"],
 
 Cell[BoxData[{
  RowBox[{
@@ -931,12 +837,14 @@ Cell[BoxData[{
     RowBox[{"h_", ",", "sp_", ",", "opts___"}], "]"}], ":=", 
    RowBox[{"MonitorTable", "[", 
     RowBox[{"h", ",", "sp", ",", "TablePlot"}], "]"}]}], ";"}]}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"f41f7788-fafb-4456-9eb7-7b4b2ebe776a"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["ReIm Plots", "Subsection"],
+Cell["ReIm Plots", \
+"Subsection",ExpressionUUID->"b891109d-e07d-4962-8a08-9321729f6220"],
 
 Cell[BoxData[{
  RowBox[{
@@ -967,19 +875,6 @@ Cell[BoxData[{
        RowBox[{"Im", "[", "h", "]"}], ",", 
        RowBox[{"-", 
         RowBox[{"Im", "[", "h", "]"}]}]}], "}"}], ",", "sp", ",", "opts"}], 
-    "]"}]}], ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"SetAttributes", "[", 
-   RowBox[{"ReImPlot", ",", "HoldFirst"}], "]"}], ";", 
-  RowBox[{
-   RowBox[{"ReImPlot", "[", 
-    RowBox[{"h_", ",", "sp_", ",", "opts___"}], "]"}], ":=", 
-   RowBox[{"Plot", "[", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{
-       RowBox[{"Re", "[", "h", "]"}], ",", 
-       RowBox[{"Im", "[", "h", "]"}]}], "}"}], ",", "sp", ",", "opts"}], 
     "]"}]}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"SetAttributes", "[", 
@@ -1462,13 +1357,15 @@ Cell[BoxData[{
              RowBox[{"Im", "[", "#", "]"}]}]}], "]"}]}], "}"}], "&"}], "/@", 
        "h"}], "]"}], ",", "opts"}], "]"}]}], 
   ";"}], "\[IndentingNewLine]"}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"77a98222-cbc4-4f82-9159-68be925fce42"]
 }, Open  ]]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Eigenplots", "Section"],
+Cell["Eigenplots", \
+"Section",ExpressionUUID->"7e81fdcf-ca77-4ac3-b2d6-cdd97a4efa18"],
 
 Cell[BoxData[
  RowBox[{
@@ -1531,12 +1428,14 @@ Cell[BoxData[
         "\[IndentingNewLine]", "]"}], ",", 
        RowBox[{"Axes", "\[Rule]", "Automatic"}], ",", "opts"}], "]"}]}]}], 
    "\[IndentingNewLine]", "]"}]}]], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"451daad0-ac51-4cea-a2d2-289883ef1605"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Dot Plot", "Section"],
+Cell["Dot Plot", \
+"Section",ExpressionUUID->"5b979bac-dbda-41af-9f38-2745fd165073"],
 
 Cell[BoxData[{
  RowBox[{
@@ -1602,12 +1501,14 @@ Cell[BoxData[{
           RowBox[{"Re", "[", "#", "]"}], ",", 
           RowBox[{"Im", "[", "#", "]"}]}], "}"}], "&"}], ",", "pts"}], "]"}], 
      ",", "opts"}], "]"}]}], ";"}]}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"8221dde0-43f5-4b9d-81db-0364a5cde823"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Movies", "Section"],
+Cell["Movies", \
+"Section",ExpressionUUID->"fb464517-b857-4838-9b00-1c56309d6583"],
 
 Cell[BoxData[{
  RowBox[{
@@ -1723,10 +1624,13 @@ Cell[BoxData[{
         RowBox[{"t", ",", 
          RowBox[{"a", "+", "h"}], ",", "b", ",", "h"}], "}"}]}], "]"}]}]}], 
    "\[IndentingNewLine]", "]"}]}]}], "Input",
- InitializationCell->True],
+ InitializationCell->
+  True,ExpressionUUID->"5b29fff7-b344-47ad-86aa-e30df5869c17"],
 
 Cell[BoxData[
- RowBox[{"\[IndentingNewLine]", "\[IndentingNewLine]"}]], "Input"],
+ RowBox[{"\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}]], \
+"Input",ExpressionUUID->"33e9575e-1de0-42a8-b03a-747d5a8821dc"],
 
 Cell[BoxData[
  RowBox[{"(*", " ", 
@@ -1749,7 +1653,8 @@ Cell[BoxData[
        RowBox[{"{", 
         RowBox[{"y", ",", "0", ",", "1"}], "}"}]}], "}"}]}], "]"}]}], 
   "\[IndentingNewLine]", "*)"}]], "Input",
- InitializationCell->True],
+ InitializationCell->
+  True,ExpressionUUID->"22329d98-4934-49a6-95e8-132c133bd825"],
 
 Cell[BoxData[
  RowBox[{"(*", 
@@ -1797,7 +1702,7 @@ Cell[BoxData[
               "]"}], "]"}]}]}], "}"}]}], "\[IndentingNewLine]", ",", 
         RowBox[{"DisplayFunction", "\[Rule]", "$DisplayFunction"}], ",", 
         "opts"}], "]"}]}], "\[IndentingNewLine]", "]"}]}]}], " ", 
-  "**)"}]], "Input"],
+  "**)"}]], "Input",ExpressionUUID->"993d6152-6d4b-4802-b39d-f3499b2b3480"],
 
 Cell[BoxData[{
  RowBox[{
@@ -1836,12 +1741,14 @@ Cell[BoxData[{
          RowBox[{"{", 
           RowBox[{"x", ",", "0", ",", "1", ",", 
            RowBox[{"1", "/", "n"}]}], "}"}]}], "]"}]}], "]"}], ",", "opts"}], 
-    "]"}]}], ";"}]}], "Input"]
+    "]"}]}], ";"}]}], \
+"Input",ExpressionUUID->"4e48734f-9345-4023-9737-44c481de603d"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Fonts", "Section"],
+Cell["Fonts", \
+"Section",ExpressionUUID->"fffa4c22-6300-48cb-b73d-2d565ce3222e"],
 
 Cell[BoxData[{
  RowBox[{
@@ -1878,12 +1785,14 @@ Cell[BoxData[{
      TraditionalForm],
     TraditionalForm,
     Editable->True]}], ";"}]}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"f252c4b3-b9c6-4bee-bb85-d1cabe69c515"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["PsuedoSpectra", "Section"],
+Cell["PsuedoSpectra", \
+"Section",ExpressionUUID->"c03b333c-2e3b-4fba-bf5c-611f69cf046f"],
 
 Cell[BoxData[{
  RowBox[{
@@ -1945,29 +1854,31 @@ Cell[BoxData[{
         RowBox[{"#", "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
         "&"}]}], "//", "Diagonal"}], ",", "opts"}], "]"}]}], ";"}]}], "Input",
  
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"fbfd7b72-8851-4ede-b3b6-0aa666f62c5e"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Finish", "Section"],
+Cell["Finish", \
+"Section",ExpressionUUID->"2a6bce3c-48e2-45a0-8c94-9b6a284d6af8"],
 
 Cell[BoxData[{
  RowBox[{
   RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"EndPackage", "[", "]"}], ";"}]}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"9948d095-ac67-4762-a3ea-3f31a4428ea0"]
 }, Open  ]]
 },
 AutoGeneratedPackage->Automatic,
 WindowSize->{1008, 1086},
-WindowMargins->{{Automatic, 46}, {Automatic, 15}},
+WindowMargins->{{594, Automatic}, {Automatic, 0}},
 PrivateNotebookOptions->{"FileOutlineCache"->False,
 "VersionedStylesheet"->{"Default.nb"[8.] -> False}},
 TrackCellChangeTimes->False,
-FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (June 27, \
-2014)",
+FrontEndVersion->"12.0 for Mac OS X x86 (64-bit) (April 8, 2019)",
 StyleDefinitions->"Default.nb"
 ]
 

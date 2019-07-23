@@ -19,9 +19,11 @@
 
 
 
+(* ::Input::Initialization:: *)
 BeginPackage[$CommonPackage];
 
 
+(* ::Input::Initialization:: *)
 LFun::usage="LFun[\!\(\*
 StyleBox[\"f\",\nFontSlant->\"Italic\"]\),d,n] constructs an \!\(\*
 StyleBox[\"n\",\nFontSlant->\"Italic\"]\)-th order Laurent approximation of \!\(\*
@@ -65,6 +67,7 @@ ZeroAtInfinityLFun::usage="Constructs a LFun with the default value of zero at i
 FFTPlot::usage="LogPlots the norm of the Fourier coefficients of an LFun";
 
 
+(* ::Input::Initialization:: *)
 LeftEvenPoints::usage="Evenly spaced points on the unit interval.";
 NLeftEvenPoints;
 FFT::usage=
@@ -107,6 +110,7 @@ End[];
 
 
 
+(* ::Input::Initialization:: *)
 
 CircleToPeriodicInterval;
 RealLineToPeriodicInterval;
@@ -142,6 +146,7 @@ DomainMemberQ[d_?CircleDomainQ,x_]:=Abs[Abs[MapToCircle[d,x]]-1]<=10 $MachineTol
 DomainQ[d_?CircleDomainQ]:=True;
 
 
+(* ::Input::Initialization:: *)
 UnitCircle=Circle[0,1];
 UnitCircleFunQ[f_LFun]:=N[Domain[f]]==N[UnitCircle];
 UnitCircleFunQ[_]:=False;
@@ -149,6 +154,7 @@ UnitCircleFunQ[_]:=False;
 CircleDomainQ[_Circle]:=True;
 
 
+(* ::Input::Initialization:: *)
 SetAttributes[ComplexMapToCircle,Listable];
 SetAttributes[MapToCircle,Listable];
 SetAttributes[MapFromCircle,Listable];
@@ -236,6 +242,7 @@ MapToCircleD[Ellipse[{a_,b_},r_],z_]:=MapToCircleD[Circle[0,r],IntervalToInnerCi
 End[];
 
 
+(* ::Input::Initialization:: *)
 
 Begin["Private`"];
 
@@ -250,6 +257,7 @@ End[];
 
 
 
+(* ::Input::Initialization:: *)
 Begin["Private`"];
 
 
@@ -270,6 +278,7 @@ Show[ComplexPlot[MapFromCircle[ell,Exp[I t]],{t,-\[Pi],\[Pi]},PlotStyle->Thick],
 Arrow[{MapFromCircle[ell,Exp[I 0.2]]//{Re[#],Im[#]}&,MapFromCircle[ell,Exp[I 0.2001]]//{Re[#],Im[#]}&}]},opts,Axes->True]]];
 
 
+(* ::Input::Initialization:: *)
 LFun[l_List,d_][z_]:=MapDot[MapToCircle[d,z]^#&,FFT[l]];
 LFun[f_,d_,n_]:=LFun[f/@MapFromCircle[d,Points[UnitCircle,n]],d];
 LFun[l_ShiftList,d_]:=LFun[l//MakeFFTIndexRange//InverseFFT,d];
@@ -302,6 +311,7 @@ MapFromCircle[f_LFun,z_]:=MapFromCircle[f//Domain,z];
 MapFromCircleD[f_LFun,z_]:=MapFromCircleD[f//Domain,z];
 
 
+(* ::Input::Initialization:: *)
 Points[lf_LFun]:=MapFromCircle[lf//Domain,Points[UnitCircle,lf//Length]];
 
 FinitePoints[if:LFun[_,Line[{-\[Infinity],\[Infinity]},___]]]:=if//Points//Rest;
@@ -313,6 +323,7 @@ FiniteRealPoints[if_LFun]:=if//FinitePoints//Re;
 Format[f:LFun[l_List,_]]:=ReImLinePlot[f,Sequence@@$FunFormat];
 
 
+(* ::Input::Initialization:: *)
 
 LFun/:Derivative[0][if_LFun]:=if;
 LFun/:Derivative[1][f_LFun]:=
@@ -354,14 +365,14 @@ RowBox[{"2", " ", "\[Pi]", "\[NonBreakingSpace]", "I"}], ")"}]}], "True"}
 },
 AllowedDimensions->{2, Automatic},
 Editable->True,
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.84]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
+GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}},
+GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.84]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}},
 Selectable->True]}
 },
-GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}},
-GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.35]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}, "Items" -> {}, "ItemsIndexed" -> {}}],
+GridBoxAlignment->{"Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+GridBoxItemSize->{"Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, "RowsIndexed" -> {}},
+GridBoxSpacings->{"Columns" -> {Offset[0.27999999999999997`], {Offset[0.35]}, Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {Offset[0.2], {Offset[0.4]}, Offset[0.2]}, "RowsIndexed" -> {}}],
 "Piecewise",
 DeleteWithContents->True,
 Editable->False,
@@ -371,6 +382,7 @@ Selectable->False]\));
 End[];
 
 
+(* ::Input::Initialization:: *)
 NegativePart;
 NonNegativePart;
 PositivePart;
@@ -399,6 +411,7 @@ NonPositiveEvaluate[f_LFun,z_]/;InfinityQ[MapToCircle[f,z]]:=(f//FFT)[[0]];
 End[];
 
 
+(* ::Input::Initialization:: *)
 SetLength;
 
 
@@ -409,6 +422,7 @@ SetLength[if_LFun,n_?OddQ]:=LFun[SetIndexRange[if//FFT,{(1-n)/2,(n-1)/2}]//Inver
 SetLength[if_LFun,n_?EvenQ]:=LFun[SetIndexRange[if//FFT,{-(n/2),n/2-1}]//InverseFFT,if//Domain];
 
 
+(* ::Input::Initialization:: *)
 
 
 LFun[f_IFun]:=LFun[Join[Values[f],Reverse[Values[f]][[2;;-2]]],UnitCircle];
@@ -417,9 +431,11 @@ ToUnitCircle[lf_LFun]:=SetDomain[lf,UnitCircle];
 
 
 
+(* ::Input::Initialization:: *)
 Reverse[lf:LFun[_,Line[{-\[Infinity],\[Infinity]},___]]]^:=LFun[{Values[lf][[1]]}~Join~(lf//Values//Rest//Reverse),lf//Domain]
 
 
+(* ::Input::Initialization:: *)
 
 ChopDrop[cf_LFun,prec_]:=LFun[ChopDrop[cf//FFT,prec]//Which[Length[#]==0,ShiftList[{0,0,0},2],IndexRange[#]=={0,0}, ShiftList[{0 #[[0]],#[[0]],0 #[[0]]},2],True,#]&//SetIndexRange[#,{-Max[Abs[IndexRange[#]]],Max[Abs[IndexRange[#]]]}]&//InverseFFT,cf//Domain];
 ChopDrop[cf_LFun]:=LFun[ChopDrop[cf//FFT]//Which[Length[#]==0,ShiftList[{0,0,0},2],IndexRange[#]=={0,0}, ShiftList[{0 #[[0]],#[[0]],0 #[[0]]},2],True,#]&//SetIndexRange[#,{-Max[Abs[IndexRange[#]]],Max[Abs[IndexRange[#]]]}]&//InverseFFT,cf//Domain];
@@ -442,6 +458,7 @@ LFun[f_?NotListOrPatternQ,d_,opts:OptionsPattern[]]:=AdaptiveLFun[8,f,d,opts];
 End[];
 
 
+(* ::Input::Initialization:: *)
 
 Begin["Private`"];
 
@@ -457,6 +474,7 @@ End[];
 
 
 
+(* ::Input::Initialization:: *)
 TransformMatrix;
 DerivativeMatrix;
 IntegrateMatrix;
@@ -487,6 +505,7 @@ Inverse[T].IM.T];
 BoundedIntegrateMatrix[lf_LFun]:=BoundedIntegrateMatrix[lf//ToUnitCircle].DiagonalMatrix[LFun[MapFromCircleD[lf,#]&,UnitCircle,lf//Length]];
 
 
+(* ::Input::Initialization:: *)
 ComplexRoots[lf_LFun]:=ComplexRoots[lf//Domain,ChopDrop[lf//FFT,$MachineTolerance]];
 
 ComplexRoots[d_,fft_ShiftList?(Length[#]==1&)]:=
@@ -517,6 +536,7 @@ Abs[Abs[#]-1]<10.^(-6)&]]];
 
 
 
+(* ::Input::Initialization:: *)
 Fun[f_,d_?CircleDomainQ,opts___]:=LFun[f,d,opts];
 
 ZeroAtInfinityLFun[f_?NotListOrPatternQ,d_,opts___]:=LFun[If[InfinityQ[#],0 f[0.],f[#]/.Underflow[]->0]&,d,opts];
@@ -526,9 +546,11 @@ ZeroAtInfinityFun[f_List,d_?CircleDomainQ]:=ZeroAtInfinityLFun[f,d];
 
 
 
+(* ::Input::Initialization:: *)
 FFTPlot[f_LFun,opts:OptionsPattern[]]:=ListLineLogPlot[Norm/@(f//FFT),opts];
 
 
+(* ::Input::Initialization:: *)
 
 CircleDomainQ[Curve[_LFun]]:=True;
 
@@ -546,21 +568,19 @@ MapToCircleD[cr:Curve[_],z_]:=1/MapFromCircleD[cr,MapToCircle[cr,z]];
 ComplexMapToCircle[Curve[cr_],z_]:=ComplexRoots[UnitCircle,IncreaseIndexRange[RemoveNZeros[FFT[cr]],{0,0}]//#-z  BasisShiftList[#,0]&];
 
 
-
-
-ComplexPlot[cf_LFun,opts:OptionsPattern[]]:=ListLinePlot[{Re[#],Im[#]}&/@cf//Values,opts];
-
-
+(* ::Input::Initialization:: *)
 AdaptiveTimes[f_LFun,g_LFun]:=
 ChopDrop[LFun[IncreaseIndexRange[f//FFT,g//FFT//IndexRange],f//Domain] LFun[IncreaseIndexRange[g//FFT,f//FFT//IndexRange],g//Domain] ,$MachineTolerance];
 AdaptivePlus[f_LFun,g_LFun]:=
 ChopDrop[LFun[IncreaseIndexRange[f//FFT,g//FFT//IndexRange],f//Domain] +LFun[IncreaseIndexRange[g//FFT,f//FFT//IndexRange],g//Domain] ,$MachineTolerance];
 
 
+(* ::Input::Initialization:: *)
 LFun/:ToeplitzMatrix[lf_LFun,n_Integer]:=ToeplitzMatrix[lf//FFT,n];
 ShiftList/:HankelMatrix[sl_ShiftList,n_Integer]:=HankelMatrix[PadRight[PositiveList[sl],n]]//Transpose;
 LFun/:HankelMatrix[lf_LFun,n_Integer]:=HankelMatrix[lf//FFT,n];
 
 
+(* ::Input::Initialization:: *)
 End[];
 EndPackage[];

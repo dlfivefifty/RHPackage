@@ -19,9 +19,11 @@
 
 
 
+(* ::Input::Initialization:: *)
 BeginPackage[$CommonPackage];
 
 
+(* ::Input::Initialization:: *)
 IFun::usage="IFun[\!\(\*
 StyleBox[\"f\",\nFontSlant->\"Italic\"]\),d,n] constructs an \!\(\*
 StyleBox[\"n\",\nFontSlant->\"Italic\"]\)-th order Chebyshev approximation of \!\(\*
@@ -119,6 +121,7 @@ AdaptivePlus;
 ChebyshevMoment;
 
 
+(* ::Input::Initialization:: *)
 ToChebyshevUSeries;
 ToChebyshevTSeries;
 
@@ -142,6 +145,7 @@ End[];
 
 
 
+(* ::Input::Initialization:: *)
 ChebyshevPoints;
 ChebyshevLobattoPoints;
 NChebyshevPoints;
@@ -182,6 +186,7 @@ If[MemberQ[n,N[Chop[x,$MachineEpsilon]]],f[[Position[n,N[Chop[x,$MachineEpsilon]
 End[];
 
 
+(* ::Input::Initialization:: *)
 CircleToInterval::usage="CircleToInterval[z] conformally maps the unit circle to the unit interval.";
 IntervalToTopCircle::usage="IntervalToTopCircle[x] maps the unit interval to the top half of the circle.";
 IntervalToBottomCircle::usage="IntervalToBottomCircle[x] maps the unit interval to the bottom half of the circle.";
@@ -234,6 +239,7 @@ Begin["Private`"];
 
 
 
+(* ::Input::Initialization:: *)
 
 
 
@@ -293,6 +299,7 @@ BoundedDomainQ[_?(!LeftEndpointInfinityQ[#]&&!RightEndpointInfinityQ[#]&)]:=True
 DomainMemberQ[d_?IntervalDomainQ,x_]:=MapToInterval[d,x]//(NumberQ[#]&&Abs[Im[#]]<10 $MachineTolerance&&Abs[#]<=1.+10 $MachineTolerance&);
 
 
+(* ::Input::Initialization:: *)
 IntervalToRealLine[_?(#~NEqual~1.&)]:=\[Infinity];
 IntervalToRealLine[_?(#~NEqual~-1.&)]:=-\[Infinity];
 IntervalToRealLine[x_?NumberQ]:=x/Sqrt[1-x^2];
@@ -307,6 +314,7 @@ MapFromInterval[Line[{_?InfinityQ,_?InfinityQ}],x_]:=IntervalToRealLine[x];
 MapFromIntervalD[Line[{_?InfinityQ,_?InfinityQ}],x_]:=IntervalToRealLine'[x];
 
 
+(* ::Input::Initialization:: *)
 SetAttributes[IntervalToHalfLine,Listable];
 IntervalToHalfLine[_?(#~NEqual~1.&)]:=\[Infinity] ;
 IntervalToHalfLine[_?InfinityQ]:=-1.;
@@ -346,6 +354,7 @@ MapFromIntervalD[Line[{a_?InfinityQ,b_?NumberQ}],-1.]:=0.;
 MapFromIntervalD[Line[{a_?InfinityQ,b_?NumberQ}],x_]:=MapFromIntervalD[Line[{a,b},Stretch->1.],x];
 
 
+(* ::Input::Initialization:: *)
 MapToInterval[Line[{a_,b_}],z_]:=(a+b-2z)/(a-b);
 MapFromInterval[Line[{a_,b_}],x_]:=(b+a)/2+(b-a)/2 x;
 MapToIntervalD[Line[{a_,b_}],x_]:=-(2/(a-b)) ;
@@ -358,6 +367,7 @@ MapFromInterval[z_]:=z;
 
 
 
+(* ::Input::Initialization:: *)
 UnitInterval=Line[{-1,1}];
 UnitIntervalFunQ[f_IFun]:=N[Domain[f]]===N[UnitInterval];
 UnitIntervalFunQ[_]:=False;
@@ -367,6 +377,7 @@ IntervalFunQ[_]:=False;
 
 
 
+(* ::Input::Initialization:: *)
 MapToInterval[Line[{a_,b_},Stretch->_?(1.~NEqual~#&)],_?InfinityQ]:=\[Infinity];
 MapFromInterval[Line[{a_,b_},Stretch->_?(1.~NEqual~#&)],_?InfinityQ]:=\[Infinity];
 MapFromInterval[Line[{a_,b_},Stretch->L_],_?InfinityQ]:=(-a+b L)/(-1+L) ;
@@ -378,6 +389,7 @@ MapToIntervalD[Line[{a_,b_},Stretch->L_],z_]:=-((2 (a L-b L))/(a-b L-z+L z)^2) ;
 MapFromIntervalD[Line[{a_,b_},Stretch->L_],z_]:=(2 (-a L+b L))/(1+L-z+L z)^2 ;
 
 
+(* ::Input::Initialization:: *)
 Arc[a_,r_,{t0_,t1_},Left]/;t0<t1:=Arc[a,r,{t0,t1}];
 Arc[a_,r_,{t0_,t1_},Left]:=Arc[a,r,{t0-2 \[Pi],t1},Left];
 Arc[a_,r_,{t0_,t1_},Right]/;t0>t1:=Arc[a,r,{t0,t1}];
@@ -420,6 +432,7 @@ Arc[{a_,b_,c_}]:=(Det[({
 
 
 
+(* ::Input::Initialization:: *)
 LeftEndpoint[comp_]:=MapFromInterval[comp,-1];
 RightEndpoint[comp_]:=MapFromInterval[comp,1];
 LeftContourArg[comp_]:=-Arg[MapToIntervalD[comp,LeftEndpoint[comp]]];
@@ -427,6 +440,7 @@ RightContourArg[comp_]:=-Arg[-MapToIntervalD[comp,RightEndpoint[comp]]];
 End[];
 
 
+(* ::Input::Initialization:: *)
 MapToIntervalDomainD;
 MapToIntervalDDomainD;
 MapFromIntervalDomainD;
@@ -480,6 +494,7 @@ End[];
 
 
 
+(* ::Input::Initialization:: *)
 
 
 
@@ -495,9 +510,11 @@ End[];
 
 
 
+(* ::Input::Initialization:: *)
 Begin["Private`"];
 
 
+(* ::Input::Initialization:: *)
 
 
 DomainPlot[Line[{a_,b_?InfinityQ},___],opts___]:=Graphics[{Thick,Blue,Arrowheads[Large],PointSize[Large],Point[a//{Re[#],Im[#]}&],Arrow[{a//{Re[#],Im[#]}&,a+2 Exp[I Arg[b]]//{Re[#],Im[#]}&}]},opts,Axes->True];
@@ -513,6 +530,7 @@ Circle[{Re[#],Im[#]}&[z0],r,{t0,t1}//N//Sort]},opts,Axes->True];
 
 
 
+(* ::Input::Initialization:: *)
 (*For some reason ListLinePlot calls the colorfunction at the point (0,0) if we try to plot just one point therefore each function with just one plotable point,will be assigned another plotable point ASSUMPTION:only constant function will triggers this special case*)
 JumpScaleDomainPlot[IFun[l_,d_]?(FiniteLength[#]==1&),opts___]:=JumpScaleDomainPlot[IFun[{l[[1]],l[[1]],l[[-1]]},d],opts];
 
@@ -528,9 +546,11 @@ PlotRange->All
 ];
 
 
+(* ::Input::Initialization:: *)
 End[];
 
 
+(* ::Input::Initialization:: *)
 
 MeanZero::usage="Subtracts out the mean of an IFun.";
 ZeroAtZero;
@@ -594,6 +614,7 @@ ZeroAtLeft[f_]:=f-First[f];
 SetLength[if_IFun,n_]:=IFun[PadRight[if//DCT,n]//InverseDCT,if//Domain];
 
 
+(* ::Input::Initialization:: *)
 
 FinitePoints[if_IFun?(LeftEndpointInfinityQ[#]&&RightEndpointInfinityQ[#]&)]:=if//IntervalPoints//Most//Rest;
 FiniteValues[if_IFun?(LeftEndpointInfinityQ[#]&&RightEndpointInfinityQ[#]&)]:=if//Values//Most//Rest;
@@ -617,6 +638,7 @@ End[];
 
 
 
+(* ::Input::Initialization:: *)
 ChebyshevD::usage="Maps a list of Chebyshev coefficients to those of its derivative.";
 ChebyshevLobattoDerivative::usage="Maps a list of function values at Chebyshev points to those of its derivative.";
 ChebyshevI::usage="Maps a list of Chebyshev coefficients to those of its indefinite integral.";
@@ -649,6 +671,7 @@ IFun/:Derivative[k_?Positive][if_IFun]:=Derivative[1][Derivative[k-1][if]];
 IFun/:Derivative[if_IFun]:=if';
 
 
+(* ::Input::Initialization:: *)
 ReduceDimension[f_IFun]:=
 IFun[f//DCT//Most//InverseDCT,Domain[f]];
 IncreaseDimension[f_IFun]:=
@@ -683,6 +706,7 @@ DomainIntegrate[if_IFun]:=if//Integrate//Last;
 End[];
 
 
+(* ::Input::Initialization:: *)
 
 
 Begin["Private`"];
@@ -692,6 +716,7 @@ ToUnitInterval[lf_IFun]:=SetDomain[lf,UnitInterval];
 
 
 
+(* ::Input::Initialization:: *)
 ChopDrop[cf_IFun,prec_]:=IFun[InverseDCT[ChopDrop[cf//DCT,prec]//Which[Length[#]==0,{0,0},Length[#]==1,{#[[1]],0 #[[1]]},True,#]&],Domain[cf]];
 ChopDrop[cf_IFun]:=IFun[InverseDCT[ChopDrop[cf//DCT]//Which[Length[#]==0,{0,0},Length[#]==1,{#[[1]],0 #[[1]]},True,#]&],Domain[cf]];
 
@@ -711,6 +736,7 @@ IFun[f_?NotListOrPatternQ,d_,opts:OptionsPattern[]]:=AdaptiveIFun[4,f,d,opts];
 End[];
 
 
+(* ::Input::Initialization:: *)
 FromValueList;
 
 
@@ -730,6 +756,7 @@ FromValueList[f_IFun?MatrixFunQ,ls_]:=MatrixMap[ZeroAtInfinityIFun[#,Domain[f]]&
 End[];
 
 
+(* ::Input::Initialization:: *)
 
 
 TransformMatrix;
@@ -772,6 +799,7 @@ IdentityMatrix[f_IFun]^:=f//Length//IdentityMatrix;
 
 
 
+(* ::Input::Initialization:: *)
 ComplexRoots[cf_IFun?UnitIntervalFunQ]:=Module[{dct},
 dct=Chop[cf//DCT,$MachineTolerance]//RemoveZeros;
 Which[Length[dct]<=1,
@@ -792,6 +820,7 @@ MapFromInterval[cf,Select[cf//ToUnitInterval//ComplexRoots,(Abs[Im[#]]<100$Machi
 Minimize[cf_IFun]^:=Join[cf'//Roots,Endpoints[cf]]//Thread[{cf/@#//Abs,#}]&//Sort//First//Second;
 
 
+(* ::Input::Initialization:: *)
 Fun[f_?NotListOrPatternQ,l:Line[{_,_},___],opts___]:=IFun[f,l,opts];
 
 Fun[f_?NotListOrPatternQ,Line[l:{_,_,___},Lopts___],n_List]:=IFun[f,Line[#[[1]],Sequence@@If[Or@@(InfinityQ/@#[[1]]),{Lopts},{}]],#[[2]]]&/@Thread[{Partition[l,2,1],n}]//If[Length[#]==1,#[[1]],#]&;
@@ -808,9 +837,11 @@ ZeroAtInfinityIFun[f_?NotListOrPatternQ,d_,opts___]:=IFun[If[InfinityQ[#],0 f[0.
 IdentityAtInfinityIFun[G_?NotListOrPatternQ,pars___]:=IFun[If[InfinityQ[#],If[G[0.]//MatrixQ,IdentityMatrix[Length[G[0.]]],1],G[#]/.Underflow[]->0]&,pars];
 
 
+(* ::Input::Initialization:: *)
 DCTPlot[f_IFun,opts:OptionsPattern[]]:=ListLineLogPlot[Norm/@(f//DCT),opts];
 
 
+(* ::Input::Initialization:: *)
 IntervalDomainQ[Curve[_IFun]]:=True;
 
 
@@ -842,10 +873,7 @@ ComplexMapToInterval[Curve[cr_IFun,Stretch->L_],z_]:=MapToInterval[Line[{-1,1},S
 ComplexMapToIntervalD[Curve[cr_IFun,Stretch->L_],z_]:=MapToIntervalD[Line[{-1,1},Stretch->L],ComplexMapToInterval[cr//Curve,z]]/MapFromIntervalD[cr//Curve,ComplexMapToInterval[cr//Curve,z]];
 
 
-
-ComplexPlot[cf_IFun,opts:OptionsPattern[]]:=ListLinePlot[{Re[#],Im[#]}&/@cf//Values,opts];
-
-
+(* ::Input::Initialization:: *)
 Conjugate[Arc[x0_,r_,{t0_,t1_}]]^:=Arc[Conjugate[x0],r,{-t0,-t1}];
 Conjugate[Curve[cr_IFun,opts___]]^:=Curve[Conjugate[cr],opts];
 ReverseOrientation[Curve[cr_IFun,opts___]]:=Curve[Head[cr][Reverse[Values[cr]],Domain[cr]],opts];
@@ -854,10 +882,12 @@ Curve/:c_?NumberQ Curve[cr_IFun,opts___]:=Curve[c cr,opts];
 Arc/:c_?NumberQ Arc[x0_,r_,{t0_,t1_}]:=Arc[c x0,r,{\[Pi]-t0,\[Pi]-t1}];
 
 
+(* ::Input::Initialization:: *)
 Line[ls_,___]~NEqual~Line[ls2_,___]:=NZeroQ[(If[#[[1]]==#[[2]],0,#[[1]]-#[[2]]]&/@Thread[{Sort[ls],Sort[ls2]}])//Flatten//Abs//Max];
 Arc[x0_,r_,t0_]~NEqual~Arc[x2_,r2_,t2_]:=NZeroQ[{x0-x2,r-r2,Exp[I t0]-Exp[I t2]}//Flatten//Abs//Max];
 
 
+(* ::Input::Initialization:: *)
 SelectWithPoint[GG_,Gg_]:=Sort[Select[GG,Or[LeftEndpoint[#]~NEqual~(Gg),RightEndpoint[#]~NEqual~(Gg)]&],
 If[LeftEndpoint[#1]~NEqual~(Gg),
 LeftContourArg[#1],
@@ -875,6 +905,7 @@ Endpoints[GG_List]:=Union[Endpoints/@GG//Flatten,SameTest->NEqual];
 FiniteEndpoints[GG_]:=Select[Endpoints[GG],!InfinityQ[#]&];
 
 
+(* ::Input::Initialization:: *)
 LegendreTransform[if_,m_]:=Module[{p,w,cf,ifv,j,n},
 {p,w}=Thread[GaussianQuadratureWeights[m,-1,1]];
 ifv=if/@p;
@@ -913,11 +944,13 @@ FiniteInverseLegendreTransformMatrix[if_?LeftEndpointInfinityQ]:=Inverse[Legendr
 FiniteInverseLegendreTransformMatrix[if_?RightEndpointInfinityQ]:=Inverse[LegendreTransformMatrix[if]][[;;-2,All]];
 
 
+(* ::Input::Initialization:: *)
 AdaptiveTimes[f_IFun,g_IFun]:=
 ChopDrop[SetLength[f,Length[f]+Length[g]] SetLength[g,Length[f]+Length[g]] ,$MachineTolerance];
 AdaptivePlus[f_IFun,g_IFun]:=
 ChopDrop[SetLength[f,Max[Length[f],Length[g]]]+ SetLength[g,Max[Length[f],Length[g]]] ,$MachineTolerance];
 
 
+(* ::Input::Initialization:: *)
 End[];
 EndPackage[];

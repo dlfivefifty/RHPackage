@@ -1,61 +1,48 @@
 Notebook[{
-Cell["\[Copyright] Sheehan Olver, 2010, subject to BSD license.", "Text"],
+Cell["\[Copyright] Sheehan Olver, 2010, subject to BSD license.", \
+"Text",ExpressionUUID->"b9081b56-ec8f-4c6d-b56a-befb01924df8"],
 
 Cell[CellGroupData[{
 
-Cell["Package setup", "Section"],
+Cell["Package setup", \
+"Section",ExpressionUUID->"90c9ac9b-80bb-4d4f-a70a-5b65be374401"],
 
 Cell[BoxData[
  RowBox[{
   RowBox[{"BeginPackage", "[", "$CommonPackage", "]"}], ";"}]], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"c64ae203-a983-46e7-8917-68a8c33f8bca"]
 }, Closed]],
 
 Cell[CellGroupData[{
 
-Cell["Documentation", "Section"],
+Cell["Documentation", \
+"Section",ExpressionUUID->"0a160472-b974-4c0f-b0d3-64874081701e"],
 
 Cell[BoxData[{
  RowBox[{
   RowBox[{
    RowBox[{
-    RowBox[{"IFun", "::", "usage"}], "=", "\"\<IFun[\!\(\*
-StyleBox[\"f\",
-FontSlant->\"Italic\"]\),d,n] constructs an \!\(\*
-StyleBox[\"n\",
-FontSlant->\"Italic\"]\)-th order Chebyshev approximation of \!\(\*
-StyleBox[\"f\",
-FontSlant->\"Italic\"]\) over the domain d, which is either a Line or Arc\!\(\*
-StyleBox[\".\",
-FontSlant->\"Italic\"]\)\!\(\*
-StyleBox[\" \",
-FontSlant->\"Italic\"]\)IFun\!\(\*
-StyleBox[\"[\",
-FontSlant->\"Italic\"]\)\!\(\*
-StyleBox[\"f\",
-FontSlant->\"Italic\"]\)\!\(\*
-StyleBox[\",\",
-FontSlant->\"Italic\"]\)d\!\(\*
-StyleBox[\"]\",
-FontSlant->\"Italic\"]\)\!\(\*
-StyleBox[\" \",
-FontSlant->\"Italic\"]\)chooses n adaptively. \!\(\*
-StyleBox[\" \",
-FontSlant->\"Italic\"]\)IFun\!\(\*
-StyleBox[\"[\",
-FontSlant->\"Italic\"]\)\!\(\*
-StyleBox[\"f\",
-FontSlant->\"Italic\"]\)\!\(\*
-StyleBox[\",\",
-FontSlant->\"Italic\"]\)d\!\(\*
-StyleBox[\",\",
-FontSlant->\"Italic\"]\)InterpolationPrecision\[Rule]tol] chooses n \
-adaptively, so that the last two Chebyshev coefficients are less than tol. If \
-f is a constructed IFun, then f[x] evaluates the approximation at the point \
-x. Operations that can be applied to an IFun include standard mathematical \
-functions (Abs, Sin, Exp, etc.) and operators Integrate (returning the \
-indefinite integral) and Derivative[k].\>\""}], ";"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{"IFun", "::", "usage"}], "=", 
+    "\"\<IFun[\!\(\*StyleBox[\"f\",FontSlant->\"Italic\"]\),d,n] constructs \
+an \!\(\*StyleBox[\"n\",FontSlant->\"Italic\"]\)-th order Chebyshev \
+approximation of \!\(\*StyleBox[\"f\",FontSlant->\"Italic\"]\) over the \
+domain d, which is either a Line or \
+Arc\!\(\*StyleBox[\".\",FontSlant->\"Italic\"]\)\!\(\*StyleBox[\" \
+\",FontSlant->\"Italic\"]\)IFun\!\(\*StyleBox[\"[\",FontSlant->\"Italic\"]\)\!\
+\(\*StyleBox[\"f\",FontSlant->\"Italic\"]\)\!\(\*StyleBox[\",\",FontSlant->\"\
+Italic\"]\)d\!\(\*StyleBox[\"]\",FontSlant->\"Italic\"]\)\!\(\*StyleBox[\" \
+\",FontSlant->\"Italic\"]\)chooses n adaptively. \!\(\*StyleBox[\" \
+\",FontSlant->\"Italic\"]\)IFun\!\(\*StyleBox[\"[\",FontSlant->\"Italic\"]\)\!\
+\(\*StyleBox[\"f\",FontSlant->\"Italic\"]\)\!\(\*StyleBox[\",\",FontSlant->\"\
+Italic\"]\)d\!\(\*StyleBox[\",\",FontSlant->\"Italic\"]\)\
+InterpolationPrecision\[Rule]tol] chooses n adaptively, so that the last two \
+Chebyshev coefficients are less than tol. If f is a constructed IFun, then \
+f[x] evaluates the approximation at the point x. Operations that can be \
+applied to an IFun include standard mathematical functions (Abs, Sin, Exp, \
+etc.) and operators Integrate (returning the indefinite integral) and \
+Derivative[k].\>\""}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+
  RowBox[{
   RowBox[{
    RowBox[{
@@ -231,12 +218,14 @@ removed\>\""}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]",
   RowBox[{"AdaptivePlus", ";"}], "\[IndentingNewLine]", 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{"ChebyshevMoment", ";"}]}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"9c7b6b84-26fa-4348-9d5c-caea8468c9b6"]
 }, Closed]],
 
 Cell[CellGroupData[{
 
-Cell["Convert series", "Section"],
+Cell["Convert series", \
+"Section",ExpressionUUID->"9507bcb4-9c0a-471b-b9a2-7c56b1ec41c4"],
 
 Cell[BoxData[{
  RowBox[{"ToChebyshevUSeries", ";"}], "\[IndentingNewLine]", 
@@ -343,12 +332,13 @@ Cell[BoxData[{
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]"}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"300f1752-1404-4009-9b72-7a5780078f0b"]
 }, Closed]],
 
 Cell[CellGroupData[{
 
-Cell["DCT", "Section"],
+Cell["DCT", "Section",ExpressionUUID->"1823e3fd-8188-48ca-9c7b-082c4eaa64fd"],
 
 Cell[BoxData[{
  RowBox[{"ChebyshevPoints", ";"}], "\[IndentingNewLine]", 
@@ -602,16 +592,18 @@ Cell[BoxData[{
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"End", "[", "]"}], ";"}]}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"57904404-936b-4382-9dfa-0ffd45c92efe"]
 }, Closed]],
 
 Cell[CellGroupData[{
 
-Cell["Maps", "Section"],
+Cell["Maps", "Section",ExpressionUUID->"666bce12-18b3-41dc-bff7-4f4b338a43de"],
 
 Cell[CellGroupData[{
 
-Cell["Standard", "Subsection"],
+Cell["Standard", \
+"Subsection",ExpressionUUID->"b1c29558-6ecc-4936-8e4b-9ac652fd90e2"],
 
 Cell[BoxData[{
  RowBox[{
@@ -746,12 +738,14 @@ interval.\>\""}], ";"}], "\[IndentingNewLine]",
  RowBox[{
   RowBox[{"Begin", "[", "\"\<Private`\>\"", "]"}], 
   ";"}], "\[IndentingNewLine]"}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"e301f6a4-d294-4486-a08c-9184caa5b197"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["General", "Subsection"],
+Cell["General", \
+"Subsection",ExpressionUUID->"e77f1b03-775a-40c6-86c3-bab134a5e441"],
 
 Cell[BoxData[
  RowBox[{"\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
@@ -1047,12 +1041,14 @@ Cell[BoxData[
           RowBox[{"1.", "+", 
            RowBox[{"10", " ", "$MachineTolerance"}]}]}]}], "&"}], ")"}]}]}], 
     ";"}]}]}]], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"8633867a-f2b6-4f46-a4e2-bdb354915fb9"]
 }, Closed]],
 
 Cell[CellGroupData[{
 
-Cell["RealLine", "Subsection"],
+Cell["RealLine", \
+"Subsection",ExpressionUUID->"486aa5df-32ce-45db-beb5-5878ef320f3a"],
 
 Cell[BoxData[{
  RowBox[{
@@ -1144,12 +1140,14 @@ Cell[BoxData[{
         RowBox[{"_", "?", "InfinityQ"}]}], "}"}], "]"}], ",", "x_"}], "]"}], ":=", 
    RowBox[{
     RowBox[{"IntervalToRealLine", "'"}], "[", "x", "]"}]}], ";"}]}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"4450cc7a-e58f-41bc-b5ae-e7472c0654ee"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Half Line", "Subsection"],
+Cell["Half Line", \
+"Subsection",ExpressionUUID->"73729c7a-6bf2-4c27-86bb-a7caf53f4462"],
 
 Cell[BoxData[{
  RowBox[{
@@ -1212,7 +1210,8 @@ Cell[BoxData[{
         RowBox[{
          RowBox[{"a_", "?", "NumberQ"}], ",", 
          RowBox[{"b_", "?", "InfinityQ"}]}], "}"}], ",", 
-       RowBox[{"Stretch", "\[Rule]", "L_"}]}], "]"}], ",", "z_"}], "]"}], ":=", 
+       RowBox[{"Stretch", "\[Rule]", "L_"}]}], "]"}], ",", "z_"}], "]"}], ":=",
+    
    RowBox[{"HalfLineToInterval", "[", 
     RowBox[{
      RowBox[{"Exp", "[", 
@@ -1543,12 +1542,14 @@ Cell[BoxData[{
         RowBox[{"a", ",", "b"}], "}"}], ",", 
        RowBox[{"Stretch", "\[Rule]", "1."}]}], "]"}], ",", "x"}], "]"}]}], 
   ";"}]}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"3a6d2102-43eb-4c8f-acd9-f254ab4ed014"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Line", "Subsection"],
+Cell["Line", \
+"Subsection",ExpressionUUID->"fdbbb9dc-a8d9-4da8-a188-d1489099ce93"],
 
 Cell[BoxData[{
  RowBox[{
@@ -1616,12 +1617,14 @@ Cell[BoxData[{
   RowBox[{
    RowBox[{"MapFromInterval", "[", "z_", "]"}], ":=", "z"}], 
   ";"}], "\[IndentingNewLine]"}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"045e570a-e463-40e8-9182-a935bdb006b0"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Unit Domains", "Subsection"],
+Cell["Unit Domains", \
+"Subsection",ExpressionUUID->"9df52190-c4a2-4283-8cca-f4eefd1f3e17"],
 
 Cell[BoxData[{
  RowBox[{
@@ -1659,12 +1662,14 @@ Cell[BoxData[{
    RowBox[{
     RowBox[{"IntervalFunQ", "[", "_", "]"}], ":=", "False"}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]"}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"2631d026-a8ea-4239-8f05-e66d9a7b0e9f"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Stretched Line", "Subsection"],
+Cell["Stretched Line", \
+"Subsection",ExpressionUUID->"7ffca905-ea55-457e-a560-4d0409265e0a"],
 
 Cell[BoxData[{
  RowBox[{
@@ -1828,7 +1833,8 @@ Cell[BoxData[{
      RowBox[{"(", 
       RowBox[{"1", "+", "L", "-", "z", "+", 
        RowBox[{"L", " ", "z"}]}], ")"}], "2"]]}], " ", ";"}]}], "Input",
- InitializationCell->True],
+ InitializationCell->
+  True,ExpressionUUID->"ed79ad69-d4f5-4d02-9797-496faae77a90"],
 
 Cell[BoxData[{
  RowBox[{
@@ -1894,12 +1900,13 @@ Cell[BoxData[{
        RowBox[{"Line", "[", 
         RowBox[{"{", 
          RowBox[{"a", ",", "b"}], "}"}], "]"}], ",", "#"}], "]"}], "&"}]}]}], 
-  ";"}]}], "Input"]
+  ";"}]}], "Input",ExpressionUUID->"09796ce4-6b16-41dc-b735-979b43affe59"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Arc", "Subsection"],
+Cell["Arc", \
+"Subsection",ExpressionUUID->"3f7227ba-569c-4c27-a9ac-19ef38d122db"],
 
 Cell[BoxData[{
  RowBox[{
@@ -2348,12 +2355,14 @@ Cell[BoxData[{
           RowBox[{"Arg", "[", 
            RowBox[{"c", "-", "x0"}], "]"}]}], "}"}]}], "]"}]}], "]"}]}]}], 
   ";"}], "\[IndentingNewLine]"}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"715e0f93-f72b-4aaa-8466-6e12a68f02e8"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["General", "Subsection"],
+Cell["General", \
+"Subsection",ExpressionUUID->"5d563a5d-a553-4726-97b9-9639021421ae"],
 
 Cell[BoxData[{
  RowBox[{
@@ -2388,13 +2397,15 @@ Cell[BoxData[{
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"End", "[", "]"}], ";"}]}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"3f62f1f5-67ce-4c0c-97cc-231046a43d6a"]
 }, Open  ]]
 }, Closed]],
 
 Cell[CellGroupData[{
 
-Cell["Maps D", "Section"],
+Cell["Maps D", \
+"Section",ExpressionUUID->"bf3ddee6-e960-47b2-9727-f8e42933dac1"],
 
 Cell[BoxData[{
  RowBox[{"MapToIntervalDomainD", ";"}], "\[IndentingNewLine]", 
@@ -2694,12 +2705,14 @@ Cell[BoxData[{
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]"}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"b3313bcd-3c62-460b-a770-f3b0111975f5"]
 }, Closed]],
 
 Cell[CellGroupData[{
 
-Cell["Points", "Section"],
+Cell["Points", \
+"Section",ExpressionUUID->"a37157bb-9dae-470a-8904-f82c9e1e1c3b"],
 
 Cell[BoxData[
  RowBox[{"\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
@@ -2728,21 +2741,25 @@ Cell[BoxData[
    "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]"}]}]], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"a85baae5-c122-44bc-a764-c6a6ed00c9aa"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Domain Plots", "Section"],
+Cell["Domain Plots", \
+"Section",ExpressionUUID->"e851ea25-7f7a-45bb-b131-9f117a67e214"],
 
 Cell[BoxData[
  RowBox[{
   RowBox[{"Begin", "[", "\"\<Private`\>\"", "]"}], ";"}]], "Input",
- InitializationCell->True],
+ InitializationCell->
+  True,ExpressionUUID->"d4ab1d71-9d03-406c-9fcc-e1dedbb5531f"],
 
 Cell[CellGroupData[{
 
-Cell["DomainPlot", "Subsection"],
+Cell["DomainPlot", \
+"Subsection",ExpressionUUID->"acda29d3-1f73-4c70-ba98-98a1a8a925f3"],
 
 Cell[BoxData[
  RowBox[{"\[IndentingNewLine]", "\[IndentingNewLine]", 
@@ -2973,12 +2990,14 @@ Cell[BoxData[
            "]"}]}], "}"}], ",", "opts", ",", 
        RowBox[{"Axes", "\[Rule]", "True"}]}], "]"}]}], ";"}], 
    "\[IndentingNewLine]"}]}]], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"52d44734-7aaa-4ac1-ba87-6f877793b295"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["JumpScaleDomainPlot", "Subsection"],
+Cell["JumpScaleDomainPlot", \
+"Subsection",ExpressionUUID->"ddc0d7e6-e71b-47b1-94d3-d8c118fb52e3"],
 
 Cell[BoxData[
  RowBox[{
@@ -3026,7 +3045,7 @@ Cell[BoxData[
            RowBox[{"l", "[", 
             RowBox[{"[", 
              RowBox[{"-", "1"}], "]"}], "]"}]}], "}"}], ",", "d"}], "]"}], 
-       ",", "opts"}], "]"}]}], ";"}], "\n", "\[IndentingNewLine]", 
+       ",", "opts"}], "]"}]}], ";"}], "\[IndentingNewLine]", "\n", 
    RowBox[{
     RowBox[{
      RowBox[{"JumpScaleDomainPlot", "[", 
@@ -3075,22 +3094,25 @@ Cell[BoxData[
          "\[IndentingNewLine]", 
          RowBox[{"PlotRange", "\[Rule]", "All"}]}], "\[IndentingNewLine]", 
         "]"}]}], "\[IndentingNewLine]", "]"}]}], ";"}]}]}]], "Input",
- InitializationCell->True],
+ InitializationCell->
+  True,ExpressionUUID->"ddbd092f-0ce8-43e8-b2a0-f9b6f0ab095e"],
 
 Cell[BoxData[
  RowBox[{
   RowBox[{"End", "[", "]"}], ";"}]], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"812a7e1a-90b2-42d2-96d2-dbd710494aef"]
 }, Open  ]]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["IFun", "Section"],
+Cell["IFun", "Section",ExpressionUUID->"ff013554-6610-4e80-834a-f0eb0f5dfe37"],
 
 Cell[CellGroupData[{
 
-Cell["Basic ops", "Subsection"],
+Cell["Basic ops", \
+"Subsection",ExpressionUUID->"323a3166-288a-4804-b176-e8a33b0c5516"],
 
 Cell[BoxData[
  RowBox[{"\[IndentingNewLine]", 
@@ -3322,12 +3344,14 @@ Cell[BoxData[
           RowBox[{"if", "//", "DCT"}], ",", "n"}], "]"}], "//", 
         "InverseDCT"}], ",", 
        RowBox[{"if", "//", "Domain"}]}], "]"}]}], ";"}]}]}]], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"0b0309af-f07a-487c-b19d-631f4b57c4f5"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Finite points and format", "Subsection"],
+Cell["Finite points and format", \
+"Subsection",ExpressionUUID->"1ddf7e4e-abe7-473a-9a7f-91204fa3f52b"],
 
 Cell[BoxData[
  RowBox[{"\[IndentingNewLine]", 
@@ -3435,12 +3459,14 @@ Cell[BoxData[
    "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]"}]}]], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"e94a7e94-05b2-453b-8a5b-200ecad22f1c"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Derivative", "Subsection"],
+Cell["Derivative", \
+"Subsection",ExpressionUUID->"6b70ca28-de6e-49dc-a47c-0403a5691ae3"],
 
 Cell[BoxData[{
  RowBox[{
@@ -3531,7 +3557,7 @@ indefinite integral.\>\""}], ";"}], "\[IndentingNewLine]",
              RowBox[{"d", "[", 
               RowBox[{"#", "-", "1"}], "]"}], "&"}], ",", 
             RowBox[{"{", "n", "}"}]}], "]"}]}]}], "]"}]}]}], "]"}]}], ";"}], 
-  "\n"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -3591,12 +3617,14 @@ indefinite integral.\>\""}], ";"}], "\[IndentingNewLine]",
   RowBox[{"IFun", "/:", 
    RowBox[{"Derivative", "[", "if_IFun", "]"}], ":=", 
    RowBox[{"if", "'"}]}], ";"}]}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"11c785d4-047f-44af-b8e2-38e66dfc19af"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Integrate", "Subsection"],
+Cell["Integrate", \
+"Subsection",ExpressionUUID->"71e7f9f8-064a-46b5-bee6-2fef977de1b3"],
 
 Cell[BoxData[{
  RowBox[{
@@ -3795,13 +3823,15 @@ Cell[BoxData[{
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"End", "[", "]"}], ";"}]}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"a2ef6a8e-70a4-4968-a1f3-4aa6f3c297b0"]
 }, Open  ]]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Conversion", "Section"],
+Cell["Conversion", \
+"Section",ExpressionUUID->"d917b97d-ed4b-400f-8233-d26ed6c18208"],
 
 Cell[BoxData[
  RowBox[{"\[IndentingNewLine]", "\[IndentingNewLine]", 
@@ -3815,12 +3845,14 @@ Cell[BoxData[
      RowBox[{"SetDomain", "[", 
       RowBox[{"lf", ",", "UnitInterval"}], "]"}]}], ";"}], 
    "\[IndentingNewLine]"}]}]], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"c77eaed6-934a-48dd-8a68-ae61bb100bb5"]
 }, Closed]],
 
 Cell[CellGroupData[{
 
-Cell["Adaptive", "Section"],
+Cell["Adaptive", \
+"Section",ExpressionUUID->"9b51f664-6fc9-4078-856d-3a0db14eed3d"],
 
 Cell[CellGroupData[{
 
@@ -3969,7 +4001,8 @@ Cell[BoxData[{
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"End", "[", "]"}], ";"}]}], "Input",
- InitializationCell->True],
+ InitializationCell->
+  True,ExpressionUUID->"53148daf-dc31-40f4-aa1f-b63e77b33932"],
 
 Cell[BoxData[
  RowBox[{
@@ -3978,13 +4011,15 @@ Cell[BoxData[
 defined.\\\\\\\"\\\", \\\"MT\\\"]\\) \
 \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
 ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/End/noctx\\\", \
-ButtonNote -> \\\"End::noctx\\\"]\\)\"\>"}]], "Message", "MSG"]
+ButtonNote -> \\\"End::noctx\\\"]\\)\"\>"}]], "Message", \
+"MSG",ExpressionUUID->"50022229-89d8-4c63-b180-f776f4f320af"]
 }, Open  ]]
 }, Closed]],
 
 Cell[CellGroupData[{
 
-Cell["Value List", "Section"],
+Cell["Value List", \
+"Section",ExpressionUUID->"f839416d-5b58-45fc-bcb3-3827acb17650"],
 
 Cell[BoxData[{
  RowBox[{
@@ -4078,12 +4113,14 @@ Cell[BoxData[{
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"End", "[", "]"}], ";"}]}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"83cb93f9-fe2a-43c7-90d8-f52ddbefbaea"]
 }, Closed]],
 
 Cell[CellGroupData[{
 
-Cell["Transform Matrix", "Section"],
+Cell["Transform Matrix", \
+"Section",ExpressionUUID->"4a4d5a2c-13f8-43d1-9554-c2a208ff2fe8"],
 
 Cell[BoxData[
  RowBox[{"\[IndentingNewLine]", "\[IndentingNewLine]", 
@@ -4177,8 +4214,8 @@ Cell[BoxData[
      RowBox[{"ReduceDimensionMatrix", "[", 
       RowBox[{
        RowBox[{"f", "//", "Domain"}], ",", 
-       RowBox[{"f", "//", "Length"}]}], "]"}]}], ";"}], "\n", 
-   "\[IndentingNewLine]", 
+       RowBox[{"f", "//", "Length"}]}], "]"}]}], ";"}], "\[IndentingNewLine]",
+    "\n", 
    RowBox[{
     RowBox[{
      RowBox[{"ReduceDimensionIntegrateMatrix", "[", 
@@ -4226,14 +4263,17 @@ Cell[BoxData[
      RowBox[{
       RowBox[{"f", "//", "Length"}], "//", "IdentityMatrix"}]}], ";"}], 
    "\[IndentingNewLine]"}]}]], "Input",
- InitializationCell->True],
+ InitializationCell->
+  True,ExpressionUUID->"bee09498-649c-4182-a988-8c836099c2b2"],
 
-Cell[BoxData[""], "Input"]
+Cell[BoxData[""], \
+"Input",ExpressionUUID->"0eb78440-1377-4592-83d8-c99cbad8b824"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Roots", "Section"],
+Cell["Roots", \
+"Section",ExpressionUUID->"bab0bdb2-3520-4c58-bd14-241c36d5bc2a"],
 
 Cell[BoxData[{
  RowBox[{
@@ -4377,12 +4417,14 @@ Cell[BoxData[{
             RowBox[{"cf", "/@", "#"}], "//", "Abs"}], ",", "#"}], "}"}], 
          "]"}], "&"}]}], "//", "Sort"}], "//", "First"}], "//", "Second"}]}], 
   ";"}]}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"69ca27bc-eb1e-48a8-9db4-5810a168c78b"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Fun Chain", "Section"],
+Cell["Fun Chain", \
+"Section",ExpressionUUID->"909a107e-6993-463e-b60b-3a28503031f3"],
 
 Cell[BoxData[{
  RowBox[{
@@ -4574,12 +4616,14 @@ Cell[BoxData[{
          RowBox[{
           RowBox[{"Underflow", "[", "]"}], "\[Rule]", "0"}]}]}], "]"}], "&"}],
       ",", "pars"}], "]"}]}], ";"}]}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"bf720564-1dcb-48a2-bae9-6357ba2f2de9"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Plots", "Section"],
+Cell["Plots", \
+"Section",ExpressionUUID->"7d193fac-4841-41d2-9e61-4be502640e29"],
 
 Cell[BoxData[
  RowBox[{
@@ -4594,16 +4638,19 @@ Cell[BoxData[
       RowBox[{"(", 
        RowBox[{"f", "//", "DCT"}], ")"}]}], ",", "opts"}], "]"}]}], 
   ";"}]], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"712ef8c9-2276-419e-99da-e8e75f316ba6"]
 }, Closed]],
 
 Cell[CellGroupData[{
 
-Cell["Curve Fun", "Section"],
+Cell["Curve Fun", \
+"Section",ExpressionUUID->"04d30cff-cd5f-4e2c-9c4d-bb668cead357"],
 
 Cell[CellGroupData[{
 
-Cell["Line Curve", "Subsection"],
+Cell["Line Curve", \
+"Subsection",ExpressionUUID->"ad4f8172-74b3-4c76-b014-690f0cacb384"],
 
 Cell[BoxData[{
  RowBox[{
@@ -4836,54 +4883,38 @@ Cell[BoxData[{
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
+   RowBox[{"ComplexMapToIntervalD", "[", 
+    RowBox[{
+     RowBox[{"Curve", "[", 
+      RowBox[{"cr_IFun", ",", 
+       RowBox[{"Stretch", "\[Rule]", "L_"}]}], "]"}], ",", "z_"}], "]"}], ":=", 
    RowBox[{
-    RowBox[{"ComplexMapToIntervalD", "[", 
+    RowBox[{"MapToIntervalD", "[", 
      RowBox[{
-      RowBox[{"Curve", "[", 
-       RowBox[{"cr_IFun", ",", 
-        RowBox[{"Stretch", "\[Rule]", "L_"}]}], "]"}], ",", "z_"}], "]"}], ":=", 
-    RowBox[{
-     RowBox[{"MapToIntervalD", "[", 
-      RowBox[{
-       RowBox[{"Line", "[", 
-        RowBox[{
-         RowBox[{"{", 
-          RowBox[{
-           RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
-         RowBox[{"Stretch", "\[Rule]", "L"}]}], "]"}], ",", 
-       RowBox[{"ComplexMapToInterval", "[", 
-        RowBox[{
-         RowBox[{"cr", "//", "Curve"}], ",", "z"}], "]"}]}], "]"}], "/", 
-     RowBox[{"MapFromIntervalD", "[", 
-      RowBox[{
-       RowBox[{"cr", "//", "Curve"}], ",", 
-       RowBox[{"ComplexMapToInterval", "[", 
-        RowBox[{
-         RowBox[{"cr", "//", "Curve"}], ",", "z"}], "]"}]}], "]"}]}]}], ";"}],
-   "\[IndentingNewLine]", "\[IndentingNewLine]", 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{"ComplexPlot", "[", 
-    RowBox[{"cf_IFun", ",", 
-     RowBox[{"opts", ":", 
-      RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", 
-   RowBox[{"ListLinePlot", "[", 
-    RowBox[{
-     RowBox[{
-      RowBox[{
+      RowBox[{"Line", "[", 
        RowBox[{
         RowBox[{"{", 
          RowBox[{
-          RowBox[{"Re", "[", "#", "]"}], ",", 
-          RowBox[{"Im", "[", "#", "]"}]}], "}"}], "&"}], "/@", "cf"}], "//", 
-      "Values"}], ",", "opts"}], "]"}]}], ";"}]}], "Input",
- InitializationCell->True]
+          RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+        RowBox[{"Stretch", "\[Rule]", "L"}]}], "]"}], ",", 
+      RowBox[{"ComplexMapToInterval", "[", 
+       RowBox[{
+        RowBox[{"cr", "//", "Curve"}], ",", "z"}], "]"}]}], "]"}], "/", 
+    RowBox[{"MapFromIntervalD", "[", 
+     RowBox[{
+      RowBox[{"cr", "//", "Curve"}], ",", 
+      RowBox[{"ComplexMapToInterval", "[", 
+       RowBox[{
+        RowBox[{"cr", "//", "Curve"}], ",", "z"}], "]"}]}], "]"}]}]}], 
+  ";"}]}], "Input",
+ InitializationCell->
+  True,ExpressionUUID->"ff05d1c1-9a17-48c8-869f-fa10cd746732"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Curve ops", "Subsection"],
+Cell["Curve ops", \
+"Subsection",ExpressionUUID->"d11f4b76-06e8-4d07-b16a-12cc37442084"],
 
 Cell[BoxData[{
  RowBox[{
@@ -4959,12 +4990,14 @@ Cell[BoxData[{
       RowBox[{
        RowBox[{"\[Pi]", "-", "t0"}], ",", 
        RowBox[{"\[Pi]", "-", "t1"}]}], "}"}]}], "]"}]}], ";"}]}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"db158e56-66e9-48e3-9dd4-5289aa87f532"]
 }, Closed]],
 
 Cell[CellGroupData[{
 
-Cell["Inverse map", "Subsection"],
+Cell["Inverse map", \
+"Subsection",ExpressionUUID->"1fb8aad4-6e1e-4edb-abaa-69de2c03f470"],
 
 Cell[BoxData[{
  RowBox[{
@@ -5103,13 +5136,14 @@ Cell[BoxData[{
                  RowBox[{"Re", "[", "#", "]"}], ",", 
                  RowBox[{"Im", "[", "#", "]"}]}], "}"}], "&"}]}]}], "}"}], 
            "]"}]}], "}"}], "//", "Graphics"}]}], "]"}]}], "]"}]}], 
-  ";"}]}], "Input"]
+  ";"}]}], "Input",ExpressionUUID->"7fb088ac-07cd-4d0d-bbdb-4e0cd93fde94"]
 }, Closed]]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["NEqual", "Section"],
+Cell["NEqual", \
+"Section",ExpressionUUID->"3d87f3e8-cb90-499a-99ee-7848256f04be"],
 
 Cell[BoxData[{
  RowBox[{
@@ -5168,12 +5202,14 @@ Cell[BoxData[{
           RowBox[{"Exp", "[", 
            RowBox[{"I", " ", "t2"}], "]"}]}]}], "}"}], "//", "Flatten"}], "//",
        "Abs"}], "//", "Max"}], "]"}]}], ";"}]}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"65393248-0256-4e45-99c7-d70afd18b16d"]
 }, Closed]],
 
 Cell[CellGroupData[{
 
-Cell["List ops", "Section"],
+Cell["List ops", \
+"Section",ExpressionUUID->"0a8802c1-c462-4f50-ae96-f7ea1ebf56ae"],
 
 Cell[BoxData[{
  RowBox[{
@@ -5285,12 +5321,14 @@ Cell[BoxData[{
       RowBox[{"!", 
        RowBox[{"InfinityQ", "[", "#", "]"}]}], "&"}]}], "]"}]}], 
   ";"}]}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"733f95f6-6ff6-4e4a-be03-2175771c6321"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Other Transforms", "Section"],
+Cell["Other Transforms", \
+"Section",ExpressionUUID->"3696aac6-c908-4ab0-a18a-63f113b49467"],
 
 Cell[BoxData[{
  RowBox[{
@@ -5580,12 +5618,14 @@ Cell[BoxData[{
      RowBox[{";;", 
       RowBox[{"-", "2"}]}], ",", "All"}], "\[RightDoubleBracket]"}]}], 
   ";"}]}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"4b859546-8307-4e03-90f5-fe98c9685d43"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Adaptive Routines", "Section"],
+Cell["Adaptive Routines", \
+"Section",ExpressionUUID->"723a113a-9211-42b1-b36d-5980e2f347a8"],
 
 Cell[BoxData[{
  RowBox[{
@@ -5626,19 +5666,22 @@ Cell[BoxData[{
           RowBox[{"Length", "[", "f", "]"}], ",", 
           RowBox[{"Length", "[", "g", "]"}]}], "]"}]}], "]"}]}], " ", ",", 
      "$MachineTolerance"}], "]"}]}], ";"}]}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"50b22176-78e3-4835-b8fb-75489e93a96c"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Finish", "Section"],
+Cell["Finish", \
+"Section",ExpressionUUID->"9652d988-151a-42f4-be77-98bf40a35548"],
 
 Cell[BoxData[{
  RowBox[{
   RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"EndPackage", "[", "]"}], ";"}]}], "Input",
- InitializationCell->True]
+ InitializationCell->
+  True,ExpressionUUID->"781f8e0b-9791-47fa-b992-c1f9975babe5"]
 }, Open  ]]
 },
 AutoGeneratedPackage->Automatic,
@@ -5647,8 +5690,7 @@ WindowMargins->{{Automatic, 190}, {Automatic, 2}},
 PrivateNotebookOptions->{"FileOutlineCache"->False},
 ShowSelection->True,
 TrackCellChangeTimes->False,
-FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (June 27, \
-2014)",
+FrontEndVersion->"12.0 for Mac OS X x86 (64-bit) (April 8, 2019)",
 StyleDefinitions->"Default.nb"
 ]
 

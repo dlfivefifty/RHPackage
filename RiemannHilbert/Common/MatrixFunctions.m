@@ -19,14 +19,15 @@
 
 
 
+(* ::Input::Initialization:: *)
 BeginPackage[$CommonPackage];
 
 
+(* ::Input::Initialization:: *)
 ZeroMatrix;OuterProduct;
 Second:=#[[2]]&;
 SparseZeroMatrix;
 SparseIdentityMatrix;
-DiagonalMatrixQ;
 
 RealLeastSquares;
 Begin["Private`"];
@@ -37,11 +38,10 @@ SparseZeroMatrix[n_,m_]:=SparseArray[{},{n,m}];
 SparseIdentityMatrix[n_]:=SparseArray[{i_,i_}->1,{n,n}];
 OuterProduct[f_List,g_List]:=Transpose[Map[# f&,g]];
 OuterProduct[f_List,g_]:=f g;
-DiagonalMatrixQ[DD_?MatrixQ]:=Norm[DD-DiagonalMatrix[Diagonal[DD]]]==0;
-DiagonalMatrixQ[_]:=False;
 End[];
 
 
+(* ::Input::Initialization:: *)
 ToRotatedList;Index;FirstIndex;IndexRange;IncreaseIndexRange;SetIndexRange;DropNegative;
 SetAttributes[ShiftList,NHoldRest];
 ToList;
@@ -89,6 +89,7 @@ ShiftList/:ShiftList[ln_List,ind_Integer][[j_]]:=ln[[fixind[j,ind,Length[ln]]]];
 ShiftList[ln_List,lp_List]:=ShiftList[Join[ln,lp],Length[ln]+1];
 
 
+(* ::Input::Initialization:: *)
 ToList[ShiftList[ln_,_]]:=ln;
 ShiftList/:Length[l_ShiftList]:=l//ToList//Length;
 ToRotatedList[ShiftList[ln_,ind_]]:=RotateLeft[ln,ind-1];
@@ -126,6 +127,7 @@ PositiveShiftList[l_ShiftList]:=ShiftList[Array[0 ToList[l][[1]]&,Length[Negativ
 ZeroShiftList[l_ShiftList]:=ShiftList[Array[0 ToList[l][[1]]&,Length[NegativeList[l]]],Join[{l[[0]]},Array[0 ToList[l][[1]]&,Length[PositiveList[l]]] ]];
 
 
+(* ::Input::Initialization:: *)
 ln_ShiftList+ln2_ShiftList^:=Module[{lnn,lnn2},
 lnn=IncreaseIndexRange[ln,IndexRange[ln2]];
 lnn2=IncreaseIndexRange[ln2,IndexRange[ln]];
@@ -145,6 +147,7 @@ ShiftList/:ListConvolve[a_ShiftList,b_ShiftList,opts___]:=ShiftList[ListConvolve
 ShiftList/:RotateLeft[a_ShiftList,opts___]:=ShiftList[RotateLeft[ToList[a],opts],Index[a]];
 
 
+(* ::Input::Initialization:: *)
 PadRight[f_ShiftList,n_]^:=ShiftList[PadRight[ToList[f],n,{If[Length[f]==0,0,ToList[f][[1]] 0]}],Index[f]];
 PadLeft[f_ShiftList,n_]^:=ShiftList[PadLeft[ToList[f],n,{If[Length[f]==0,0,ToList[f][[1]] 0]}],Index[f]+n-Length[f]];
 ShiftRight[f_ShiftList]:=ShiftList[ToList[f],Index[f]-1];
@@ -165,11 +168,13 @@ RiffleList[sl_ShiftList,l2_List]:=ShiftList[RiffleList[ToList[sl],l2],Index[sl](
 Reverse[sl_ShiftList]^:=ShiftList[sl//ToList//Reverse,Length[sl]-Index[sl]+1];
 
 
+(* ::Input::Initialization:: *)
 Format[ShiftList[l_,ind_Integer]]:=If[0<ind<Length[l],Join[l[[1;;ind-1]],{Style[l[[ind]],Bold]},l[[ind+1;;-1]]],
 l];
 MatrixForm[ShiftList[l_,ind_Integer]]^:=Join[l[[1;;ind-1]],{Style[l[[ind]],Bold]},l[[ind+1;;-1]]]//MatrixForm;
 
 
+(* ::Input::Initialization:: *)
 ShiftList/:Apply[f_,ShiftList[l_,_]]:=Apply[f,l];ShiftList/:Map[f_,ShiftList[l_,ind_]]:=ShiftList[Map[f,l],ind];
 ShiftList/:MapIndexed[f_,ShiftList[ln_,ind_]]:=ShiftList[MapIndexed[f[#1,#2-ind]&,ln],ind];
 SetAttributes[ShiftTable,HoldFirst];
@@ -179,6 +184,7 @@ BasisShiftList[ln_ShiftList,k_]:=ShiftList[BasisVector[Length[ln]][k+Index[ln]],
 BasisShiftList[i_;;j_,k_]:=ShiftList[BasisVector[j-i+1][k-i+1],1-i];
 
 
+(* ::Input::Initialization:: *)
 ReplacePart[sl_ShiftList,pat_]^:=ShiftList[MapIndexed[If[Apply[Or,Map[Function[pm,MatchQ[First[#2]-Index[sl],pm]],Map[First,pat]]],First[#2]-Index[sl]/.pat,#1]&,ToList[sl]],Index[sl]];
 
 ReplaceEntry[sl_ShiftList,i_,p_,OptionsPattern[IncreaseSize->False]]:=Module[{sl2,sll},
@@ -195,6 +201,7 @@ Re[f_ShiftList]^:=Map[Re,f];
 Im[f_ShiftList]^:=Map[Im,f];
 
 
+(* ::Input::Initialization:: *)
 Indices[sl_ShiftList]^:=Array[#-Index[sl]&,Length[sl]];LinePlot[sl_ShiftList,opts___]^:=ListLinePlot[Thread[List[Indices[sl],ToList[sl]]],opts];
 ListLogPlot[sl_ShiftList,opts___]^:=ListLogPlot[Thread[List[Indices[sl],ToList[sl]]],opts];
 LineLogPlot[sl_ShiftList,opts___]:=ListLineLogPlot[Thread[List[Indices[sl],ToList[sl]]],opts];
@@ -219,6 +226,7 @@ NZeroQ[sl_ShiftList]:=sl//ToList//NZeroQ;
 End[];
 
 
+(* ::Input::Initialization:: *)
 ShiftMatrix;
 ToArray;
 RangeIndex;
@@ -240,11 +248,13 @@ ShiftMatrix/:Transpose[ShiftMatrix[ls_?MatrixQ,{iind_,jind_}]]:=ShiftMatrix[ls//
 ShiftMatrix/:Inverse[ShiftMatrix[ls_?MatrixQ,{iind_,jind_}]]:=ShiftMatrix[ls//Inverse,{jind,iind}];
 
 
+(* ::Input::Initialization:: *)
 
 ToArray[ShiftMatrix[ls_,{_,_}]]:=ls;
 Normal[sl_ShiftMatrix]^:=sl//ToArray;
 
 
+(* ::Input::Initialization:: *)
 ShiftMatrix/:Dimensions[ShiftMatrix[ls_?MatrixQ,{_,_}]]:=Dimensions[ls];
 
 RowIndex[ShiftMatrix[ls_?MatrixQ,{iind_,jind_}]]:=iind;
@@ -263,10 +273,12 @@ SetIndexRange[sm_ShiftMatrix,{i_,j_},{m_,n_}]:=PadRight[PadLeft[sm,{i,m}],{j,n}]
 
 
 
+(* ::Input::Initialization:: *)
 Format[sm:ShiftMatrix[_?MatrixQ,{_Integer,_Integer}]]:=Module[{i,j},
 Table[If[i==0||j==0,Style[sm[[i,j]],Bold],sm[[i,j]]],{i,RowIndexRange[sm][[1]],RowIndexRange[sm][[2]]},{j,ColumnIndexRange[sm][[1]],ColumnIndexRange[sm][[2]]}]]//MatrixForm
 
 
+(* ::Input::Initialization:: *)
 ShiftMatrix/:sm_ShiftMatrix.sl_ShiftList:=ShiftList[ToArray[sm].ToList[sl],RangeIndex[sm]];
 ShiftMatrix/:sl_ShiftList.sm_ShiftMatrix:=ShiftList[ToList[sl].ToArray[sm],ColumnIndex[sm]];
 ShiftMatrix/:sm_ShiftMatrix.sm2_ShiftMatrix:=ShiftMatrix[ToArray[sm].ToArray[sm2],{RangeIndex[sm],DomainIndex[sm2]}];
@@ -274,6 +286,7 @@ ShiftMatrix/:sm_ShiftMatrix+sm2_ShiftMatrix:=ShiftMatrix[ToArray[sm]+ToArray[sm2
 ShiftMatrix/:c_?NumberQ sm_ShiftMatrix:=ShiftMatrix[c ToArray[sm],{RangeIndex[sm],DomainIndex[sm]}];
 
 
+(* ::Input::Initialization:: *)
 ShiftDiagonalMatrix[A_,B_]:=ShiftMatrix[BlockDiagonalMatrix[{A,B}],Dimensions[A]+1];
 
 ShiftMatrix[{A_?MatrixQ,B_?MatrixQ}]:=ShiftMatrix[A~RightJoin~B,{1,Dimensions[A][[2]]+1}];
@@ -299,6 +312,7 @@ ShiftMatrix/:Im[ShiftMatrix[ls_?MatrixQ,ind_]]:=ShiftMatrix[ls//Im,ind];
 End[];
 
 
+(* ::Input::Initialization:: *)
 
 RemoveZeros;
 RemoveNZeros;
@@ -325,6 +339,7 @@ ChopDrop[v_,prec_]:=Chop[v,prec]//RemoveZeros;
 End[];
 
 
+(* ::Input::Initialization:: *)
 ApplyAll;
 ColumnMap;
 VectorTranspose;
@@ -336,6 +351,7 @@ ColumnMap[f_,m_?MatrixQ]:=Map[f,Transpose[m]]//VectorTranspose;
 End[];
 
 
+(* ::Input::Initialization:: *)
 MapOuter;MapDot;
 
 Begin["Private`"];
@@ -351,6 +367,7 @@ VectorTranspose[f_]:=f;
 End[];
 
 
+(* ::Input::Initialization:: *)
 
 GaussianElimination;
 
@@ -471,6 +488,7 @@ GrowShiftRight[l_List]:=Join[{0},l];
 End[];
 
 
+(* ::Input::Initialization:: *)
 PLUDecomposition;
 PULDecomposition;
 QLDecomposition;
@@ -505,6 +523,7 @@ RQDecomposition[A_]:=Module[{Q,L},
 End[];
 
 
+(* ::Input::Initialization:: *)
 
 BlockRow;BlockMatrix;SparseDiagonalMatrix;
 
@@ -516,9 +535,11 @@ CIdentityMatrix[n_]:=IdentityMatrix[n];
 CIdentityMatrix[]=1;
 
 
+(* ::Input::Initialization:: *)
 MaxRowDimension[B_]:=Max/@Thread[Select[Dimensions/@MakeMatrix/@B,#!={}&]];
 
 
+(* ::Input::Initialization:: *)
 ScalarFlatten[p_List,vars___]:=Flatten[p,vars];
 ScalarFlatten[p_,vars___]:=p;
 MakeMatrix[p_]/;VectorQ[p]:={p};
@@ -527,6 +548,7 @@ MakeMatrix[p_]:={{p}};
 BlockRowBack[M_]:=Map[ScalarFlatten[#,1]&,Thread[Join[M]]]//MakeMatrix;
 
 
+(* ::Input::Initialization:: *)
 
 BlockRow[B_]:=Module[{dms},
 dms=MaxRowDimension[B];
@@ -541,13 +563,16 @@ Map[Which[#===0||#===Null,
 		#]&,B]]//BlockRowBack]
 
 
+(* ::Input::Initialization:: *)
 BlockMatrix[A_]:=Flatten[(BlockRow/@A),1];
 SparseDiagonalMatrix[l_List]:=Module[{i},SparseArray[{i_,i_}:>l[[i]],Length[l]{1,1}]];
 
 
 
+(* ::Input::Initialization:: *)
 RealLeastSquares[A_,b_]:=LeastSquares[Join[Re[A],Im[A]],Join[Re[b],Im[b]]]
 
 
+(* ::Input::Initialization:: *)
 End[];
 EndPackage[];

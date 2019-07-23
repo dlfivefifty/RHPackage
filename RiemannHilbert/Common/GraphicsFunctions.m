@@ -19,15 +19,13 @@
 
 
 
+(* ::Input::Initialization:: *)
 BeginPackage[$CommonPackage];
 
 
-ComplexPlot::usage=
-"ComplexPlot[f[t],{t,a,b}] plots the trajectory in the complex plane of f from a to b.";
+(* ::Input::Initialization:: *)
 ComplexArrowPlot::usage=
 "ComplexArrowPlot[f[t],{t,a,b}] plots the trajectory in the complex plane of f from a to b with an arrow showing flow.";
-ComplexPlot3D::usage=
-"ComplexPlot3D[f[z],{z,a,b}] plots absolute value, real and imaginary parts in the complex plane in the rectangle defined by {{Re[a],Im[a]}, {Re[b],Im[b]}}";
 TablePlot::usage=
 "TablePlot[h[k],{k,v}] plots the data points {k,h[k]} for k over range v.";
 TableLogPlot::usage=
@@ -35,9 +33,6 @@ TableLogPlot::usage=
 
 ReImTablePlot::usage=
 "ReImTablePlot[h[k],{k,v}] plots the real and imaginary points of h[k].";
-
-ReImPlot::usage=
-"ReImPlot[h[x],{x,v}] plots the real and imaginary points of h[x].";
 
 DotPlot::usage=
 "Plots a list of real points.";
@@ -54,6 +49,7 @@ TablePlot3D::usage=
 "TablePlot3D[h[i,k],{i,v1},{k,v2}] plots the data points {i,k,h[i,k]} for i over range v1 and k over range v2.";
 
 
+(* ::Input::Initialization:: *)
 DarkYellow=RGBColor[0.6,0.6,0.1];
 DarkGreen=RGBColor[0.0,0.6,0.1];
 DarkRed=RGBColor[0.8,0.2,0.1];
@@ -61,6 +57,7 @@ DarkRed=RGBColor[0.8,0.2,0.1];
 DefaultFontSize;RomanFont;ItalicFont;
 
 
+(* ::Input::Initialization:: *)
 ReImComplexContourPlot;
 CirclePlot;
 LogPlot3D;
@@ -70,13 +67,6 @@ PseudospectraPlot;
 SVDPlot;
 
 Begin["Private`"];
-Options[ComplexPlot]=Options[ParametricPlot];
-ComplexPlot[hlis_,b_List,opts:OptionsPattern[]]:=Module[{h,hlist},
-hlist={hlis}//Flatten;
-Map[Function[h,
-ParametricPlot[{Re[h],Im[h]},b,opts]],
-hlist]//Show
-]
 
 ComplexArrowPlot[hlis_,b_,opts___]:=Show[ComplexPlot[hlis,b,opts],Graphics[{Arrowheads[Large],Hue[0.67`,0.6`,0.6`],{hlis/.First[b]->(Last[b]+0.000001 Sign[Second[b]-Last[b]])//{Re[#],Im[#]}&//N,hlis/.First[b]->(Last[b])//{Re[#],Im[#]}&//N}//Arrow}]]
 
@@ -94,16 +84,7 @@ CirclePlot[h_,{z_,r_},opts___]:=CirclePlot[h,{z,0,r},opts];
 CirclePlot[h_,z_,opts___]:=CirclePlot[h,{z,1},opts];
 
 
-Options[ComplexPlot3D]=Options[Plot3D];
-ComplexPlot3D[h_,v_,opts:OptionsPattern[]]:=Module[{x,y,h2,xv,yv},
-	h2=h/.First[v]->x+I y;
-	xv={x,Re[v[[2]]],Re[Last[v]]};
-	yv={y,Im[v[[2]]],Im[Last[v]]};
-
-	Plot3D[h2//Abs,Evaluate[xv],Evaluate[yv],PlotLabel->Abs,opts]//Print;
-	Plot3D[h2//Re,Evaluate[xv],Evaluate[yv],PlotLabel->Re,opts]//Print;
-	Plot3D[h2//Im,Evaluate[xv],Evaluate[yv],PlotLabel->Im,opts]//Print;
-];
+(* ::Input::Initialization:: *)
 ReComplexPlot3D[h_,v_,opts___]:=Module[{x,y,h2,xv,yv},
 	h2=h/.First[v]->x+I y;
 	xv={x,Re[v[[2]]],Re[Last[v]]};
@@ -113,11 +94,13 @@ ReComplexPlot3D[h_,v_,opts___]:=Module[{x,y,h2,xv,yv},
 ]
 
 
+(* ::Input::Initialization:: *)
 LogPlot3D[h_,opts___]:=Module[{x,y,h2,xv,yv},
 Plot3D[h//Log10,opts]
 ]
 
 
+(* ::Input::Initialization:: *)
 ComplexLogPlot3D[h_,v_,opts___]:=Module[{x,y,h2,xv,yv},
 	h2=h/.First[v]->x+I y;
 	xv={x,Re[v[[2]]],Re[Last[v]]};
@@ -129,6 +112,7 @@ ComplexLogPlot3D[h_,v_,opts___]:=Module[{x,y,h2,xv,yv},
 ]
 
 
+(* ::Input::Initialization:: *)
 AnalyticityPlot[h_,v_,opts___]:=
 Module[{f,rf,if,x,y,z,anal1,anal2},
 f[x_,y_]:=Assuming[x\[Element]Reals&&y\[Element]Reals,h/.First[v]->x+I y//ExpandAll//Simplify];
@@ -140,6 +124,7 @@ Plot3D[anal2[x,y],{x,Re[v[[2]]],Re[Last[v]]},{y,Im[v[[2]]],Im[Last[v]]},opts]
 End[];
 
 
+(* ::Input::Initialization:: *)
 ListLineLogLogPlot;
 TableLogLogPlot;
 ReImLogPlot;
@@ -164,6 +149,7 @@ ListLineLogLogPlot[h_,opts___]:=ListLogLogPlot[h,Joined->True,opts];
 
 
 
+(* ::Input::Initialization:: *)
 ThreadIfList[l:{{_,{_,_}}..}]:=Thread[Thread/@l];
 ThreadIfList[l_]:=l;
 
@@ -177,6 +163,7 @@ SetAttributes[CArrayPlot,HoldFirst];
 CArrayPlot[h_,sp_,opts___]:=ListLinePlot[Array[{#,h[#]}&,sp],opts];
 
 
+(* ::Input::Initialization:: *)
 SetAttributes[TableLogPlot,HoldFirst];
 TableLogPlot[h_,sp_,opts___]:=
 ListLineLogPlot[Table[{First[sp],h},sp],opts];
@@ -191,6 +178,7 @@ SetAttributes[ArrayLogPlot,HoldFirst];
 ArrayLogPlot[h_,sp_,opts___]:=ListLineLogPlot[Array[{#,h[#]}&,sp],opts];
 
 
+(* ::Input::Initialization:: *)
 SetAttributes[MonitorTable,HoldFirst];
 MonitorTable[h_,{k_,i_,n_,sp_},cmd_,opts___]:=Module[{p,foo},
 foo[p_]:=foo[p]=Hold[h]/.k->p//ReleaseHold;Monitor[cmd[foo[p],{p,i,n,sp},opts],cmd[foo[k],{k,i,p,sp},opts]]];
@@ -203,9 +191,9 @@ SetAttributes[MonitorTablePlot,HoldFirst];
 MonitorTablePlot[h_,sp_,opts___]:=MonitorTable[h,sp,TablePlot];
 
 
+(* ::Input::Initialization:: *)
 SetAttributes[AbsLogPlot,HoldFirst];AbsLogPlot[h_,sp_,opts___]:=LogPlot[{h,-h},sp,opts];
 SetAttributes[ReImLogPlot,HoldFirst];ReImLogPlot[h_,sp_,opts___]:=LogPlot[{Re[h],-Re[h],Im[h],-Im[h]},sp,opts];
-SetAttributes[ReImPlot,HoldFirst];ReImPlot[h_,sp_,opts___]:=Plot[{Re[h],Im[h]},sp,opts];
 SetAttributes[ReImTablePlot,HoldFirst];ReImTablePlot[h_,sp_,opts___]:=TablePlot[{Re[h],Im[h]},sp,opts];
 SetAttributes[ReImTableLogPlot,HoldFirst];
 ReImTableLogPlot[h_,sp_,opts___]:=TablePlot[{Re[h],-Re[h],Im[h],-Im[h]},sp,opts];
@@ -227,6 +215,7 @@ ReImListLogLogPlot[h_List,opts___]:=ListLogLogPlot[Thread[{Max[0,Re[#]],Max[0,-R
 
 
 
+(* ::Input::Initialization:: *)
 EigenballPlot[A_,opts___]:=Module[{n,i,j},
 n=Length[A];Show[Graphics[Table[Circle[{Re[A[[i,i]]],Im[A[[i,i]]]},\!\(
 \*UnderoverscriptBox[\(\[Sum]\), \(j = 1\), \(i - 1\)]\(Abs[A[[i, j]]]\)\)+\!\(
@@ -236,11 +225,13 @@ Graphics[Map[Point[{Re[#],Im[#]}]&,Eigenvalues[A]]
 ]
 
 
+(* ::Input::Initialization:: *)
 DotPlot[pts_,opts:OptionsPattern[ListPlot]]:=ListPlot[Map[{#,0}&,pts],Axes->False,opts];
 ComplexDotPlot[pts_,opts:OptionsPattern[ListPlot]]:=ListPlot[Map[{Re[#],Im[#]}&,pts],PlotStyle->Join[If[OptionValue[PlotStyle]===Automatic,{},{OptionValue[PlotStyle]}//Flatten],{PointSize[Large]}],opts];
 ComplexLinePlot[pts_,opts:OptionsPattern[ListLinePlot]]:=ListLinePlot[Map[{Re[#],Im[#]}&,pts],opts];
 
 
+(* ::Input::Initialization:: *)
 Options[MoviePlot]={Plotter->Plot,Frames->15};
 
 MoviePlot[f_,boundsAndOpts__]:=
@@ -267,11 +258,13 @@ MoviePlot[f_,boundsAndOpts__]:=
 ]
 
 
+(* ::Input::Initialization:: *)
 (* WARNING: Conflicts with builtin function simplex
 Simplex[2]:=Module[{x,y},{x+y\[LessEqual]1,{x,0,1},{y,0,1}}]
 *)
 
 
+(* ::Input::Initialization:: *)
 DefaultFontSize=12;$TextStyle={FontFamily->"Cmr12",FontSize->DefaultFontSize};RomanFont[str_,size_:DefaultFontSize]:=\!\(\*
 TagBox[
 FormBox[
@@ -294,9 +287,11 @@ TraditionalForm,
 Editable->True]\);
 
 
+(* ::Input::Initialization:: *)
 PseudospectraPlot[M_,zmin_:(-1.-1.I),zmax_:(1.+1. I),h_:.1]:=Flatten[Table[{x,y,M-(x+I y) IdentityMatrix[M//Length]//SingularValueDecomposition//#[[2]]&//Diagonal//Min},{x,zmin//Re,zmax//Re,h},{y,zmin//Im,zmax//Im,h}],1]//ListContourPlot;
 SVDPlot[m_,opts___]:=ComplexDotPlot[m//SingularValueDecomposition//#[[2]]&//Diagonal,opts];
 
 
+(* ::Input::Initialization:: *)
 End[];
 EndPackage[];
