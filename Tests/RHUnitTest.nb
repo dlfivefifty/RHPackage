@@ -8471,7 +8471,7 @@ Cell[BoxData[
       RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}], ",", "hf"}], "]"}], 
    "//", 
    RowBox[{
-    RowBox[{"BlockDiagonalMatrix", "[", 
+    RowBox[{"SparseBlockDiagonalMatrix", "[", 
      RowBox[{"{", 
       RowBox[{"#", ",", "#", ",", "#", ",", "#"}], "}"}], "]"}], "&"}]}], 
   ";"}]], "Input",
@@ -29872,7 +29872,7 @@ Cell[BoxData[{
       RowBox[{"f", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
       ",", "g"}], "]"}], "//", 
     RowBox[{
-     RowBox[{"BlockDiagonalMatrix", "[", 
+     RowBox[{"SparseBlockDiagonalMatrix", "[", 
       RowBox[{"{", 
        RowBox[{"#", ",", "#"}], "}"}], "]"}], "&"}]}]}], 
   ";"}], "\[IndentingNewLine]", 
@@ -29890,7 +29890,7 @@ Cell[BoxData[{
         RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}], ",", "g"}], "]"}],
       "//", 
      RowBox[{
-      RowBox[{"BlockDiagonalMatrix", "[", 
+      RowBox[{"SparseBlockDiagonalMatrix", "[", 
        RowBox[{"{", 
         RowBox[{"#", ",", "#", ",", "#", ",", "#"}], "}"}], "]"}], "&"}]}]}], 
    ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
@@ -29911,7 +29911,7 @@ Cell[BoxData[{
          RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}], "&"}], "/@", 
        "l"}], ",", "g"}], "]"}], "//", 
     RowBox[{
-     RowBox[{"BlockDiagonalMatrix", "[", 
+     RowBox[{"SparseBlockDiagonalMatrix", "[", 
       RowBox[{"{", 
        RowBox[{"#", ",", "#", ",", "#", ",", "#"}], "}"}], "]"}], "&"}]}]}], 
   ";"}], "\[IndentingNewLine]", 
@@ -29933,7 +29933,7 @@ Cell[BoxData[{
           RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}], "&"}], "/@", 
         "l"}], ",", "l2"}], "]"}], "//", 
      RowBox[{
-      RowBox[{"BlockDiagonalMatrix", "[", 
+      RowBox[{"SparseBlockDiagonalMatrix", "[", 
        RowBox[{"{", 
         RowBox[{"#", ",", "#", ",", "#", ",", "#"}], "}"}], "]"}], "&"}]}]}], 
    ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
@@ -29953,7 +29953,7 @@ Cell[BoxData[{
         RowBox[{"#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
         "&"}], "/@", "l"}], ",", "g"}], "]"}], "//", 
     RowBox[{
-     RowBox[{"BlockDiagonalMatrix", "[", 
+     RowBox[{"SparseBlockDiagonalMatrix", "[", 
       RowBox[{"{", 
        RowBox[{"#", ",", "#"}], "}"}], "]"}], "&"}]}]}], 
   ";"}], "\[IndentingNewLine]", 
@@ -29973,7 +29973,7 @@ Cell[BoxData[{
         RowBox[{"#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
         "&"}], "/@", "l"}], ",", "l2"}], "]"}], "//", 
     RowBox[{
-     RowBox[{"BlockDiagonalMatrix", "[", 
+     RowBox[{"SparseBlockDiagonalMatrix", "[", 
       RowBox[{"{", 
        RowBox[{"#", ",", "#"}], "}"}], "]"}], "&"}]}]}], 
   ";"}], "\[IndentingNewLine]", 

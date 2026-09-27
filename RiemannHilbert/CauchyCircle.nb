@@ -51,7 +51,17 @@ an IFun f at a point x on Domain[f].\>\""}], ";"}],
  RowBox[{
   RowBox[{"HilbertInverse", ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
- RowBox[{"CauchyMatrix", ";"}], "\[IndentingNewLine]", 
+ RowBox[{"(*", " ", 
+  RowBox[{"Shadows", " ", "System`CauchyMatrix"}], ",", " ", 
+  RowBox[{"introduced", " ", "in", " ", "Version", " ", "13.2"}], " ", 
+  "*)"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Off", "[", 
+   RowBox[{"General", "::", "shdw"}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"RiemannHilbert`CauchyMatrix", ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"On", "[", 
+   RowBox[{"General", "::", "shdw"}], "]"}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"CauchyS", ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{"FPCauchyBasis", ";"}], "\[IndentingNewLine]", 

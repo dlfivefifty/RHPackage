@@ -84,7 +84,7 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{"ScalarToVectorMatrix", ":=", 
    RowBox[{
-    RowBox[{"BlockDiagonalMatrix", "[", 
+    RowBox[{"SparseBlockDiagonalMatrix", "[", 
      RowBox[{"{", 
       RowBox[{"#", ",", "#"}], "}"}], "]"}], "&"}]}], 
   ";"}], "\[IndentingNewLine]", 
@@ -92,7 +92,7 @@ Cell[BoxData[{
   RowBox[{
    RowBox[{"ScalarToMatrixMatrix", ":=", 
     RowBox[{
-     RowBox[{"BlockDiagonalMatrix", "[", 
+     RowBox[{"SparseBlockDiagonalMatrix", "[", 
       RowBox[{"{", 
        RowBox[{"#", ",", "#", ",", "#", ",", "#"}], "}"}], "]"}], "&"}]}], 
    ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 

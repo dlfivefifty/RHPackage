@@ -1639,7 +1639,7 @@ Cell[BoxData[{
      RowBox[{"A_", ",", "B_"}], "]"}], ":=", 
     RowBox[{"ShiftMatrix", "[", 
      RowBox[{
-      RowBox[{"BlockDiagonalMatrix", "[", 
+      RowBox[{"SparseBlockDiagonalMatrix", "[", 
        RowBox[{"{", 
         RowBox[{"A", ",", "B"}], "}"}], "]"}], ",", 
       RowBox[{
@@ -2076,7 +2076,7 @@ Cell[BoxData[
    RowBox[{"PartitionList", ";"}], "\[IndentingNewLine]", 
    "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{"RightJoin", ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
-   RowBox[{"BlockDiagonalMatrix", ";"}], "\[IndentingNewLine]", 
+   RowBox[{"SparseBlockDiagonalMatrix", ";"}], "\[IndentingNewLine]", 
    "\[IndentingNewLine]", 
    RowBox[{"ToShiftListOfArrays", ";"}], "\[IndentingNewLine]", 
    RowBox[{"ToArrayOfShiftLists", ";"}], "\[IndentingNewLine]", 
@@ -2382,7 +2382,7 @@ Cell[BoxData[
     ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{
-     RowBox[{"BlockDiagonalMatrix", "[", "Al_List", "]"}], ":=", 
+     RowBox[{"SparseBlockDiagonalMatrix", "[", "Al_List", "]"}], ":=", 
      RowBox[{"Module", "[", 
       RowBox[{
        RowBox[{"{", 

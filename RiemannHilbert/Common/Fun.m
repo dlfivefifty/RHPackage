@@ -381,7 +381,7 @@ MatrixMultVectorFun[G_List]:=Join@@(RightJoin@@#&/@MatrixMap[SparseDiagonalMatri
 RightMatrixMultVectorFun[G_List]:=MatrixMultVectorFun[Transpose/@G];
 
 
-RightMatrixMultMatrixFun[G_List]:=BlockDiagonalMatrix[{MatrixMultVectorFun[Transpose/@(G)],MatrixMultVectorFun[Transpose/@(G)]}];
+RightMatrixMultMatrixFun[G_List]:=SparseBlockDiagonalMatrix[{MatrixMultVectorFun[Transpose/@(G)],MatrixMultVectorFun[Transpose/@(G)]}];
 
 MatrixMultMatrixFun[G_List]:=Join[(RightJoin@@(SparseDiagonalMatrix/@Flatten[Thread[{1,0} MatrixMap[ToValueList,G//ToArrayOfListOfFuns]],1])),
 (RightJoin@@(SparseDiagonalMatrix/@Flatten[Reverse/@Thread[{1,0} MatrixMap[ToValueList,G//ToArrayOfListOfFuns]],1])),

@@ -29,7 +29,10 @@ CauchyInverse;
 CauchyInverseBasis;
 HilbertInverse;
 
-CauchyMatrix;
+(* Shadows System`CauchyMatrix, introduced in Version 13.2 *)
+Off[General::shdw];
+RiemannHilbert`CauchyMatrix;
+On[General::shdw];
 CauchyS;
 
 FPCauchyBasis;

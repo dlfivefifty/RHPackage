@@ -50,9 +50,12 @@ TablePlot3D::usage=
 
 
 (* ::Input::Initialization:: *)
+(* DarkYellow, DarkGreen and DarkRed are built in since Version 14.3 *)
+If[$VersionNumber<14.3,
 DarkYellow=RGBColor[0.6,0.6,0.1];
 DarkGreen=RGBColor[0.0,0.6,0.1];
-DarkRed=RGBColor[0.8,0.2,0.1];
+DarkRed=RGBColor[0.8,0.2,0.1]
+];
 
 DefaultFontSize;RomanFont;ItalicFont;
 

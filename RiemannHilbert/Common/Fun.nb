@@ -1363,7 +1363,7 @@ Cell[BoxData[{
   RowBox[{
    RowBox[{
     RowBox[{"RightMatrixMultMatrixFun", "[", "G_List", "]"}], ":=", 
-    RowBox[{"BlockDiagonalMatrix", "[", 
+    RowBox[{"SparseBlockDiagonalMatrix", "[", 
      RowBox[{"{", 
       RowBox[{
        RowBox[{"MatrixMultVectorFun", "[", 

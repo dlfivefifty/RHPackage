@@ -287,7 +287,7 @@ ShiftMatrix/:c_?NumberQ sm_ShiftMatrix:=ShiftMatrix[c ToArray[sm],{RangeIndex[sm
 
 
 (* ::Input::Initialization:: *)
-ShiftDiagonalMatrix[A_,B_]:=ShiftMatrix[BlockDiagonalMatrix[{A,B}],Dimensions[A]+1];
+ShiftDiagonalMatrix[A_,B_]:=ShiftMatrix[SparseBlockDiagonalMatrix[{A,B}],Dimensions[A]+1];
 
 ShiftMatrix[{A_?MatrixQ,B_?MatrixQ}]:=ShiftMatrix[A~RightJoin~B,{1,Dimensions[A][[2]]+1}];
 
@@ -400,7 +400,7 @@ PartitionList;
 
 RightJoin;
 
-BlockDiagonalMatrix;
+SparseBlockDiagonalMatrix;
 
 ToShiftListOfArrays;
 ToArrayOfShiftLists;
@@ -457,7 +457,7 @@ PartitionList[l_,d_?MatrixQ]:=PartitionList[PartitionList[l,Flatten[d]],Length/@
 
 RightJoin[v__]:=Join@@(VectorTranspose/@{v})//VectorTranspose;
 
-BlockDiagonalMatrix[Al_List]:=Module[{Asp,k,j,dim,sete},
+SparseBlockDiagonalMatrix[Al_List]:=Module[{Asp,k,j,dim,sete},
 dim[al_?MatrixQ]:=al//Dimensions;
 dim[al_?VectorQ]:={al//Length,1};
 dim[al_]:={1,1};

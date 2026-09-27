@@ -80,21 +80,29 @@ Cell["Colours", \
 "Section",ExpressionUUID->"8a4eaf9f-a088-4be8-ba49-0a9b07ca6712"],
 
 Cell[BoxData[{
- RowBox[{
-  RowBox[{"DarkYellow", "=", 
-   RowBox[{"RGBColor", "[", 
-    RowBox[{"0.6", ",", "0.6", ",", "0.1"}], "]"}]}], 
-  ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"DarkGreen", "=", 
-   RowBox[{"RGBColor", "[", 
-    RowBox[{"0.0", ",", "0.6", ",", "0.1"}], "]"}]}], 
-  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"(*", " ", 
+  RowBox[{"DarkYellow", ",", " ", 
+   RowBox[{"DarkGreen", " ", "and", " ", "DarkRed", " ", "are", " ", 
+    "built", " ", "in", " ", "since", " ", "Version", " ", "14.3"}]}], 
+  " ", "*)"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
-   RowBox[{"DarkRed", "=", 
-    RowBox[{"RGBColor", "[", 
-     RowBox[{"0.8", ",", "0.2", ",", "0.1"}], "]"}]}], ";"}], 
+   RowBox[{"If", "[", 
+    RowBox[{
+     RowBox[{"$VersionNumber", "<", "14.3"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"DarkYellow", "=", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0.6", ",", "0.6", ",", "0.1"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"DarkGreen", "=", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0.0", ",", "0.6", ",", "0.1"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"DarkRed", "=", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0.8", ",", "0.2", ",", "0.1"}], "]"}]}]}]}], 
+    "\[IndentingNewLine]", "]"}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{"DefaultFontSize", ";", "RomanFont", ";", "ItalicFont", 
   ";"}]}], "Input",

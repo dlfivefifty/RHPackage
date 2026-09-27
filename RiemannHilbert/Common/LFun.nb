@@ -1328,7 +1328,7 @@ Cell[BoxData[
        RowBox[{"d_", "?", "CircleDomainQ"}], ",", "n_"}], "]"}], ":=", 
      RowBox[{"MapFromCircle", "[", 
       RowBox[{"d", ",", 
-       RowBox[{"ComplexCirclePoints", "[", "n", "]"}]}], "]"}]}], ";"}], 
+       RowBox[{"NCirclePoints", "[", "n", "]"}]}], "]"}]}], ";"}], 
    "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"End", "[", "]"}], ";"}], "\[IndentingNewLine]"}]}]], "Input",

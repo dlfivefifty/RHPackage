@@ -251,7 +251,7 @@ Begin["Private`"];
 ComplexCirclePoints[n_]:=Exp[I \[Pi] LeftEvenPoints[n]];
 NCirclePoints[n_]:=ComplexCirclePoints[n]//N;
 
-Points[d_?CircleDomainQ,n_]:=MapFromCircle[d,ComplexCirclePoints[n]];
+Points[d_?CircleDomainQ,n_]:=MapFromCircle[d,NCirclePoints[n]];
 
 End[];
 

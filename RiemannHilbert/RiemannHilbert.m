@@ -43,8 +43,8 @@ SparseSolve::usage="Option for RHSolve";
 Begin["Private`"];
 
 
-ScalarToVectorMatrix:=BlockDiagonalMatrix[{#,#}]&;
-ScalarToMatrixMatrix:=BlockDiagonalMatrix[{#,#,#,#}]&;
+ScalarToVectorMatrix:=SparseBlockDiagonalMatrix[{#,#}]&;
+ScalarToMatrixMatrix:=SparseBlockDiagonalMatrix[{#,#,#,#}]&;
 
 CauchyMatrix[s_?SignQ,f_?VectorFunQ,g_?FunQ]:=CauchyMatrix[s,f[[1]],g]//ScalarToVectorMatrix;
 CauchyMatrix[s_?SignQ,f_?MatrixFunQ,g_?FunQ]:=CauchyMatrix[s,f[[1,1]],g]//ScalarToMatrixMatrix;
